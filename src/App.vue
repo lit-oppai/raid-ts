@@ -8,7 +8,7 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 <template>
 	<Splitter class="os_panel h-screen">
 		<!-- menu bar start -->
-		<SplitterPanel :size="20" class="bg-white min-w-[204px]">
+		<SplitterPanel :size="20" class="menu_bar">
 			<menuBar></menuBar>
 		</SplitterPanel>
 		<!-- menu bar end -->
