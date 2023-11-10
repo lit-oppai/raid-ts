@@ -13,7 +13,7 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 		</SplitterPanel>
 		<!-- menu bar end -->
 
-		<SplitterPanel :size="80" class="bg-gray-50">
+		<SplitterPanel :size="80" class="bg-gray-50" style="flex-grow: 1;">
 			<div class="top_bar">
 				<div class="top_bar_left">
 					<span>Content</span>
