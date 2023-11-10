@@ -1,5 +1,6 @@
 @import 'iconfonts-casaos/casaos-iconfonts.css';
-@import './prime.css';
+@import './prime_components.css';
+@import './prime_utilities.css'
 
 :root {
 	/* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
