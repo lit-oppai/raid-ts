@@ -3,7 +3,7 @@
     <defs>
         <linearGradient id="IconifyId1813088fe1fbc01fb466" x1="-.828%" x2="57.636%" y1="7.652%" y2="78.411%">
             <stop offset="0%" stop-color="#ffc941"></stop>
-            <stop offset="100%" stop-color="#441956"></stop>
+            <stop offset="100%" stop-color="rgba(168,71,210,0.188)"></stop>
         </linearGradient>
     </defs>
     <path fill="url(#IconifyId1813088fe1fbc01fb466)"
