@@ -2,7 +2,15 @@
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
 import menuBar from '@/components/menuBar.vue';
-import 'primevue/resources/themes/saga-blue/theme.css';
+// import 'primevue/resources/themes/saga-blue/theme.css';
+import messageBus from '@/utils/messageBus';
+
+function onClose() {
+    messageBus("mircoapp_communicate", {
+        action: 'close',
+        name: 'icewhale_connect'
+    });
+}
 </script>
 
 <template>
@@ -13,12 +21,12 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 		</SplitterPanel>
 		<!-- menu bar end -->
 
-		<SplitterPanel :size="80" class="bg-gray-50" style="flex-grow: 1;">
+		<SplitterPanel :size="80" class="bg-gray-50">
 			<div class="top_bar">
 				<div class="top_bar_left">
 					<span>Content</span>
 				</div>
-				<div class="top_bar_right">
+				<div class="top_bar_right" @click="onClose">
 					<i class="casa-close-xs-outline"></i>
 				</div>
 			</div>
