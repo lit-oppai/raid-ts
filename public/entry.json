@@ -4,8 +4,8 @@
     "en_us": "Raid"
   },
   "prefetch": true,
-  "entry": "/modules/icewhale_connect/index.html",
-  "icon": "/modules/icewhale_connect/appicon.svg",
+  "entry": "/modules/icewhale_raid/index.html",
+  "icon": "/modules/icewhale_raid/raid.svg",
   "description": "Icewhale Raid",
   "formality": {
     "type": "modal",
