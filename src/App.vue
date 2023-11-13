@@ -24,8 +24,11 @@ function onClose() {
 		<SplitterPanel :size="80" class="bg-gray-50">
 			<div class="top_bar">
 				<div class="top_bar_left">
-					<span>Content</span>
+					<span>Storage Manager</span>
 				</div>
+                <div class="top_bar_center">
+                    <!-- search or active -->
+                </div>
 				<div class="top_bar_right" @click="onClose">
 					<i class="casa-close-xs-outline"></i>
 				</div>

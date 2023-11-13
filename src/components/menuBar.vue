@@ -7,12 +7,7 @@ import { routes } from '@/pages/router.ts';
 <!-- css components: os_panel menu_bar -->
 <template>
 	<div class="menu_bar_header">
-		<span class="
-			text-slate-800
-			text-base
-			font-medium
-			font-['Roboto']
-			leading-normal">
+		<span class="">
 			Setting
 		</span>
 		<div class="os_author">

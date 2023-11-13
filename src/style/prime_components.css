@@ -12,7 +12,8 @@
 
             /* title */
             .top_bar_left {
-                @apply flex-1;
+                @apply flex-grow-0 flex-shrink-0;
+                @apply text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal;
             }
 
             /* actions */
@@ -22,11 +23,11 @@
 
             /* close */
             .top_bar_right {
-                /* @apply flex-shrink-0; */
+                @apply flex-grow-0 flex-shrink-0 cursor-pointer;
             }
 
             i {
-                @apply w-8 h-8 p-2 rounded-md;
+                @apply text-zinc-800 w-8 h-8 p-2 rounded-md;
 
                 &::before {
                     @apply w-6 h-6;
@@ -54,6 +55,7 @@
             /* layout */
             .menu_bar_header {
                 @apply m-5 px-1 max-md:hidden;
+                @apply text-slate-800 text-base font-medium font-['Roboto'] leading-normal;
             }
 
             .menu_bar_list {
@@ -93,6 +95,7 @@
     /* author party */
     .os_author {
         @apply flex mt-9 space-x-2.5 items-center;
+        @apply text-zinc-800 text-sm font-normal font-['Roboto'] leading-tight;
 
         img {
             @apply w-10 h-10;
