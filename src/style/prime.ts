@@ -1,6 +1,7 @@
+// You can change the theme which primevue components.
 export default {
 	button: {
-		root: ({ props, context }) => {
+		root: () => {
 			return ({
 				class: [
 					'items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center align-bottom',

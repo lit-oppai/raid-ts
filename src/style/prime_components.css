@@ -22,7 +22,7 @@
 
             /* close */
             .top_bar_right {
-                @apply flex-shrink-0;
+                /* @apply flex-shrink-0; */
             }
 
             i {
