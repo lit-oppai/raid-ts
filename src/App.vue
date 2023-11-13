@@ -2,7 +2,6 @@
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
 import menuBar from '@/components/menuBar.vue';
-// import 'primevue/resources/themes/saga-blue/theme.css';
 import messageBus from '@/utils/messageBus';
 
 function onClose() {
@@ -16,12 +15,12 @@ function onClose() {
 <template>
 	<Splitter class="os_panel h-screen">
 		<!-- menu bar start -->
-		<SplitterPanel :size="20" class="menu_bar">
+		<SplitterPanel :size="20" class="panel_right">
 			<menuBar></menuBar>
 		</SplitterPanel>
 		<!-- menu bar end -->
 
-		<SplitterPanel :size="80" class="bg-gray-50">
+		<SplitterPanel :size="80" class="panel_content">
 			<div class="top_bar">
 				<div class="top_bar_left">
 					<span>Storage Manager</span>
