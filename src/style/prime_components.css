@@ -42,25 +42,32 @@
                 }
             }
         }
-        /* menu bar */
-        .menu_bar {
+        /* panel right */
+        .panel_right {
             @apply transition-all;
             @apply min-w-0 w-12 max-w-[3rem];
             @screen md {
                 @apply bg-white min-w-[204px];
             }
-            /* animation-name: slideInFromLeft;
-            animation-duration: 1s; */
+        }
+        /* panel content */
+        .panel_content{
+            @apply bg-gray-50 flex-grow;
+        }
+    }
+}
 
-            /* layout */
-            .menu_bar_header {
-                @apply m-5 px-1 max-md:hidden;
-                @apply text-slate-800 text-base font-medium font-['Roboto'] leading-normal;
-            }
+@layer components {
+    .os_menu_bar {
+        @apply flex flex-col h-full;
+        /* layout */
+        .menu_bar_header {
+            @apply flex-grow-0 flex-shrink-0 m-5 px-1 max-md:hidden;
+            @apply text-slate-800 text-base font-medium font-['Roboto'] leading-normal;
+        }
 
-            .menu_bar_list {
-                @apply flex flex-col max-md:mt-5;
-            }
+        .menu_bar_list {
+            @apply flex-grow overflow-y-auto flex flex-col max-md:mt-5;
         }
     }
 }
