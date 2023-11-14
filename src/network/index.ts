@@ -133,3 +133,49 @@ const openAPI = {
 export { api, instance };
 
 export default openAPI;
+
+// TODO: 重构代码 refactor code.
+// // Interception before request initiation
+// function requestInterceptor(config) {
+//     const token = localStorage.getItem("access_token");
+//     if (token) {
+//         config.headers.Authorization = token;
+//     }
+//     return config;
+// }
+
+// function requestErrorInterceptor(error) {
+//     // Do something with request error
+//     return Promise.reject(error);
+// }
+
+// instance.interceptors.request.use(requestInterceptor, requestErrorInterceptor);
+
+// // Response interception
+
+// let isRefreshing = false;
+// let requests: Array<Function> = [];
+
+// function unauthorized(error = null) {
+//     error && console.warn('unauthorized', error);
+//     return Promise.reject(
+//         new Error("Unauthorized request, please make sure you have logged in")
+//     );
+// }
+
+// function responseInterceptor(response) {
+//     return response;
+// }
+
+// async function responseErrorInterceptor(error) {
+//     const originalConfig = error?.config;
+//     const refresh_token = localStorage.getItem("refresh_token");
+//     // Access Token was expired
+//     if (originalConfig.url !== "/users/register" && error?.response?.status === 401) {
+//         if (!isRefreshing) {
+//             // logic here
+//         }
+//     }
+// }
+
+// instance.interceptors.response.use(responseInterceptor, responseErrorInterceptor);

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Image from 'primevue/image';
 import Button from 'primevue/button';
-import authorImage from '@/assets/img/author.svg';
-import { routes } from '@/pages/router.ts';
+import authorImage from '@assets/img/author.svg';
+import { routes } from '@pages/router.ts';
 </script>
 <!-- css components: os_panel menu_bar -->
 <template>
@@ -22,7 +22,7 @@ import { routes } from '@/pages/router.ts';
         <!--`<router-link>` 将呈现一个带有正确 `href` 属性的 `<a>` 标签-->
         <div class="menu_bar_list">
             <router-link v-for="item in routes" :to="item.path" class="os_menu">
-                <Button class="" :label="item.name" :icon="item.icon">
+                <Button class="" :label="(item.name as string)" :icon="item.icon">
                 </Button>
             </router-link>
         </div>

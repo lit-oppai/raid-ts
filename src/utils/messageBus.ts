@@ -1,4 +1,4 @@
-import WUJIE_PROPS from "@/utils/primaryProps.ts";
+import WUJIE_PROPS from "@utils/primaryProps.ts";
 import { api } from "@/network";
 
 // Function:
