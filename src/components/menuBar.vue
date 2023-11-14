@@ -7,16 +7,14 @@ import { routes } from '@/pages/router.ts';
 <!-- css components: os_panel menu_bar -->
 <template>
     <div class="os_menu_bar">
-        <div class="menu_bar_header">
-            <span class="">
-                Setting
+        <span class="menu_bar_title">
+            Setting
+        </span>
+        <div class="menu_bar_info">
+            <Image :src="authorImage"></Image>
+            <span class="info_name">
+                name
             </span>
-            <div class="os_author">
-                <Image :src="authorImage"></Image>
-                <span class="">
-                    name
-                </span>
-            </div>
         </div>
 
         <!--使用 router-link 组件进行导航 -->
