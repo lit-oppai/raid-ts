@@ -15,7 +15,10 @@
 
             /* title */
             .top_bar_left {
-                @apply flex-grow-0 flex-shrink-0;
+                @apply flex-grow-0 flex-shrink-0 mr-2 h-8 w-8 leading-8;
+            }
+
+            .top_bar_title {
                 @apply text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal;
             }
 
@@ -26,10 +29,11 @@
 
             /* close */
             .top_bar_right {
-                @apply flex-grow-0 flex-shrink-0 cursor-pointer;
+                @apply flex-grow-0 flex-shrink-0;
             }
 
             i {
+                @apply cursor-pointer;
                 @apply text-zinc-800 w-8 h-8 p-1 rounded-md;
 
                 &::before {
