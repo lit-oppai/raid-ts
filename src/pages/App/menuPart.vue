@@ -10,17 +10,14 @@ import { routes } from '@pages/router.ts';
         <span class="menu_bar_title">
             Setting
         </span>
-        <div class="menu_bar_info">
+        <div class="menu_bar_author">
             <Image :src="authorImage"></Image>
-            <span class="info_name">
+            <span class="author_name">
                 name
             </span>
         </div>
 
-        <!--使用 router-link 组件进行导航 -->
-        <!--通过传递 `to` 来指定链接 -->
-        <!--`<router-link>` 将呈现一个带有正确 `href` 属性的 `<a>` 标签-->
-        <div class="menu_bar_list">
+        <div class="menu_bar_selector">
             <router-link v-for="item in routes" :to="item.path" class="os_menu">
                 <Button class="" :label="(item.name as string)" :icon="item.icon">
                 </Button>

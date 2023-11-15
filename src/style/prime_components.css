@@ -10,25 +10,25 @@
         [data-pc-section='gutter'] {
             width: 0;
         }
-        .top_bar {
+        .panel_top {
             @apply flex items-center h-14 pr-5 pl-4 border-b-2 border-gray-100;
 
             /* title */
-            .top_bar_left {
+            .top_left {
                 @apply flex-grow-0 flex-shrink-0 mr-2 h-8 w-8 leading-8;
             }
 
-            .top_bar_title {
+            .top_title {
                 @apply text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal;
             }
 
             /* actions */
-            .top_bar_center {
+            .top_center {
                 @apply flex-1;
             }
 
             /* close */
-            .top_bar_right {
+            .top_right {
                 @apply flex-grow-0 flex-shrink-0;
             }
 
@@ -73,29 +73,58 @@
             @apply text-slate-800 text-base font-medium font-['Roboto'] leading-normal;
         }
 
-        .menu_bar_info {
+        .menu_bar_author {
             @apply flex space-x-2.5 items-center;
             @apply flex-grow-0 flex-shrink-0 m-5 px-1 pt-4;
             @apply text-zinc-800 text-sm font-normal font-['Roboto'] leading-tight;
             @screen max-md {
                 @apply mx-0;
-                .info_name {
+                .author_name {
                     @apply hidden;
                 }
             }
         }
 
-        .menu_bar_list {
+        .menu_bar_selector {
             @apply flex-grow overflow-y-auto flex flex-col max-md:mt-5;
+            a {
+                @apply mx-4 max-md:mx-0 rounded;
+
+                /* routers */
+                button {
+                    @apply w-full h-12 inline-flex items-center rounded;
+                    @apply text-zinc-800 text-sm font-normal font-['Roboto'] leading-tight;
+                    @screen max-md {
+                        @apply inline text-center text-2xl;
+                    }
+
+                    span::before {
+                        @apply w-6 h-6 mx-2 my-auto;
+                        @screen max-md {
+                            @apply w-8 h-8 mx-1;
+                        }
+                    }
+                    &:hover {
+                        @apply bg-sky-500 text-white;
+                    }
+                    span:not(:first-child) {
+                        @apply max-md:hidden;
+                    }
+                }
+
+                /* active route */
+                &.router-link-active {
+                    @apply bg-gray-100;
+                }
+            }
         }
     }
 }
 
-@layer components {
+/* @layer components {
     .os_menu {
         @apply mx-4 max-md:mx-0 rounded;
 
-        /* routers */
         button {
             @apply w-full h-12 inline-flex items-center rounded;
             @apply text-zinc-800 text-sm font-normal font-['Roboto'] leading-tight;
@@ -117,9 +146,8 @@
             }
         }
 
-        /* active route */
         &.router-link-active {
             @apply bg-gray-100;
         }
     }
-}
+} */
