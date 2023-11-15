@@ -6,14 +6,14 @@ import contentPart from '@pages/App/contentPart.vue';
 </script>
 
 <template>
-	<Splitter class="os_panel h-screen">
+	<Splitter class="os_panel">
 		<!-- menu bar start -->
-		<SplitterPanel :size="20" class="panel_right">
+		<SplitterPanel :size="20" class="panel_left">
 			<menuPart></menuPart>
 		</SplitterPanel>
 		<!-- menu bar end -->
 
-		<SplitterPanel :size="80" class="panel_content">
+		<SplitterPanel :size="80" class="panel_right">
             <contentPart></contentPart>
 		</SplitterPanel>
 	</Splitter>
