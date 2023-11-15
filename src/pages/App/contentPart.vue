@@ -20,21 +20,21 @@ function onClose() {
 }
 </script>
 <template>
-    <div class="top_bar">
-        <div class="top_bar_left" @click="router.go(-1)" v-if="route.matched.length > 1">
+    <div class="panel_top">
+        <div class="top_left" @click="router.go(-1)" v-if="route.matched.length > 1">
             <i class="casa-left-outline"></i>
         </div>
-        <div class="top_bar_title">
+        <div class="top_title">
             <span>{{ title }}</span>
         </div>
-        <div class="top_bar_center">
+        <div class="top_center">
             <!-- search or active -->
         </div>
-        <div class="top_bar_right" @click="onClose">
+        <div class="top_right" @click="onClose">
             <i class="casa-close-outline"></i>
         </div>
     </div>
     <!-- 路由出口 -->
     <!-- 路由匹配到的组件将渲染在这里 -->
-    <router-view></router-view>
+    <router-view class="panel_content"></router-view>
 </template>
