@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Breadcrumb from 'primevue/breadcrumb';
 import messageBus from '@utils/messageBus';
 import { useRoute } from 'vue-router';
+import router from '@pages/router.ts';
 import { computed } from 'vue';
 
 //获取路由中的 mate 信息
@@ -9,7 +9,7 @@ const route = useRoute();
 //获取路由中的 title 信息
 const title = computed(() => route.meta.title);
 //计算当前路由的层级
-console.log(route);
+console.log(router);
 
 
 function onClose() {
@@ -21,15 +21,17 @@ function onClose() {
 </script>
 <template>
     <div class="top_bar">
-        <div class="top_bar_left">
+        <div class="top_bar_left" @click="router.go(-1)" v-if="route.matched.length > 1">
+            <i class="casa-left-outline"></i>
+        </div>
+        <div class="top_bar_title">
             <span>{{ title }}</span>
-            <Breadcrumb />
         </div>
         <div class="top_bar_center">
             <!-- search or active -->
         </div>
         <div class="top_bar_right" @click="onClose">
-            <i class="casa-close-xs-outline"></i>
+            <i class="casa-close-outline"></i>
         </div>
     </div>
     <!-- 路由出口 -->
