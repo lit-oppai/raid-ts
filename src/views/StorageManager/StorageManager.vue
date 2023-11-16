@@ -3,11 +3,15 @@ import Image from 'primevue/image';
 import RaidSVG from '@assets/img/StorageManager/Raid.svg';
 import HDDSVG from '@assets/img/StorageManager/HDD.svg';
 import SSDSVG from '@assets/img/StorageManager/SSD.svg';
+
+import ZimaCubeCard from '@views/StorageManager/ZimaCubeCard.vue';
 </script>
 
 <template>
     <!-- Storage Sketch Part -->
-    <div class="storage_image">1111</div>
+    <div class="storage_image">
+        <ZimaCubeCard></ZimaCubeCard>
+    </div>
     <!-- Storage Usage Part -->
     <div class="storage_useage os_bg_white_card flex flex-col px-4 py-3">
         <div class="w-full flex justify-between">
@@ -104,9 +108,9 @@ import SSDSVG from '@assets/img/StorageManager/SSD.svg';
                             HDD-2-Man Pao
                         </span>
                     </div>
-                    <div>
-                        <span class="text-neutral-400 text-xs font-normal font-['Roboto']">Total 245GB ·</span>.
-                        <span class="text-zinc-800 text-xs font-normal font-['Roboto']">Surplus 210.5GB</span>.
+                    <div class="flex">
+                        <span class="text-neutral-400 text-xs font-normal font-['Roboto']">Total 245GB ·</span>
+                        <span class="text-zinc-800 text-xs font-normal font-['Roboto']">Surplus 210.5GB</span>
                     </div>
                 </div>
 
@@ -124,9 +128,9 @@ import SSDSVG from '@assets/img/StorageManager/SSD.svg';
                             SSD-2-Qing Sheng
                         </span>
                     </div>
-                    <div>
-                        <span class="text-neutral-400 text-xs font-normal font-['Roboto']">Total 245GB ·</span>.
-                        <span class="text-zinc-800 text-xs font-normal font-['Roboto']">Surplus 210.5GB</span>.
+                    <div class="flex">
+                        <span class="text-neutral-400 text-xs font-normal font-['Roboto']">Total 245GB ·</span>
+                        <span class="text-zinc-800 text-xs font-normal font-['Roboto']">Surplus 210.5GB</span>
                     </div>
                 </div>
                 <div class="w-6 h-6 rounded os_list_action_icon">
