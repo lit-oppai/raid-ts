@@ -1,6 +1,8 @@
 <script setup lang="ts">
 // import OverlayPanel from 'primevue/overlaypanel';
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { HDDStatus, SSDStatus } from './DataControl.ts'
+
 const healthyColor = '#28C322'
 const unhealthyColor = '#F26224'
 // const op = ref<OverlayPanel | null>(null)
@@ -24,6 +26,21 @@ onMounted(() => {
     // setOpacity('disk4', 0.5)
     // setOpacity('disk5', 0.5)
     // setOpacity('diskABCD', 0.5)
+    // HDDStatus.value.forEach((item: any, index: any) => {
+    //     setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
+    // })
+})
+computed(() => {
+    HDDStatus.value.forEach((item: any, index: any) => {
+        setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
+    })
+    // SSD 中存在一个有效，就可以显示
+    SSDStatus.value.forEach((item: any) => {
+        if (item.avail) {
+            setOpacity(`diskABCD`, 1)
+            return
+        }
+    })
 })
 // ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // 配置

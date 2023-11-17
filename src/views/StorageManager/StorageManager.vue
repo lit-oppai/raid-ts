@@ -9,6 +9,9 @@ import HDDSVG from '@assets/img/StorageManager/HDD.svg';
 import SSDSVG from '@assets/img/StorageManager/SSD.svg';
 
 import ZimaCubeCard from '@views/StorageManager/ZimaCubeCard.vue';
+import initStorageInfo from './DataControl.ts'
+
+initStorageInfo();
 </script>
 
 <template>
