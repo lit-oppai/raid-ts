@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // import ZimaCubeHubSketch from './ZimaCubeHubSketch.vue'
 import ZimaCubeSketch from './ZimaCubeSketch.vue'
+import DiskCard from './DiskCard.vue';
 // import { ref, onMounted } from 'vue'
 // let ZimaCubeSketchRef = ref(null)
 // // 根据 svg id 获取 svg 元素，并更改其opacity属性
@@ -15,11 +16,22 @@ import ZimaCubeSketch from './ZimaCubeSketch.vue'
 // onMounted(() => {
 //     setOpacity('test', 0.5)
 // })
-
+const HDD: (string)[] = ['1', '2', '3', '4', '5', '6']
+const SSD: (string)[] = ['A', 'B', 'C', 'D']
 </script>
 
 <template>
-    <div class="flex justify-center mt-10 mb-6">
+    <div class="flex justify-center mt-10 mb-6 relative">
         <ZimaCubeSketch ref="ZimaCubeSketchRef"></ZimaCubeSketch>
+        <!-- <DiskCard :x="0" part="A"></DiskCard> -->
+        <!-- <div class=" absolute w-[340px] h-full left-[calc(50%_-_173px)] bg-[linear-gradient(45deg,_#b27495,_transparent)]">
+            111</div> -->
+        <div class=" absolute w-[117px] h-14 left-[calc(50%_-_50px)] top-3 flex space-x-1">
+            <DiskCard v-for="key in HDD" :x="0" :part="key"></DiskCard>
+        </div>
+
+        <div class=" absolute w-[76px] h-14 left-[calc(50%_+_79px)] top-3 flex space-x-1">
+            <DiskCard v-for="key in SSD" :x="0" :part="key"></DiskCard>
+        </div>
     </div>
 </template>

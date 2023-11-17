@@ -18,9 +18,11 @@
     "vue-router": "4"
   },
   "devDependencies": {
+    "@icewhale/zimaos-localstorage-openapi": "0.4.9-alpha3",
     "@types/node": "^20.9.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.16",
+    "naive-ui": "^2.35.0",
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0",
     "postcss-nesting": "^12.0.1",

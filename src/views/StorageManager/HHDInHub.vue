@@ -21,7 +21,7 @@ const filter = computed(() => {
 </script>
 
 <template>
-    <g name="diskB" class="hover:scale-150 cursor-pointer">
+    <g name="diskB" class="cursor-pointer">
         <rect :x="x" y="12" width="16" height="56" rx="3" fill="white" />
         <circle name="colorB" :cx="x + 8" cy="20" r="2" fill="#28C322" />
         <g opacity="0.5" :filter="`url(#${filter}}})`">

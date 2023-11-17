@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import Image from 'primevue/image';
+// import Tooltip from 'primevue/tooltip';
+// app.directive('tooltip', Tooltip);注入指令
+import { NPopover } from 'naive-ui'
+
 import RaidSVG from '@assets/img/StorageManager/Raid.svg';
 import HDDSVG from '@assets/img/StorageManager/HDD.svg';
 import SSDSVG from '@assets/img/StorageManager/SSD.svg';
@@ -27,9 +31,31 @@ import ZimaCubeCard from '@views/StorageManager/ZimaCubeCard.vue';
         <div class="flex space-x-3 mt-1">
             <div class="w-[120px] flex-shrink-0 grid grid-cols-2">
                 <div class="col-span-2 flex flex-nowrap rounded-sm overflow-hidden">
-                    <div class="bg-amber-500 w-[50%] h-2"></div>
-                    <div class="bg-violet-500 w-[30%] h-2"></div>
-                    <div class="bg-gray-100 w-[20%] h-2"></div>
+                    <NPopover trigger="hover">
+                        <template #trigger>
+                            <div class="bg-amber-500 w-[50%] h-2"></div>
+                        </template>
+                        <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
+                            已用空间：50GB
+                        </span>
+                    </NPopover>
+                    <NPopover trigger="hover">
+                        <template #trigger>
+                            <div class="bg-violet-500 w-[30%] h-2"></div>
+                        </template>
+                        <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
+                            已用空间：50GB
+                        </span>
+                    </NPopover>
+                    <NPopover trigger="hover">
+                        <template #trigger>
+                            <div class="bg-gray-100 w-[20%] h-2"></div>
+                        </template>
+                        <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
+                            总空间：256GB 可用空间：50GB
+                        </span>
+                    </NPopover>
+
                 </div>
                 <div class=" space-x-1">
                     <span class="bg-amber-500 w-1.5 h-1.5 rounded-sm inline-block"></span>
@@ -42,8 +68,23 @@ import ZimaCubeCard from '@views/StorageManager/ZimaCubeCard.vue';
             </div>
             <div class="flex-grow">
                 <div class="col-span-2 flex flex-nowrap rounded-sm overflow-hidden">
-                    <div class="bg-green-400 w-[20%] h-2"></div>
-                    <div class="bg-gray-100 w-[80%] h-2"></div>
+                    <NPopover trigger="hover">
+                        <template #trigger>
+                            <div class="bg-green-400 w-[20%] h-2"></div>
+                        </template>
+                        <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
+                            已用空间：50GB
+                        </span>
+                    </NPopover>
+                    <NPopover trigger="hover">
+                        <template #trigger>
+                            <div class="bg-gray-100 w-[80%] h-2"></div>
+                        </template>
+                        <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
+                            总空间：256GB 可用空间：50GB
+                        </span>
+                    </NPopover>
+
                 </div>
                 <div class="flex justify-between">
                     <div class=" space-x-1">
