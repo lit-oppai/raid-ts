@@ -34,6 +34,8 @@ computed(() => {
     HDDStatus.value.forEach((item: any, index: any) => {
         setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
     })
+})
+computed(() => {
     // SSD 中存在一个有效，就可以显示
     SSDStatus.value.forEach((item: any) => {
         if (item.avail) {
@@ -97,7 +99,7 @@ import DiskCard from './DiskCard.vue';
         <path d="M23 80H27V81C27 81.5523 26.5523 82 26 82H24C23.4477 82 23 81.5523 23 81V80Z" fill="#7E858C" />
         <path d="M73 80H77V81C77 81.5523 76.5523 82 76 82H74C73.4477 82 73 81.5523 73 81V80Z" fill="#7E858C" />
 
-        <g id="diskABCD">
+        <g name="diskABCD">
             <rect x="76" y="42" width="8" height="32" rx="1" fill="white" />
             <rect x="78" y="71" width="4" height="1" fill="#DADFE6" />
             <rect x="78" y="68" width="4" height="1" fill="#DADFE6" />
