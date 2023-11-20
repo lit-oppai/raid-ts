@@ -1,10 +1,10 @@
 <script setup lang="ts">
 // import OverlayPanel from 'primevue/overlaypanel';
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { HDDStatus, SSDStatus } from './DataControl.ts'
 
-const healthyColor = '#28C322'
-const unhealthyColor = '#F26224'
+// const healthyColor = '#28C322'
+// const unhealthyColor = '#F26224'
 // const op = ref<OverlayPanel | null>(null)
 // const toggle = (event) => {
 //     op.value.toggle(event);
@@ -30,27 +30,25 @@ onMounted(() => {
     //     setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
     // })
 })
-computed(() => {
-    HDDStatus.value.forEach((item: any, index: any) => {
+
+watch([HDDStatus.value, SSDStatus.value], ([newHDDVal, newSSDVal]) => {
+    console.log(newHDDVal, newSSDVal);
+    
+    newHDDVal.forEach((item: any, index: any) => {
         setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
     })
-})
-computed(() => {
-    // SSD 中存在一个有效，就可以显示
-    SSDStatus.value.forEach((item: any) => {
-        if (item.avail) {
-            setOpacity(`diskABCD`, 1)
-            return
-        }
-    })
+    // 全部无效，则设置ABCD无效。
+    if (newSSDVal.every((item: any) => !item.avail)) {
+        setOpacity(`diskABCD`, 0.5)
+    }
 })
 // ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // 配置
-const test1 = 0.5
-const invalidList = ['disk1', 'disk2', 'disk3', 'disk4', 'disk5', 'diskABCD']
+// const test1 = 0.5
+// const invalidList = ['disk1', 'disk2', 'disk3', 'disk4', 'disk5', 'diskABCD']
 // —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————— 
 // import HHDInHub from './HHDInHub.vue';
-import DiskCard from './DiskCard.vue';
+// import DiskCard from './DiskCard.vue';
 </script>
 
 <template>

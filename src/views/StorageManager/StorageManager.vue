@@ -33,7 +33,7 @@ initStorageInfo();
         <!-- TODO: Respondency -->
         <div class="flex space-x-3 mt-1">
             <div class="w-[120px] flex-shrink-0 grid grid-cols-2">
-                <div class="col-span-2 flex flex-nowrap rounded-sm overflow-hidden">
+                <div class="col-span-2 flex flex-nowrap rounded-sm overflow-hidden cursor-help">
                     <NPopover trigger="hover">
                         <template #trigger>
                             <div class="bg-amber-500 w-[50%] h-2"></div>
@@ -70,7 +70,7 @@ initStorageInfo();
                 </div>
             </div>
             <div class="flex-grow">
-                <div class="col-span-2 flex flex-nowrap rounded-sm overflow-hidden">
+                <div class="col-span-2 flex flex-nowrap rounded-sm overflow-hidden cursor-help">
                     <NPopover trigger="hover">
                         <template #trigger>
                             <div class="bg-green-400 w-[20%] h-2"></div>
