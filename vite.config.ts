@@ -12,6 +12,7 @@ export default ({ mode }) => {
             alias: {
                 '@assets': fileURLToPath(new URL('src/assets', import.meta.url)),
                 '@components': fileURLToPath(new URL('src/components', import.meta.url)),
+                '@views': fileURLToPath(new URL('src/views', import.meta.url)),
                 '@pages': fileURLToPath(new URL('src/pages', import.meta.url)),
                 '@style': fileURLToPath(new URL('src/style', import.meta.url)),
                 '@utils': fileURLToPath(new URL('src/utils', import.meta.url)),

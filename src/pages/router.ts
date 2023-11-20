@@ -19,7 +19,7 @@ declare type RouteMeta = RouteRecordRaw & {
 export const routes: RouteMeta[] = [
     {
         path: '/',
-        component: () => import('./home.vue'),
+        component: () => import('./home'),
         name: 'home',
         icon: 'casa-settings-outline',
         meta: {
@@ -28,14 +28,14 @@ export const routes: RouteMeta[] = [
     },
     {
         path: '/network',
-        component: () => import('./home.vue'),
+        component: () => import('./home'),
         name: 'network',
         icon: 'casa-network-outline',
         meta: { title: 'Network', }
     },
     {
         path: '/storage',
-        component: () => import('./storage/storage.vue'),
+        component: () => import('./storage'),
         name: 'storage',
         icon: 'casa-settings-outline',
         meta: {
@@ -44,7 +44,7 @@ export const routes: RouteMeta[] = [
         children: [
             {
                 path: 'discoverStorage',
-                component: () => import('./storage/discoverStorage.vue'),
+                component: () => import('./storage/DiscoverStorage.ts'),
                 name: 'discoverStorage',
                 meta: { title: 'Discover Storage', }
             }

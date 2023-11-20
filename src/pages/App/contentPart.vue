@@ -8,9 +8,6 @@ import { computed } from 'vue';
 const route = useRoute();
 //获取路由中的 title 信息
 const title = computed(() => route.meta.title);
-//计算当前路由的层级
-console.log(router);
-
 
 function onClose() {
     messageBus("mircoapp_communicate", {
@@ -36,5 +33,7 @@ function onClose() {
     </div>
     <!-- 路由出口 -->
     <!-- 路由匹配到的组件将渲染在这里 -->
-    <router-view class="panel_content"></router-view>
+    <div class="panel_content">
+        <router-view></router-view>
+    </div>
 </template>

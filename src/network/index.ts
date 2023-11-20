@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-// import { Configuration, ZerotierMethodsApi } from "@icewhale/zimaos-openapi";
+import { Configuration, RaidMethodsService  } from "@icewhale/zimaos-localstorage-openapi";
 
 const axiosBaseURL = ``;
 
@@ -125,9 +125,8 @@ const api = {
     },
 };
 
-// const config = new Configuration({});
 const openAPI = {
-    // zeroTier: new ZerotierMethodsApi(config, "/v2/zimaos", instance)
+    raid: new RaidMethodsService("/v1/raid", instance)
 };
 
 export { api, instance };
