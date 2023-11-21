@@ -8,10 +8,12 @@ import RaidSVG from '@assets/img/StorageManager/Raid.svg';
 import HDDSVG from '@assets/img/StorageManager/HDD.svg';
 import SSDSVG from '@assets/img/StorageManager/SSD.svg';
 
+import { initEstablishRAID, showEstablishRAID } from '@views/EstablishRAID/controlView.ts'
 import ZimaCubeCard from '@views/StorageManager/ZimaCubeCard.vue';
-import initStorageInfo from './DataControl.ts'
+import initStorageInfo from './controlData.ts'
 
 initStorageInfo();
+initEstablishRAID();
 </script>
 
 <template>
@@ -133,7 +135,7 @@ initStorageInfo();
                     <span class="font-medium">RAID</span>.
                 </div>
                 <div class=" flex-shrink-0">
-                    <button class="h-7 bg-sky-600 rounded-[14px] px-[14px]">
+                    <button class="h-7 bg-sky-600 rounded-[14px] px-[14px]" @click="showEstablishRAID">
                         <span class="text-white text-sm font-normal font-['Roboto'] leading-5">创建</span>
                     </button>
                 </div>
@@ -184,3 +186,5 @@ initStorageInfo();
         </div>
     </div>
 </template>
+./controlData.ts
+@/views/EstablishRAID/controlView.ts

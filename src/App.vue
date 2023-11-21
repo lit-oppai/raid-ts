@@ -3,6 +3,7 @@ import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
 import menuPart from '@pages/App/menuPart.vue';
 import contentPart from '@pages/App/contentPart.vue';
+import DynamicDialog from 'primevue/dynamicdialog';
 </script>
 
 <template>
@@ -17,6 +18,7 @@ import contentPart from '@pages/App/contentPart.vue';
             <contentPart></contentPart>
 		</SplitterPanel>
 	</Splitter>
+    <DynamicDialog class="opacity-40 bg-black"/>
 </template>
 
 <style scoped></style>

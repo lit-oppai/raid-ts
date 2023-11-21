@@ -44,8 +44,6 @@ type STORAGE_USAGE_INFO_TYPE = {
 // }
 // Data Acquisition.
 async function getDiskInfo(): Promise<DISK_INFO_TYPE[] | any> {
-    console.log("getDiskInfo");
-    
     return axios.get("http://127.0.0.1:4523/m1/1026187-0-default/v1/disks").then((res) => res.data.data);
 }
 async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
@@ -97,8 +95,6 @@ const cleanDiskInfo = (diskInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TYP
     storageInfo.map((storage: any) => {
         storage.model
     });
-    console.log("存储用量");
-    
 }
 
 // Data Lifecycle Management.

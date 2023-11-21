@@ -33,6 +33,6 @@
     // types 引入组件
     "types": ["naive-ui/volar"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "vue-shim.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

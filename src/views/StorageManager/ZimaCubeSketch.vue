@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import OverlayPanel from 'primevue/overlaypanel';
 import { ref, onMounted, watch } from 'vue'
-import { HDDStatus, SSDStatus } from './DataControl.ts'
+import { HDDStatus, SSDStatus } from './controlData.ts'
 
 // const healthyColor = '#28C322'
 // const unhealthyColor = '#F26224'
@@ -32,8 +32,6 @@ onMounted(() => {
 })
 
 watch([HDDStatus.value, SSDStatus.value], ([newHDDVal, newSSDVal]) => {
-    console.log(newHDDVal, newSSDVal);
-    
     newHDDVal.forEach((item: any, index: any) => {
         setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
     })
@@ -317,3 +315,4 @@ watch([HDDStatus.value, SSDStatus.value], ([newHDDVal, newSSDVal]) => {
         </div>
     </OverlayPanel> -->
 </template>
+./controlData.ts

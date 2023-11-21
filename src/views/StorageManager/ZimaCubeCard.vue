@@ -16,7 +16,7 @@ import DiskCard from './DiskCard.vue';
 // onMounted(() => {
 //     setOpacity('test', 0.5)
 // })
-import { HDDStatus, SSDStatus } from './DataControl.ts'
+import { HDDStatus, SSDStatus } from './controlData.ts'
 
 const HDD: (string)[] = ['1', '2', '3', '4', '5', '6']
 const SSD: (string)[] = ['A', 'B', 'C', 'D']
@@ -37,3 +37,4 @@ const SSD: (string)[] = ['A', 'B', 'C', 'D']
         </div>
     </div>
 </template>
+./controlData.ts
