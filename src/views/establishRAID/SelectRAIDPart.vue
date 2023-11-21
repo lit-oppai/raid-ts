@@ -40,7 +40,7 @@
                 </template>
             </div>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col space-y-1 mt-4">
                 <template v-for="key in [2, 3, 'A']" :key="key">
                     <div class="flex items-center h-10 bg-gray-50 rounded-md">
                         <span class="ml-1 w-[34px] text-center">

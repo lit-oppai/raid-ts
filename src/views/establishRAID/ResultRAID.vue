@@ -18,7 +18,7 @@ if (props.status === 'success') {
 }
 </script>
 <template>
-    <div class="flex flex-col items-center space-y-7.">
+    <div class="flex flex-col items-center space-y-7 mt-20">
         <Image :src="svg"></Image>
         <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
             {{ statusMessage }}

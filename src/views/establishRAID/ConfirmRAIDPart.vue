@@ -3,7 +3,7 @@ import { ref } from 'vue';
 const checked = ref(false);
 </script>
 <template>
-    <div class="h-full w-full flex items-center">
+    <div class="h-full w-full flex items-center mt-16">
         <div class="bg-gray-50 rounded-lg border border-gray-200 px-6 py-8">
             <div>
                 <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
