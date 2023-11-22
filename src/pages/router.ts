@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { defineAsyncComponent } from 'vue';
 
 declare type RouteChildMeta = RouteRecordRaw & {
     meta: {
@@ -35,19 +36,32 @@ export const routes: RouteMeta[] = [
     },
     {
         path: '/storage',
-        component: () => import('./storage'),
+        component: () => import('./storage/index.ts'),
         name: 'storage',
         icon: 'casa-settings-outline',
         meta: {
             title: 'Storage Manager',
         },
+        redirect: '/storage/DetailStorage', // 开发使用
         children: [
             {
                 path: 'discoverStorage',
                 component: () => import('./storage/DiscoverStorage.ts'),
                 name: 'discoverStorage',
                 meta: { title: 'Discover Storage', }
-            }
+            },
+            {
+                path: 'ModifyRAID',
+                component: () => import('./storage/ModifyRAID.ts'),
+                name: 'ModifyRAID',
+                meta: { title: 'Modify RAID', }
+            },
+            {
+                path: 'DetailStorage',
+                component: () => import('./storage/DetailStorage.ts'),
+                name: 'DetailStorage',
+                meta: { title: 'Detail Storage', }
+            },
         ]
     },
 ];

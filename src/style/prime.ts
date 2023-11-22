@@ -1,15 +1,39 @@
 // You can change the theme which primevue components.
 export default {
     button: {
-        root: () => {
+        root: ({ props }: any) => {
             return ({
                 class: [
-                    'items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center align-bottom',
+                    'items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center',
                     'transition duration-200 ease-in-out',
-                    'focus:outline-none focus:outline-offset-0',
+                    { 'h-7 rounded-[14px] px-3.5 py-1 gap-2': props.size === 'small' },
+                    {
+                        'bg-sky-600': props.severity === 'primary',
+                        'bg-sky-100': props.severity === 'secondary',
+                        'bg-rose-100': props.severity === 'accent',
+                    },
+                    {
+                        'hover:bg-sky-700': props.severity === 'primary',
+                        'hover:bg-sky-200': props.severity === 'secondary',
+                        'hover:bg-red-300': props.severity === 'accent',
+                    }
                 ]
             })
         },
+        label: ({ props }: any) => {
+            console.log(props.severity);
+
+            return ({
+                class: [
+                    { 'text-sm font-normal font-["Roboto"] leading-5': props.size === 'small' },
+                    {
+                        'text-white': props.severity === 'primary',
+                        'text-sky-600': props.severity === 'secondary',
+                        'text-orange-500': props.severity === 'accent',
+                    }
+                ]
+            })
+        }
     },
     dialog: {
         root: ({ state }: any) => ({

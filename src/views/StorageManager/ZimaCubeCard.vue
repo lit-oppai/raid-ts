@@ -37,4 +37,3 @@ const SSD: (string)[] = ['A', 'B', 'C', 'D']
         </div>
     </div>
 </template>
-./controlData.ts
