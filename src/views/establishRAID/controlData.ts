@@ -4,6 +4,21 @@ import { ref } from "vue";
 const currentStep = ref(0);
 // Getting RAID Status
 
+type Orientation = "next" | "prev";
+const stepByStep = (orientation: Orientation) => {
+    switch (orientation) {
+        case "next":
+            currentStep.value++;
+            break;
+        case "prev":
+            currentStep.value--;
+            break;
+        default:
+            break;
+    }
+};
+
 export {
-    currentStep
+    currentStep,
+    stepByStep,
 }

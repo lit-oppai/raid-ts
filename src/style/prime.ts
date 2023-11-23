@@ -8,11 +8,13 @@ export default {
                     'transition duration-200 ease-in-out',
                     { 'h-7 rounded-[14px] px-3.5 py-1 gap-2': props.size === 'small' },
                     {
+                        'bg-gray-100': props.severity === 'neutral',
                         'bg-sky-600': props.severity === 'primary',
                         'bg-sky-100': props.severity === 'secondary',
                         'bg-rose-100': props.severity === 'accent',
                     },
                     {
+                        'hover:bg-zinc-200': props.severity === 'neutral',
                         'hover:bg-sky-700': props.severity === 'primary',
                         'hover:bg-sky-200': props.severity === 'secondary',
                         'hover:bg-red-300': props.severity === 'accent',
@@ -21,12 +23,12 @@ export default {
             })
         },
         label: ({ props }: any) => {
-            console.log(props.severity);
 
             return ({
                 class: [
                     { 'text-sm font-normal font-["Roboto"] leading-5': props.size === 'small' },
                     {
+                        'text-zinc-800': props.severity === 'neutral',
                         'text-white': props.severity === 'primary',
                         'text-sky-600': props.severity === 'secondary',
                         'text-orange-500': props.severity === 'accent',

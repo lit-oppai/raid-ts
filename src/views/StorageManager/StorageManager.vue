@@ -126,8 +126,8 @@ initEstablishRAID();
                     <div class="flex-grow text-sky-500 text-sm font-normal font-['Roboto'] leading-6">
                         Discover the new hard drive
                     </div>
-                    <div class="w-6 h-6 rounded">
-                        <i class="casa-right-outline"></i>
+                    <div class="w-6 h-6 rounded os_list_action_icon">
+                        <i class="casa-right-outline text-base"></i>
                     </div>
                 </div>
 
@@ -140,7 +140,7 @@ initEstablishRAID();
                         <span class="font-medium">RAID</span>.
                     </div>
                     <div class=" flex-shrink-0">
-                        <button class="h-7 bg-sky-600 rounded-[14px] px-[14px]" @click="showEstablishRAID">
+                        <button class="h-7 bg-sky-600 rounded-[14px] px-[14px]" @click="showEstablishRAID('Create')">
                             <span class="text-white text-sm font-normal font-['Roboto'] leading-5">创建</span>
                         </button>
                     </div>
@@ -165,8 +165,8 @@ initEstablishRAID();
                         </div>
                     </div>
 
-                    <div class="w-6 h-6 rounded os_list_action_icon">
-                        <i class="casa-right-outline"></i>
+                    <div class="w-6 h-6 rounded os_list_action_icon" @click="$router.push('/storage/ModifyRAID')">
+                        <i class="casa-right-outline text-base"></i>
                     </div>
                 </div>
                 <div class="flex px-3 space-x-3 items-center rounded-md os_list">
@@ -184,8 +184,8 @@ initEstablishRAID();
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto']">Surplus 210.5GB</span>
                         </div>
                     </div>
-                    <div class="w-6 h-6 rounded os_list_action_icon">
-                        <i class="casa-right-outline"></i>
+                    <div class="w-6 h-6 rounded os_list_action_icon" @click="$router.push('/storage/DetailStorage')">
+                        <i class="casa-right-outline text-base"></i>
                     </div>
                 </div>
             </div>

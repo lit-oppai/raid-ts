@@ -19,8 +19,8 @@ import CardRAID from './CardRAID.vue';
         </span>
     </div>
     <div class="mt-2 grid grid-cols-3 space-x-4">
-        <CardRAID></CardRAID>
-        <CardRAID></CardRAID>
-        <CardRAID></CardRAID>
+        <CardRAID disable></CardRAID>
+        <CardRAID :disable="false"></CardRAID>
+        <CardRAID :disable="false"></CardRAID>
     </div>
 </template>

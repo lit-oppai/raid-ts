@@ -42,7 +42,7 @@ export const routes: RouteMeta[] = [
         meta: {
             title: 'Storage Manager',
         },
-        redirect: '/storage/DetailStorage', // 开发使用
+        // redirect: '/storage/ModifyRAID', // 开发使用
         children: [
             {
                 path: 'discoverStorage',

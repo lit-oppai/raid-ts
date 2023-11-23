@@ -53,7 +53,7 @@ import { showEstablishRAID } from '@views/EstablishRAID/controlView.ts'
                 添加其他硬盘
             </span>
 
-            <Button label="添加" severity="secondary" size="small" @click="showEstablishRAID"></Button>
+            <Button label="添加" severity="secondary" size="small" @click="showEstablishRAID('Modify')"></Button>
         </div>
     </div>
     <!-- Others -->
