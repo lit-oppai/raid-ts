@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CardRAID from './CardRAID.vue';
 </script>
-<template>
+<template name="OverviewPart">
     <div class="mt-10">
         <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
             What is RAID?

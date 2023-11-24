@@ -70,7 +70,7 @@ export default {
             class: [
                 'overflow-y-auto',
                 'h-full',
-                'bg-white text-gray-700 px-6 pb-8 pt-0',
+                'bg-white text-gray-700 px-6',
                 'dark:bg-gray-900  dark:text-white/80 ',
                 {
                     grow: state.maximized,

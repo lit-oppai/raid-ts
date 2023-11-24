@@ -1,4 +1,4 @@
-<template>
+<template name="SelectRAIDPart">
     <!-- 外框布局 -->
     <div class="space-y-6">
         <!-- select strategy -->

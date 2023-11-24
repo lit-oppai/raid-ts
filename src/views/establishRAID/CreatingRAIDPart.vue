@@ -3,7 +3,7 @@ import { LottieAnimation } from "lottie-web-vue"
 import creatingJSON from '@assets/img/EstablishRAID/creating.json';
 import EasterEgg from '@assets/img/EstablishRAID/EasterEgg.json';
 </script>
-<template>
+<template name="CreatingRAIDPart">
     <div class="flex flex-col items-center space-y-2 pt-[5%]">
         <LottieAnimation :animation-data="creatingJSON" loop class="w-[6.25rem] h-[6.25rem]" />
         <LottieAnimation :animation-data="EasterEgg" loop v-if="false" />

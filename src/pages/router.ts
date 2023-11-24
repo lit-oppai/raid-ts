@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { defineAsyncComponent } from 'vue';
 
 declare type RouteChildMeta = RouteRecordRaw & {
     meta: {
@@ -20,7 +19,7 @@ declare type RouteMeta = RouteRecordRaw & {
 export const routes: RouteMeta[] = [
     {
         path: '/',
-        component: () => import('./home'),
+        component: () => import('./storage/DetailStorage.ts'),
         name: 'home',
         icon: 'casa-settings-outline',
         meta: {
@@ -29,7 +28,7 @@ export const routes: RouteMeta[] = [
     },
     {
         path: '/network',
-        component: () => import('./home'),
+        component: () => import('./storage/DiscoverStorage.ts'),
         name: 'network',
         icon: 'casa-network-outline',
         meta: { title: 'Network', }
@@ -42,7 +41,6 @@ export const routes: RouteMeta[] = [
         meta: {
             title: 'Storage Manager',
         },
-        // redirect: '/storage/ModifyRAID', // 开发使用
         children: [
             {
                 path: 'discoverStorage',
@@ -63,6 +61,13 @@ export const routes: RouteMeta[] = [
                 meta: { title: 'Detail Storage', }
             },
         ]
+    },
+    {
+        path: '/developPage',
+        component: () => import('./storage/ModifyRAID'),
+        name: 'developPage',
+        icon: 'casa-network-outline',
+        meta: { title: 'Develop Page', }
     },
 ];
 
