@@ -5,7 +5,7 @@ import cryingFaceSVG from '@assets/img/EstablishRAID/cryingFace.svg';
 </script>
 
 <template name="AddToRAIDPart">
-    <template v-if="false">
+    <template v-if="true">
         <div class="mt-6 mb-4">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                 请选择要添加的磁盘

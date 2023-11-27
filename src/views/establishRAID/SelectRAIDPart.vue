@@ -1,3 +1,7 @@
+<script setup lang="ts">
+
+</script>
+
 <template name="SelectRAIDPart">
     <!-- 外框布局 -->
     <div class="space-y-6">
@@ -13,10 +17,11 @@
                     RAID1
                 </span>
             </div>
-            <div class="h-9 bg-slate-50 rounded-md flex items-center pl-4">
-                <span class="text-sky-600 text-sm font-medium font-['Roboto']">
+            <div class="h-9 bg-slate-50 rounded-md flex items-center px-4 justify-between active:bg-sky-600 group">
+                <span class="text-sky-600 group-active:text-white text-sm font-medium font-['Roboto']">
                     RAID5
                 </span>
+                <i class="casa-check-outline text-white text-base"></i>
             </div>
         </div>
         <!-- Please select the desired hard disk -->

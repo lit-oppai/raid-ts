@@ -25,7 +25,7 @@ if (props.status === 'success') {
         </span>
     </div>
     <div class="mt-3">
-        <div v-if="props.status === 'success'" class="bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
+        <div v-if="props.status !== 'success'" class="bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
             <div class="flex justify-between">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                     Capacity :
