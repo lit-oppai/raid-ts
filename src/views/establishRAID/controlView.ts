@@ -6,7 +6,8 @@
 // import ResultRAID from './ResultRAID.vue';
 import { markRaw, defineAsyncComponent, computed, ref, Ref, watch } from 'vue';
 import { useDialog } from 'primevue/usedialog';
-import { currentStep, currentStepName, stepschain, changeContext, ContextType } from "./controlData.ts";
+import { currentStep, currentStepName, stepschain, changeContext } from "./controlData.ts";
+import { EntranceContextType } from "./controlDataTypes.ts";
 
 // let currentStep: number = 0;
 // const stepschain = [OverviewPart, SelectRAIDPart, ConfirmRAIDPart, CreatingRAIDPart, ResultRAID];
@@ -55,7 +56,7 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
             step: 0,
         },
     }
-    changeContext(type as ContextType);
+    changeContext(type as EntranceContextType);
     currentStep.value = showType[type].step;
     // 为了避免丢失 init 操作，这里默认声明。
     if (!dialog) {

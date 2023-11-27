@@ -7,6 +7,9 @@ export default {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                'roboto': ['Roboto'],
+            },
             screens: {
                 'max-sm': { 'max': '640px' },
                 'max-md': { 'max': '768px' },

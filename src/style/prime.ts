@@ -4,9 +4,14 @@ export default {
         root: ({ props }: any) => {
             return ({
                 class: [
-                    'items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center',
-                    'transition duration-200 ease-in-out',
-                    { 'h-7 rounded-[14px] px-3.5 py-1 gap-2': props.size === 'small' },
+                    'items-center cursor-pointer inline-flex flex-shrink-0 relative select-none text-center whitespace-nowrap', // base, layout
+                    'transition duration-200 ease-in-out', // transition
+                    'rounded-[14px] gap-2', // button shape 
+                    {
+                        'px-3.5 py-1': props.size !== null,
+                        'h-6': props.size === 'small',
+                        'h-7': props.size === 'medium',
+                    },
                     {
                         'bg-gray-100 hover:bg-zinc-200': props.severity === 'neutral',
                         'bg-sky-600 hover:bg-sky-700': props.severity === 'primary',
@@ -19,7 +24,11 @@ export default {
         label: ({ props }: any) => {
             return ({
                 class: [
-                    { 'text-sm font-normal font-["Roboto"] leading-5': props.size === 'small' },
+                    'font-normal font-["Roboto"]',
+                    {
+                        'text-xs leading-4': props.size === 'small',
+                        'text-sm leading-5': props.size === 'medium',
+                    },
                     {
                         'text-zinc-800': props.severity === 'neutral',
                         'text-white': props.severity === 'primary',

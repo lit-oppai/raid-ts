@@ -50,7 +50,7 @@ initEstablishRAID();
             <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto'] mr-1">
                 Healthy
             </span>
-            <Button label="推出" severity="primary" size="small" @click="showEstablishRAID('Modify')"></Button>
+            <Button label="推出" severity="primary" size="medium" @click="showEstablishRAID('Modify')"></Button>
         </div>
         <div class="flex items-center bg-gray-50 rounded-md h-10 px-3 gap-4">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
@@ -58,8 +58,8 @@ initEstablishRAID();
             </span>
             <span class="flex-grow"></span>
             <!-- TODO：添加 socket 到框架，以触发关机 -->
-            <Button label="关机" severity="primary" size="small"></Button>
-            <Button label="添加" severity="primary" size="small" @click="showEstablishRAID('FirstAid')"></Button>
+            <Button label="关机" severity="primary" size="medium"></Button>
+            <Button label="添加" severity="primary" size="medium" @click="showEstablishRAID('FirstAid')"></Button>
         </div>
         <div class="pt-2">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
@@ -108,7 +108,7 @@ initEstablishRAID();
                 添加其他硬盘
             </span>
 
-            <Button label="添加" severity="secondary" size="small" @click="showEstablishRAID('Modify')"></Button>
+            <Button label="添加" severity="secondary" size="medium" @click="showEstablishRAID('Modify')"></Button>
         </div>
         <div class="bg-white rounded-lg h-11 flex items-center px-4">
             <Image :src="warningSVG" class="h-6 w-6"></Image>
@@ -116,7 +116,7 @@ initEstablishRAID();
                 抹掉并解散
             </span>
 
-            <Button label="开始" severity="accent" size="small"></Button>
+            <Button label="开始" severity="accent" size="medium"></Button>
         </div>
     </div>
 </template>

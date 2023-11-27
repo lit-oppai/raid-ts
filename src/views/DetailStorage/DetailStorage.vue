@@ -47,7 +47,7 @@ import warningSVG from '@assets/img/StorageManager/warning.svg';
                 格式化硬盘
             </span>
 
-            <Button label="开始" severity="accent" size="small"></Button>
+            <Button label="开始" severity="accent" size="medium"></Button>
         </div>
     </div>
 </template>

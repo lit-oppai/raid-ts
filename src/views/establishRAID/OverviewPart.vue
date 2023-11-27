@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import CardRAID from './CardRAID.vue';
+import { currentRAIDStrategy } from './controlData.ts';
+// import { ref } from 'vue';
+// const currentRAIDStrategy = ref('');
+
 </script>
 <template name="OverviewPart">
     <div class="mt-10">
@@ -19,8 +23,8 @@ import CardRAID from './CardRAID.vue';
         </span>
     </div>
     <div class="mt-2 grid grid-cols-3 space-x-4">
-        <CardRAID disable></CardRAID>
-        <CardRAID :disable="false"></CardRAID>
-        <CardRAID :disable="false"></CardRAID>
+        <CardRAID RAIDName="RAID0" @click="currentRAIDStrategy ='RAID0'" disable></CardRAID>
+        <CardRAID RAIDName="RAID1" @click="currentRAIDStrategy ='RAID1'" :disable="false"></CardRAID>
+        <CardRAID RAIDName="RAID5" @click="currentRAIDStrategy ='RAID5'" :disable="false"></CardRAID>
     </div>
 </template>

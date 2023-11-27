@@ -1,5 +1,8 @@
 <script setup lang="ts">
-
+import { currentRAIDStrategy } from './controlData.ts';
+import { RAIDStrategy } from './controlDataTypes.ts';
+// const list = typeof RAIDStrategy
+const strategies: RAIDStrategy[];
 </script>
 
 <template name="SelectRAIDPart">
@@ -7,26 +10,26 @@
     <div class="space-y-6">
         <!-- select strategy -->
         <div class="mt-6 grid grid-cols-3 space-x-4">
-            <div class="h-9 bg-slate-50 rounded-md flex items-center pl-4">
+            <!-- <div v-for="Strategy in RAIDStrategy" :key="Strategy" class="h-9 bg-slate-50 rounded-md flex items-center pl-4">
                 <span class="text-sky-600 text-sm font-medium font-['Roboto']">
-                    RAID0
+                    {{ Strategy }}
                 </span>
             </div>
             <div class="h-9 bg-slate-50 rounded-md flex items-center pl-4">
                 <span class="text-sky-600 text-sm font-medium font-['Roboto']">
                     RAID1
                 </span>
-            </div>
-            <div class="h-9 bg-slate-50 rounded-md flex items-center px-4 justify-between active:bg-sky-600 group">
+            </div> -->
+            <div v-for="Strategy in strategies" :key="Strategy" class="h-9 bg-slate-50 rounded-md flex items-center px-4 justify-between active:bg-sky-600 group">
                 <span class="text-sky-600 group-active:text-white text-sm font-medium font-['Roboto']">
-                    RAID5
+                    {{ Strategy }}
                 </span>
                 <i class="casa-check-outline text-white text-base"></i>
             </div>
         </div>
         <!-- Please select the desired hard disk -->
         <div>
-            <div>
+            <div class="mb-2">
                 <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
                     Please select the desired hard disk
                 </span>
@@ -47,15 +50,18 @@
 
             <div class="flex flex-col space-y-1 mt-4">
                 <template v-for="key in [2, 3, 'A']" :key="key">
-                    <div class="flex items-center h-10 bg-gray-50 rounded-md">
+                    <div class="flex items-center h-10 bg-gray-50 rounded-md pr-4">
                         <span class="ml-1 w-[34px] text-center">
                             {{ key }}
                         </span>
-                        <span class="flex-grow">
+                        <span class="mx-2">
                             name
                         </span>
+                        <span class="flex-grow text-neutral-400 text-xs font-normal font-['Roboto']">
+                            Type
+                        </span>
                         <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
-                            Total 245GB ·
+                            Total 245GB/
                         </span>
                         <span class="text-zinc-800 text-xs font-normal font-['Roboto']">
                             Surplus 110.5GB
@@ -67,7 +73,7 @@
         </div>
         <!-- Usage estimate -->
         <div>
-            <div class="flex justify-between">
+            <div class="mb-2 flex justify-between">
                 <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
                     Usage estimate
                 </span>

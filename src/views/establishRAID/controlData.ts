@@ -1,13 +1,16 @@
-import { computed, ComputedRef, ref } from "vue";
+import { computed, ComputedRef, ref, Ref } from "vue";
 import OverviewPart from "./OverviewPart.vue";
 import SelectRAIDPart from "./SelectRAIDPart.vue";
 import ConfirmRAIDPart from "./ConfirmRAIDPart.vue";
 import CreatingRAIDPart from "./CreatingRAIDPart.vue";
 import ResultRAIDPart from './ResultRAIDPart.vue';
 import AddToRAIDPart from './AddToRAIDPart.vue';
-type ContextType = "Create" | "Modify" | "FirstAid";
-const context = ref<ContextType>('Create');
-const changeContext = (type: ContextType) => {
+// type EntranceContextType = "Create" | "Modify" | "FirstAid";
+import { EntranceContextType, RAIDStrategy } from "./controlDataTypes.ts";
+const RAIDStrategys: RAIDStrategy[] = ["RAID0", "RAID1", "RAID5"];
+
+const context = ref<EntranceContextType>('Create');
+const changeContext = (type: EntranceContextType) => {
     context.value = type;
 }
 const stepschain: ComputedRef<(typeof OverviewPart | typeof SelectRAIDPart | typeof ConfirmRAIDPart | typeof CreatingRAIDPart | typeof ResultRAIDPart | typeof AddToRAIDPart)[]> = computed(() => {
@@ -23,7 +26,7 @@ const currentStep = ref(0);
 const currentStepName = computed(() => {
     return stepschain.value[currentStep.value].__name;
 })
-
+const currentRAIDStrategy: Ref<RAIDStrategy> = ref('');
 // Getting RAID Status
 type Orientation = "next" | "prev";
 const stepByStep = (orientation: Orientation) => {
@@ -38,12 +41,11 @@ const stepByStep = (orientation: Orientation) => {
             break;
     }
 };
-export type {
-    ContextType,
-}
+
 export {
     currentStep,
     currentStepName,
+    currentRAIDStrategy,
     stepByStep,
     // TODO: 暂时放在 controlView.ts 中。
     stepschain,

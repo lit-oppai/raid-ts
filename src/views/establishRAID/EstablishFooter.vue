@@ -14,9 +14,9 @@ const closeDialog = (e: object) => {
 <template>
     <div class="space-x-4">
         <!-- step 1 -->
-        <Button label="Cancel" severity="neutral" size="small" @click="closeDialog" v-show="currentStepName !== 'OverviewPart' && context === 'Modify' && currentStep < 2"></Button>
+        <Button label="Cancel" severity="neutral" size="medium" @click="closeDialog" v-show="currentStepName !== 'OverviewPart' && context === 'Modify' && currentStep < 2"></Button>
 
-        <Button label="上一步" severity="neutral" size="small" @click="stepByStep('prev')" v-show="context === 'Create' && currentStep > 1 || context === 'Create'"></Button>
-        <Button label="下一步" severity="primary" size="small" @click="stepByStep('next')"></Button>
+        <Button label="上一步" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="context === 'Create' && currentStep > 1 || context === 'Create'"></Button>
+        <Button label="下一步" severity="primary" size="medium" @click="stepByStep('next')"></Button>
     </div>
 </template>

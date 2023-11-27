@@ -126,7 +126,7 @@ const api = {
 };
 
 const openAPI = {
-    raid: new RaidMethodsService("/v1/raid", instance)
+    raid: new RaidMethodsService()
 };
 
 export { api, instance };

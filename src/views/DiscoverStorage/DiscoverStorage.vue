@@ -20,13 +20,13 @@ import diskSVG from '@assets/img/StorageManager/disk.svg';
                     </span>
                 </div>
                 <div class="flex-grow"></div>
-                <Button label="格式化并启用" severity="primary" size="small"></Button>
+                <Button label="格式化并启用" severity="primary" size="medium"></Button>
             </div>
             <!-- Content -->
             <div class="ml-9 mt-4 bg-gray-50 rounded-lg p-3 gap-2 flex flex-col">
                 <!-- Traversing Part -->
-                <div class="rounded-md border border-gray-200 px-1.5 flex items-center h-8" v-for="key in 3" :key="key">
-                    <span class="text-zinc-800 text-xs font-medium font-['Roboto']">
+                <div class="rounded-md border border-gray-200 px-1.5 flex items-center h-9" v-for="key in 3" :key="key">
+                    <span class="text-zinc-800 text-xs font-medium font-['Roboto'] px-2">
                         Partition 1
                     </span>
                     <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto']">
