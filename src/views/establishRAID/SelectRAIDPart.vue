@@ -37,7 +37,8 @@ for (let [key, item] of allDiskStatus) {
     <!-- 外框布局 -->
     <div class="space-y-6">
         <!-- select strategy -->
-        <div class="mt-6 flex space-x-4">
+        <!-- TODO：此处有判断逻辑 -->
+        <div class="mt-6 flex space-x-4"  v-if="true">
             <SelectStrategy v-for="strategy in strategies" :key="strategy" :strategy="strategy"></SelectStrategy>
         </div>
         <!-- Please select the desired hard disk -->
