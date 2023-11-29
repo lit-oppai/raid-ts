@@ -7,7 +7,7 @@
 import { markRaw, defineAsyncComponent, computed, ref, Ref, watch } from 'vue';
 import { useDialog } from 'primevue/usedialog';
 import { currentStep, currentStepName, stepschain, changeContext } from "./controlData.ts";
-import { EntranceContextType } from "./controlDataTypes.ts";
+import { EntranceContextType } from "./controlData.d";
 
 // let currentStep: number = 0;
 // const stepschain = [OverviewPart, SelectRAIDPart, ConfirmRAIDPart, CreatingRAIDPart, ResultRAID];
@@ -48,7 +48,7 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
             step: 0
         },
         Modify: {
-            title: 'Modify RAID',
+            title: '扩容RAID5',
             step: 0
         },
         FirstAid: {

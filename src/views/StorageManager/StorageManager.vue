@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import Image from 'primevue/image';
-// import Tooltip from 'primevue/tooltip';
-// app.directive('tooltip', Tooltip);注入指令
 import { NPopover } from 'naive-ui'
 
 import RaidSVG from '@assets/img/StorageManager/Raid.svg';
@@ -10,12 +8,21 @@ import SSDSVG from '@assets/img/StorageManager/SSD.svg';
 
 import { initEstablishRAID, showEstablishRAID } from '@views/EstablishRAID/controlView.ts'
 import ZimaCubeCard from '@views/StorageManager/ZimaCubeCard.vue';
-import initStorageInfo from './controlData.ts'
+import initStorageInfo from './controlData.ts';
+import { usageStatus, convertSizeToReadable, RAIDCandidateDiskCount } from './controlData.ts';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 const route = useRoute();
 const pathDeep = computed(() => route.matched.length === 1);
-
+const sysRate = computed(() => {    
+    return (usageStatus.value?.SystemUsage / (usageStatus.value?.SystemUsage + usageStatus.value?.DataFree + usageStatus.value?.DataUsage) * 100).toFixed(0);
+});
+const dataRate = computed(() => {
+    return (usageStatus.value?.DataUsage / (usageStatus.value?.SystemUsage + usageStatus.value?.DataFree + usageStatus.value?.DataUsage) * 100).toFixed(0);
+});
+const freeRate = computed(() => {
+    return (usageStatus.value?.DataFree / (usageStatus.value?.SystemUsage + usageStatus.value?.DataFree + usageStatus.value?.DataUsage) * 100).toFixed(0);
+});
 initStorageInfo();
 initEstablishRAID();
 </script>
@@ -43,26 +50,26 @@ initEstablishRAID();
                     <div class="col-span-2 flex flex-nowrap rounded-sm overflow-hidden cursor-help">
                         <NPopover trigger="hover">
                             <template #trigger>
-                                <div class="bg-amber-500 w-[50%] h-2"></div>
+                                <div class="bg-amber-500 h-2" :style="`width:${sysRate}%`"></div>
                             </template>
                             <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
-                                已用空间：50GB
+                                已用空间：{{ convertSizeToReadable(usageStatus?.SystemUsage || 0) }}
                             </span>
                         </NPopover>
                         <NPopover trigger="hover">
                             <template #trigger>
-                                <div class="bg-violet-500 w-[30%] h-2"></div>
+                                <div class="bg-violet-500 h-2" :style="`width:${dataRate}%`"></div>
                             </template>
                             <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
-                                已用空间：50GB
+                                已用空间：{{ convertSizeToReadable(usageStatus?.DataUsage || 0) }}
                             </span>
                         </NPopover>
                         <NPopover trigger="hover">
                             <template #trigger>
-                                <div class="bg-gray-100 w-[20%] h-2"></div>
+                                <div class="bg-gray-100 h-2" :style="`width:${freeRate}%`"></div>
                             </template>
                             <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
-                                总空间：256GB 可用空间：50GB
+                                总空间：256GB 可用空间：{{ convertSizeToReadable(usageStatus?.DataFree || 0) }}
                             </span>
                         </NPopover>
 
@@ -126,12 +133,12 @@ initEstablishRAID();
                     <div class="flex-grow text-sky-500 text-sm font-normal font-['Roboto'] leading-6">
                         Discover the new hard drive
                     </div>
-                    <div class="w-6 h-6 rounded os_list_action_icon">
+                    <div class="w-6 h-6 rounded os_list_action_icon" @click="$router.push('/storage/DiscoverStorage')">
                         <i class="casa-right-outline text-base"></i>
                     </div>
                 </div>
 
-                <div class="flex px-3 space-x-3 items-center h-10 rounded-md os_list">
+                <div v-if="RAIDCandidateDiskCount > 2"  class="flex px-3 space-x-3 items-center h-10 rounded-md os_list">
                     <div class="w-6 h-6 flex justify-center items-center">
                         <Image :src="RaidSVG" />
                     </div>
@@ -139,7 +146,7 @@ initEstablishRAID();
                         To enhance data availability, capacity, and/or performance by
                         <span class="font-medium">RAID</span>.
                     </div>
-                    <div class=" flex-shrink-0">
+                    <div class="flex-shrink-0">
                         <button class="h-7 bg-sky-600 rounded-[14px] px-[14px]" @click="showEstablishRAID('Create')">
                             <span class="text-white text-sm font-normal font-['Roboto'] leading-5">创建</span>
                         </button>

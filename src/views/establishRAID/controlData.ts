@@ -6,7 +6,8 @@ import CreatingRAIDPart from "./CreatingRAIDPart.vue";
 import ResultRAIDPart from './ResultRAIDPart.vue';
 import AddToRAIDPart from './AddToRAIDPart.vue';
 // type EntranceContextType = "Create" | "Modify" | "FirstAid";
-import { EntranceContextType, RAIDStrategy } from "./controlDataTypes.ts";
+import { EntranceContextType, RAIDStrategy } from "./controlData.d";
+// import { RAIDCandidateDiskCount } from "@views/StorageManager/controlData.ts";
 const RAIDStrategys: RAIDStrategy[] = ["RAID0", "RAID1", "RAID5"];
 
 const context = ref<EntranceContextType>('Create');
@@ -26,7 +27,7 @@ const currentStep = ref(0);
 const currentStepName = computed(() => {
     return stepschain.value[currentStep.value].__name;
 })
-const currentRAIDStrategy: Ref<RAIDStrategy> = ref('');
+const currentRAIDStrategy: Ref<RAIDStrategy | ''> = ref('');
 // Getting RAID Status
 type Orientation = "next" | "prev";
 const stepByStep = (orientation: Orientation) => {
@@ -52,4 +53,7 @@ export {
     stepschainMap,
     context,
     changeContext,
+
+    // from another file.
+    // RAIDCandidateDiskCount,
 }

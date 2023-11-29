@@ -4,7 +4,7 @@ import Image from 'primevue/image';
 import questionSVG from '@assets/img/EstablishRAID/question.svg';
 // import recommendSVG from '@assets/img/EstablishRAID/recommend.svg';
 import { currentStep } from "./controlData.ts";
-import { defineProps, computed } from 'vue';
+import { defineProps, computed, ref } from 'vue';
 const addStep = () => {
     if (props.disable) {
         return;
@@ -16,15 +16,6 @@ const props = defineProps<{
     disable: boolean;
     RAIDName: string;
 }>();
-const cardClass = computed(() => {
-    let classList = '';
-    if (props.disable) {
-        classList = 'opacity-50';
-    } else {
-        classList = 'cursor-pointer hover:bg-gray-100 active:bg-sky-600';
-    }
-    return classList;
-});
 interface RaidStrategyInfo {
     security: number;
     speed: number;
@@ -54,9 +45,14 @@ const raidStrategyInfoMap: Record<string, RaidStrategyInfo> = {
 const currentRaidStrategyInfo = computed(() => {
     return raidStrategyInfoMap[props.RAIDName];
 });
+
+const showRequirePopover = ref(false);
 </script>
 <template>
-    <div class="px-4 py-6 space-y-4 bg-gray-50 rounded-lg group" :class="cardClass" @click="addStep">
+    <div class="px-4 py-6 space-y-4 bg-gray-50 rounded-lg" :class="{
+        'opacity-50': props.disable,
+        'group cursor-pointer hover:bg-gray-100 active:bg-sky-600': !props.disable
+    }" @click="addStep" @pointerover="showRequirePopover = true" @pointerleave="showRequirePopover = false">
         <div class="flex items-center group-active:text-white">
             <span class="text-base">{{ RAIDName }}</span>
             <!-- <Image :src="recommendSVG" imageStyle="{color: red}" class="ml-1 fill-sky-600 active:fill-white"></Image> -->
@@ -68,19 +64,19 @@ const currentRaidStrategyInfo = computed(() => {
 
             <span class="flex-grow"></span>
             <div @click="e => e.stopPropagation()">
-                <NPopover trigger="click" placement="bottom">
+                <NPopover trigger="hover" placement="bottom-end" scrollable content-style="padding-right: 0;">
                     <template #trigger>
                         <Image :src="questionSVG" class="flex-shrink"></Image>
                     </template>
                     <div class="max-w-[156px]">
                         <!-- 头部 -->
-                        <div class="flex justify-between items-center">
-                            <span class="text-slate-800 text-base font-semibold font-['Roboto']">
-                                Clarification
-                        </span>
-                        <i class="casa-close-outline"></i>
-                    </div>
-                    <!-- 内容 -->
+                        <!-- <div class="flex justify-between items-center">
+                                                <span class="text-slate-800 text-base font-semibold font-['Roboto']">
+                                                    Clarification
+                                                </span>
+                                                <i class="casa-close-outline"></i>
+                                            </div> -->
+                        <!-- 内容 -->
                         <div class="max-h-[162px] scrollbar-container">
                             RAID 5 utilizes striping and parity-checking technology, distributing data across
                             multiple
@@ -125,7 +121,13 @@ const currentRaidStrategyInfo = computed(() => {
                 {{ currentRaidStrategyInfo.capacity }}%
             </span>
         </div>
-        <div class="w-full h-px bg-gray-200"></div>
+        
+        <n-popover :show="disable && showRequirePopover" trigger="manual">
+            <template #trigger>
+                <div class="w-full h-px bg-gray-200"></div>
+            </template>
+            At least {{ currentRaidStrategyInfo.minDisks }} hard drives are required
+        </n-popover>
         <div class="flex justify-between">
             <span class="text-zinc-800 text-xs font-medium font-['Roboto'] group-active:text-white">
                 Min disks

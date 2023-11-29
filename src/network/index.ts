@@ -1,8 +1,13 @@
 import axios, { AxiosResponse } from "axios";
-import { Configuration, RaidMethodsService  } from "@icewhale/zimaos-localstorage-openapi";
+import { Configuration, DiskMethodsApi, MergeMethodsApi, MountMethodsApi, StorageMethodsApi, RaidMethodsApi } from "@icewhale/zimaos-localstorage-openapi";
 
+const configuration = new Configuration({
+    accessToken: localStorage.getItem("access_token") ?? "",
+});
+const prefix = "/v2/local_storage";
 const axiosBaseURL = ``;
 
+// TODO: 旧的依赖，如果不使用旧的 API，可以删除。
 //Create a axios instance, And set timeout to 30s
 const instance = axios.create({
     baseURL: axiosBaseURL,
@@ -125,12 +130,23 @@ const api = {
     },
 };
 
+// TODO: instance 的配置项与 codegen 生成代码类似，可以考虑使用 codegen 生成代码。删除 instance。
+const disk = new DiskMethodsApi(configuration, prefix, instance);
+const merge = new MergeMethodsApi(configuration, prefix, instance);
+const mount = new MountMethodsApi(configuration, prefix, instance);
+const raid = new RaidMethodsApi(configuration, prefix, instance);
+const storage = new StorageMethodsApi(configuration, prefix, instance);
 const openAPI = {
-    raid: new RaidMethodsService()
+    disk,
+    merge,
+    mount,
+    raid,
+    storage,
 };
 
 export { api, instance };
 
+// TODO: 导出文件应该与文件名一致，这里应该是 openAPI.ts。
 export default openAPI;
 
 // TODO: 重构代码 refactor code.
