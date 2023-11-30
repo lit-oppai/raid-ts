@@ -20,7 +20,7 @@ import diskSVG from '@assets/img/StorageManager/disk.svg';
                     </span>
                 </div>
                 <div class="flex-grow"></div>
-                <Button label="格式化并启用" severity="primary" size="medium"></Button>
+                <Button label="格式化并启用" severity="primary" Size="medium"></Button>
             </div>
             <!-- Content -->
             <div class="ml-9 mt-4 bg-gray-50 rounded-lg p-3 gap-2 flex flex-col">
@@ -33,7 +33,7 @@ import diskSVG from '@assets/img/StorageManager/disk.svg';
                         保留数据 · 128.8GB
                     </span>
                     <span class="flex-grow"></span>
-                    <Button label="格式化并启用" severity="secondary" size="small"></Button>
+                    <Button label="格式化并启用" severity="secondary" Size="small"></Button>
                 </div>
             </div>
         </div>

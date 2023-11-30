@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import CardRAID from './CardRAID.vue';
-import { currentRAIDStrategy } from './controlData.ts';
+import { selectRAIDStrategy } from './controlData.ts';
 import { RAIDCandidateDiskCount } from '@views/StorageManager/controlData.ts';
 // import { ref } from 'vue';
-// const currentRAIDStrategy = ref('');
+// const selectRAIDStrategy = ref('');
 
 </script>
 <template name="OverviewPart">
@@ -24,8 +24,8 @@ import { RAIDCandidateDiskCount } from '@views/StorageManager/controlData.ts';
         </span>
     </div>
     <div class="mt-2 grid grid-cols-3 space-x-4">
-        <CardRAID RAIDName="RAID0" @click="currentRAIDStrategy ='RAID0'" :disable="false"></CardRAID>
-        <CardRAID RAIDName="RAID1" @click="currentRAIDStrategy ='RAID1'" :disable="false"></CardRAID>
-        <CardRAID RAIDName="RAID5" @click="currentRAIDStrategy ='RAID5'" :disable="RAIDCandidateDiskCount < 3"></CardRAID>
+        <CardRAID RAIDName="RAID0" @click="selectRAIDStrategy ='RAID0'" :disable="false"></CardRAID>
+        <CardRAID RAIDName="RAID1" @click="selectRAIDStrategy ='RAID1'" :disable="false"></CardRAID>
+        <CardRAID RAIDName="RAID5" @click="selectRAIDStrategy ='RAID5'" :disable="RAIDCandidateDiskCount < 3"></CardRAID>
     </div>
 </template>

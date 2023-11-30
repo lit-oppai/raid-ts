@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+// import { ref } from 'vue';
 import { RAIDStrategy } from './controlData.d';
+import { selectStorageList } from './controlData';
 import { SSDStatus, HDDStatus } from '@views/StorageManager/controlData.ts';
 import SelectStrategy from './SelectStrategy.vue';
 // const list = typeof RAIDStrategy
@@ -12,7 +13,7 @@ const allDiskStatus = new Map(sortedArray);
 const storageDisabled: (number | string)[] = [];
 // const storageDisabledMap = new Map();
 // 选中
-const storageSelected = ref<(number | string)[]>([]);
+// const selectStorageList = ref<(number | string)[]>([]);
 // 可选
 const storageSelectable: (number | string)[] = [];
 // 无硬盘
@@ -24,7 +25,7 @@ for (let [key, item] of allDiskStatus) {
         // storageDisabled.set(key, item);
         storageNone.push(key);
     }else if(false){
-        storageSelected.value.push(key);
+        selectStorageList.value.push(key);
     } else if (!item.health) {
         storageDisabled.push(key);
     }else{
@@ -39,7 +40,7 @@ for (let [key, item] of allDiskStatus) {
         <!-- select strategy -->
         <!-- TODO：此处有判断逻辑 -->
         <div class="mt-6 flex space-x-4"  v-if="true">
-            <SelectStrategy v-for="strategy in strategies" :key="strategy" :strategy="strategy"></SelectStrategy>
+            <SelectStrategy v-for="strategy in strategies" :key="strategy" :strategy="strategy" @click="selectStorageList.length = 0"></SelectStrategy>
         </div>
         <!-- Please select the desired hard disk -->
         <div>
@@ -51,13 +52,13 @@ for (let [key, item] of allDiskStatus) {
 
             <div class="flex space-x-2">
                 <template v-for="[key, item] in allDiskStatus" :key="key">
-                    <input :disabled="storageDisabled.includes(key as number) || storageNone.includes(key as string)"
-                        type="checkbox" class="hidden" :id="`check${key}`" :value="key" v-model="storageSelected">
+                    <input :disabled="storageDisabled.includes(key)"
+                        type="checkbox" class="hidden" :id="`check${key}`" :value="key" v-model="selectStorageList">
                     <label :for="`check${key}`" :class="{
                         'bg-gray-50 opacity-50': storageNone.includes(key as string),
                         'bg-gray-50': storageDisabled.includes(key as number),
-                        'bg-slate-50 text-sky-600 cursor-pointer': storageSelectable.includes(key) && !storageSelected.includes(key),
-                        'bg-sky-600 text-white cursor-pointer': storageSelected.includes(key),
+                        'bg-slate-50 text-sky-600 cursor-pointer': storageSelectable.includes(key) && !selectStorageList.includes(key),
+                        'bg-sky-600 text-white cursor-pointer': selectStorageList.includes(key),
                     }" class="h-20 flex-grow rounded-md flex flex-col items-center justify-around">
                         <span class="text-center text-base font-semibold font-['Roboto']">
                             {{ key }}
@@ -70,7 +71,7 @@ for (let [key, item] of allDiskStatus) {
             </div>
 
             <div class="flex flex-col space-y-1 mt-4">
-                <template v-for="key in storageSelected" :key="key">
+                <template v-for="key in selectStorageList" :key="key">
                     <div class="flex items-center h-10 bg-gray-50 rounded-md pr-4">
                         <span class="ml-1 w-[34px] text-center">
                             {{ key }}
@@ -132,4 +133,3 @@ for (let [key, item] of allDiskStatus) {
         </div>
     </div>
 </template>
-./controlData

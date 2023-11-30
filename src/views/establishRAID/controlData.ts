@@ -27,7 +27,10 @@ const currentStep = ref(0);
 const currentStepName = computed(() => {
     return stepschain.value[currentStep.value].__name;
 })
-const currentRAIDStrategy: Ref<RAIDStrategy | ''> = ref('');
+const selectRAIDStrategy: Ref<RAIDStrategy | ''> = ref('');
+const selectStorageList = ref<(number | string)[]>([]); // selected disk record.
+const nameRAID = ref('Main-Storage')
+const checkedCreateRAID = ref<boolean>(false);
 // Getting RAID Status
 type Orientation = "next" | "prev";
 const stepByStep = (orientation: Orientation) => {
@@ -46,7 +49,11 @@ const stepByStep = (orientation: Orientation) => {
 export {
     currentStep,
     currentStepName,
-    currentRAIDStrategy,
+    selectRAIDStrategy,
+    selectStorageList,
+    nameRAID,
+    checkedCreateRAID,
+
     stepByStep,
     // TODO: 暂时放在 controlView.ts 中。
     stepschain,

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, Ref, onMounted } from 'vue'
-const checked = ref(false)
+import { nameRAID, checkedCreateRAID } from './controlData.ts';
+// const checked = ref(false)
 
-const name = ref('Main-Storage')
+// const name = ref('Main-Storage')
 const nameRef: Ref<HTMLInputElement | null> = ref(null)
 // 在组件挂载时调用selectText()方法选中文本
 onMounted(() => {
@@ -23,7 +24,7 @@ function selectText(): void {
                 </span>
             </div>
             <div class="mr-2 mt-3 flex flex-col space-y-[6px]">
-                <input ref="nameRef" id="name" v-model="name" autocomplete="Main-Storage" type="text" force
+                <input ref="nameRef" id="name" v-model="nameRAID" autocomplete="Main-Storage" type="text" force
                     class="selection:bg-sky-100 h-[20px] px-3 py-1.5 rounded box-content border border-zinc-200 hover:border-sky-600 active:border-sky-600 focus-visible:border-sky-600 outline-none text-sky-600 text-sm font-normal font-['Roboto']" />
 
                 <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
@@ -53,7 +54,7 @@ function selectText(): void {
                 </span>
             </div>
             <div class="flex justify-end items-center mt-16">
-                <input name="confirm" type="checkbox" v-model="checked" class="mr-2 w-5 h-5 cursor-pointer" />
+                <input name="confirm" type="checkbox" v-model="checkedCreateRAID" class="mr-2 w-5 h-5 cursor-pointer" />
                 <span class="text-zinc-800 text-sm font-normal font-['Roboto']">
                     I am aware of this and confirm the operation.
                 </span>
