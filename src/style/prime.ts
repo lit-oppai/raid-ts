@@ -2,8 +2,6 @@
 export default {
     button: {
         root: ({ props, context }: any) => {
-            console.log(context, props, 1111111111);
-
             return ({
                 class: [
                     'items-center cursor-pointer inline-flex flex-shrink-0 relative select-none text-center whitespace-nowrap', // base, layout

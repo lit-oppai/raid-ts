@@ -3,7 +3,7 @@ import { ref, reactive } from "vue";
 import openAPI from "@/network";
 
 // Setting Data Types && Naming conventions for Constants.
-type DISK_TYPE = "SSD" | "HDD";
+type DISK_TYPE = "SSD" | "HDD" | "NVME";
 type DISK_INFO_TYPE = {
     "index": number,
     "avail": boolean,
@@ -21,9 +21,15 @@ type DISK_INFO_TYPE = {
 
 };
 type UI_DISK_INFO_TYPE = {
-    "avail": boolean,
+    "exit": boolean,
     "health": boolean,
     "temperature": number,
+    "type"?: DISK_TYPE,
+    "path"?: string,
+    // RAID 备选盘 1、状态健康 2、未被占用
+    "candidate"?: boolean,
+    "occupied"?: string,
+    "unused"?: boolean,
 }
 type STORAGE_TYPE = "ext4" | "xfs" | "ntfs" | "fat32" | "exfat";
 type STORAGE_INFO_TYPE = {
@@ -38,6 +44,7 @@ type STORAGE_INFO_TYPE = {
     "raid": boolean,
     "raid_level": number,
     "label": string,
+    "utilizations": Array<{ mount_point: string, name: string, raid: boolean, raid_level: number } | undefined>,
     // "persisted_in": string,
     // "disk_type": DISK_TYPE,
 }
@@ -66,9 +73,9 @@ async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
     // return axios.get("http://127.0.0.1:4523/m1/1026187-0-default/v1/cloud").then((res) => res.data.data);
 };
 // const HDDStatus = ref<UI_DISK_INFO_TYPE[]>([])
-const HDDStatus = reactive(new Map<string | number, UI_DISK_INFO_TYPE>())
+const HDDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
 // const SSDStatus = ref<UI_DISK_INFO_TYPE[]>([])
-const SSDStatus = reactive(new Map<string | number, UI_DISK_INFO_TYPE>())
+const SSDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
 // RAID 候选盘数量
 const RAIDCandidateDiskCount = ref<number>(0);
 // 纯数值，方便后面组合计算比例
@@ -89,27 +96,38 @@ const mapIndexForADCD = new Map<number, string>([
 // Data Cleaning.
 const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TYPE[]) => {
     disksInfo.map((disk: any) => {
-        if (disk.type === "HDD" && disk.index > 0) {
-            HDDStatus.set(disk.index, {
-                "avail": disk.avail || disk.free,
+        // if (disk.type === "HDD" && disk.index > 0) {
+        if (disk.index < 7 && disk.index > 0) {
+            HDDStatus.set(disk.index + '', {
+                "exit": true,
                 "health": disk.health,
                 "temperature": disk.temperature,
+                "type": disk.type,
+                "path": disk.path,
+                "candidate": disk.health && (disk.utilizations[0]?.raid ?? false) === false,
+                "occupied": disk.utilizations[0]?.name ?? "",
+                "unused": disk.utilizations.length === 0,
             });
             RAIDCandidateDiskCount.value++;
         } else if (["SSD", 'NVME'].includes(disk.type) && disk.index) {
             const key = mapIndexForADCD.get(disk.index);
             key && SSDStatus.set(key, {
-                "avail": disk.avail || disk.free,
+                "exit": true,
                 "health": disk.health,
                 "temperature": disk.temperature,
+                "type": disk.type,
+                "path": disk.path,
+                "candidate": disk.health && (disk.utilizations[0]?.raid ?? false) === false,
+                "occupied": disk.utilizations[0]?.name ?? "",
+                "unused": disk.utilizations.length === 0,
             });
             RAIDCandidateDiskCount.value++;
         }
     });
-    for (let i = 0; i < 6; i++) {
-        if (typeof HDDStatus.get(i) !== 'object') {
-            HDDStatus.set(i, {
-                "avail": false,
+    for (let i = 1; i < 7; i++) {
+        if (typeof HDDStatus.get(i + '') !== 'object') {
+            HDDStatus.set(i + '', {
+                "exit": false,
                 "health": false,
                 "temperature": 0,
             });
@@ -119,7 +137,7 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
         const key = mapIndexForADCD.get(i);
         if (key && typeof SSDStatus.get(key) !== 'object') {
             SSDStatus.set(key, {
-                "avail": false,
+                "exit": false,
                 "health": false,
                 "temperature": 0,
             });

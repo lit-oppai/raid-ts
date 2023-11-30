@@ -1,4 +1,4 @@
-import { computed, ComputedRef, ref, Ref } from "vue";
+import { computed, ComputedRef, ref, Ref, customRef } from "vue";
 import OverviewPart from "./OverviewPart.vue";
 import SelectRAIDPart from "./SelectRAIDPart.vue";
 import ConfirmRAIDPart from "./ConfirmRAIDPart.vue";
@@ -28,7 +28,23 @@ const currentStepName = computed(() => {
     return stepschain.value[currentStep.value].__name;
 })
 const selectRAIDStrategy: Ref<RAIDStrategy | ''> = ref('');
-const selectStorageList = ref<(number | string)[]>([]); // selected disk record.
+const selectStorageList = customRef((track, trigger) => {
+    let value: (number | string)[] = [];
+    return {
+        get() {
+            track();
+            return value;
+        },
+        set(newValue) {
+            trigger();
+            console.log(newValue, 111);
+
+            newValue.sort((a: string | number, b: string | number) => (a > b ? 1 : -1));
+            value = newValue;
+        }
+    };
+});
+
 const nameRAID = ref('Main-Storage')
 const checkedCreateRAID = ref<boolean>(false);
 // Getting RAID Status

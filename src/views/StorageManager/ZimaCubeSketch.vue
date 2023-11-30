@@ -27,25 +27,25 @@ onMounted(() => {
     // setOpacity('disk5', 0.5)
     // setOpacity('diskABCD', 0.5)
     // HDDStatus.value.forEach((item: any, index: any) => {
-    //     setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
+    //     setOpacity(`disk${index + 1}`, item.exit ? 1 : 0.5)
     // })
 })
 
 watch([HDDStatus, SSDStatus], ([newHDDVal, newSSDVal]) => {
-    newHDDVal.forEach((item: any, index: any) => {
-        setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
+    newHDDVal.forEach((item, index) => {        
+        setOpacity(`disk${index}`, item.exit ? 1 : 0.5)
     })
     // 全部无效，则设置ABCD无效。
-    if (Array.from(newSSDVal.values()).every((item: any) => !item.avail)) {
+    if (Array.from(newSSDVal.values()).every((item: any) => !item.exit)) {
         setOpacity(`diskABCD`, 0.5)
     }
 })
 // watch([HDDStatus.value, SSDStatus.value], ([newHDDVal, newSSDVal]) => {
 //     newHDDVal.forEach((item: any, index: any) => {
-//         setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
+//         setOpacity(`disk${index + 1}`, item.exit ? 1 : 0.5)
 //     })
 //     // 全部无效，则设置ABCD无效。
-//     if (newSSDVal.every((item: any) => !item.avail)) {
+//     if (newSSDVal.every((item: any) => !item.exit)) {
 //         setOpacity(`diskABCD`, 0.5)
 //     }
 // })

@@ -4,6 +4,7 @@ import { RAIDStrategy } from './controlData.d';
 import { selectStorageList } from './controlData';
 import { SSDStatus, HDDStatus } from '@views/StorageManager/controlData.ts';
 import SelectStrategy from './SelectStrategy.vue';
+import { NPopover } from 'naive-ui';
 // const list = typeof RAIDStrategy
 const strategies: RAIDStrategy[] = ['RAID0', 'RAID1', 'RAID5'];
 // const allDiskTemp = new Map([...SSDStatus, ...HDDStatus]);
@@ -21,17 +22,18 @@ const storageNone: (number | string)[] = [];
 
 for (let [key, item] of allDiskStatus) {
     // 不可选
-    if (!item.avail) {
-        // storageDisabled.set(key, item);
+    if (!item.exit) {
+        // 无硬盘
         storageNone.push(key);
-    }else if(false){
-        selectStorageList.value.push(key);
-    } else if (!item.health) {
+    } else if (!item.candidate) {
+        // 不可选
         storageDisabled.push(key);
-    }else{
+    } else {
+        // 可选
         storageSelectable.push(key);
     }
 }
+
 </script>
 
 <template name="SelectRAIDPart">
@@ -39,8 +41,9 @@ for (let [key, item] of allDiskStatus) {
     <div class="space-y-6">
         <!-- select strategy -->
         <!-- TODO：此处有判断逻辑 -->
-        <div class="mt-6 flex space-x-4"  v-if="true">
-            <SelectStrategy v-for="strategy in strategies" :key="strategy" :strategy="strategy" @click="selectStorageList.length = 0"></SelectStrategy>
+        <div class="mt-6 flex space-x-4" v-if="true">
+            <SelectStrategy v-for="strategy in strategies" :key="strategy" :strategy="strategy"
+                @click="selectStorageList = []"></SelectStrategy>
         </div>
         <!-- Please select the desired hard disk -->
         <div>
@@ -52,21 +55,34 @@ for (let [key, item] of allDiskStatus) {
 
             <div class="flex space-x-2">
                 <template v-for="[key, item] in allDiskStatus" :key="key">
-                    <input :disabled="storageDisabled.includes(key)"
-                        type="checkbox" class="hidden" :id="`check${key}`" :value="key" v-model="selectStorageList">
-                    <label :for="`check${key}`" :class="{
-                        'bg-gray-50 opacity-50': storageNone.includes(key as string),
-                        'bg-gray-50': storageDisabled.includes(key as number),
-                        'bg-slate-50 text-sky-600 cursor-pointer': storageSelectable.includes(key) && !selectStorageList.includes(key),
-                        'bg-sky-600 text-white cursor-pointer': selectStorageList.includes(key),
-                    }" class="h-20 flex-grow rounded-md flex flex-col items-center justify-around">
-                        <span class="text-center text-base font-semibold font-['Roboto']">
-                            {{ key }}
-                        </span>
-                        <span class="text-center text-xs font-normal font-['Roboto']">
-                            RAID5
-                        </span>
-                    </label>
+                    <input :disabled="[...storageNone, ...storageDisabled].includes(key)" type="checkbox" class="hidden"
+                        :id="`check${key}`" :value="key" v-model="selectStorageList">
+
+                    <!-- <NPopover trigger="hover" :disabled="(item?.occupied?.length ?? 0) === 0"> -->
+                    <NPopover trigger="hover" :disabled="!item.exit" placement="bottom">
+                        <template #trigger>
+                            <label :for="`check${key}`" :class="{
+                                'bg-gray-50 opacity-50': storageNone.includes(key as string),
+                                'bg-gray-50': storageDisabled.includes(key),
+                                'bg-slate-50 text-sky-600 cursor-pointer': storageSelectable.includes(key) && !selectStorageList.includes(key),
+                                'bg-sky-600 text-white cursor-pointer': selectStorageList.includes(key),
+                            }" class="h-20 flex-1 rounded-md flex flex-col items-center justify-around">
+                                <span class="text-center text-base font-semibold font-['Roboto']">
+                                    {{ key }}
+                                </span>
+                                <span class="text-center text-xs font-normal font-['Roboto']">
+                                    {{ item.type || "Empty" }}
+                                </span>
+                            </label>
+                        </template>
+                        <div v-if="item?.unused">
+                            {{ item?.type }} 使用中
+                        </div>
+                        <div v-else>
+                            {{ item?.occupied }} 使用中
+                        </div>
+                    </NPopover>
+
                 </template>
             </div>
 
