@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { inject, computed, watch, ref } from "vue";
+import { inject, computed } from "vue";
 import Button from "primevue/button";
-import { currentStep, currentStepName, stepByStep, resultRAID, context, nameRAID, checkedCreateRAID, selectRAIDStrategy, selectStorageList } from "./controlData.ts";
+import { currentStep, currentStepName, stepByStep, resultRAIDInfo, context, nameRAID, checkedCreateRAID, selectRAIDStrategy, selectStorageList } from "./controlData.ts";
 import { HDDStatus, SSDStatus, reloadServiceData } from "@views/StorageManager/controlData.ts"
 import openAPI from "@network/index.ts"
 import { RaidBodyRaidLevelEnum } from "@icewhale/zimaos-localstorage-openapi";
@@ -23,11 +23,26 @@ const createRAID = () => {
     openAPI.raid.createRaid({ devices: pathList.value, name: nameRAID.value, raid_level: raidLevel as unknown as RaidBodyRaidLevelEnum }).then((res) => {
         // closeDialog(res);
         stepByStep('next')
-        resultRAID.value = true;
+        resultRAIDInfo.capacity = (res.data.array_size ?? 0 - 0) * 1024;
+        resultRAIDInfo.btnText = '开始使用';
+        resultRAIDInfo.success = true;
+        resultRAIDInfo.butFunc = () => {
+            closeDialog();
+        }
     }).catch((err) => {
         stepByStep('next')
         console.log(err);
-        resultRAID.value = false;
+        resultRAIDInfo.btnText = '重新开始';
+        resultRAIDInfo.success = false;
+        resultRAIDInfo.butFunc = () => {
+            // TODO: 直接更改数据不是最佳实践。。。
+            stepByStep('prev');
+            stepByStep('prev');
+            stepByStep('prev');
+            //  TODO：选择是否重置
+            // TODO： 刷新数据
+            reloadServiceData();
+        }
     })
 }
 
@@ -44,29 +59,6 @@ const checkNextStep = computed<boolean>(() => {
     }
     return false;
 })
-let resutlButText = ref(''), resultButFun: () => void;
-watch(resultRAID, (newVal) => {
-    switch (newVal) {
-        case true:
-            resutlButText.value = '开始使用';
-            resultButFun = () => {
-                closeDialog();
-            }
-            break;
-        case false:
-            resutlButText.value = '重新开始';
-            resultButFun = () => {
-                // TODO: 直接更改数据不是最佳实践。。。
-                stepByStep('prev');
-                stepByStep('prev');
-                stepByStep('prev');
-                //  TODO：选择是否重置
-                // TODO： 刷新数据
-                reloadServiceData();
-            }
-            break;
-    }
-}, { immediate: true })
 </script>
 
 <template>
@@ -86,7 +78,7 @@ watch(resultRAID, (newVal) => {
             :disabled="(selectStorageList.length < 2 || !checkedCreateRAID)"></Button>
 
         <!-- Result Part -->
-        <Button :label="resutlButText" severity="primary" Size="medium" @click="resultButFun"
+        <Button :label="resultRAIDInfo.btnText" severity="primary" Size="medium" @click="resultRAIDInfo.butFunc"
             v-if="currentStepName === 'ResultRAIDPart'"></Button>
     </div>
 </template>

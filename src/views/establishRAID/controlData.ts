@@ -1,14 +1,11 @@
-import { computed, ComputedRef, ref, Ref, customRef, onBeforeUnmount } from "vue";
+import { computed, ComputedRef, ref, Ref, customRef, reactive } from "vue";
 import OverviewPart from "./OverviewPart.vue";
 import SelectRAIDPart from "./SelectRAIDPart.vue";
 import ConfirmRAIDPart from "./ConfirmRAIDPart.vue";
 import CreatingRAIDPart from "./CreatingRAIDPart.vue";
 import ResultRAIDPart from './ResultRAIDPart.vue';
 import AddToRAIDPart from './AddToRAIDPart.vue';
-// type EntranceContextType = "Create" | "Modify" | "FirstAid";
 import { EntranceContextType, RAIDStrategy } from "./controlData.d";
-// import { RAIDCandidateDiskCount } from "@views/StorageManager/controlData.ts";
-const RAIDStrategys: RAIDStrategy[] = ["RAID0", "RAID1", "RAID5"];
 
 const context = ref<EntranceContextType>('Create');
 const changeContext = (type: EntranceContextType) => {
@@ -59,24 +56,27 @@ const stepByStep = (orientation: Orientation) => {
             break;
     }
 };
-const resultRAID = ref<boolean>(true)
-// onBeforeUnmount(() => {
-//     currentStep.value = 0;
-//     selectRAIDStrategy.value = '';
-//     selectStorageList.value = [];
-//     nameRAID.value = 'Main-Storage';
-//     checkedCreateRAID.value = false;
-//     resultRAID.value = true;
-
-//     console.log('Component is about to be unmounted');
-// })
+const resultRAIDInfo = reactive<{
+    btnText: string,
+    butFunc: () => void,
+    success: boolean,
+    capacity: number,
+}>({
+    btnText: '',
+    butFunc: () => { },
+    success: true,
+    capacity: 0,
+})
 const clear = (): void => {
     currentStep.value = 0;
     selectRAIDStrategy.value = '';
     selectStorageList.value = [];
     nameRAID.value = 'Main-Storage';
     checkedCreateRAID.value = false;
-    resultRAID.value = true;
+    resultRAIDInfo.btnText = '';
+    resultRAIDInfo.butFunc = () => { };
+    resultRAIDInfo.success = true;
+    resultRAIDInfo.capacity = 0;
 };
 export {
     currentStep,
@@ -87,16 +87,14 @@ export {
     checkedCreateRAID,
 
     stepByStep,
-    resultRAID,
+    resultRAIDInfo,
+    // resultRAID,
+    // resultCapacity,
     // TODO: 暂时放在 controlView.ts 中。
     stepschain,
     stepschainMap,
     context,
     changeContext,
 
-    // from another file.
-    // RAIDCandidateDiskCount,
-
-    //
     clear,
 }

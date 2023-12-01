@@ -41,10 +41,22 @@ export default ({ mode }) => {
                     target: `http://${process.env.VITE_OPEN_API_DEV_IP}:${process.env.VITE_OPEN_API_DEV_PORT}`,
                     changeOrigin: true,
                 },
-                // "/": {
-                //     target: `http://${process.env.VITE_OPEN_API_DEV_IP}:${process.env.VITE_OPEN_API_DEV_PORT}`,
-                //     changeOrigin: true,
-                // }
+                "^/assets": {
+                    // rewrite: (path) => {
+                    //     console.log(path.replace(/^\//, '/'))
+                    //     return path.replace(/^\//, '/')
+                    // },
+                    target: `http://${process.env.VITE_OPEN_API_DEV_IP}:${process.env.VITE_OPEN_API_DEV_PORT}`,
+                    changeOrigin: true,
+                },
+                "^/login": {
+                    rewrite: (path) => {
+                        console.log(path.replace(/^\/login/, '/'))
+                        return path.replace(/^\/login/, '/')
+                    },
+                    target: `http://${process.env.VITE_OPEN_API_DEV_IP}:${process.env.VITE_OPEN_API_DEV_PORT}`,
+                    changeOrigin: true,
+                }
             }
         },
     })

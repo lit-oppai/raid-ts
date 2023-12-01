@@ -1,20 +1,9 @@
 // ref https://codesandbox.io/s/plfs2x?file=/src/App.vue:1006-1069
-// import OverviewPart from "./OverviewPart.vue";
-// import SelectRAIDPart from "./SelectRAIDPart.vue";
-// import ConfirmRAIDPart from "./ConfirmRAIDPart.vue";
-// import CreatingRAIDPart from "./CreatingRAIDPart.vue";
-// import ResultRAID from './ResultRAID.vue';
-import { markRaw, defineAsyncComponent, computed, ref, Ref, watch } from 'vue';
+import { markRaw, defineAsyncComponent, ref, Ref, watch } from 'vue';
 import { useDialog } from 'primevue/usedialog';
-import { currentStep, currentStepName, stepschain,clear, changeContext } from "./controlData.ts";
+import { currentStep, currentStepName,clear, changeContext } from "./controlData.ts";
 import { EntranceContextType } from "./controlData.d";
 
-// let currentStep: number = 0;
-// const stepschain = [OverviewPart, SelectRAIDPart, ConfirmRAIDPart, CreatingRAIDPart, ResultRAID];
-// const stepschainMap = {
-//     Create: [OverviewPart, SelectRAIDPart, ConfirmRAIDPart, CreatingRAIDPart, ResultRAID],
-//     FirstAid: [OverviewPart, SelectRAIDPart, ConfirmRAIDPart, CreatingRAIDPart, ResultRAID],
-// }
 const EstablishRAID = defineAsyncComponent(() => import('@views/EstablishRAID/EstablishRAID.vue'))
 const EstablishFooter = defineAsyncComponent(() => import('@views/EstablishRAID/EstablishFooter.vue'))
 
@@ -103,6 +92,4 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
 export {
     initEstablishRAID,
     showEstablishRAID,
-    // stepschain,
-    // stepschainMap
 }
