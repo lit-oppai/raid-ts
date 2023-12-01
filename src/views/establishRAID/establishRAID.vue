@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import { onBeforeUnmount } from "vue";
+import { currentStep, stepschain, clear } from "./controlData.ts";
+onBeforeUnmount(() => {
+    clear();
+})
+</script>
 <template>
-    这是格式化RAID
+    <component :is="stepschain[currentStep]"></component>
 </template>

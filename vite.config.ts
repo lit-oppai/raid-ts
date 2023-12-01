@@ -12,6 +12,7 @@ export default ({ mode }) => {
             alias: {
                 '@assets': fileURLToPath(new URL('src/assets', import.meta.url)),
                 '@components': fileURLToPath(new URL('src/components', import.meta.url)),
+                '@network': fileURLToPath(new URL('src/network', import.meta.url)),
                 '@views': fileURLToPath(new URL('src/views', import.meta.url)),
                 '@pages': fileURLToPath(new URL('src/pages', import.meta.url)),
                 '@style': fileURLToPath(new URL('src/style', import.meta.url)),
@@ -19,8 +20,9 @@ export default ({ mode }) => {
                 '@': fileURLToPath(new URL('src', import.meta.url)),
             },
         },
+        // base: "/modules/icewhale_settings/",
         build: {
-            outDir: "build/sysroot/usr/share/casaos/www/modules/icewhale_raid",
+            outDir: "build/sysroot/usr/share/casaos/www/modules/icewhale_settings",
         },
         server: {
             open: true,
@@ -39,6 +41,10 @@ export default ({ mode }) => {
                     target: `http://${process.env.VITE_OPEN_API_DEV_IP}:${process.env.VITE_OPEN_API_DEV_PORT}`,
                     changeOrigin: true,
                 },
+                // "/": {
+                //     target: `http://${process.env.VITE_OPEN_API_DEV_IP}:${process.env.VITE_OPEN_API_DEV_PORT}`,
+                //     changeOrigin: true,
+                // }
             }
         },
     })

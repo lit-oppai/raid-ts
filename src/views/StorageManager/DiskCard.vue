@@ -31,22 +31,22 @@ const pilotLampOpacity = computed(() => {
     return ['A', 'B', 'C', 'D'].includes(props.part) ? 0 : 1;
 })
 const exitLampOpacity = computed(() => {
-    return props.source.avail ? 1 : 0.5;
+    return props.source.exit ? 1 : 0.5;
 })
 const statuTitle = computed(() => {
-    if (props.source.avail) {
+    if (props.source.exit) {
         return props.source.health === 'true' ? 'healthy' : 'unhealthy'
     }
     return 'unknown'
 })
 const statuColor = computed(() => {
-    if (props.source.avail) {
+    if (props.source.exit) {
         return props.source.health === 'true' ? healthyColor : unhealthyColor
     }
     return unknownColor
 })
 const statuClass = computed(() => {
-    if (props.source.avail) {
+    if (props.source.exit) {
         return props.source.health === 'true' ? 'text-green-600' : 'text-red-600'
     }
     return 'text-gray-600'

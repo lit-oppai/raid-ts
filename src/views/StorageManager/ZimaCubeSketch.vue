@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import OverlayPanel from 'primevue/overlaypanel';
 import { ref, onMounted, watch } from 'vue'
-import { HDDStatus, SSDStatus } from './DataControl.ts'
+import { HDDStatus, SSDStatus } from './controlData.ts'
 
 // const healthyColor = '#28C322'
 // const unhealthyColor = '#F26224'
@@ -27,21 +27,28 @@ onMounted(() => {
     // setOpacity('disk5', 0.5)
     // setOpacity('diskABCD', 0.5)
     // HDDStatus.value.forEach((item: any, index: any) => {
-    //     setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
+    //     setOpacity(`disk${index + 1}`, item.exit ? 1 : 0.5)
     // })
 })
 
-watch([HDDStatus.value, SSDStatus.value], ([newHDDVal, newSSDVal]) => {
-    console.log(newHDDVal, newSSDVal);
-    
-    newHDDVal.forEach((item: any, index: any) => {
-        setOpacity(`disk${index + 1}`, item.avail ? 1 : 0.5)
+watch([HDDStatus, SSDStatus], ([newHDDVal, newSSDVal]) => {
+    newHDDVal.forEach((item, index) => {        
+        setOpacity(`disk${index}`, item.exit ? 1 : 0.5)
     })
     // 全部无效，则设置ABCD无效。
-    if (newSSDVal.every((item: any) => !item.avail)) {
+    if (Array.from(newSSDVal.values()).every((item: any) => !item.exit)) {
         setOpacity(`diskABCD`, 0.5)
     }
 })
+// watch([HDDStatus.value, SSDStatus.value], ([newHDDVal, newSSDVal]) => {
+//     newHDDVal.forEach((item: any, index: any) => {
+//         setOpacity(`disk${index + 1}`, item.exit ? 1 : 0.5)
+//     })
+//     // 全部无效，则设置ABCD无效。
+//     if (newSSDVal.every((item: any) => !item.exit)) {
+//         setOpacity(`diskABCD`, 0.5)
+//     }
+// })
 // ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // 配置
 // const test1 = 0.5
@@ -247,15 +254,15 @@ watch([HDDStatus.value, SSDStatus.value], ([newHDDVal, newSSDVal]) => {
                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
                 <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.2 0" />
                 <feBlend mode="normal" in2="effect1_innerShadow_988_10640" result="effect2_innerShadow_988_10640" />
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha" />
-                <feOffset dy="-2" />
-                <feGaussianBlur stdDeviation="2" />
-                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-                <feColorMatrix type="matrix" values="0 0 0 0 0.358333 0 0 0 0 0.375694 0 0 0 0 0.4 0 0 0 0.3 0" />
-                <feBlend mode="normal" in2="effect2_innerShadow_988_10640" result="effect3_innerShadow_988_10640" />
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha" />
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha" />
+            <feOffset dy="-2" />
+            <feGaussianBlur stdDeviation="2" />
+            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+            <feColorMatrix type="matrix" values="0 0 0 0 0.358333 0 0 0 0 0.375694 0 0 0 0 0.4 0 0 0 0.3 0" />
+            <feBlend mode="normal" in2="effect2_innerShadow_988_10640" result="effect3_innerShadow_988_10640" />
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha" />
                 <feOffset dy="-1" />
                 <feGaussianBlur stdDeviation="0.5" />
                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
@@ -307,13 +314,14 @@ watch([HDDStatus.value, SSDStatus.value], ([newHDDVal, newSSDVal]) => {
             fill="#909599" />
     </svg>
     <!-- <OverlayPanel ref="op">
-        <div>
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">Health:</span>
-            <span class="text-green-600 text-sm font-medium font-['Roboto'] leading-5">Healthy</span>
-        </div>
-        <div>
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">Temperature:</span>
-            <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">36.6 °C</span>
-        </div>
-    </OverlayPanel> -->
+            <div>
+                <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">Health:</span>
+                <span class="text-green-600 text-sm font-medium font-['Roboto'] leading-5">Healthy</span>
+            </div>
+            <div>
+                <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">Temperature:</span>
+                <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">36.6 °C</span>
+            </div>
+        </OverlayPanel> -->
 </template>
+./controlData.ts
