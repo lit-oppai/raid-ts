@@ -6,7 +6,7 @@
 // import ResultRAID from './ResultRAID.vue';
 import { markRaw, defineAsyncComponent, computed, ref, Ref, watch } from 'vue';
 import { useDialog } from 'primevue/usedialog';
-import { currentStep, currentStepName, stepschain, changeContext } from "./controlData.ts";
+import { currentStep, currentStepName, stepschain,clear, changeContext } from "./controlData.ts";
 import { EntranceContextType } from "./controlData.d";
 
 // let currentStep: number = 0;
@@ -26,14 +26,24 @@ const initEstablishRAID = (): void => {
     dialog = useDialog();
 }
 
-let footer: Ref<typeof EstablishFooter | null> = ref(null);
+const footer: Ref<typeof EstablishFooter | null> = ref(null);
+const closable = ref<boolean>(true);
 watch(currentStepName, (newVal) => {
-    if(newVal === 'OverviewPart') {
-        footer.value = null;
-    } else {
-        footer.value = markRaw(EstablishFooter);
+    switch (newVal) {
+        case 'OverviewPart':
+            closable.value = true;
+            footer.value = null;
+            break;
+        case 'CreatingRAIDPart':
+            closable.value = false;
+            footer.value = null;
+            break;
+        default:
+            closable.value = true;
+            footer.value = markRaw(EstablishFooter);
+            break;
     }
- }, { immediate: true })
+}, { immediate: true })
 
 interface ShowType {
     [key: string]: {
@@ -44,7 +54,7 @@ interface ShowType {
 const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
     const showType: ShowType = {
         Create: {
-            title: 'Establish RAID',
+            title: 'Create RAID',
             step: 0
         },
         Modify: {
@@ -74,9 +84,15 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
                 '640px': '90vw'
             },
             modal: true,
+            closable,
         },
         onClose: () => {
-            currentStep.value = 0;
+            // currentStep.value = 0;
+            // // 垃圾回收
+            // // dialog = null;
+            // (window as any)?.gc && (window as any)?.gc();
+            // (window as any)?.collectGarbage && (window as any)?.collectGarbage();
+            clear();
         },
         templates: {
             footer: footer

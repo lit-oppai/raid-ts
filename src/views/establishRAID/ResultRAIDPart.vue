@@ -2,14 +2,14 @@
 import Image from 'primevue/image';
 import errorSVG from "@assets/img/EstablishRAID/error.svg";
 import successSVG from "@assets/img/EstablishRAID/success.svg";
-
-const props = defineProps<{
-    status: 'success' | 'error';
-}>();
+import { resultRAID } from './controlData.ts';
+// const props = defineProps<{
+//     status: 'success' | 'error';
+// }>();
 
 let svg: string, statusMessage: string;
 
-if (props.status === 'success') {
+if (resultRAID.value) {
     svg = successSVG;
     statusMessage = "Creation Successful";
 } else {
@@ -25,7 +25,7 @@ if (props.status === 'success') {
         </span>
     </div>
     <div class="mt-3">
-        <div v-if="props.status !== 'success'" class="bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
+        <div v-if="resultRAID" class="bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
             <div class="flex justify-between">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                     Capacity :

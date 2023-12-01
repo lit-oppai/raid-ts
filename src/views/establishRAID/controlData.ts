@@ -1,4 +1,4 @@
-import { computed, ComputedRef, ref, Ref, customRef } from "vue";
+import { computed, ComputedRef, ref, Ref, customRef, onBeforeUnmount } from "vue";
 import OverviewPart from "./OverviewPart.vue";
 import SelectRAIDPart from "./SelectRAIDPart.vue";
 import ConfirmRAIDPart from "./ConfirmRAIDPart.vue";
@@ -29,18 +29,16 @@ const currentStepName = computed(() => {
 })
 const selectRAIDStrategy: Ref<RAIDStrategy | ''> = ref('');
 const selectStorageList = customRef((track, trigger) => {
-    let value: (number | string)[] = [];
+    let value: string[] = [];
     return {
         get() {
             track();
             return value;
         },
         set(newValue) {
-            trigger();
-            console.log(newValue, 111);
-
-            newValue.sort((a: string | number, b: string | number) => (a > b ? 1 : -1));
+            newValue.sort((a: string, b: string) => (a > b ? 1 : -1));
             value = newValue;
+            trigger();
         }
     };
 });
@@ -61,7 +59,25 @@ const stepByStep = (orientation: Orientation) => {
             break;
     }
 };
+const resultRAID = ref<boolean>(true)
+// onBeforeUnmount(() => {
+//     currentStep.value = 0;
+//     selectRAIDStrategy.value = '';
+//     selectStorageList.value = [];
+//     nameRAID.value = 'Main-Storage';
+//     checkedCreateRAID.value = false;
+//     resultRAID.value = true;
 
+//     console.log('Component is about to be unmounted');
+// })
+const clear = (): void => {
+    currentStep.value = 0;
+    selectRAIDStrategy.value = '';
+    selectStorageList.value = [];
+    nameRAID.value = 'Main-Storage';
+    checkedCreateRAID.value = false;
+    resultRAID.value = true;
+};
 export {
     currentStep,
     currentStepName,
@@ -71,6 +87,7 @@ export {
     checkedCreateRAID,
 
     stepByStep,
+    resultRAID,
     // TODO: 暂时放在 controlView.ts 中。
     stepschain,
     stepschainMap,
@@ -79,4 +96,7 @@ export {
 
     // from another file.
     // RAIDCandidateDiskCount,
+
+    //
+    clear,
 }

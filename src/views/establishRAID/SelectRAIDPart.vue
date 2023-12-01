@@ -1,8 +1,8 @@
 <script setup lang="ts">
-// import { ref } from 'vue';
+import { watch, ref } from 'vue';
 import { RAIDStrategy } from './controlData.d';
-import { selectStorageList } from './controlData';
-import { SSDStatus, HDDStatus } from '@views/StorageManager/controlData.ts';
+import { selectStorageList, selectRAIDStrategy } from './controlData';
+import { SSDStatus, HDDStatus, convertSizeToReadable } from '@views/StorageManager/controlData.ts';
 import SelectStrategy from './SelectStrategy.vue';
 import { NPopover } from 'naive-ui';
 // const list = typeof RAIDStrategy
@@ -25,15 +25,53 @@ for (let [key, item] of allDiskStatus) {
     if (!item.exit) {
         // 无硬盘
         storageNone.push(key);
-    } else if (!item.candidate) {
-        // 不可选
-        storageDisabled.push(key);
-    } else {
+    } else if (item?.unused) {
         // 可选
         storageSelectable.push(key);
+    } else {
+        // 不可选
+        storageDisabled.push(key);
     }
 }
-
+let availableSpacePercentage = ref(0), readunantSpacePercentage = ref(0), availableSpace = ref(0);
+watch(selectStorageList, (newVal) => {
+    // 置空逻辑
+    if (newVal.length === 0) {
+        availableSpacePercentage.value = 0;
+        readunantSpacePercentage.value = 0;
+        return;
+    }
+    // 选择逻辑
+    let totalSize = 0, minSize = 0;
+    newVal.forEach((item) => {
+        totalSize += allDiskStatus.get(item)?.size ?? 0;
+        minSize = minSize !== 0 ? Math.min(minSize, allDiskStatus.get(item)?.size ?? 0) : allDiskStatus.get(item)?.size ?? 0;
+    });
+    switch (selectRAIDStrategy.value) {
+        case 'RAID0':
+            availableSpace.value = totalSize;
+            availableSpacePercentage.value = 100;
+            readunantSpacePercentage.value = 0;
+            break;
+        case 'RAID1':
+            availableSpace.value = minSize;
+            availableSpacePercentage.value = minSize ? (minSize * 100 / totalSize)?.toFixed(0) as unknown as number : 0;
+            readunantSpacePercentage.value = 100 - availableSpacePercentage.value;
+            break;
+        case 'RAID5':
+            // 至少三块硬盘
+            if (newVal.length > 2) {
+                availableSpace.value = minSize * (newVal.length - 1);
+                availableSpacePercentage.value = (minSize * (newVal.length - 1) * 100 / totalSize)?.toFixed(0) as unknown as number;
+                readunantSpacePercentage.value = 100 - availableSpacePercentage.value;
+            } else {
+                availableSpace.value = 0;
+                availableSpacePercentage.value = 0;
+                readunantSpacePercentage.value = 0;
+            }
+            break;
+    }
+});
 </script>
 
 <template name="SelectRAIDPart">
@@ -53,12 +91,12 @@ for (let [key, item] of allDiskStatus) {
                 </span>
             </div>
 
+            <!-- 磁盘选择 -->
             <div class="flex space-x-2">
                 <template v-for="[key, item] in allDiskStatus" :key="key">
                     <input :disabled="[...storageNone, ...storageDisabled].includes(key)" type="checkbox" class="hidden"
                         :id="`check${key}`" :value="key" v-model="selectStorageList">
 
-                    <!-- <NPopover trigger="hover" :disabled="(item?.occupied?.length ?? 0) === 0"> -->
                     <NPopover trigger="hover" :disabled="!item.exit" placement="bottom">
                         <template #trigger>
                             <label :for="`check${key}`" :class="{
@@ -75,17 +113,21 @@ for (let [key, item] of allDiskStatus) {
                                 </span>
                             </label>
                         </template>
-                        <div v-if="item?.unused">
-                            {{ item?.type }} 使用中
+                        <div v-if="item?.RaidAssignment">
+                            {{ item?.RaidAssignment }} 使用中
+                        </div>
+                        <div v-else-if="item?.unused">
+                            未使用的磁盘
                         </div>
                         <div v-else>
-                            {{ item?.occupied }} 使用中
+                            {{ item?.type }} 使用中
                         </div>
                     </NPopover>
 
                 </template>
             </div>
 
+            <!-- 选择的磁盘信息展示 -->
             <div class="flex flex-col space-y-1 mt-4">
                 <template v-for="key in selectStorageList" :key="key">
                     <div class="flex items-center h-10 bg-gray-50 rounded-md pr-4">
@@ -93,56 +135,54 @@ for (let [key, item] of allDiskStatus) {
                             {{ key }}
                         </span>
                         <span class="mx-2">
-                            name
+                            {{ allDiskStatus.get(key)?.name }}
                         </span>
                         <span class="flex-grow text-neutral-400 text-xs font-normal font-['Roboto']">
-                            Type
                         </span>
                         <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
-                            Total 245GB/
                         </span>
                         <span class="text-zinc-800 text-xs font-normal font-['Roboto']">
-                            Surplus 110.5GB
+                            {{ convertSizeToReadable(allDiskStatus.get(key)?.size ?? 0) }}
                         </span>
                     </div>
                 </template>
 
             </div>
         </div>
-        <!-- Usage estimate -->
+        <!-- Estimated usage -->
         <div>
             <div class="mb-2 flex justify-between">
                 <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-                    Usage estimate
+                    Estimated usage
                 </span>
                 <div>
                     <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto']">
-                        可用
+                        Estimated available
                     </span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-                        213GB
+                        {{ convertSizeToReadable(availableSpace) }}
                     </span>
                 </div>
             </div>
 
             <div class="flex rounded-sm overflow-hidden">
-                <span class="h-2 bg-emerald-400 w-[20%]"></span>
-                <span class="h-2 bg-amber-500 w-[20%]"></span>
-                <span class="h-2 bg-orange-500 w-[60%]"></span>
+                <span class="h-2 bg-emerald-400" :style="{ width: `${availableSpacePercentage}%` }"></span>
+                <span class="h-2 bg-amber-500" :style="{ width: `${readunantSpacePercentage}%` }"></span>
             </div>
 
-            <div class="flex space-x-4">
+            <div class="flex space-x-4 mt-2">
                 <div class="space-x-1">
                     <span class="bg-emerald-400 w-1.5 h-1.5 rounded-sm inline-block"></span>
-                    <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">预计可用容量</span>
+                    <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">Estimated available</span>
                 </div>
                 <div class="space-x-1 flex-grow">
                     <span class="bg-amber-500 w-1.5 h-1.5 rounded-sm inline-block"></span>
-                    <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">预计不可用容量</span>
+                    <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">Protection and
+                        redundancy</span>
                 </div>
                 <div>
-                    <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
-                        RAID5
+                    <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto']">
+                        {{ selectRAIDStrategy }}
                     </span>
                 </div>
             </div>

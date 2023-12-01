@@ -24,11 +24,15 @@ type UI_DISK_INFO_TYPE = {
     "exit": boolean,
     "health": boolean,
     "temperature": number,
+    "name"?: string,
+    "size"?: number,
     "type"?: DISK_TYPE,
     "path"?: string,
     // RAID 备选盘 1、状态健康 2、未被占用
-    "candidate"?: boolean,
-    "occupied"?: string,
+    // 2023年12月01日 不再使用备选盘，只有未使用的盘可以进入 raid
+    // "candidate"?: boolean,
+    "RaidAssignment"?: string,
+    // "occupied"?: string,
     "unused"?: boolean,
 }
 type STORAGE_TYPE = "ext4" | "xfs" | "ntfs" | "fat32" | "exfat";
@@ -102,10 +106,12 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
                 "exit": true,
                 "health": disk.health,
                 "temperature": disk.temperature,
+                "name": disk.name,
+                "size": disk.size,
                 "type": disk.type,
                 "path": disk.path,
-                "candidate": disk.health && (disk.utilizations[0]?.raid ?? false) === false,
-                "occupied": disk.utilizations[0]?.name ?? "",
+                // "candidate": disk.health && disk.utilizations.length <= 1 && (disk.utilizations[0]?.raid ?? false) === false,
+                "RaidAssignment": disk.utilizations[0]?.raid === true && disk.utilizations[0]?.name || "",
                 "unused": disk.utilizations.length === 0,
             });
             RAIDCandidateDiskCount.value++;
@@ -115,10 +121,12 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
                 "exit": true,
                 "health": disk.health,
                 "temperature": disk.temperature,
+                "name": disk.name,
+                "size": disk.size,
                 "type": disk.type,
                 "path": disk.path,
-                "candidate": disk.health && (disk.utilizations[0]?.raid ?? false) === false,
-                "occupied": disk.utilizations[0]?.name ?? "",
+                // "candidate": disk.health && disk.utilizations.length <= 1 && (disk.utilizations[0]?.raid ?? false) === false,
+                "RaidAssignment": disk.utilizations[0]?.raid === true && disk.utilizations[0]?.name || "",
                 "unused": disk.utilizations.length === 0,
             });
             RAIDCandidateDiskCount.value++;
@@ -199,4 +207,4 @@ const initStorageInfo = async (): Promise<void> => {
     rinseDiskInfo(disksInfo, storageInfo);
 }
 export default initStorageInfo;
-export { HDDStatus, SSDStatus, RAIDCandidateDiskCount, usageStatus, convertSizeToReadable, convertSizeToTargetUnit };
+export { HDDStatus, SSDStatus, initStorageInfo as reloadServiceData, RAIDCandidateDiskCount, usageStatus, convertSizeToReadable, convertSizeToTargetUnit };
