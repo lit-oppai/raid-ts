@@ -3,7 +3,7 @@ import { ref, reactive } from "vue";
 import openAPI from "@/network";
 
 // Setting Data Types && Naming conventions for Constants.
-type DISK_TYPE = "SSD" | "HDD" | "NVME";
+type DISK_TYPE = "SSD" | "HDD" | "NVME" | "SATA";
 type DISK_INFO_TYPE = {
     "index": number,
     "avail": boolean,
@@ -28,6 +28,7 @@ type UI_DISK_INFO_TYPE = {
     "size"?: number,
     "type"?: DISK_TYPE,
     "path"?: string,
+    "model"?: string,
     // RAID 备选盘 1、状态健康 2、未被占用
     // 2023年12月01日 不再使用备选盘，只有未使用的盘可以进入 raid
     // "candidate"?: boolean,
@@ -48,10 +49,27 @@ type STORAGE_INFO_TYPE = {
     "raid": boolean,
     "raid_level": number,
     "label": string,
-    "utilizations": Array<{ mount_point: string, name: string, raid: boolean, raid_level: number } | undefined>,
+    "children": Array<{ mount_point: string, name: string, raid: boolean, raid_level: number } | undefined>,
     // "persisted_in": string,
-    // "disk_type": DISK_TYPE,
+    // sata、nvme
+    "disk_type": DISK_TYPE,
 }
+type UI_STORAGE_INFO_TYPE = {
+    "uuid": string,
+    // "mount_point": string,
+    "size": string | number,
+    "avail": string | number,
+    "used": string | number,
+    // "type": STORAGE_TYPE,
+    "path": string,
+    // "drive_name": string,
+    "raid": boolean,
+    "raid_level": number,
+    "label": string,
+    // "children": Array<{ mount_point: string, name: string, raid: boolean, raid_level: number } | undefined>,
+    // "persisted_in": string,
+    "disk_type": DISK_TYPE,
+};
 type STORAGE_USAGE_INFO_TYPE = {
     // 系统空间占用量
     SystemUsage: 2340421632,
@@ -62,7 +80,7 @@ type STORAGE_USAGE_INFO_TYPE = {
     // 文件空间占用量
     FilesUsage: number,
     // 文件空间剩余量
-    FileFree: number,
+    FilesFree: number,
 }
 // type DISK_STATUS_TYPE = {
 // }
@@ -80,6 +98,8 @@ async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
 const HDDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
 // const SSDStatus = ref<UI_DISK_INFO_TYPE[]>([])
 const SSDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
+//  未使用的 storage
+const storageInfoMap = reactive(new Map<string, UI_STORAGE_INFO_TYPE>())
 // RAID 候选盘数量
 const RAIDCandidateDiskCount = ref<number>(0);
 // 纯数值，方便后面组合计算比例
@@ -88,7 +108,7 @@ const usageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     DataUsage: 0,
     DataFree: 0,
     FilesUsage: 0,
-    FileFree: 0,
+    FilesFree: 0,
 });
 
 const mapIndexForADCD = new Map<number, string>([
@@ -110,11 +130,12 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
                 "size": disk.size,
                 "type": disk.type,
                 "path": disk.path,
-                // "candidate": disk.health && disk.utilizations.length <= 1 && (disk.utilizations[0]?.raid ?? false) === false,
-                "RaidAssignment": disk.utilizations[0]?.raid === true && disk.utilizations[0]?.name || "",
-                "unused": disk.utilizations.length === 0,
+                "model": disk.model,
+                // "candidate": disk.health && disk.children.length <= 1 && (disk.children[0]?.raid ?? false) === false,
+                "RaidAssignment": disk.children[0]?.raid === true && disk.children[0]?.name || "",
+                "unused": disk.children.length === 0,
             });
-            RAIDCandidateDiskCount.value++;
+            disk.children?.length === 0 && RAIDCandidateDiskCount.value++;
         } else if (["SSD", 'NVME'].includes(disk.type) && disk.index) {
             const key = mapIndexForADCD.get(disk.index);
             key && SSDStatus.set(key, {
@@ -125,11 +146,12 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
                 "size": disk.size,
                 "type": disk.type,
                 "path": disk.path,
-                // "candidate": disk.health && disk.utilizations.length <= 1 && (disk.utilizations[0]?.raid ?? false) === false,
-                "RaidAssignment": disk.utilizations[0]?.raid === true && disk.utilizations[0]?.name || "",
-                "unused": disk.utilizations.length === 0,
+                "model": disk.model,
+                // "candidate": disk.health && disk.children.length <= 1 && (disk.children[0]?.raid ?? false) === false,
+                "RaidAssignment": disk.children[0]?.raid === true && disk.children[0]?.name || "",
+                "unused": disk.children.length === 0,
             });
-            RAIDCandidateDiskCount.value++;
+            disk.children?.length === 0 && RAIDCandidateDiskCount.value++;
         }
     });
     for (let i = 1; i < 7; i++) {
@@ -160,6 +182,19 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
         } else {
             fileFree += Number(storage.avail);
             filesUsage += Number(storage.used);
+            storageInfoMap.set(storage.label, {
+                "uuid": storage.uuid,
+                // "mount_point": string,
+                "size": storage.size,
+                "avail": storage.avail,
+                "used": storage.used,
+                "disk_type": storage.disk_type.toUpperCase() as DISK_TYPE,
+                "path": storage.path,
+                // "drive_name": string,
+                "raid": storage.raid,
+                "raid_level": storage.raid_level,
+                "label": storage.label,
+            })
         }
     });
     usageStatus.value = {
@@ -167,15 +202,22 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
         DataUsage: dataUsage,
         DataFree: dataFree,
         FilesUsage: fileFree,
-        FileFree: filesUsage,
+        FilesFree: filesUsage,
     }
 }
 
 // TODO: Tools unit.
 // 单位转换:bit 转 GB、TB、PB、EB、ZB、YB
-const convertSizeToReadable = (size: number) => {
+const convertSizeToReadable = (size: number | string) => {
     const unit = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     let index = 0;
+    if (typeof size === 'string') {
+        size = Number(size);
+        // 检测字符串是否溢出
+        if (size > Number.MAX_SAFE_INTEGER) {
+            throw new Error("The number is too large to convert.");
+        }
+    }
     while (size >= 1024) {
         size = size / 1024;
         index++;
@@ -207,4 +249,4 @@ const initStorageInfo = async (): Promise<void> => {
     rinseDiskInfo(disksInfo, storageInfo);
 }
 export default initStorageInfo;
-export { HDDStatus, SSDStatus, initStorageInfo as reloadServiceData, RAIDCandidateDiskCount, usageStatus, convertSizeToReadable, convertSizeToTargetUnit };
+export { HDDStatus, SSDStatus, storageInfoMap, initStorageInfo as reloadServiceData, RAIDCandidateDiskCount, usageStatus, convertSizeToReadable, convertSizeToTargetUnit };

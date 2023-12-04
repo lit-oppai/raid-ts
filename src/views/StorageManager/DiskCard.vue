@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, computed } from 'vue';
 import { NPopover } from 'naive-ui'
+import { convertSizeToReadable } from './controlData.ts';
 
 const healthyColor = '#28C322'
 const unhealthyColor = '#F26224'
@@ -34,22 +35,23 @@ const exitLampOpacity = computed(() => {
     return props.source.exit ? 1 : 0.5;
 })
 const statuTitle = computed(() => {
-    if (props.source.exit) {
-        return props.source.health === 'true' ? 'healthy' : 'unhealthy'
+    if (!props.source.exit || props.source.unused) {
+        return '空闲'
     }
-    return 'unknown'
+    return (props.source.health === 'true' ? 'healthy' : 'unhealthy') + ` ${props.source.temperature} °C`
 })
 const statuColor = computed(() => {
-    if (props.source.exit) {
-        return props.source.health === 'true' ? healthyColor : unhealthyColor
+    if (!props.source.exit || props.source.unused) {
+        return unknownColor
     }
-    return unknownColor
+    return props.source.health === 'true' ? healthyColor : unhealthyColor
+
 })
 const statuClass = computed(() => {
-    if (props.source.exit) {
-        return props.source.health === 'true' ? 'text-green-600' : 'text-red-600'
+    if (!props.source.exit || props.source.unused) {
+        return 'text-zinc-800'
     }
-    return 'text-gray-600'
+    return props.source.health === 'true' ? 'text-green-600' : 'text-red-600'
 })
 </script>
 
@@ -79,13 +81,23 @@ const statuClass = computed(() => {
                 </filter>
             </svg>
         </template>
-        <div>
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">Health:</span>
-            <span class="text-sm font-medium font-['Roboto'] leading-5" :class="statuClass">{{ statuTitle }}</span>
+        <div v-if="source?.model && props.source.exit && !props.source.unused">
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
+                {{ source?.model }} {{ convertSizeToReadable(source?.size) }}
+            </span>
         </div>
         <div>
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">Temperature:</span>
-            <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{ source.temperature }} °C</span>
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">状态 : </span>
+            <span class="text-sm font-medium font-['Roboto'] leading-5" :class="statuClass">{{ statuTitle }}</span>
+        </div>
+
+        <div v-if="source?.RaidAssignment">
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">属于 : </span>
+            <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{ source?.RaidAssignment }}</span>
+        </div>
+        <div v-else>
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">类型 : </span>
+            <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{ source?.type }}</span>
         </div>
     </NPopover>
 </template>
