@@ -6,7 +6,10 @@ import CreatingRAIDPart from "./CreatingRAIDPart.vue";
 import ResultRAIDPart from './ResultRAIDPart.vue';
 import AddToRAIDPart from './AddToRAIDPart.vue';
 import { EntranceContextType, RAIDStrategy } from "./controlData.d";
-
+// ----------------------------------------
+// TODO: 只被外部传参使用
+const formatePath = ref<string>('');
+// ----------------------------------------
 const context = ref<EntranceContextType>('Create');
 const changeContext = (type: EntranceContextType) => {
     context.value = type;
@@ -18,6 +21,8 @@ const stepschainMap: { [key: string]: (typeof OverviewPart | typeof SelectRAIDPa
     Create: [OverviewPart, SelectRAIDPart, ConfirmRAIDPart, CreatingRAIDPart, ResultRAIDPart],
     Modify: [SelectRAIDPart, ConfirmRAIDPart, CreatingRAIDPart, ResultRAIDPart],
     FirstAid: [AddToRAIDPart, ConfirmRAIDPart, CreatingRAIDPart, ResultRAIDPart],
+    CreateStorage: [ConfirmRAIDPart, CreatingRAIDPart, ResultRAIDPart],
+    EnableStorage: [CreatingRAIDPart, ResultRAIDPart],
 }
 // TODO: 设定值从 0-7
 const currentStep = ref(0);
@@ -40,7 +45,7 @@ const selectStorageList = customRef((track, trigger) => {
     };
 });
 
-const nameRAID = ref('Main-Storage')
+const nameStorage = ref('Main-Storage')
 const checkedCreateRAID = ref<boolean>(false);
 // Getting RAID Status
 type Orientation = "next" | "prev";
@@ -71,7 +76,7 @@ const clear = (): void => {
     currentStep.value = 0;
     selectRAIDStrategy.value = '';
     selectStorageList.value = [];
-    nameRAID.value = 'Main-Storage';
+    nameStorage.value = 'Main-Storage';
     checkedCreateRAID.value = false;
     resultRAIDInfo.btnText = '';
     resultRAIDInfo.butFunc = () => { };
@@ -83,7 +88,7 @@ export {
     currentStepName,
     selectRAIDStrategy,
     selectStorageList,
-    nameRAID,
+    nameStorage,
     checkedCreateRAID,
 
     stepByStep,
@@ -97,4 +102,7 @@ export {
     changeContext,
 
     clear,
+
+    // TODO: 只被外部传参使用
+    formatePath,
 }

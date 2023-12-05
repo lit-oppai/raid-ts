@@ -28,7 +28,7 @@ export const routes: RouteMeta[] = [
     },
     {
         path: '/network',
-        component: () => import('./storage/DiscoverStorage.ts'),
+        component: () => import('./storage/DiscoverNewHardDrive.ts'),
         name: 'network',
         icon: 'casa-network-outline',
         meta: { title: 'Network', }
@@ -43,13 +43,13 @@ export const routes: RouteMeta[] = [
         },
         children: [
             {
-                path: 'discoverStorage',
-                component: () => import('./storage/DiscoverStorage.ts'),
-                name: 'discoverStorage',
-                meta: { title: 'Discover Storage', }
+                path: 'discoverNewHardDrive',
+                component: () => import('./storage/DiscoverNewHardDrive.ts'),
+                name: 'discoverNewHardDrive',
+                meta: { title: 'New hard drive', }
             },
             {
-                path: 'ModifyRAID',
+                path: 'ModifyRAID/:storageName',
                 component: () => import('./storage/ModifyRAID.ts'),
                 name: 'ModifyRAID',
                 meta: { title: 'Modify RAID', }
@@ -70,8 +70,18 @@ export const routes: RouteMeta[] = [
         meta: { title: 'Develop Page', }
     },
 ];
-
-export default createRouter({
+const router = createRouter({
     history: createWebHashHistory(),
     routes
 });
+
+router.beforeEach((to, from, next) => {
+    // 对于path: 'ModifyRAID/:storageName', 更改meta: { title: 'Modify RAID', }
+    if (to.params.storageName) {
+        to.meta.title = to.params.storageName;
+    }
+    // to and from are both route objects. must call `next`.
+    next();
+});
+
+export default router;

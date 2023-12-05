@@ -1,38 +1,51 @@
 <script setup lang="ts">
 import { inject, computed } from "vue";
 import Button from "primevue/button";
-import { currentStep, currentStepName, stepByStep, resultRAIDInfo, context, nameRAID, checkedCreateRAID, selectRAIDStrategy, selectStorageList } from "./controlData.ts";
+import { currentStep, currentStepName, stepByStep, resultRAIDInfo, context, nameStorage, checkedCreateRAID, selectRAIDStrategy, selectStorageList, formatePath } from "./controlData.ts";
 import { HDDStatus, SSDStatus, reloadServiceData } from "@views/StorageManager/controlData.ts"
 import openAPI from "@network/index.ts"
 import { RaidBodyRaidLevelEnum } from "@icewhale/zimaos-localstorage-openapi";
-const dialogRef: any = inject("dialogRef");
-
-const closeDialog = (e?: object) => {
-    dialogRef.value.close(e);
-};
+import { closeEstablishRAID } from "./controlView";
 
 const pathList = computed(() => {
     return selectStorageList.value.map((item) => {
         return HDDStatus.get(item + '')?.path ?? SSDStatus.get(item + '')?.path ?? '';
     }) ?? [];
 })
-
+const createStorage = () => {
+    stepByStep('next');
+    switch (context.value) {
+        case 'CreateStorage':
+            createSingleStorage();
+            break;
+        default:
+            createRAID();
+            break;
+    }
+}
+const createSingleStorage = () => {
+    // openAPI.storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
+    openAPI.storage.createStorage({ name: nameStorage.value, path: '/dev/sdd', format: true }).then((res) => {
+        closeEstablishRAID(res);
+    }).catch((err) => {
+        console.log(err);
+    }).finally(() => {
+        stepByStep('next');
+    })
+}
 const createRAID = () => {
     const raidLevel = Number(selectRAIDStrategy.value?.split('RAID')[1]);
-    stepByStep('next')
-    openAPI.raid.createRaid({ devices: pathList.value, name: nameRAID.value, raid_level: raidLevel as unknown as RaidBodyRaidLevelEnum }).then((res) => {
-        // closeDialog(res);
-        stepByStep('next')
+
+    openAPI.raid.createRaid({ devices: pathList.value, name: nameStorage.value, raid_level: raidLevel as unknown as RaidBodyRaidLevelEnum }).then((res) => {
         resultRAIDInfo.capacity = (res.data.array_size ?? 0 - 0) * 1024;
-        resultRAIDInfo.btnText = '开始使用';
+        resultRAIDInfo.btnText = 'Done';
         resultRAIDInfo.success = true;
         resultRAIDInfo.butFunc = () => {
-            closeDialog();
+            closeEstablishRAID();
         }
     }).catch((err) => {
-        stepByStep('next')
         console.log(err);
-        resultRAIDInfo.btnText = '重新开始';
+        resultRAIDInfo.btnText = 'Restart';
         resultRAIDInfo.success = false;
         resultRAIDInfo.butFunc = () => {
             // TODO: 直接更改数据不是最佳实践。。。
@@ -43,6 +56,8 @@ const createRAID = () => {
             // TODO： 刷新数据
             reloadServiceData();
         }
+    }).finally(() => {
+        stepByStep('next');
     })
 }
 
@@ -64,21 +79,21 @@ const checkNextStep = computed<boolean>(() => {
 <template>
     <div class="space-x-4">
         <!-- step 1 -->
-        <Button label="Cancel" severity="neutral" Size="medium" @click="closeDialog"
+        <Button label="Cancel" severity="neutral" size="medium" @click="closeEstablishRAID"
             v-show="currentStepName !== 'OverviewPart' && context === 'Modify' && currentStep < 2"></Button>
 
-        <Button label="上一步" severity="neutral" Size="medium" @click="stepByStep('prev')"
+        <Button label="上一步" severity="neutral" size="medium" @click="stepByStep('prev')"
             v-show="currentStepName !== 'ResultRAIDPart' && currentStepName !== 'ResultRAIDPart'"></Button>
-        <Button label="下一步" severity="primary" Size="medium" @click="stepByStep('next')"
+        <Button label="下一步" severity="primary" size="medium" @click="stepByStep('next')"
             v-show="currentStepName !== 'ConfirmRAIDPart' && currentStepName !== 'ResultRAIDPart'"
             :disabled="checkNextStep"></Button>
 
-        <Button label="创建" severity="primary" Size="medium" @click="createRAID"
+        <Button label="创建" severity="primary" size="medium" @click="createStorage"
             v-show="currentStepName === 'ConfirmRAIDPart'"
-            :disabled="(selectStorageList.length < 2 || !checkedCreateRAID)"></Button>
+            :disabled="context !== 'CreateStorage' && selectStorageList.length < 2 || !checkedCreateRAID"></Button>
 
         <!-- Result Part -->
-        <Button :label="resultRAIDInfo.btnText" severity="primary" Size="medium" @click="resultRAIDInfo.butFunc"
+        <Button :label="resultRAIDInfo.btnText" severity="primary" size="medium" @click="resultRAIDInfo.butFunc"
             v-if="currentStepName === 'ResultRAIDPart'"></Button>
     </div>
 </template>

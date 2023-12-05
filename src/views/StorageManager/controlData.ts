@@ -10,15 +10,17 @@ type DISK_INFO_TYPE = {
     "name": string,
     "size": number,
     "health": string | boolean,
+    "free": boolean,
     "temperature": number,
     "type": DISK_TYPE,
     "path": string,
     "model": string,
     // "need_format": boolean,
     // "serial": "NF6243T000696",
-    // "children_number": number,
     // "supported": boolean,
-
+    "children": Array<{ mount_point: string, name: string, raid: boolean, raid_level: number, path: string, size: number, supported: boolean } | undefined>,
+    "children_number": number,
+    "support": boolean,
 };
 type UI_DISK_INFO_TYPE = {
     "exit": boolean,
@@ -35,6 +37,9 @@ type UI_DISK_INFO_TYPE = {
     "RaidAssignment"?: string,
     // "occupied"?: string,
     "unused"?: boolean,
+    "children"?: Array<{ mount_point: string, name: string, raid: boolean, raid_level: number, path: string, size:number, supported: boolean } | undefined>,
+    "children_number"?: number,
+    "support"?: boolean,
 }
 type STORAGE_TYPE = "ext4" | "xfs" | "ntfs" | "fat32" | "exfat";
 type STORAGE_INFO_TYPE = {
@@ -133,9 +138,12 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
                 "model": disk.model,
                 // "candidate": disk.health && disk.children.length <= 1 && (disk.children[0]?.raid ?? false) === false,
                 "RaidAssignment": disk.children[0]?.raid === true && disk.children[0]?.name || "",
-                "unused": disk.children.length === 0,
+                "unused": disk.free,
+                "children": disk.children,
+                "children_number": disk.children_number,
+                "support": disk.support,
             });
-            disk.children?.length === 0 && RAIDCandidateDiskCount.value++;
+            disk.free && RAIDCandidateDiskCount.value++;
         } else if (["SSD", 'NVME'].includes(disk.type) && disk.index) {
             const key = mapIndexForADCD.get(disk.index);
             key && SSDStatus.set(key, {
@@ -149,9 +157,12 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
                 "model": disk.model,
                 // "candidate": disk.health && disk.children.length <= 1 && (disk.children[0]?.raid ?? false) === false,
                 "RaidAssignment": disk.children[0]?.raid === true && disk.children[0]?.name || "",
-                "unused": disk.children.length === 0,
+                "unused": disk.free,
+                "children": disk.children,
+                "children_number": disk.children_number,
+                "support": disk.support,
             });
-            disk.children?.length === 0 && RAIDCandidateDiskCount.value++;
+            disk.free && RAIDCandidateDiskCount.value++;
         }
     });
     for (let i = 1; i < 7; i++) {
@@ -180,13 +191,17 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
             dataUsage = Number(storage.used)
             dataFree = Number(storage.avail)
         } else {
-            fileFree += Number(storage.avail);
+            let storageSize = Number(storage.size);
+            if (storage.raid) {
+                storageSize *= 1024;
+            }
+            fileFree += storageSize - Number(storage.used);
             filesUsage += Number(storage.used);
             storageInfoMap.set(storage.label, {
                 "uuid": storage.uuid,
                 // "mount_point": string,
                 "size": storage.size,
-                "avail": storage.avail,
+                "avail": storageSize - Number(storage.used),
                 "used": storage.used,
                 "disk_type": storage.disk_type.toUpperCase() as DISK_TYPE,
                 "path": storage.path,
@@ -201,8 +216,8 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
         SystemUsage: 2340421632,
         DataUsage: dataUsage,
         DataFree: dataFree,
-        FilesUsage: fileFree,
-        FilesFree: filesUsage,
+        FilesUsage: filesUsage,
+        FilesFree: fileFree,
     }
 }
 

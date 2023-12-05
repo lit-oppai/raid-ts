@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import Image from 'primevue/image';
 import Button from 'primevue/button';
 import protectSVG from '@assets/img/StorageManager/protect.svg';
@@ -8,6 +9,25 @@ import warningRedSVG from '@assets/img/StorageManager/warningRed.svg'
 import warningIntense from '@assets/img/StorageManager/warningIntense.svg';
 // import Warning from '@assets/img/StorageManager/warning.vue';
 import { showEstablishRAID, initEstablishRAID } from '@views/EstablishRAID/controlView.ts'
+import { storageInfoMap } from '@views/StorageManager/controlData.ts';
+import { useRoute } from 'vue-router';
+import { raid, storage } from '@network/index.ts';
+
+const route = useRoute();
+const storageName = route.params.storageName as string;
+const infoObj = storageInfoMap.get(storageName)
+const storageInfo = ref()
+if (infoObj?.raid) {
+    await raid.getRaids(infoObj?.path).then((res) => {
+       storageInfo.value = res.data
+    })
+} else {
+    await storage.getStorage("false", infoObj?.path).then((res) => {
+        storageInfo.value = res.data.data
+    })
+}
+console.log(storageInfo.value, 'storageInfo.value');
+
 initEstablishRAID();
 </script>
 <template>
@@ -16,23 +36,23 @@ initEstablishRAID();
         <Image :src="warningIntense"></Image>
         <!-- <Warning class="fill-sky-500 h-6 w-6"></Warning> -->
         <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow align-baseline">
-            请先备份数据，再进行操作。
+            The data has been locked for read-only access. Please replace it for recovery operations.
         </span>
     </div>
-    <!-- Hard Disk Part -->
+    <!-- Hard Drive Part -->
     <div class="mt-6 mb-2 mr-0.5">
         <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-            Hard Disk
+            Hard Drive
         </span>
     </div>
     <div class="bg-white rounded-lg space-y-1 p-3">
         <!-- Traversing -->
-        <div class="flex justify-between items-center bg-gray-50 rounded-md h-10 px-3">
+        <div class="flex justify-between items-center bg-gray-50 rounded-md h-10 px-3" v-for="(item,index) in storageInfo" :key="index">
             <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
-                HDD-2-Manpao
+                {{ item.name }}
             </span>
             <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto'] mr-1">
-                Healthy
+                {{ item.Healthy }}
             </span>
         </div>
 
@@ -50,7 +70,7 @@ initEstablishRAID();
             <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto'] mr-1">
                 Healthy
             </span>
-            <Button label="推出" severity="primary" Size="medium" @click="showEstablishRAID('Modify')"></Button>
+            <Button label="推出" severity="primary" size="medium" @click="showEstablishRAID('Modify')"></Button>
         </div>
         <div class="flex items-center bg-gray-50 rounded-md h-10 px-3 gap-4">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
@@ -58,8 +78,8 @@ initEstablishRAID();
             </span>
             <span class="flex-grow"></span>
             <!-- TODO：添加 socket 到框架，以触发关机 -->
-            <Button label="关机" severity="primary" Size="medium"></Button>
-            <Button label="添加" severity="primary" Size="medium" @click="showEstablishRAID('FirstAid')"></Button>
+            <Button label="关机" severity="primary" size="medium"></Button>
+            <Button label="添加" severity="primary" size="medium" @click="showEstablishRAID('FirstAid')"></Button>
         </div>
         <div class="pt-2">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
@@ -108,7 +128,7 @@ initEstablishRAID();
                 添加其他硬盘
             </span>
 
-            <Button label="添加" severity="secondary" Size="medium" @click="showEstablishRAID('Modify')"></Button>
+            <Button label="添加" severity="secondary" size="medium" @click="showEstablishRAID('Modify')"></Button>
         </div>
         <div class="bg-white rounded-lg h-11 flex items-center px-4">
             <Image :src="warningSVG" class="h-6 w-6"></Image>
@@ -116,7 +136,7 @@ initEstablishRAID();
                 抹掉并解散
             </span>
 
-            <Button label="开始" severity="accent" Size="medium"></Button>
+            <Button label="开始" severity="accent" size="medium"></Button>
         </div>
     </div>
 </template>

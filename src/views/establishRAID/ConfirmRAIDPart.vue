@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, Ref, onMounted } from 'vue'
-import { nameRAID, checkedCreateRAID } from './controlData.ts';
+import { ref, Ref, onMounted, computed } from 'vue'
+import { nameStorage, checkedCreateRAID, context } from './controlData.ts';
 // const checked = ref(false)
 
 // const name = ref('Main-Storage')
@@ -14,17 +14,21 @@ function selectText(): void {
     const inputElement = nameRef.value;
     inputElement?.select();
 }
+
+const textName = computed(() => {
+    return context.value === 'CreateStorage' ? 'Name Storage' : 'Name RAID storage'
+})
 </script>
 <template>
     <div class="w-full flex flex-col justify-center mt-6 space-y-4">
         <div class="bg-gray-50 rounded-lg border border-gray-200 px-6 pt-[2px] grid grid-cols-2">
             <div class="mt-4 mb-10">
                 <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-                    Rename Storage
+                    {{ textName }}
                 </span>
             </div>
             <div class="mr-2 mt-3 flex flex-col space-y-[6px]">
-                <input ref="nameRef" id="name" v-model="nameRAID" autocomplete="Main-Storage" type="text" force
+                <input ref="nameRef" id="name" v-model="nameStorage" autocomplete="Main-Storage" type="text" force
                     class="selection:bg-sky-100 h-[20px] px-3 py-1.5 rounded box-content border border-zinc-200 hover:border-sky-600 active:border-sky-600 focus-visible:border-sky-600 outline-none text-sky-600 text-sm font-normal font-['Roboto']" />
 
                 <span class="text-neutral-400 text-xs font-normal font-['Roboto']">

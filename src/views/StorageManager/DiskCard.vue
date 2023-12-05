@@ -87,16 +87,16 @@ const statuClass = computed(() => {
             </span>
         </div>
         <div>
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">状态 : </span>
+            <!-- <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">状态 : </span> -->
             <span class="text-sm font-medium font-['Roboto'] leading-5" :class="statuClass">{{ statuTitle }}</span>
         </div>
 
         <div v-if="source?.RaidAssignment">
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">属于 : </span>
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">Used by </span>
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{ source?.RaidAssignment }}</span>
         </div>
         <div v-else>
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">类型 : </span>
+            <!-- <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">类型 : </span> -->
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{ source?.type }}</span>
         </div>
     </NPopover>

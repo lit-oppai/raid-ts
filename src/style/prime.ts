@@ -8,9 +8,9 @@ export default {
                     'transition duration-200 ease-in-out', // transition
                     'rounded-[14px] gap-2', // button shape 
                     {
-                        'px-3.5 py-1': props.Size !== null,
-                        'h-6': props.Size === 'small',
-                        'h-7': props.Size === 'medium',
+                        'px-3.5 py-1': props.size !== null,
+                        'h-6 text-xs leading-4': props.size === 'small',
+                        'h-7 text-sm leading-5': props.size === 'medium',
                     },
                     {
                         'text-neutral-300 bg-gray-100': context.disabled,
@@ -27,8 +27,8 @@ export default {
                 class: [
                     'font-normal font-["Roboto"]',
                     {
-                        'text-xs leading-4': props.Size === 'small',
-                        'text-sm leading-5': props.Size === 'medium',
+                        'text-xs leading-4': props.size === 'small',
+                        'text-sm leading-5': props.size === 'medium',
                     },
                     // {
                     //     'text-neutral-300': props.disabled,

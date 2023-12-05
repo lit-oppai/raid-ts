@@ -2,7 +2,7 @@
 import Image from 'primevue/image';
 import errorSVG from "@assets/img/EstablishRAID/error.svg";
 import successSVG from "@assets/img/EstablishRAID/success.svg";
-import { resultRAIDInfo, selectRAIDStrategy, selectStorageList } from './controlData.ts';
+import { resultRAIDInfo, selectRAIDStrategy, selectStorageList, context } from './controlData.ts';
 import { convertSizeToReadable } from '@views/StorageManager/controlData.ts';
 // const props = defineProps<{
 //     status: 'success' | 'error';
@@ -12,10 +12,18 @@ let svg: string, statusMessage: string;
 
 if (resultRAIDInfo.success) {
     svg = successSVG;
-    statusMessage = "Creation Successful";
+    if (context.value === 'EnableStorage') {
+        statusMessage = "Enablement successful";
+    } else {
+        statusMessage = "Creation Successful";
+    }
 } else {
     svg = errorSVG;
-    statusMessage = "Creation Failed";
+    if (context.value === 'EnableStorage') {
+        statusMessage = "Enablement failed";
+    } else {
+        statusMessage = "Creation Failed";
+    }
 }
 </script>
 <template name="ResultRAIDPart">
@@ -25,8 +33,9 @@ if (resultRAIDInfo.success) {
             {{ statusMessage }}
         </span>
     </div>
-    <div class="mt-3 flex justify-center">
-        <div v-if="resultRAIDInfo.success" class="max-w-[20.25rem] flex-grow mx-2 bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
+    <div class="mt-3 flex justify-center" v-if="context !== 'EnableStorage'">
+        <div v-if="resultRAIDInfo.success"
+            class="max-w-[20.25rem] flex-grow mx-2 bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
             <div class="flex justify-between">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                     Capacity :

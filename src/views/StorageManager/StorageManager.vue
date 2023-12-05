@@ -46,8 +46,10 @@ initEstablishRAID();
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">ZimaCube</span>
                 </div>
                 <div class="space-x-1">
-                    <span class="text-neutral-400 text-xs font-normal font-['Roboto'] ">剩余</span>
-                    <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">213GB</span>
+                    <span class="text-neutral-400 text-xs font-normal font-['Roboto'] ">Available</span>
+                    <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">
+                        {{ convertSizeToReadable(usageStatus.FilesFree).replace('0.00B', '--') }}
+                    </span>
                 </div>
             </div>
             <!-- TODO: Respondency -->
@@ -148,8 +150,10 @@ initEstablishRAID();
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">Files</span>
                         </div>
                         <div>
-                            <span class="text-neutral-400 text-xs font-normal font-['Roboto'] ">Total 1023GB/ </span>
-                            <span class="text-zinc-800 text-xs font-normal font-['Roboto'] ">810GB</span>
+                            <span class="text-neutral-400 text-xs font-normal font-['Roboto'] ">{{
+                                convertSizeToReadable(usageStatus.FilesFree + usageStatus.FilesUsage) }}/ </span>
+                            <span class="text-zinc-800 text-xs font-normal font-['Roboto'] ">{{
+                                convertSizeToReadable(usageStatus.FilesUsage) }} used</span>
                         </div>
                     </div>
 
@@ -172,7 +176,7 @@ initEstablishRAID();
                     <div class="flex-grow text-sky-500 text-sm font-normal font-['Roboto'] leading-6">
                         Discover the new hard drive
                     </div>
-                    <div class="w-6 h-6 rounded os_list_action_icon" @click="$router.push('/storage/DiscoverStorage')">
+                    <div class="w-6 h-6 rounded os_list_action_icon" @click="$router.push('/storage/DiscoverNewHardDrive')">
                         <i class="casa-right-outline text-base"></i>
                     </div>
                 </div>
@@ -216,7 +220,7 @@ initEstablishRAID();
                         </div>
                     </div>
 
-                    <div class="w-6 h-6 rounded os_list_action_icon" @click="$router.push('/storage/ModifyRAID')">
+                    <div class="w-6 h-6 rounded os_list_action_icon" @click="$router.push(`/storage/ModifyRAID/${item.label}`)">
                         <i class="casa-right-outline text-base"></i>
                     </div>
                 </div>
@@ -242,5 +246,7 @@ initEstablishRAID();
             </div>
         </div>
     </div>
-    <router-view v-else></router-view>
+    <Suspense v-else>
+        <router-view></router-view>
+    </Suspense>
 </template>
