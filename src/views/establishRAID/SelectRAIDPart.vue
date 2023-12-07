@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch, ref } from 'vue';
 import { RAIDStrategy } from './controlData.d';
-import { selectStorageList, selectRAIDStrategy } from './controlData';
+import { selectStorageList, selectRAIDStrategy, context } from './controlData';
 import { SSDStatus, HDDStatus, convertSizeToReadable } from '@views/StorageManager/controlData.ts';
 import SelectStrategy from './SelectStrategy.vue';
 import { NPopover } from 'naive-ui';
@@ -76,10 +76,10 @@ watch(selectStorageList, (newVal) => {
 
 <template name="SelectRAIDPart">
     <!-- 外框布局 -->
-    <div class="space-y-6">
+    <div class="space-y-6 mt-6">
         <!-- select strategy -->
-        <!-- TODO：此处有判断逻辑 -->
-        <div class="mt-6 flex space-x-4" v-if="true">
+        <!-- 扩容没有策略选择 -->
+        <div class="flex space-x-4" v-if="context !== 'Modify'">
             <SelectStrategy v-for="strategy in strategies" :key="strategy" :strategy="strategy"
                 @click="selectStorageList = []"></SelectStrategy>
         </div>

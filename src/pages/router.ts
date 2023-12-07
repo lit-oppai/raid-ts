@@ -55,7 +55,7 @@ export const routes: RouteMeta[] = [
                 meta: { title: 'Modify RAID', }
             },
             {
-                path: 'DetailStorage',
+                path: 'DetailStorage/:storageName',
                 component: () => import('./storage/DetailStorage.ts'),
                 name: 'DetailStorage',
                 meta: { title: 'Detail Storage', }

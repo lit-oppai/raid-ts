@@ -4,9 +4,6 @@ import errorSVG from "@assets/img/EstablishRAID/error.svg";
 import successSVG from "@assets/img/EstablishRAID/success.svg";
 import { resultRAIDInfo, selectRAIDStrategy, selectStorageList, context } from './controlData.ts';
 import { convertSizeToReadable } from '@views/StorageManager/controlData.ts';
-// const props = defineProps<{
-//     status: 'success' | 'error';
-// }>();
 
 let svg: string, statusMessage: string;
 

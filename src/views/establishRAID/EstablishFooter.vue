@@ -25,8 +25,15 @@ const createStorage = () => {
 }
 const createSingleStorage = () => {
     // openAPI.storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
-    openAPI.storage.createStorage({ name: nameStorage.value, path: '/dev/sdd', format: true }).then((res) => {
-        closeEstablishRAID(res);
+    openAPI.storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
+        if(res.status === 200) {
+            resultRAIDInfo.success = true;
+            resultRAIDInfo.btnText = 'Done';
+        } else {
+            resultRAIDInfo.success = false;
+            resultRAIDInfo.btnText = 'Restart';
+        }
+        resultRAIDInfo.butFunc = closeEstablishRAID;
     }).catch((err) => {
         console.log(err);
     }).finally(() => {

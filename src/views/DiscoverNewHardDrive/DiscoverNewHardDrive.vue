@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import Image from 'primevue/image';
 import Button from 'primevue/button';
 // import diskSVG from '@assets/img/StorageManager/disk.svg';
@@ -6,20 +7,23 @@ import HDDSVG from '@assets/img/StorageManager/HDD.svg';
 import SSDSVG from '@assets/img/StorageManager/SSD.svg';
 import { HDDStatus, SSDStatus, convertSizeToReadable } from '@views/StorageManager/controlData.ts';
 import { stepByStep } from '@views/EstablishRAID/controlData.ts';
-const filtedArray = Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) => a[0] > b[0] ? 1 : -1).filter((item) => item[1].unused);
-const allDiskStatus = new Map(filtedArray);
+// const filtedArray = Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) => a[0] > b[0] ? 1 : -1).filter((item) => item[1].unused);
+const allDiskStatus = computed(() => {
+    // TODO: 新硬盘页面， 产品要求特殊处理，加上未被挂载分区的硬盘。
+    return new Map(Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) => a[0] > b[0] ? 1 : -1).filter((item) => (!item[1].support) || item[1].unused));
+})
 import { closeEstablishRAID, showEstablishRAID } from '@views/EstablishRAID/controlView.ts';
-import { resultRAIDInfo } from '@views/EstablishRAID/controlData.ts';
+import { resultRAIDInfo, nameStorage, formatePath } from '@views/EstablishRAID/controlData.ts';
 import { storage } from '@network/index.ts';
 
-const showCheckFormat = (): void => {
+const showCheckFormat = (name: string = "", path: string = ""): void => {
+    nameStorage.value = name;
+    formatePath.value = path;
     showEstablishRAID('CreateStorage')
 }
 const showEnableStorage = (name: string, path: string): void => {
     showEstablishRAID('EnableStorage')
     storage.createStorage({ path, name, format: false }).then((res) => {
-        console.log(res, 123);
-
         if (res.status === 200) {
             resultRAIDInfo.success = true;
             resultRAIDInfo.btnText = 'Done';
@@ -72,8 +76,8 @@ const showEnableStorage = (name: string, path: string): void => {
                     <div class="flex-grow"></div>
                     <Button label="Enable" severity="primary" size="medium"
                         @click="showEnableStorage(disk.name as string, disk.path as string)" v-if="disk.support"></Button>
-                    <Button label="Format and Enable" severity="primary" size="medium" @click="showCheckFormat()"
-                        v-else></Button>
+                    <Button label="Format and Enable" severity="primary" size="medium"
+                        @click="showCheckFormat(disk.name, disk.path)" v-else></Button>
                 </div>
                 <!-- Content -->
                 <div class="ml-9 mt-4 bg-gray-50 rounded-lg p-3 gap-2 flex flex-col" v-if="disk?.children_number ?? 0 > 0">
@@ -105,8 +109,8 @@ const showEnableStorage = (name: string, path: string): void => {
                         <Button label="Enable" severity="secondary" size="small"
                             @click="showEnableStorage(item?.name as string, item?.path as string)"
                             v-else-if="item?.supported"></Button>
-                        <Button label="Format and Enable" severity="secondary" size="small" @click="showCheckFormat()"
-                            v-else></Button>
+                        <Button label="Format and Enable" severity="secondary" size="small"
+                            @click="showCheckFormat(item?.name, item?.path)" v-else></Button>
                         <!-- paperwork end -->
 
                     </div>

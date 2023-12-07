@@ -37,7 +37,7 @@ type UI_DISK_INFO_TYPE = {
     "RaidAssignment"?: string,
     // "occupied"?: string,
     "unused"?: boolean,
-    "children"?: Array<{ mount_point: string, name: string, raid: boolean, raid_level: number, path: string, size:number, supported: boolean } | undefined>,
+    "children"?: Array<{ mount_point: string, name: string, raid: boolean, raid_level: number, path: string, size: number, supported: boolean } | undefined>,
     "children_number"?: number,
     "support"?: boolean,
 }
@@ -197,6 +197,7 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[], storageInfo: STORAGE_INFO_TY
             }
             fileFree += storageSize - Number(storage.used);
             filesUsage += Number(storage.used);
+            
             storageInfoMap.set(storage.label, {
                 "uuid": storage.uuid,
                 // "mount_point": string,
@@ -261,6 +262,9 @@ const convertSizeToTargetUnit = (size: number, targetUnit: string): number => {
 const initStorageInfo = async (): Promise<void> => {
     const disksInfo = await getDiskInfo();
     const storageInfo = await getStorageInfo();
+    // reload lifecycle.
+    storageInfoMap.clear();
+    RAIDCandidateDiskCount.value = 0;
     rinseDiskInfo(disksInfo, storageInfo);
 }
 export default initStorageInfo;

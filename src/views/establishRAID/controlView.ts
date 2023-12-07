@@ -1,14 +1,15 @@
 // ref https://codesandbox.io/s/plfs2x?file=/src/App.vue:1006-1069
 import { markRaw, defineAsyncComponent, ref, Ref, watch, inject } from 'vue';
 import { useDialog } from 'primevue/usedialog';
-import { currentStep, currentStepName,clear, changeContext } from "./controlData.ts";
+import { currentStep, currentStepName, clear, changeContext } from "./controlData.ts";
 import { EntranceContextType } from "./controlData.d";
+import { reloadServiceData } from '@views/StorageManager/controlData.ts';
 
 const EstablishRAID = defineAsyncComponent(() => import('@views/EstablishRAID/EstablishRAID.vue'))
 const EstablishFooter = defineAsyncComponent(() => import('@views/EstablishRAID/EstablishFooter.vue'))
 
 let dialog: any = null;
-let dialogInstance:any = null;
+let dialogInstance: any = null;
 
 // TODO: 为了减少重复声明，做了 init 处理。但是非原子操作，会容易丢失 init 操作。
 // TODO: Reomve.
@@ -40,11 +41,9 @@ interface ShowType {
         title: string;
     }
 }
-// TODO: 只被外部传参使用
-import { formatePath } from './controlData.ts';
 
-const showEstablishRAID = (type: keyof ShowType = 'Create', id?: string): void => {
-    formatePath.value = id ?? '';
+const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
+
     const showType: ShowType = {
         Create: {
             title: 'Create RAID',
@@ -97,8 +96,9 @@ const showEstablishRAID = (type: keyof ShowType = 'Create', id?: string): void =
     });
 };
 
-const closeEstablishRAID = (e?: object): void => { 
+const closeEstablishRAID = (e?: object): void => {
     // dialogRef.value?.close(e);
+    reloadServiceData();
     dialogInstance?.close(e);
 }
 

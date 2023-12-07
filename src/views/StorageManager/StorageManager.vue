@@ -10,9 +10,10 @@ import { initEstablishRAID, showEstablishRAID } from '@views/EstablishRAID/contr
 import ZimaCubeCard from '@views/StorageManager/ZimaCubeCard.vue';
 import initStorageInfo from './controlData.ts';
 import { storageInfoMap, usageStatus, convertSizeToReadable, RAIDCandidateDiskCount } from './controlData.ts';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { computed } from 'vue';
 const route = useRoute();
+const router = useRouter();
 const pathDeep = computed(() => route.matched.length === 1);
 const sysRate = computed(() => {
     return (usageStatus.value?.SystemUsage / (usageStatus.value?.SystemUsage + usageStatus.value?.DataFree + usageStatus.value?.DataUsage) * 100).toFixed(0);
@@ -31,6 +32,14 @@ const filesFreeRate = computed(() => {
 });
 initStorageInfo();
 initEstablishRAID();
+const goToStorageDetailPage = (isRaid: boolean, label: string) => {
+    // '/storage/DetailStorage'
+    if (isRaid) {
+        router.push(`/storage/ModifyRAID/${label}`)
+    } else {
+        router.push(`/storage/DetailStorage/${label}`)
+    }
+}
 </script>
 
 <template>
@@ -202,8 +211,8 @@ initEstablishRAID();
                 <div class="flex px-3 space-x-3 items-center rounded-md os_list" v-for="[label, item] in storageInfoMap"
                     :key="label">
                     <div class="w-6 h-6 flex justify-center items-center">
-                        <Image :src="HDDSVG" v-if="item.disk_type === 'NVME'" />
-                        <Image :src="SSDSVG" v-else-if="item.disk_type === 'SATA'" />
+                        <Image :src="HDDSVG" v-if="item.disk_type === 'SATA'" />
+                        <Image :src="SSDSVG" v-else-if="item.disk_type === 'NVME'" />
                         <Image :src="RaidSVG" v-else />
                     </div>
                     <div class="flex-grow flex flex-col py-2 space-y-1">
@@ -220,7 +229,7 @@ initEstablishRAID();
                         </div>
                     </div>
 
-                    <div class="w-6 h-6 rounded os_list_action_icon" @click="$router.push(`/storage/ModifyRAID/${item.label}`)">
+                    <div class="w-6 h-6 rounded os_list_action_icon" @click="goToStorageDetailPage(item.raid, item.label)">
                         <i class="casa-right-outline text-base"></i>
                     </div>
                 </div>
@@ -239,7 +248,7 @@ initEstablishRAID();
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto']">Surplus 210.5GB</span>
                         </div>
                     </div>
-                    <div class="w-6 h-6 rounded os_list_action_icon" @click="$router.push('/storage/DetailStorage')">
+                    <div class="w-6 h-6 rounded os_list_action_icon">
                         <i class="casa-right-outline text-base"></i>
                     </div>
                 </div>
