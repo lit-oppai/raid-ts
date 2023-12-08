@@ -72,6 +72,15 @@ const resultRAIDInfo = reactive<{
     success: true,
     capacity: 0,
 })
+// 选择磁盘
+const selectedFidDisk = ref<string>();
+// 最小的盘尺寸
+const needMinNewDiskSize = ref<number>(0);
+const needFirstAidRaid = ref<string>();
+// 扩容
+const diskListByStorageSpace = ref<string[]>([]);
+const extendRaidPath = ref<string>();
+
 const clear = (): void => {
     currentStep.value = 0;
     selectRAIDStrategy.value = '';
@@ -82,6 +91,11 @@ const clear = (): void => {
     resultRAIDInfo.butFunc = () => { };
     resultRAIDInfo.success = true;
     resultRAIDInfo.capacity = 0;
+    selectedFidDisk.value = '';
+    needMinNewDiskSize.value = 0;
+    needFirstAidRaid.value = '';
+    diskListByStorageSpace.value = [];
+    extendRaidPath.value = '';
 };
 export {
     currentStep,
@@ -93,6 +107,11 @@ export {
 
     stepByStep,
     resultRAIDInfo,
+    selectedFidDisk,
+    needMinNewDiskSize,
+    needFirstAidRaid,
+    diskListByStorageSpace,
+    extendRaidPath,
     // resultRAID,
     // resultCapacity,
     // TODO: 暂时放在 controlView.ts 中。

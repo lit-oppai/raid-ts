@@ -12,7 +12,7 @@ import {
     showEstablishRAID,
     initEstablishRAID,
 } from "@views/EstablishRAID/controlView.ts";
-import { selectRAIDStrategy } from "@views/EstablishRAID/controlData.ts";
+import { selectRAIDStrategy, needMinNewDiskSize } from "@views/EstablishRAID/controlData.ts";
 import { RAIDStrategy } from "@views/EstablishRAID/controlData.d";
 import {
     convertSizeToReadable,
@@ -31,21 +31,23 @@ const diskInfoByStorageSpace = ref<Device[]>([]);
 
 const needFirstAid = ref(false);
 const needNewDisk = ref(false);
-const needMinSize = ref(0);
+// const needMinNewDiskSize = ref(0);
+const loadRaid = async () => {
+    await raid.getRaids(storageInfo?.path).then((res) => {
+        selectRAIDStrategy.value = ("RAID" + res.data.data?.[0].raid_level ??
+            0) as RAIDStrategy;
+        diskInfoByStorageSpace.value = res.data.data?.[0].devices ?? [];
 
-await raid.getRaids(storageInfo?.path).then((res) => {
-    selectRAIDStrategy.value = ("RAID" + res.data.data?.[0].raid_level ??
-        0) as RAIDStrategy;
-    diskInfoByStorageSpace.value = res.data.data?.[0].devices ?? [];
+        // TODO: 为了做急救功能，此为相反的数据
+        // diskInfoByStorageSpace.value[0].health = !diskInfoByStorageSpace.value[0].health;
 
-    // TODO: 为了做急救功能，此为相反的数据
-    // diskInfoByStorageSpace.value[0].health = !diskInfoByStorageSpace.value[0].health;
+        needFirstAid.value = diskInfoByStorageSpace.value.filter((i) => !i.health).length !== 0;
+        needNewDisk.value = res.data.data?.[0].shortage ?? false;
+        needMinNewDiskSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
+    });
+}
 
-    needFirstAid.value = diskInfoByStorageSpace.value.filter((i) => !i.health).length !== 0;
-    needNewDisk.value = res.data.data?.[0].shortage ?? false;
-    needMinSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
-});
-
+loadRaid(); // TODO
 initEstablishRAID();
 
 // disable raid
@@ -66,14 +68,70 @@ const disabledRaid = async (): Promise<void> => {
             console.log(err);
         });
 };
+
+// ejct disk 
+const operationEjectLoading = ref<boolean>(false);
+const ejectDiskFromRaid = async (path: string): Promise<void> => {
+    operationEjectLoading.value = true;
+    await raid
+        .updateRaid({ path: storageInfo?.path ?? '', action: 'remove', devices: [path] })
+        .then((res) => {
+            if (res.status === 200) {
+                // reloadServiceData();
+                loadRaid();
+            } else {
+                console.log("eject failed");
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            operationEjectLoading.value = false;
+            showAddingDiskButton.value = false;
+        });
+};
+
+// power off
+import messageBus from '@utils/messageBus';
+const showAddingDiskButton = ref(true);
+const targetPawerOff = (): void => {
+    showAddingDiskButton.value = true;
+    messageBus('mircoapp_communicate', {
+        action: 'power_off',
+        name: 'icewhale_settings'
+    });
+}
+
+// open first aid page
+import { needFirstAidRaid } from '@views/EstablishRAID/controlData.ts'
+const openFirstAid = (): void => {
+    needFirstAidRaid.value = storageInfo?.path ?? '';
+    showEstablishRAID('FirstAid');
+}
+
+// extened capacity
+import { diskListByStorageSpace, extendRaidPath, nameStorage } from '@views/EstablishRAID/controlData.ts'
+import { mapIndexForDiskHub } from '@views/StorageManager/controlData.ts'
+const extenedCapacity = (): void => {
+    // perpare data
+    selectRAIDStrategy.value = 'RAID' + storageInfo?.raid_level as RAIDStrategy;
+    // needMinNewDiskSize
+    diskListByStorageSpace.value = diskInfoByStorageSpace.value.map((item) => {
+        return mapIndexForDiskHub.get(item.index as number)
+    }) as string[];
+    extendRaidPath.value = storageInfo?.path ?? '';
+    nameStorage.value = storageInfo?.name ?? '';
+    showEstablishRAID('Modify')
+}
 </script>
 <template>
     <!-- Warnning Info -->
-    <div class="w-full px-3 py-2.5 bg-rose-100 rounded-md justify-start items-center gap-2 inline-flex mt-4">
+    <div class="w-full px-3 py-2.5 bg-rose-100 rounded-md justify-start items-center gap-2 inline-flex mt-4"
+        v-if="needNewDisk">
         <Image :src="warningIntense"></Image>
         <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow align-baseline">
-            The data has been locked for read-only access. Please replace it for recovery
-            operations.
+            The data has been locked for read-only access. Please replace it for recovery operations.
         </span>
     </div>
     <!-- Hard Drive Part -->
@@ -96,19 +154,22 @@ const disabledRaid = async (): Promise<void> => {
                 <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto'] mr-1" v-if="item.health">
                     {{ item.health === true ? "Healthy" : "Unhealthy" }}
                 </span>
-                <Button label="推出" severity="primary" size="medium" @click="showEstablishRAID('Modify')" v-else></Button>
+                <Button :loading="operationEjectLoading" label="Eject" severity="primary" size="medium"
+                    @click="ejectDiskFromRaid(item.path as string)" v-else></Button>
             </div>
         </div>
 
         <div class="flex items-center bg-gray-50 rounded-md h-10 px-3 gap-4" v-if="needNewDisk">
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto']" v-if="showAddingDiskButton">
+                Need new hard drive · At least {{ convertSizeToReadable(needMinNewDiskSize) }}
+            </span>
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto']" v-else>
                 The hard drive has been ejected. Please power off, replace and restart.
             </span>
             <span class="flex-grow"></span>
-            <!-- TODO：添加 socket 到框架，以触发关机 -->
-            <Button label="Eject" severity="primary" size="medium"></Button>
-            <Button label="Power off" severity="primary" size="medium"></Button>
-            <Button label="Add" severity="primary" size="medium" @click="showEstablishRAID('FirstAid')"></Button>
+            <!-- TODO：添加 socket 到框架，以触发 -->
+            <Button label="Add" severity="primary" size="medium" @click="openFirstAid" v-if="showAddingDiskButton"></Button>
+            <Button label="Power off" severity="primary" size="medium" @click="targetPawerOff()" v-else></Button>
         </div>
 
         <div class="pt-2 px-1">
@@ -119,7 +180,7 @@ const disabledRaid = async (): Promise<void> => {
     </div>
 
     <!-- Data Protect -->
-    <div class="mt-6 space-y-2" if="storageInfo.raid_level !== 0">
+    <div class="mt-6 space-y-2" v-if="selectRAIDStrategy !== 'RAID0'">
         <div class="mr-0.5">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                 Data Protection
@@ -144,7 +205,7 @@ const disabledRaid = async (): Promise<void> => {
                 <div class="h-8 flex items-center px-4 pb-1">
                     <i class="casa-alert-outline text-2xl text-rose-500"></i>
                     <span class="text-neutral-400 text-xs font-normal font-['Roboto'] flex-grow ml-3">
-                        Replace a hard drive of at least {{ convertSizeToReadable(needMinSize) }}
+                        Replace a hard drive of at least {{ convertSizeToReadable(needMinNewDiskSize) }}
                         to restore functionality.
                     </span>
                 </div>
@@ -158,13 +219,13 @@ const disabledRaid = async (): Promise<void> => {
         </div>
 
         <!-- TODO0 无损坏 && raid5 && 存在空槽位 -->
-        <div class="bg-white rounded-lg h-11 flex items-center px-4" v-if="selectRAIDStrategy === 'RAID5' && !needFirstAid">
+        <div class="bg-white rounded-lg h-11 flex items-center px-4" v-if="storageInfo?.raid_level === 5 && !needFirstAid">
             <Image :src="diskSVG" class="h-6 w-6"></Image>
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
                 Expand capacity
             </span>
 
-            <Button label="Add Drive" severity="secondary" size="medium" @click="showEstablishRAID('Modify')"></Button>
+            <Button label="Add Drive" severity="secondary" size="medium" @click="extenedCapacity"></Button>
         </div>
 
         <div class="bg-white rounded-lg h-11 flex items-center px-4">

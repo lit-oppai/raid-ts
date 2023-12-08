@@ -124,5 +124,5 @@ export default {
                                 leaveToClass: 'opacity-0 scale-75'
                             };
         }
-    }
+    },
 }

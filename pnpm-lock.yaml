@@ -29,8 +29,8 @@ dependencies:
 
 devDependencies:
   '@icewhale/zimaos-localstorage-openapi':
-    specifier: 0.4.9-alpha10
-    version: 0.4.9-alpha10
+    specifier: 0.4.9-alpha13
+    version: 0.4.9-alpha13
   '@types/lodash':
     specifier: ^4.14.202
     version: 4.14.202
@@ -338,8 +338,8 @@ packages:
     dev: true
     optional: true
 
-  /@icewhale/zimaos-localstorage-openapi@0.4.9-alpha10:
-    resolution: {integrity: sha512-yBpyxMscmiTtmm0uq+ITBOJcwSPChIX0C7EaOuRV35gRyGqNMq3+DJjlYHsTV8HOC2bU3spJjda3rEDK6Eu8ag==}
+  /@icewhale/zimaos-localstorage-openapi@0.4.9-alpha13:
+    resolution: {integrity: sha512-i56m55FJj4XrIqdvU1dIaBowWBn4o5fwVMfO/G4Q/F8YxIn6VodS8aBuI+8iclA0VdjTtypcC8161d+7K3bviA==}
     dependencies:
       axios: 1.6.2
     transitivePeerDependencies:

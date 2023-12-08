@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, onBeforeMount } from 'vue';
 import Image from 'primevue/image';
 import Button from 'primevue/button';
 // import diskSVG from '@assets/img/StorageManager/disk.svg';
@@ -11,6 +11,22 @@ import { stepByStep } from '@views/EstablishRAID/controlData.ts';
 const allDiskStatus = computed(() => {
     // TODO: 新硬盘页面， 产品要求特殊处理，加上未被挂载分区的硬盘。
     return new Map(Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) => a[0] > b[0] ? 1 : -1).filter((item) => (!item[1].support) || item[1].unused));
+})
+import { disk } from '@network/index.ts';
+const allNewDiskStatus = ref(new Map());
+const loadAllNewDiskStatus = (): void => {
+    disk.getDisks("show").then((res) => {
+        if (res.status === 200 && res.data.data) {
+            allNewDiskStatus.value = new Map(res.data.data.filter((item) => item.model !== 'System').map((item) => {
+                const indexHub = ['0', '1', '2', '3', '4', '5', '6', 'A', 'B', 'C', 'D'];
+                return [indexHub[item?.index ?? 0], item]
+            }));
+        }
+    })
+}
+
+onBeforeMount(() => {
+    loadAllNewDiskStatus();
 })
 import { closeEstablishRAID, showEstablishRAID } from '@views/EstablishRAID/controlView.ts';
 import { resultRAIDInfo, nameStorage, formatePath } from '@views/EstablishRAID/controlData.ts';
@@ -37,6 +53,7 @@ const showEnableStorage = (name: string, path: string): void => {
         resultRAIDInfo.btnText = 'Restart';
     }).finally(() => {
         resultRAIDInfo.butFunc = () => {
+            loadAllNewDiskStatus();
             closeEstablishRAID();
         }
         stepByStep('next');
@@ -47,7 +64,7 @@ const showEnableStorage = (name: string, path: string): void => {
 <template>
     <div class="">
         <!-- Traversing Part -->
-        <div v-for="[label, disk] in allDiskStatus" :key="label">
+        <div v-for="[label, disk] in allNewDiskStatus" :key="label">
             <div class="mt-6 mb-2">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                     Hard drive bay {{ label }}
