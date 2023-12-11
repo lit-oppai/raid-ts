@@ -68,7 +68,7 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
     // 对于path: 'ModifyRAID/:storageName', 更改meta: { title: 'Modify RAID', }
     if (to.params.storageName) {
         to.meta.title = to.params.storageName;

@@ -85,7 +85,7 @@ export default {
         footer: {
             class: ['shrink-0 ', 'h-16', 'border-t-2 bg-white text-gray-700 px-6 pb-6 pt-3 text-right rounded-b-xl', 'dark:bg-gray-900  dark:text-white/80']
         },
-        mask: ({ props }: any) => ({
+        mask: ({  }: any) => ({
             class: ['transition duration-200', 'bg-black/40']
         }),
         transition: ({ props }: any) => {

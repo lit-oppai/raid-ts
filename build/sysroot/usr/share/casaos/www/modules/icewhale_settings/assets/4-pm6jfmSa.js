@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-x3n3nnut.js";import{o,c as t}from"./index-Dv97TFdI.js";const c={},r={d:"M11.1113 46.959V48.084H4.95898L4.91211 47.2344L8.5918 41.4688H9.72266L8.49805 43.5664L6.38281 46.959H11.1113ZM10.0449 41.4688V50H8.63281V41.4688H10.0449Z",fill:"#909599"};function _(n,s){return o(),t("path",r)}const i=e(c,[["render",_]]);export{i as default};

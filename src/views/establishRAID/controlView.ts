@@ -1,8 +1,7 @@
 // ref https://codesandbox.io/s/plfs2x?file=/src/App.vue:1006-1069
-import { markRaw, defineAsyncComponent, ref, Ref, watch, inject } from 'vue'
+import { markRaw, defineAsyncComponent, ref, Ref, watch } from 'vue'
 import { useDialog } from 'primevue/usedialog'
 import {
-    currentStep,
     currentStepName,
     clear,
     changeContext

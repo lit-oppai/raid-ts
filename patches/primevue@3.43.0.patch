@@ -1,0 +1,13 @@
+diff --git a/button/Button.d.ts b/button/Button.d.ts
+index 768e3ff28e019387f99b4e6f953744df0f080621..f7ab64e797935e03bfa82b20cc3c711a782daaf3 100755
+--- a/button/Button.d.ts
++++ b/button/Button.d.ts
+@@ -161,7 +161,7 @@ export interface ButtonProps extends ButtonHTMLAttributes {
+     /**
+      * Defines the size of the button.
+      */
+-    size?: 'small' | 'large' | undefined;
++    size?: 'small' | 'large' | 'medium' | string | undefined;
+     /**
+      * Add a plain textual class to the button without a background initially.
+      * @defaultValue false

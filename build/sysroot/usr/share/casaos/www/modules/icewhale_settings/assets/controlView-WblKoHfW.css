@@ -1,0 +1,1 @@
+.scrollbar-container{overflow-y:scroll;scrollbar-width:thin;scrollbar-color:rgba(207,207,207,.5) transparent}.scrollbar-container::-webkit-scrollbar-track{background-color:transparent}.scrollbar-container::-webkit-scrollbar-thumb{background-color:#cfcfcf80;border-radius:10px}.scrollbar-container::-webkit-scrollbar-thumb:hover{background-color:#cfcfcfcc}

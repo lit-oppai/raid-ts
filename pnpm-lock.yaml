@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  primevue@3.43.0:
+    hash: 6xg2mlikixstnt3asa7z64fc4u
+    path: patches/primevue@3.43.0.patch
+
 dependencies:
   axios:
     specifier: ^1.6.2
@@ -12,8 +17,8 @@ dependencies:
     specifier: ^1.0.4
     version: 1.0.4
   primevue:
-    specifier: ^3.42.0
-    version: 3.42.0(vue@3.3.9)
+    specifier: latest
+    version: 3.43.0(patch_hash=6xg2mlikixstnt3asa7z64fc4u)(vue@3.3.9)
   socket.io-client:
     specifier: ^4.7.2
     version: 4.7.2
@@ -1364,13 +1369,14 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
-  /primevue@3.42.0(vue@3.3.9):
-    resolution: {integrity: sha512-vY/nHBInl/k2MFfgx+5dGI3tH1P6OmO2Oj6eOLwtHk000yopPxLBUP/enALoElriy5EaPzfv02upOrsQqd+nJA==}
+  /primevue@3.43.0(patch_hash=6xg2mlikixstnt3asa7z64fc4u)(vue@3.3.9):
+    resolution: {integrity: sha512-iW2gEbM79v5RzRYIrg010fN1DRr5CIRdMsVMG3pBUCq0rzUGnm/hlzJ9ThDZyJrA0/tEKByAo/Pra56s5PnvqQ==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
       vue: 3.3.9(typescript@5.3.2)
     dev: false
+    patched: true
 
   /process@0.11.10:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
