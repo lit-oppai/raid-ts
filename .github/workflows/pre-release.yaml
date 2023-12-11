@@ -52,7 +52,6 @@ jobs:
           echo github.sha ${{ github.sha }}
           echo env.VERSION ${{ steps.get_version.outputs.VERSION }}
 
-      - run: npm install -G pnpm
       - run: pnpm install
       - run: pnpm build
       - run: |
