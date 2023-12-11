@@ -16,11 +16,7 @@ import {
 } from "@views/EstablishRAID/controlView.ts";
 import ZimaCubeCard from "@views/StorageManager/ZimaCubeCard.vue";
 import initStorageInfo from "./controlData.ts";
-import {
-    storageInfoMap,
-    usageStatus,
-    RAIDCandidateDiskCount,
-} from "./controlData.ts";
+import { storageInfoMap, usageStatus, RAIDCandidateDiskCount } from "./controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
@@ -92,7 +88,8 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
             <div class="w-full flex justify-between">
                 <div class="flex items-center space-x-1.5">
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">ZimaCube</span>
-                    <i class="casa-right-outline text-base os_list_action_icon" @click="goToStorageDetailPage(false, 'ZimaOS-HD')"></i>
+                    <i class="casa-right-outline text-base os_list_action_icon"
+                        @click="goToStorageDetailPage(false, 'ZimaOS-HD')"></i>
                 </div>
                 <div class="space-x-1">
                     <span class="text-neutral-400 text-xs font-normal font-['Roboto']">Available</span>
@@ -224,7 +221,8 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
         <div v-else>
             <!-- notice or create RAID -->
             <div class="os_bg_white_card">
-                <div class="flex px-3 space-x-3 items-center h-10 rounded-md bg-blue-100" v-if="RAIDCandidateDiskCount > 0">
+                <div class="flex px-3 space-x-3 items-center h-10 rounded-md bg-blue-100 cursor-pointer" v-if="RAIDCandidateDiskCount > 0"
+                    @click="$router.push('/storage/DiscoverNewHardDrive')">
                     <div class="w-6 h-6 flex justify-center items-center">
                         <div class="self-center flex justify-evenly bg-sky-500 w-4 h-4 rounded-full">
                             <i class="text-white text-xs font-normal font-['Roboto']">{{
@@ -235,7 +233,7 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
                     <div class="flex-grow text-sky-500 text-sm font-normal font-['Roboto'] leading-6">
                         Discover the new hard drive
                     </div>
-                    <div class="w-6 h-6 rounded os_list_action_icon" @click="$router.push('/storage/DiscoverNewHardDrive')">
+                    <div class="w-6 h-6 rounded os_list_action_icon">
                         <i class="casa-right-outline text-base"></i>
                     </div>
                 </div>
