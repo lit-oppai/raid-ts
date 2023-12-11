@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount } from "vue";
+import { onBeforeMount, ref } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import { NPopover } from "naive-ui";
@@ -75,6 +75,14 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
         router.push(`/storage/DetailStorage/${label}`);
     }
 };
+
+// 检测错误信息
+const unhealthyLable = ref<string>();
+storageInfoMap.forEach((item) => {
+    if (!item.health && item.raid) {
+        unhealthyLable.value = item.name;
+    }
+});
 </script>
 
 <template>
@@ -190,7 +198,7 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
                             </div>
                         </NPopover>
                     </div>
-                    <div class="flex justify-between" v-if="usageStatus.FilesUsage">
+                    <div class="flex justify-between" v-if="usageStatus.FilesUsage || usageStatus.FilesFree">
                         <div class="space-x-1">
                             <span class="bg-green-400 w-1.5 h-1.5 rounded-sm inline-block"></span>
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">Files</span>
@@ -221,8 +229,20 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
         <div v-else>
             <!-- notice or create RAID -->
             <div class="os_bg_white_card">
-                <div class="flex px-3 space-x-3 items-center h-10 rounded-md bg-blue-100 cursor-pointer" v-if="RAIDCandidateDiskCount > 0"
-                    @click="$router.push('/storage/DiscoverNewHardDrive')">
+                <div class="flex px-3 space-x-3 items-center h-10 rounded-md bg-rose-100 cursor-pointer"
+                    v-if="unhealthyLable" @click="goToStorageDetailPage(true, unhealthyLable)">
+                    <div class="w-6 h-6 flex justify-center items-center">
+                        <Image :src="warningRedSVG" class="text-base fill-red-500"></Image>
+                    </div>
+                    <div class="flex-grow text-orange-500 text-sm font-normal font-['Roboto'] leading-6">
+                        Detected hard drive damaged
+                    </div>
+                    <div class="w-6 h-6 rounded os_list_action_icon">
+                        <i class="casa-right-outline text-base"></i>
+                    </div>
+                </div>
+                <div class="flex px-3 space-x-3 items-center h-10 rounded-md bg-blue-100 cursor-pointer"
+                    v-else-if="RAIDCandidateDiskCount > 0" @click="$router.push('/storage/DiscoverNewHardDrive')">
                     <div class="w-6 h-6 flex justify-center items-center">
                         <div class="self-center flex justify-evenly bg-sky-500 w-4 h-4 rounded-full">
                             <i class="text-white text-xs font-normal font-['Roboto']">{{
