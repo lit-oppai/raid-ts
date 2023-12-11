@@ -19,7 +19,7 @@ declare type RouteMeta = RouteRecordRaw & {
 export const routes: RouteMeta[] = [
     {
         path: '/',
-        component: () => import('./storage/DetailStorage.ts'),
+        component: () => import('./home'),
         name: 'home',
         icon: 'casa-settings-outline',
         meta: {
@@ -28,7 +28,7 @@ export const routes: RouteMeta[] = [
     },
     {
         path: '/network',
-        component: () => import('./storage/DiscoverNewHardDrive.ts'),
+        component: () => import('./home'),
         name: 'network',
         icon: 'casa-network-outline',
         meta: { title: 'Network', }
@@ -61,13 +61,6 @@ export const routes: RouteMeta[] = [
                 meta: { title: 'Detail Storage', }
             },
         ]
-    },
-    {
-        path: '/developPage',
-        component: () => import('./storage/ModifyRAID'),
-        name: 'developPage',
-        icon: 'casa-network-outline',
-        meta: { title: 'Develop Page', }
     },
 ];
 const router = createRouter({

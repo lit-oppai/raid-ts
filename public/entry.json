@@ -1,12 +1,12 @@
 {
-  "name": "icewhale_raid",
+  "name": "icewhale_settings",
   "title": {
-    "en_us": "Raid"
+    "en_us": "settings"
   },
   "prefetch": true,
-  "entry": "/modules/icewhale_raid/index.html",
-  "icon": "/modules/icewhale_raid/raid.svg",
-  "description": "Icewhale Raid",
+  "entry": "/modules/icewhale_settings/index.html",
+  "icon": "/modules/icewhale_settings/raid.svg",
+  "description": "Icewhale Settings",
   "formality": {
     "type": "modal",
     "props": {
