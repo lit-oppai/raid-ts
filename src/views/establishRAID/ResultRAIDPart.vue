@@ -8,7 +8,7 @@ import {
     selectStorageList,
     context,
 } from "./controlData.ts";
-import { convertSizeToReadable } from "@views/StorageManager/controlData.ts";
+import { convertSizeToReadable } from "@utils/tools.ts";
 
 let svg: string, statusMessage: string;
 

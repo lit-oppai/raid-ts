@@ -32,6 +32,7 @@ type DISK_INFO_TYPE = {
     >
     children_number: number
     support: boolean
+    rota: boolean
 }
 type UI_DISK_INFO_TYPE = {
     exit: boolean
@@ -105,7 +106,7 @@ type UI_STORAGE_INFO_TYPE = {
     path: string
     // "drive_name": string,
     raid: boolean
-    raid_level: number
+    raid_level?: number
     label: string
     // "children": Array<{ mount_point: string, name: string, raid: boolean, raid_level: number } | undefined>,
     // "persisted_in": string,
@@ -135,7 +136,7 @@ async function getDiskInfo(): Promise<DISK_INFO_TYPE[] | any> {
 async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
     const a = await openAPI.raid.getRaids().then((res: any) => res.data.data)
     const b = await openAPI.storage
-        .getStorage('false')
+        .getStorage('show')
         .then((res: any) => res.data.data)
     return [...a, ...b]
     // return StorageMethodsService.getStorage('show', '/').then((res: any) => res.data.data);
@@ -145,8 +146,10 @@ async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
 const HDDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
 // const SSDStatus = ref<UI_DISK_INFO_TYPE[]>([])
 const SSDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
-//  未使用的 storage
+//  除去系统盘之外的 storage
 const storageInfoMap = reactive(new Map<string, UI_STORAGE_INFO_TYPE>())
+// 系统 storage 信息
+let sysStorageInfo = reactive<UI_STORAGE_INFO_TYPE | any>({})
 // RAID 候选盘数量
 const RAIDCandidateDiskCount = ref<number>(0)
 // 纯数值，方便后面组合计算比例
@@ -171,6 +174,7 @@ const mapIndexForDiskHub = new Map<number, string>([
     [93, 'C'],
     [94, 'D']
 ])
+import { EnumStorageNames } from './const'
 // Data Cleaning.
 const rinseDiskInfo = (
     disksInfo: DISK_INFO_TYPE[],
@@ -185,7 +189,7 @@ const rinseDiskInfo = (
                 temperature: disk.temperature,
                 name: disk.name,
                 size: disk.size,
-                type: disk.type,
+                type: disk.rota ? 'HDD' : 'SSD',
                 path: disk.path,
                 model: disk.model,
                 // "candidate": disk.health && disk.children.length <= 1 && (disk.children[0]?.raid ?? false) === false,
@@ -208,7 +212,7 @@ const rinseDiskInfo = (
                     temperature: disk.temperature,
                     name: disk.name,
                     size: disk.size,
-                    type: disk.type,
+                    type: disk.rota ? 'HDD' : 'SSD',
                     path: disk.path,
                     model: disk.model,
                     // "candidate": disk.health && disk.children.length <= 1 && (disk.children[0]?.raid ?? false) === false,
@@ -249,21 +253,36 @@ const rinseDiskInfo = (
         fileFree = 0,
         filesUsage = 0
     storageInfo.map((storage: STORAGE_INFO_TYPE): void => {
-        if (storage.label === 'System') {
+        // TODO: 优化, 在后端统一“ZimaOS-HD” 名称。
+        let name = storage.name
+        if (name === 'System') {
             dataUsage = Number(storage.used)
             dataFree = Number(storage.avail)
+            name = EnumStorageNames.System;
+            sysStorageInfo = {
+                name,
+                uuid: storage?.uuid,
+                size: storage.size,
+                avail: storage.avail ?? 0,
+                used: storage.used,
+                disk_type: storage.disk_type as DISK_TYPE,
+                path: storage.path,
+                label: name,
+                health: storage.health,
+                raid: false,
+            }
         } else {
+            // TODO：优化，后端统一返回数值，统一返回数据单位。此处，当时 raid 时，size 为字节。
             let storageSize = Number(storage.size)
             if (storage?.raid_level !== undefined) {
                 storageSize *= 1024
             }
             fileFree += storageSize - Number(storage.used)
             filesUsage += Number(storage.used)
-
-            storageInfoMap.set(storage.name, {
+            storageInfoMap.set(name, {
                 uuid: storage?.uuid,
                 // "mount_point": string,
-                name: storage.name,
+                name: name,
                 size: storage.size,
                 avail: storageSize - Number(storage.used),
                 used: storage.used,
@@ -271,8 +290,8 @@ const rinseDiskInfo = (
                 path: storage.path,
                 // "drive_name": string,
                 raid: storage.raid_level !== undefined,
-                raid_level: storage.raid_level ?? -1,
-                label: storage?.label || storage.name,
+                raid_level: storage.raid_level,
+                label: name,
                 health:
                     storage?.devices?.every(device => device.health) ||
                     storage.health,
@@ -289,43 +308,6 @@ const rinseDiskInfo = (
     }
 }
 
-// TODO: Tools unit.
-// 单位转换:bit 转 GB、TB、PB、EB、ZB、YB
-const convertSizeToReadable = (size: number | string) => {
-    const unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-    let index = 0
-    if (typeof size === 'string') {
-        size = Number(size)
-        // 检测字符串是否溢出
-        if (size > Number.MAX_SAFE_INTEGER) {
-            throw new Error('The number is too large to convert.')
-        }
-    }
-    while (size >= 1024) {
-        size = size / 1024
-        index++
-    }
-    return size.toFixed(2) + unit[index]
-}
-
-// TODO: Tools unit.
-// 单位转目标单位:bit 转 GB、TB、PB、EB、ZB、YB
-const convertSizeToTargetUnit = (size: number, targetUnit: string): number => {
-    const unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-    let index = 0,
-        convertedSize: number = 0
-    const targetIndex = unit.indexOf(targetUnit.toUpperCase())
-
-    if (targetIndex !== -1) {
-        while (index <= targetIndex) {
-            size = size / 1024
-            index++
-        }
-        convertedSize = parseFloat(size.toFixed(2))
-    }
-
-    return convertedSize
-}
 // Data Lifecycle Management.
 const initStorageInfo = async (): Promise<void> => {
     const disksInfo = await getDiskInfo()
@@ -340,10 +322,9 @@ export {
     HDDStatus,
     SSDStatus,
     storageInfoMap,
+    sysStorageInfo,
     initStorageInfo as reloadServiceData,
     RAIDCandidateDiskCount,
     usageStatus,
-    convertSizeToReadable,
-    convertSizeToTargetUnit,
     mapIndexForDiskHub
 }

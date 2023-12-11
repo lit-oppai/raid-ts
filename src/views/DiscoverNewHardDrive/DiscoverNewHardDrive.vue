@@ -8,8 +8,8 @@ import SSDSVG from "@assets/img/StorageManager/SSD.svg";
 import {
     HDDStatus,
     SSDStatus,
-    convertSizeToReadable,
 } from "@views/StorageManager/controlData.ts";
+import { convertSizeToReadable } from "@utils/tools.ts";
 import { stepByStep } from "@views/EstablishRAID/controlData.ts";
 // const filtedArray = Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) => a[0] > b[0] ? 1 : -1).filter((item) => item[1].unused);
 const allDiskStatus = computed(() => {

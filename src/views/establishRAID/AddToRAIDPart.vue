@@ -7,7 +7,7 @@ import SSDSVG from '@assets/img/StorageManager/SSD.svg'
 import cryingFaceSVG from '@assets/img/EstablishRAID/cryingFace.svg'
 import { disk } from '@network/index.ts'
 import { Disk } from '@icewhale/zimaos-localstorage-openapi'
-import { convertSizeToReadable } from '@views/StorageManager/controlData.ts'
+import { convertSizeToReadable } from "@utils/tools.ts";
 const newDiskStatus = ref<Disk[]>()
 const loadNewDiskStatus = async () => {
     await disk.getDisks('show').then(res => {

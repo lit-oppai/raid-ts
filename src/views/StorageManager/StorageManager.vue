@@ -19,9 +19,9 @@ import initStorageInfo from "./controlData.ts";
 import {
     storageInfoMap,
     usageStatus,
-    convertSizeToReadable,
     RAIDCandidateDiskCount,
 } from "./controlData.ts";
+import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
 const route = useRoute();
@@ -90,8 +90,9 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
         <!-- Storage Usage Part -->
         <div class="storage_useage os_bg_white_card flex flex-col px-4 py-3">
             <div class="w-full flex justify-between">
-                <div>
+                <div class="flex items-center space-x-1.5">
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">ZimaCube</span>
+                    <i class="casa-right-outline text-base os_list_action_icon" @click="goToStorageDetailPage(false, 'ZimaOS-HD')"></i>
                 </div>
                 <div class="space-x-1">
                     <span class="text-neutral-400 text-xs font-normal font-['Roboto']">Available</span>
@@ -192,7 +193,7 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
                             </div>
                         </NPopover>
                     </div>
-                    <div class="flex justify-between">
+                    <div class="flex justify-between" v-if="usageStatus.FilesUsage">
                         <div class="space-x-1">
                             <span class="bg-green-400 w-1.5 h-1.5 rounded-sm inline-block"></span>
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">Files</span>
@@ -259,11 +260,11 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
             </div>
 
             <!-- Disk Info List -->
-            <div class="os_bg_white_card mt-2">
+            <div class="os_bg_white_card mt-2" v-if="storageInfoMap.size > 0">
                 <!-- Traversing -->
                 <div class="flex px-3 space-x-3 items-center rounded-md os_list active:bg-gray-200 cursor-pointer"
                     v-for="[label, item] in storageInfoMap" :key="label"
-                    @click="goToStorageDetailPage(item.raid, item.label)">
+                    @click="goToStorageDetailPage(item.raid, item.name)">
                     <div class="w-6 h-6 flex justify-center items-center">
                         <Image :src="HDDSVG" v-if="item.disk_type === 'SATA'" />
                         <Image :src="SSDSVG" v-else-if="item.disk_type === 'NVME'" />
@@ -272,7 +273,7 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
                     <div class="flex-grow flex flex-col py-2 space-y-1">
                         <div class="flex items-center">
                             <span class="text-zinc-800 text-base font-medium font-['Roboto'] leading-6">
-                                {{ item.label }}
+                                {{ item.name }}
                             </span>
                             <span
                                 class="mx-1 px-1 py-px bg-rose-100 rounded justify-center items-center gap-0.5 inline-flex"
@@ -287,7 +288,7 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto']">{{
                                 item.disk_type
                             }}</span>
-                            <span class="text-neutral-400 text-xs font-normal font-['Roboto']">·{{
+                            <span class="text-neutral-400 text-xs font-normal font-['Roboto']">{{
                                 convertSizeToReadable(item.size) }} /
                             </span>
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto']">{{

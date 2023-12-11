@@ -6,10 +6,10 @@ import SSDSVG from "@assets/img/StorageManager/SSD.svg";
 import warningSVG from "@assets/img/StorageManager/warning.svg";
 //
 import {
-    convertSizeToReadable,
     storageInfoMap,
     reloadServiceData,
 } from "@views/StorageManager/controlData.ts";
+import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import { showEstablishRAID } from "@views/EstablishRAID/controlView.ts";
 import { nameStorage, formatePath } from "@views/EstablishRAID/controlData.ts";
@@ -18,7 +18,12 @@ import { storage } from "@network/index.ts";
 const route = useRoute();
 const router = useRouter();
 const storageName = route.params.storageName as string;
-const storageInfo = storageInfoMap.get(storageName);
+import { EnumStorageNames } from '@views/StorageManager/const.ts';
+import { sysStorageInfo } from '@views/StorageManager/controlData.ts';
+let storageInfo = storageInfoMap.get(storageName);
+if (storageName === EnumStorageNames.System) {
+    storageInfo = sysStorageInfo;
+}
 
 // format or disband function
 const showCheckFormat = (): void => {
@@ -56,7 +61,7 @@ const disabledStorage = async (): Promise<void> => {
             <div class="flex-grow flex flex-col py-2 space-y-1">
                 <div>
                     <span class="text-zinc-800 text-base font-medium font-['Roboto'] leading-6">
-                        {{ storageInfo?.label }}
+                        {{ storageInfo?.name }}
                     </span>
                 </div>
                 <div class="flex">
@@ -69,13 +74,12 @@ const disabledStorage = async (): Promise<void> => {
             </div>
 
             <span class="text-right text-neutral-400 text-sm font-normal font-['Roboto']">
-                <!-- {{ storageInfo?.health ? 'Healthy' : 'Unhealthy' }} -->
-                Healthy
+                {{ storageInfo?.health ? 'Healthy' : 'Unhealthy' }}
             </span>
         </div>
     </div>
     <!-- General -->
-    <div class="mt-6 space-y-2">
+    <div class="mt-6 space-y-2" v-if="storageName !== EnumStorageNames.System">
         <div class="">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> General </span>
         </div>

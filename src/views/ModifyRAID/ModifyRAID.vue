@@ -18,10 +18,10 @@ import {
 } from "@views/EstablishRAID/controlData.ts";
 import { RAIDStrategy } from "@views/EstablishRAID/controlData.d";
 import {
-    convertSizeToReadable,
     storageInfoMap,
     reloadServiceData,
 } from "@views/StorageManager/controlData.ts";
+import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute } from "vue-router";
 import { raid } from "@network/index.ts";
 import { Device } from "@icewhale/zimaos-localstorage-openapi";
