@@ -144,7 +144,14 @@ const openAPI = {
     storage,
 };
 
-export { api, instance };
+export {
+    api, instance,
+    disk,
+    merge,
+    mount,
+    raid,
+    storage,
+};
 
 // TODO: 导出文件应该与文件名一致，这里应该是 openAPI.ts。
 export default openAPI;

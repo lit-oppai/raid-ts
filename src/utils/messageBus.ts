@@ -4,7 +4,7 @@ import { api } from "@/network";
 // Function:
 // Send message to message bus.
 // TODO: Need to transform to socket.io.
-function messageBus(name: string, params?: string | { [key: string]: any }) {
+function messageBus(name: keyof typeof Messages, params?: string | { [key: string]: any }) {
     type messageTypes = keyof typeof Messages;
     if (name as messageTypes in Messages) {
         const payload = (Messages[name as messageTypes] as Function)(params);

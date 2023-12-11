@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { watch, ref } from 'vue';
-import { RAIDStrategy } from './controlData.d';
-import { selectStorageList, selectRAIDStrategy } from './controlData';
-import { SSDStatus, HDDStatus, convertSizeToReadable } from '@views/StorageManager/controlData.ts';
-import SelectStrategy from './SelectStrategy.vue';
-import { NPopover } from 'naive-ui';
+import { watch, ref } from "vue";
+import { RAIDStrategy } from "./controlData.d";
+import { selectStorageList, selectRAIDStrategy, context } from "./controlData";
+import {
+    SSDStatus,
+    HDDStatus,
+    convertSizeToReadable,
+} from "@views/StorageManager/controlData.ts";
+import SelectStrategy from "./SelectStrategy.vue";
+import { NPopover } from "naive-ui";
 // const list = typeof RAIDStrategy
-const strategies: RAIDStrategy[] = ['RAID0', 'RAID1', 'RAID5'];
+const strategies: RAIDStrategy[] = ["RAID0", "RAID1", "RAID5"];
 // const allDiskTemp = new Map([...SSDStatus, ...HDDStatus]);
-const sortedArray = Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) => a[0] > b[0] ? 1 : -1);
+const sortedArray = Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) =>
+    a[0] > b[0] ? 1 : -1
+);
 const allDiskStatus = new Map(sortedArray);
 // 不可选
 const storageDisabled: (number | string)[] = [];
@@ -33,53 +39,74 @@ for (let [key, item] of allDiskStatus) {
         storageDisabled.push(key);
     }
 }
-let availableSpacePercentage = ref(0), readunantSpacePercentage = ref(0), availableSpace = ref(0);
-watch(selectStorageList, (newVal) => {
-    // 置空逻辑
-    if (newVal.length === 0) {
-        availableSpacePercentage.value = 0;
-        readunantSpacePercentage.value = 0;
-        return;
-    }
-    // 选择逻辑
-    let totalSize = 0, minSize = 0;
-    newVal.forEach((item) => {
-        totalSize += allDiskStatus.get(item)?.size ?? 0;
-        minSize = minSize !== 0 ? Math.min(minSize, allDiskStatus.get(item)?.size ?? 0) : allDiskStatus.get(item)?.size ?? 0;
-    });
-    switch (selectRAIDStrategy.value) {
-        case 'RAID0':
-            availableSpace.value = totalSize;
-            availableSpacePercentage.value = 100;
+let availableSpacePercentage = ref(0),
+    readunantSpacePercentage = ref(0),
+    availableSpace = ref(0);
+watch(
+    selectStorageList,
+    (newVal) => {
+        const totleValue = [...newVal, ...diskListByStorageSpace.value];
+        // 置空逻辑
+        if (totleValue.length === 0) {
+            availableSpacePercentage.value = 0;
             readunantSpacePercentage.value = 0;
-            break;
-        case 'RAID1':
-            availableSpace.value = minSize;
-            availableSpacePercentage.value = minSize ? (minSize * 100 / totalSize)?.toFixed(0) as unknown as number : 0;
-            readunantSpacePercentage.value = 100 - availableSpacePercentage.value;
-            break;
-        case 'RAID5':
-            // 至少三块硬盘
-            if (newVal.length > 2) {
-                availableSpace.value = minSize * (newVal.length - 1);
-                availableSpacePercentage.value = (minSize * (newVal.length - 1) * 100 / totalSize)?.toFixed(0) as unknown as number;
-                readunantSpacePercentage.value = 100 - availableSpacePercentage.value;
-            } else {
-                availableSpace.value = 0;
-                availableSpacePercentage.value = 0;
+            return;
+        }
+        // 选择逻辑
+        let totalSize = 0,
+            minSize = 0;
+        totleValue.forEach((item) => {
+            totalSize += allDiskStatus.get(item)?.size ?? 0;
+            minSize =
+                minSize !== 0
+                    ? Math.min(minSize, allDiskStatus.get(item)?.size ?? 0)
+                    : allDiskStatus.get(item)?.size ?? 0;
+        });
+        switch (selectRAIDStrategy.value) {
+            case "RAID0":
+                availableSpace.value = totalSize;
+                availableSpacePercentage.value = 100;
                 readunantSpacePercentage.value = 0;
-            }
-            break;
-    }
-});
+                break;
+            case "RAID1":
+                availableSpace.value = minSize;
+                availableSpacePercentage.value = minSize
+                    ? ((((minSize * 100) / totalSize)?.toFixed(0) as unknown) as number)
+                    : 0;
+                readunantSpacePercentage.value = 100 - availableSpacePercentage.value;
+                break;
+            case "RAID5":
+                // 至少三块硬盘
+                if (totleValue.length > 2) {
+                    availableSpace.value = minSize * (totleValue.length - 1);
+                    availableSpacePercentage.value = ((
+                        (minSize * (totleValue.length - 1) * 100) /
+                        totalSize
+                    )?.toFixed(0) as unknown) as number;
+                    readunantSpacePercentage.value = 100 - availableSpacePercentage.value;
+                } else {
+                    availableSpace.value = 0;
+                    availableSpacePercentage.value = 0;
+                    readunantSpacePercentage.value = 0;
+                }
+                break;
+        }
+    },
+    { immediate: true }
+);
+
+// extened capacity
+import {
+    diskListByStorageSpace,
+} from "@views/EstablishRAID/controlData.ts";
 </script>
 
 <template name="SelectRAIDPart">
     <!-- 外框布局 -->
-    <div class="space-y-6">
+    <div class="space-y-6 mt-6">
         <!-- select strategy -->
-        <!-- TODO：此处有判断逻辑 -->
-        <div class="mt-6 flex space-x-4" v-if="true">
+        <!-- 扩容没有策略选择 -->
+        <div class="flex space-x-4" v-if="context !== 'Modify'">
             <SelectStrategy v-for="strategy in strategies" :key="strategy" :strategy="strategy"
                 @click="selectStorageList = []"></SelectStrategy>
         </div>
@@ -95,7 +122,7 @@ watch(selectStorageList, (newVal) => {
             <div class="flex space-x-2">
                 <template v-for="[key, item] in allDiskStatus" :key="key">
                     <input :disabled="[...storageNone, ...storageDisabled].includes(key)" type="checkbox" class="hidden"
-                        :id="`check${key}`" :value="key" v-model="selectStorageList">
+                        :id="`check${key}`" :value="key" v-model="selectStorageList" />
 
                     <NPopover trigger="hover" :disabled="!item.exit" placement="bottom">
                         <template #trigger>
@@ -108,28 +135,26 @@ watch(selectStorageList, (newVal) => {
                                 <span class="text-center text-base font-semibold font-['Roboto']">
                                     {{ key }}
                                 </span>
+                                <span></span>
                                 <span class="text-center text-xs font-normal font-['Roboto']">
-                                    {{ item.type || "Empty" }}
+                                    {{
+                                        diskListByStorageSpace.includes(key)
+                                        ? "Current"
+                                        : item.type || "Empty"
+                                    }}
                                 </span>
                             </label>
                         </template>
-                        <div v-if="item?.RaidAssignment">
-                            {{ item?.RaidAssignment }} 使用中
-                        </div>
-                        <div v-else-if="item?.unused">
-                            未使用的磁盘
-                        </div>
-                        <div v-else>
-                            {{ item?.type }} 使用中
-                        </div>
+                        <div v-if="item?.RaidAssignment">Used by {{ item?.RaidAssignment }}</div>
+                        <div v-else-if="item?.unused">未使用的磁盘</div>
+                        <div v-else>{{ item?.type }} Used</div>
                     </NPopover>
-
                 </template>
             </div>
 
             <!-- 选择的磁盘信息展示 -->
             <div class="flex flex-col space-y-1 mt-4">
-                <template v-for="key in selectStorageList" :key="key">
+                <template v-for="key in [...selectStorageList, ...diskListByStorageSpace]" :key="key">
                     <div class="flex items-center h-10 bg-gray-50 rounded-md pr-4">
                         <span class="ml-1 w-[34px] text-center">
                             {{ key }}
@@ -139,14 +164,12 @@ watch(selectStorageList, (newVal) => {
                         </span>
                         <span class="flex-grow text-neutral-400 text-xs font-normal font-['Roboto']">
                         </span>
-                        <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
-                        </span>
+                        <span class="text-neutral-400 text-xs font-normal font-['Roboto']"> </span>
                         <span class="text-zinc-800 text-xs font-normal font-['Roboto']">
                             {{ convertSizeToReadable(allDiskStatus.get(key)?.size ?? 0) }}
                         </span>
                     </div>
                 </template>
-
             </div>
         </div>
         <!-- Estimated usage -->

@@ -1,17 +1,7 @@
 <!-- TODO: transform to little. -->
 <script setup lang="ts">
-import { ref } from 'vue';
-const props = defineProps({
-    x: {
-        type: Number,
-        required: true
-    },
-    y: {
-        type: Number,
-        required: true
-    },
-})
-const filter = ref<string>('')
+import { ref } from "vue";
+const filter = ref<string>("");
 </script>
 
 <template>

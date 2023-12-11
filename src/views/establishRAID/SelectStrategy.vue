@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { selectRAIDStrategy } from './controlData.ts';
-import { RAIDCandidateDiskCount } from '@views/StorageManager/controlData.ts';
-import { RAIDStrategy } from './controlData.d';
-const props =
-defineProps({
+import { computed } from "vue";
+import { selectRAIDStrategy } from "./controlData.ts";
+import { RAIDCandidateDiskCount } from "@views/StorageManager/controlData.ts";
+import { RAIDStrategy } from "./controlData.d";
+const props = defineProps({
     strategy: {
         type: String as () => RAIDStrategy,
         required: true,
     },
 });
 const disabled = computed(() => {
-    return props.strategy === 'RAID5' && RAIDCandidateDiskCount.value < 3;
+    return props.strategy === "RAID5" && RAIDCandidateDiskCount.value < 3;
 });
 </script>
 

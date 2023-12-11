@@ -32,7 +32,7 @@
       "@style/*": ["./src/style/*"],
     },
     // types 引入组件
-    "types": ["naive-ui/volar"]
+    "types": ["naive-ui/volar", "lodash"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "vue-shim.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]

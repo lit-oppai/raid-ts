@@ -29,8 +29,11 @@ dependencies:
 
 devDependencies:
   '@icewhale/zimaos-localstorage-openapi':
-    specifier: 0.4.9-alpha7
-    version: 0.4.9-alpha7
+    specifier: 0.4.9-alpha13
+    version: 0.4.9-alpha13
+  '@types/lodash':
+    specifier: ^4.14.202
+    version: 4.14.202
   '@types/node':
     specifier: ^20.10.1
     version: 20.10.1
@@ -40,6 +43,9 @@ devDependencies:
   autoprefixer:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.31)
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   lottie-web-vue:
     specifier: ^2.0.7
     version: 2.0.7(typescript@5.3.2)
@@ -332,8 +338,8 @@ packages:
     dev: true
     optional: true
 
-  /@icewhale/zimaos-localstorage-openapi@0.4.9-alpha7:
-    resolution: {integrity: sha512-HxXtHs025xfSJwkMFKB7v00bhY6lkPajmV6qCB2rHP4rs74VPzw0uhdvm5AbdhSQKvn7LgHmI4zEBFC26QRr8w==}
+  /@icewhale/zimaos-localstorage-openapi@0.4.9-alpha13:
+    resolution: {integrity: sha512-i56m55FJj4XrIqdvU1dIaBowWBn4o5fwVMfO/G4Q/F8YxIn6VodS8aBuI+8iclA0VdjTtypcC8161d+7K3bviA==}
     dependencies:
       axios: 1.6.2
     transitivePeerDependencies:

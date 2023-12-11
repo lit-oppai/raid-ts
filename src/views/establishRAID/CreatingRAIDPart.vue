@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { LottieAnimation } from "lottie-web-vue"
-import creatingJSON from '@assets/img/EstablishRAID/creating.json';
-import EasterEgg from '@assets/img/EstablishRAID/EasterEgg.json';
+import { LottieAnimation } from "lottie-web-vue";
+import creatingJSON from "@assets/img/EstablishRAID/creating.json";
+import EasterEgg from "@assets/img/EstablishRAID/EasterEgg.json";
 </script>
 <template name="CreatingRAIDPart">
     <div class="flex flex-col items-center space-y-2 pt-[5%]">
@@ -13,8 +13,8 @@ import EasterEgg from '@assets/img/EstablishRAID/EasterEgg.json';
     </div>
     <div class="mt-3">
         <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-            During this process, do not disconnect the hard drive or turn off the computer to avoid damaging the
-            system.
+            During this process, do not disconnect the hard drive or turn off the computer to
+            avoid damaging the system.
         </span>
     </div>
     <div class="mt-2">

@@ -1,20 +1,31 @@
 <script setup lang="ts">
-import Image from 'primevue/image';
+import Image from "primevue/image";
 import errorSVG from "@assets/img/EstablishRAID/error.svg";
 import successSVG from "@assets/img/EstablishRAID/success.svg";
-import { resultRAID } from './controlData.ts';
-// const props = defineProps<{
-//     status: 'success' | 'error';
-// }>();
+import {
+    resultRAIDInfo,
+    selectRAIDStrategy,
+    selectStorageList,
+    context,
+} from "./controlData.ts";
+import { convertSizeToReadable } from "@views/StorageManager/controlData.ts";
 
 let svg: string, statusMessage: string;
 
-if (resultRAID.value) {
+if (resultRAIDInfo.success) {
     svg = successSVG;
-    statusMessage = "Creation Successful";
+    if (context.value === "EnableStorage") {
+        statusMessage = "Enablement successful";
+    } else {
+        statusMessage = "Creation Successful";
+    }
 } else {
     svg = errorSVG;
-    statusMessage = "Creation Failed";
+    if (context.value === "EnableStorage") {
+        statusMessage = "Enablement failed";
+    } else {
+        statusMessage = "Creation Failed";
+    }
 }
 </script>
 <template name="ResultRAIDPart">
@@ -24,14 +35,15 @@ if (resultRAID.value) {
             {{ statusMessage }}
         </span>
     </div>
-    <div class="mt-3">
-        <div v-if="resultRAID" class="bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
+    <div class="mt-3 flex justify-center" v-if="context !== 'EnableStorage'">
+        <div v-if="resultRAIDInfo.success"
+            class="max-w-[20.25rem] flex-grow mx-2 bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
             <div class="flex justify-between">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                     Capacity :
                 </span>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
-                    4.8TB
+                    {{ convertSizeToReadable(resultRAIDInfo.capacity) }}
                 </span>
             </div>
             <div class="w-full h-px bg-gray-200"></div>
@@ -40,7 +52,7 @@ if (resultRAID.value) {
                     Storage Mode :
                 </span>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
-                    RAID5
+                    {{ selectRAIDStrategy }}
                 </span>
             </div>
             <div class="w-full h-px bg-gray-200"></div>
@@ -49,13 +61,13 @@ if (resultRAID.value) {
                     Use hard disk :
                 </span>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
-                    Disk2/Disk3/SSD-ADisk2/Disk3/SSD-A
+                    {{ selectStorageList }}
                 </span>
             </div>
         </div>
         <span v-else class="text-neutral-400 text-sm font-normal font-['Roboto']">
-            Describe the cause of the user's failure, what caused it and because of what. Describe the cause of the user's
-            failure, what caused it and because of what.
+            Describe the cause of the user's failure, what caused it and because of what.
+            Describe the cause of the user's failure, what caused it and because of what.
         </span>
     </div>
 </template>

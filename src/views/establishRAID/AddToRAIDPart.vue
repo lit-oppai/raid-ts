@@ -1,38 +1,65 @@
 <script setup lang="ts">
-import Image from 'primevue/image';
-import diskSVG from '@assets/img/StorageManager/disk.svg';
-import cryingFaceSVG from '@assets/img/EstablishRAID/cryingFace.svg';
+import { ref, onMounted } from 'vue'
+import Image from 'primevue/image'
+// import diskSVG from '@assets/img/StorageManager/disk.svg';
+import HDDSVG from '@assets/img/StorageManager/HDD.svg'
+import SSDSVG from '@assets/img/StorageManager/SSD.svg'
+import cryingFaceSVG from '@assets/img/EstablishRAID/cryingFace.svg'
+import { disk } from '@network/index.ts'
+import { Disk } from '@icewhale/zimaos-localstorage-openapi'
+import { convertSizeToReadable } from '@views/StorageManager/controlData.ts'
+const newDiskStatus = ref<Disk[]>()
+const loadNewDiskStatus = async () => {
+    await disk.getDisks('show').then(res => {
+        newDiskStatus.value = res.data.data?.filter(
+            item => item?.free && item?.health === 'true'
+        )
+    })
+}
+
+// 最小的盘尺寸
+// 获取选择的硬盘
+import {
+    selectedFidDisk,
+    needMinNewDiskSize
+} from '@views/EstablishRAID/controlData.ts'
+onMounted(async () => {
+    await loadNewDiskStatus()
+    selectedFidDisk.value =
+        newDiskStatus.value?.find(
+            item => item.size && item.size >= needMinNewDiskSize.value
+        )?.path ?? ''
+})
 </script>
 
 <template name="AddToRAIDPart">
     <template v-if="true">
         <div class="mt-6 mb-4">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-                请选择要添加的磁盘
+                Select s new hard drive of at least 447GB
             </span>
         </div>
         <div class="flex flex-col gap-2">
-
             <!-- Traversing Part -->
-            <div class="flex items-center h-10 bg-white rounded-md border border-neutral-300 gap-2 px-3" v-for="key in 3"
-                :key="key">
-                <Image :src="diskSVG" class="h-6 w-6"></Image>
+            <label class="flex items-center h-10 bg-white rounded-md border border-neutral-300 gap-2 px-3 cursor-pointer"
+                v-for="(item, index) in newDiskStatus" :key="index" :for="`select${index}`" :class="{
+                    'opacity-50':
+                        item && item.size && needMinNewDiskSize > item.size
+                }">
+                <Image :src="item.type === 'HDD' ? HDDSVG : SSDSVG" class="h-6 w-6"></Image>
                 <span class="align-baseline text-zinc-800 text-sm font-medium font-['Roboto']">
-                    HDD-Storage3
+                    {{ item.model }} -
+                    {{ convertSizeToReadable(item.size as number) }}
                 </span>
                 <div class="flex-grow"></div>
-                <span class="align-baseline text-neutral-400 text-sm font-normal font-['Roboto']">
-                    Total 245GB · Surplus 210.5GB
-                </span>
-                <input type="radio" name="select" :id="`select${key}`">
-            </div>
-
+                <input type="radio" :id="`select${index}`" :value="item.path" v-model="selectedFidDisk"
+                    v-if="item && item.size && needMinNewDiskSize <= item.size" />
+            </label>
         </div>
     </template>
     <template v-else>
         <div class="flex h-full flex-col items-center justify-center bg-white rounded-xl">
-            <Image :src="cryingFaceSVG">
-            </Image>
+            <Image :src="cryingFaceSVG"> </Image>
             暂无硬盘可用
         </div>
     </template>
