@@ -1,58 +1,62 @@
 <script setup lang="ts">
-import { defineAsyncComponent, computed } from 'vue';
-import { NPopover } from 'naive-ui'
-import { convertSizeToReadable } from './controlData.ts';
+import { defineAsyncComponent, computed } from "vue";
+import { NPopover } from "naive-ui";
+import { convertSizeToReadable } from "./controlData.ts";
 
-const healthyColor = '#28C322'
-const unhealthyColor = '#F26224'
-const unknownColor = '#C0C6CC'
+const healthyColor = "#28C322";
+const unhealthyColor = "#F26224";
+const unknownColor = "#C0C6CC";
 const props = defineProps({
     x: {
         type: Number,
-        required: true
+        required: true,
     },
     source: {
         type: Object,
         default: () => {
             return {
-                health: 'false',
-                temperature: '0'
-            }
-        }
+                health: "false",
+                temperature: "0",
+            };
+        },
     },
     part: {
         type: String,
-        required: true
+        required: true,
     },
-})
+});
 // 根据 props 阐述 动态引入组件
-const dynamicComponent: ReturnType<typeof defineAsyncComponent> = defineAsyncComponent(() => import(`./font/${props.part}.vue`))
+const dynamicComponent: ReturnType<typeof defineAsyncComponent> = defineAsyncComponent(
+    () => import(`./font/${props.part}.vue`)
+);
 
 const pilotLampOpacity = computed(() => {
-    return ['A', 'B', 'C', 'D'].includes(props.part) ? 0 : 1;
-})
+    return ["A", "B", "C", "D"].includes(props.part) ? 0 : 1;
+});
 const exitLampOpacity = computed(() => {
     return props.source.exit ? 1 : 0.5;
-})
+});
 const statuTitle = computed(() => {
     if (!props.source.exit || props.source.unused) {
-        return '空闲'
+        return "空闲";
     }
-    return (props.source.health === 'true' ? 'healthy' : 'unhealthy') + ` ${props.source.temperature} °C`
-})
+    return (
+        (props.source.health === "true" ? "healthy" : "unhealthy") +
+        ` ${props.source.temperature} °C`
+    );
+});
 const statuColor = computed(() => {
     if (!props.source.exit || props.source.unused) {
-        return unknownColor
+        return unknownColor;
     }
-    return props.source.health === 'true' ? healthyColor : unhealthyColor
-
-})
+    return props.source.health === "true" ? healthyColor : unhealthyColor;
+});
 const statuClass = computed(() => {
     if (!props.source.exit || props.source.unused) {
-        return 'text-zinc-800'
+        return "text-zinc-800";
     }
-    return props.source.health === 'true' ? 'text-green-600' : 'text-red-600'
-})
+    return props.source.health === "true" ? "text-green-600" : "text-red-600";
+});
 </script>
 
 <template>
@@ -88,16 +92,23 @@ const statuClass = computed(() => {
         </div>
         <div>
             <!-- <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">状态 : </span> -->
-            <span class="text-sm font-medium font-['Roboto'] leading-5" :class="statuClass">{{ statuTitle }}</span>
+            <span class="text-sm font-medium font-['Roboto'] leading-5" :class="statuClass">{{
+                statuTitle
+            }}</span>
         </div>
 
         <div v-if="source?.RaidAssignment">
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">Used by </span>
-            <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{ source?.RaidAssignment }}</span>
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">Used by
+            </span>
+            <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{
+                source?.RaidAssignment
+            }}</span>
         </div>
         <div v-else>
             <!-- <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">类型 : </span> -->
-            <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{ source?.type }}</span>
+            <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{
+                source?.type
+            }}</span>
         </div>
     </NPopover>
 </template>

@@ -4,20 +4,20 @@
 -->
 <script setup lang="ts">
 // 全部是一排，只需要一个 x
-import { ref, computed } from 'vue';
+import { computed } from "vue";
 const props = defineProps({
     x: {
         type: Number,
-        required: true
+        required: true,
     },
     part: {
         type: String,
-        required: true
+        required: true,
     },
-})
+});
 const filter = computed(() => {
-    return `filter${props.part}`
-})
+    return `filter${props.part}`;
+});
 </script>
 
 <template>
@@ -32,7 +32,6 @@ const filter = computed(() => {
             <rect :x="x + 4" y="31" width="8" height="1" fill="#DADFE5" />
             <rect :x="x + 4" y="34" width="8" height="1" fill="#DADFE5" />
         </g>
-
     </g>
     <defs>
         <filter :id="filter" :x="x + 2" y="14" width="12" height="12" filterUnits="userSpaceOnUse"

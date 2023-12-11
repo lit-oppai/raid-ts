@@ -8,7 +8,7 @@ import RaidSVG from "@assets/img/StorageManager/Raid.svg";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
 import warningRedSVG from "@assets/img/StorageManager/warningRed.svg";
-import cryingFaceSVG from '@assets/img/EstablishRAID/cryingFace.svg';
+import cryingFaceSVG from "@assets/img/EstablishRAID/cryingFace.svg";
 
 import {
     initEstablishRAID,
@@ -274,10 +274,13 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
                             <span class="text-zinc-800 text-base font-medium font-['Roboto'] leading-6">
                                 {{ item.label }}
                             </span>
-                            <span class="mx-1 px-1 py-px bg-rose-100 rounded justify-center items-center gap-0.5 inline-flex"
+                            <span
+                                class="mx-1 px-1 py-px bg-rose-100 rounded justify-center items-center gap-0.5 inline-flex"
                                 v-if="!item.health">
                                 <Image :src="warningRedSVG" class="h-4 w-4 fill-red-500"></Image>
-                                <span class="text-rose-500 text-xs font-normal font-['Roboto']"> Damaged </span>
+                                <span class="text-rose-500 text-xs font-normal font-['Roboto']">
+                                    Damaged
+                                </span>
                             </span>
                         </div>
                         <div class="flex" v-if="item.health">
@@ -285,13 +288,15 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
                                 item.disk_type
                             }}</span>
                             <span class="text-neutral-400 text-xs font-normal font-['Roboto']">·{{
-                                convertSizeToReadable(item.size) }} / </span>
+                                convertSizeToReadable(item.size) }} /
+                            </span>
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto']">{{
                                 convertSizeToReadable(item.used ?? 0) }} Used</span>
                         </div>
                         <div v-else>
                             <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
-                                The data has been locked for read-only access. Click to enter the recovery process.
+                                The data has been locked for read-only access. Click to enter the recovery
+                                process.
                             </span>
                         </div>
                     </div>

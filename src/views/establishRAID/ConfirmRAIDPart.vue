@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, Ref, onMounted, computed } from 'vue'
-import { nameStorage, checkedCreateRAID, context } from './controlData.ts';
+import { ref, Ref, onMounted, computed } from "vue";
+import { nameStorage, checkedCreateRAID, context } from "./controlData.ts";
 // const checked = ref(false)
 
 // const name = ref('Main-Storage')
-const nameRef: Ref<HTMLInputElement | null> = ref(null)
+const nameRef: Ref<HTMLInputElement | null> = ref(null);
 // 在组件挂载时调用selectText()方法选中文本
 onMounted(() => {
     selectText();
@@ -16,13 +16,14 @@ function selectText(): void {
 }
 
 const textName = computed(() => {
-    return context.value === 'CreateStorage' ? 'Name Storage' : 'Name RAID storage'
-})
+    return context.value === "CreateStorage" ? "Name Storage" : "Name RAID storage";
+});
 </script>
 <template>
     <div class="w-full flex flex-col justify-center mt-6 space-y-4">
         <!-- AddToRAIDPart not show. -->
-        <div class="bg-gray-50 rounded-lg border border-gray-200 px-6 pt-[2px] grid grid-cols-2" v-show="context !== 'FirstAid'">
+        <div class="bg-gray-50 rounded-lg border border-gray-200 px-6 pt-[2px] grid grid-cols-2"
+            v-show="context !== 'FirstAid'">
             <div class="mt-4 mb-10">
                 <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
                     {{ textName }}
@@ -44,18 +45,14 @@ const textName = computed(() => {
                 </span>
             </div>
             <div class="text-neutral-400 text-sm font-normal font-['Roboto'] mt-3">
-                <span>
-                    Creating a RAID array will initialize the selected hard
-                    drive,
-                </span>
+                <span> Creating a RAID array will initialize the selected hard drive, </span>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
-                    and all files on the hard drive will be deleted and cannot
-                    be recovered.
+                    and all files on the hard drive will be deleted and cannot be recovered.
                 </span>
                 <span>
-                    Please back up important files on the hard drive in advance.
-                    During this process, do not disconnect the hard drive or
-                    turn off the computer to avoid damaging the system.
+                    Please back up important files on the hard drive in advance. During this
+                    process, do not disconnect the hard drive or turn off the computer to avoid
+                    damaging the system.
                 </span>
             </div>
             <div class="flex justify-end items-center mt-16">

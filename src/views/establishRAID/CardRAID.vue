@@ -1,57 +1,58 @@
 <script setup lang="ts">
-import { NPopover } from 'naive-ui';
-import Image from 'primevue/image';
-import questionSVG from '@assets/img/EstablishRAID/question.svg';
+import { NPopover } from 'naive-ui'
+import Image from 'primevue/image'
+import questionSVG from '@assets/img/EstablishRAID/question.svg'
 // import recommendSVG from '@assets/img/EstablishRAID/recommend.svg';
-import { currentStep } from "./controlData.ts";
-import { defineProps, computed, ref } from 'vue';
+import { currentStep } from './controlData.ts'
+import { defineProps, computed, ref } from 'vue'
 const addStep = () => {
     if (props.disable) {
-        return;
+        return
     }
-    currentStep.value++;
-};
+    currentStep.value++
+}
 // const disable = false;
 const props = defineProps<{
-    disable: boolean;
-    RAIDName: string;
-}>();
+    disable: boolean
+    RAIDName: string
+}>()
 interface RaidStrategyInfo {
-    security: number;
-    speed: number;
-    capacity: number;
-    minDisks: number;
+    security: number
+    speed: number
+    capacity: number
+    minDisks: number
 }
 const raidStrategyInfoMap: Record<string, RaidStrategyInfo> = {
     RAID0: {
         security: 1,
         speed: 4,
         capacity: 50,
-        minDisks: 2,
+        minDisks: 2
     },
     RAID1: {
         security: 4,
         speed: 1,
         capacity: 50,
-        minDisks: 2,
+        minDisks: 2
     },
     RAID5: {
         security: 2,
         speed: 3,
         capacity: 83,
-        minDisks: 3,
-    },
+        minDisks: 3
+    }
 }
 const currentRaidStrategyInfo = computed(() => {
-    return raidStrategyInfoMap[props.RAIDName];
-});
+    return raidStrategyInfoMap[props.RAIDName]
+})
 
-const showRequirePopover = ref(false);
+const showRequirePopover = ref(false)
 </script>
 <template>
     <div class="px-4 py-6 space-y-4 bg-gray-50 rounded-lg" :class="{
         'opacity-50': props.disable,
-        'group cursor-pointer hover:bg-gray-100 active:bg-sky-600': !props.disable
+        'group cursor-pointer hover:bg-gray-100 active:bg-sky-600':
+            !props.disable
     }" @click="addStep" @pointerover="showRequirePopover = true" @pointerleave="showRequirePopover = false">
         <div class="flex items-center group-active:text-white">
             <span class="text-base">{{ RAIDName }}</span>
@@ -78,12 +79,10 @@ const showRequirePopover = ref(false);
                                             </div> -->
                         <!-- 内容 -->
                         <div class="max-h-[162px] scrollbar-container">
-                            RAID 5 utilizes striping and parity-checking technology, distributing data across
-                            multiple
-                            hard
-                            drives and using parity for redundancy. In case of drive failure, data can be recovered
-                            from
-                            the
+                            RAID 5 utilizes striping and parity-checking
+                            technology, distributing data across multiple hard
+                            drives and using parity for redundancy. In case of
+                            drive failure, data can be recovered from the
                             remaining drives and parity information.
                         </div>
                     </div>
@@ -98,8 +97,9 @@ const showRequirePopover = ref(false);
                 </span>
             </div>
             <div class="flex space-x-1">
-                <div v-for="key in 4" :key="key" :class="{ 'opacity-20': key > currentRaidStrategyInfo.security }"
-                    class="flex-grow h-[3px] bg-sky-600 rounded-[1px] group-active:bg-white"></div>
+                <div v-for="key in 4" :key="key" :class="{
+                    'opacity-20': key > currentRaidStrategyInfo.security
+                }" class="flex-grow h-[3px] bg-sky-600 rounded-[1px] group-active:bg-white"></div>
             </div>
             <div class="mt-4 mb-1">
                 <span class="text-zinc-800 text-xs font-medium font-['Roboto'] group-active:text-white">
@@ -107,8 +107,9 @@ const showRequirePopover = ref(false);
                 </span>
             </div>
             <div class="flex space-x-1">
-                <div v-for="key in 4" :key="key" :class="{ 'opacity-20': key > currentRaidStrategyInfo.speed }"
-                    class="flex-grow h-[3px] bg-sky-600 rounded-[1px] group-active:bg-white"></div>
+                <div v-for="key in 4" :key="key" :class="{
+                    'opacity-20': key > currentRaidStrategyInfo.speed
+                }" class="flex-grow h-[3px] bg-sky-600 rounded-[1px] group-active:bg-white"></div>
             </div>
         </div>
         <!-- 要求部分 -->
@@ -121,12 +122,13 @@ const showRequirePopover = ref(false);
                 {{ currentRaidStrategyInfo.capacity }}%
             </span>
         </div>
-        
+
         <n-popover :show="disable && showRequirePopover" trigger="manual">
             <template #trigger>
                 <div class="w-full h-px bg-gray-200"></div>
             </template>
-            At least {{ currentRaidStrategyInfo.minDisks }} hard drives are required
+            At least {{ currentRaidStrategyInfo.minDisks }} hard drives are
+            required
         </n-popover>
         <div class="flex justify-between">
             <span class="text-zinc-800 text-xs font-medium font-['Roboto'] group-active:text-white">

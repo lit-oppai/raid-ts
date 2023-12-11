@@ -1,22 +1,27 @@
 <script setup lang="ts">
-import Image from 'primevue/image';
+import Image from "primevue/image";
 import errorSVG from "@assets/img/EstablishRAID/error.svg";
 import successSVG from "@assets/img/EstablishRAID/success.svg";
-import { resultRAIDInfo, selectRAIDStrategy, selectStorageList, context } from './controlData.ts';
-import { convertSizeToReadable } from '@views/StorageManager/controlData.ts';
+import {
+    resultRAIDInfo,
+    selectRAIDStrategy,
+    selectStorageList,
+    context,
+} from "./controlData.ts";
+import { convertSizeToReadable } from "@views/StorageManager/controlData.ts";
 
 let svg: string, statusMessage: string;
 
 if (resultRAIDInfo.success) {
     svg = successSVG;
-    if (context.value === 'EnableStorage') {
+    if (context.value === "EnableStorage") {
         statusMessage = "Enablement successful";
     } else {
         statusMessage = "Creation Successful";
     }
 } else {
     svg = errorSVG;
-    if (context.value === 'EnableStorage') {
+    if (context.value === "EnableStorage") {
         statusMessage = "Enablement failed";
     } else {
         statusMessage = "Creation Failed";
@@ -61,8 +66,8 @@ if (resultRAIDInfo.success) {
             </div>
         </div>
         <span v-else class="text-neutral-400 text-sm font-normal font-['Roboto']">
-            Describe the cause of the user's failure, what caused it and because of what. Describe the cause of the user's
-            failure, what caused it and because of what.
+            Describe the cause of the user's failure, what caused it and because of what.
+            Describe the cause of the user's failure, what caused it and because of what.
         </span>
     </div>
 </template>

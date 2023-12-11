@@ -1,64 +1,87 @@
 <script setup lang="ts">
-import { computed, ref, onBeforeMount } from 'vue';
-import Image from 'primevue/image';
-import Button from 'primevue/button';
+import { computed, ref, onBeforeMount } from "vue";
+import Image from "primevue/image";
+import Button from "primevue/button";
 // import diskSVG from '@assets/img/StorageManager/disk.svg';
-import HDDSVG from '@assets/img/StorageManager/HDD.svg';
-import SSDSVG from '@assets/img/StorageManager/SSD.svg';
-import { HDDStatus, SSDStatus, convertSizeToReadable } from '@views/StorageManager/controlData.ts';
-import { stepByStep } from '@views/EstablishRAID/controlData.ts';
+import HDDSVG from "@assets/img/StorageManager/HDD.svg";
+import SSDSVG from "@assets/img/StorageManager/SSD.svg";
+import {
+    HDDStatus,
+    SSDStatus,
+    convertSizeToReadable,
+} from "@views/StorageManager/controlData.ts";
+import { stepByStep } from "@views/EstablishRAID/controlData.ts";
 // const filtedArray = Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) => a[0] > b[0] ? 1 : -1).filter((item) => item[1].unused);
 const allDiskStatus = computed(() => {
     // TODO: 新硬盘页面， 产品要求特殊处理，加上未被挂载分区的硬盘。
-    return new Map(Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) => a[0] > b[0] ? 1 : -1).filter((item) => (!item[1].support) || item[1].unused));
-})
-import { disk } from '@network/index.ts';
+    return new Map(
+        Array.from(new Map([...SSDStatus, ...HDDStatus]))
+            .sort((a, b) => (a[0] > b[0] ? 1 : -1))
+            .filter((item) => !item[1].support || item[1].unused)
+    );
+});
+import { disk } from "@network/index.ts";
 const allNewDiskStatus = ref(new Map());
 const loadAllNewDiskStatus = (): void => {
     disk.getDisks("show").then((res) => {
         if (res.status === 200 && res.data.data) {
-            allNewDiskStatus.value = new Map(res.data.data.filter((item) => item.model !== 'System').map((item) => {
-                const indexHub = ['0', '1', '2', '3', '4', '5', '6', 'A', 'B', 'C', 'D'];
-                return [indexHub[item?.index ?? 0], item]
-            }));
+            allNewDiskStatus.value = new Map(
+                res.data.data
+                    .filter((item) => item.model !== "System")
+                    .map((item) => {
+                        const indexHub = ["0", "1", "2", "3", "4", "5", "6", "A", "B", "C", "D"];
+                        return [indexHub[item?.index ?? 0], item];
+                    })
+            );
         }
-    })
-}
+    });
+};
 
 onBeforeMount(() => {
     loadAllNewDiskStatus();
-})
-import { closeEstablishRAID, showEstablishRAID } from '@views/EstablishRAID/controlView.ts';
-import { resultRAIDInfo, nameStorage, formatePath } from '@views/EstablishRAID/controlData.ts';
-import { storage } from '@network/index.ts';
+});
+import {
+    closeEstablishRAID,
+    showEstablishRAID,
+} from "@views/EstablishRAID/controlView.ts";
+import {
+    resultRAIDInfo,
+    nameStorage,
+    formatePath,
+} from "@views/EstablishRAID/controlData.ts";
+import { storage } from "@network/index.ts";
 
 const showCheckFormat = (name: string = "", path: string = ""): void => {
     nameStorage.value = name;
     formatePath.value = path;
-    showEstablishRAID('CreateStorage')
-}
+    showEstablishRAID("CreateStorage");
+};
 const showEnableStorage = (name: string, path: string): void => {
-    showEstablishRAID('EnableStorage')
-    storage.createStorage({ path, name, format: false }).then((res) => {
-        if (res.status === 200) {
-            resultRAIDInfo.success = true;
-            resultRAIDInfo.btnText = 'Done';
-        } else {
+    showEstablishRAID("EnableStorage");
+    storage
+        .createStorage({ path, name, format: false })
+        .then((res) => {
+            if (res.status === 200) {
+                resultRAIDInfo.success = true;
+                resultRAIDInfo.btnText = "Done";
+            } else {
+                resultRAIDInfo.success = false;
+                resultRAIDInfo.btnText = "Restart";
+            }
+        })
+        .catch((err) => {
+            console.error(err);
             resultRAIDInfo.success = false;
-            resultRAIDInfo.btnText = 'Restart';
-        }
-    }).catch((err) => {
-        console.error(err);
-        resultRAIDInfo.success = false;
-        resultRAIDInfo.btnText = 'Restart';
-    }).finally(() => {
-        resultRAIDInfo.butFunc = () => {
-            loadAllNewDiskStatus();
-            closeEstablishRAID();
-        }
-        stepByStep('next');
-    })
-}
+            resultRAIDInfo.btnText = "Restart";
+        })
+        .finally(() => {
+            resultRAIDInfo.butFunc = () => {
+                loadAllNewDiskStatus();
+                closeEstablishRAID();
+            };
+            stepByStep("next");
+        });
+};
 </script>
 
 <template>
@@ -88,7 +111,6 @@ const showEnableStorage = (name: string, path: string): void => {
                             Please check and back up the data before formatting.
                         </span>
                         <!-- paperwork end -->
-
                     </div>
                     <div class="flex-grow"></div>
                     <Button label="Enable" severity="primary" size="medium"
@@ -129,11 +151,9 @@ const showEnableStorage = (name: string, path: string): void => {
                         <Button label="Format and Enable" severity="secondary" size="small"
                             @click="showCheckFormat(item?.name, item?.path)" v-else></Button>
                         <!-- paperwork end -->
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </template>

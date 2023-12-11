@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import OverlayPanel from 'primevue/overlaypanel';
-import { ref, onMounted, watch } from 'vue'
-import { HDDStatus, SSDStatus } from './controlData.ts'
+import { ref, onMounted, watch } from "vue";
+import { HDDStatus, SSDStatus } from "./controlData.ts";
 
 // const healthyColor = '#28C322'
 // const unhealthyColor = '#F26224'
@@ -10,15 +10,15 @@ import { HDDStatus, SSDStatus } from './controlData.ts'
 //     op.value.toggle(event);
 // }
 // ----------------------—————————————————————————————————————————————————————————————————————————————————————————————————————
-let ZimaCubeSketchRef = ref<SVGSVGElement | null>(null)
+let ZimaCubeSketchRef = ref<SVGSVGElement | null>(null);
 const setOpacity = (name: string, opacity: number) => {
     const svg = ZimaCubeSketchRef.value?.querySelectorAll(`[name=${name}]`);
     if (svg) {
         svg.forEach((item) => {
-            item.setAttribute('opacity', opacity.toString())
-        })
+            item.setAttribute("opacity", opacity.toString());
+        });
     }
-}
+};
 onMounted(() => {
     // setOpacity('disk1', 0.5)
     // setOpacity('disk2', 0.5)
@@ -29,17 +29,17 @@ onMounted(() => {
     // HDDStatus.value.forEach((item: any, index: any) => {
     //     setOpacity(`disk${index + 1}`, item.exit ? 1 : 0.5)
     // })
-})
+});
 
 watch([HDDStatus, SSDStatus], ([newHDDVal, newSSDVal]) => {
-    newHDDVal.forEach((item, index) => {        
-        setOpacity(`disk${index}`, item.exit ? 1 : 0.5)
-    })
+    newHDDVal.forEach((item, index) => {
+        setOpacity(`disk${index}`, item.exit ? 1 : 0.5);
+    });
     // 全部无效，则设置ABCD无效。
     if (Array.from(newSSDVal.values()).every((item: any) => !item.exit)) {
-        setOpacity(`diskABCD`, 0.5)
+        setOpacity(`diskABCD`, 0.5);
     }
-})
+});
 // watch([HDDStatus.value, SSDStatus.value], ([newHDDVal, newSSDVal]) => {
 //     newHDDVal.forEach((item: any, index: any) => {
 //         setOpacity(`disk${index + 1}`, item.exit ? 1 : 0.5)
@@ -53,7 +53,7 @@ watch([HDDStatus, SSDStatus], ([newHDDVal, newSSDVal]) => {
 // 配置
 // const test1 = 0.5
 // const invalidList = ['disk1', 'disk2', 'disk3', 'disk4', 'disk5', 'diskABCD']
-// —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————— 
+// ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // import HHDInHub from './HHDInHub.vue';
 // import DiskCard from './DiskCard.vue';
 </script>
@@ -254,15 +254,15 @@ watch([HDDStatus, SSDStatus], ([newHDDVal, newSSDVal]) => {
                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
                 <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.2 0" />
                 <feBlend mode="normal" in2="effect1_innerShadow_988_10640" result="effect2_innerShadow_988_10640" />
-            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                result="hardAlpha" />
-            <feOffset dy="-2" />
-            <feGaussianBlur stdDeviation="2" />
-            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-            <feColorMatrix type="matrix" values="0 0 0 0 0.358333 0 0 0 0 0.375694 0 0 0 0 0.4 0 0 0 0.3 0" />
-            <feBlend mode="normal" in2="effect2_innerShadow_988_10640" result="effect3_innerShadow_988_10640" />
-            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                result="hardAlpha" />
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha" />
+                <feOffset dy="-2" />
+                <feGaussianBlur stdDeviation="2" />
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0.358333 0 0 0 0 0.375694 0 0 0 0 0.4 0 0 0 0.3 0" />
+                <feBlend mode="normal" in2="effect2_innerShadow_988_10640" result="effect3_innerShadow_988_10640" />
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha" />
                 <feOffset dy="-1" />
                 <feGaussianBlur stdDeviation="0.5" />
                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
