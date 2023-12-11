@@ -73,7 +73,7 @@ const selectStorageList = customRef((track, trigger) => {
         }
     }
 })
-
+// 当前操作的存储池名称
 const nameStorage = ref('Main-Storage')
 const checkedCreateRAID = ref<boolean>(false)
 // Getting RAID Status

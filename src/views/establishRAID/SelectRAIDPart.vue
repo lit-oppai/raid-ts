@@ -5,8 +5,8 @@ import { selectStorageList, selectRAIDStrategy, context } from "./controlData";
 import {
     SSDStatus,
     HDDStatus,
-    convertSizeToReadable,
 } from "@views/StorageManager/controlData.ts";
+import { convertSizeToReadable } from "@utils/tools.ts";
 import SelectStrategy from "./SelectStrategy.vue";
 import { NPopover } from "naive-ui";
 // const list = typeof RAIDStrategy

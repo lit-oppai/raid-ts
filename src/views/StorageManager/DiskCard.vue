@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, computed } from "vue";
 import { NPopover } from "naive-ui";
-import { convertSizeToReadable } from "./controlData.ts";
+import { convertSizeToReadable } from "@utils/tools.ts";
 
 const healthyColor = "#28C322";
 const unhealthyColor = "#F26224";
@@ -98,7 +98,8 @@ const statuClass = computed(() => {
         </div>
 
         <div v-if="source?.RaidAssignment">
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">Used by
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">
+                Used by
             </span>
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{
                 source?.RaidAssignment
