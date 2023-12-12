@@ -25,4 +25,4 @@ dist-ssr
 pnpm-lock.yaml
 
 # output
-/build
+build/
