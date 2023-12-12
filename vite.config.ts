@@ -20,6 +20,7 @@ export default ({ mode }) => {
                 '@': fileURLToPath(new URL('src', import.meta.url)),
             },
         },
+        base: "./",
         build: {
             outDir: "build/sysroot/usr/share/casaos/www/modules/icewhale_settings",
         },
