@@ -36,7 +36,7 @@ if (resultRAIDInfo.success) {
         </span>
     </div>
     <div class="mt-3 flex justify-center" v-if="context !== 'EnableStorage'">
-        <div v-if="resultRAIDInfo.success"
+        <div v-if="resultRAIDInfo.success && resultRAIDInfo.capacity"
             class="max-w-[20.25rem] flex-grow mx-2 bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
             <div class="flex justify-between">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
@@ -66,8 +66,7 @@ if (resultRAIDInfo.success) {
             </div>
         </div>
         <span v-else class="text-neutral-400 text-sm font-normal font-['Roboto']">
-            Describe the cause of the user's failure, what caused it and because of what.
-            Describe the cause of the user's failure, what caused it and because of what.
+            Describe the cause of the user's failure, what caused it and because of {{ resultRAIDInfo.messages }}.
         </span>
     </div>
 </template>

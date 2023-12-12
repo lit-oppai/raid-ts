@@ -67,11 +67,11 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
         },
         // FormateDisk
         CreateStorage: {
-            title: 'Create Storage | Rasterize and enable'
+            title: 'Create Storage | Enable new hard drive'
         },
         // EnableStorage
         EnableStorage: {
-            title: 'Enable Storage'
+            title: 'Enable new hard drive'
         }
     }
     changeContext(type as EntranceContextType)
