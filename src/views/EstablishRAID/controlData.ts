@@ -1,4 +1,3 @@
-import { messages } from '@assets/lang';
 import { computed, ComputedRef, ref, Ref, customRef, reactive } from 'vue'
 import OverviewPart from './OverviewPart.vue'
 import SelectRAIDPart from './SelectRAIDPart.vue'
