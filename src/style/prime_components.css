@@ -7,7 +7,7 @@
  */
 @layer components {
     .os_panel {
-        @apply h-screen;
+        @apply h-full overflow-hidden;
         [data-pc-section='gutter'] {
             width: 0;
         }
@@ -67,7 +67,7 @@
         /* content in panel right */
         .panel_content {
             @apply px-4;
-            @apply h-[calc(100vh_-_56px)] overflow-y-auto;
+            @apply h-[calc(100%_-_56px)] overflow-y-auto;
         }
     }
 }

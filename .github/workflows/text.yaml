@@ -36,47 +36,22 @@ jobs:
                     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
                     restore-keys: |
                         ${{ runner.os }}-pnpm-store-
-            -   name: install git
-                run: sudo apt install --yes git
-
-            -   name: git global
-                run: sudo git config --global --add safe.directory '*'
-
-            -   name: Fetch all tags
-                run: sudo git fetch --force --tags
-
-            -   name: Get version
-                id: get_version
-                # run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-                # run: echo "VERSION=$(git describe --abbrev=0 --tags | awk -F- '{print $1}')" >> $GITHUB_ENV
-                run: echo "VERSION=v99.99.99" >> $GITHUB_ENV
-
-            -   name: show version
-                id: show_version
-                run: echo ${{ env.VERSION }}
-                # run: echo ${{ steps.get_version.outputs.VERSION }}
-
-            -   run: yarn install --check-files
-            -   run: yarn add global turbo -W
-            -   run: yarn build
+            -   run: pnpm install
+            -   run: pnpm run build
             -   run: |
                     tar -zcvf linux-all-icewhale-files-ui-${{ env.VERSION }}.tar.gz build
                     ls
-
             -   name: install sshpass
                 run: sudo apt install sshpass --yes
-
             -   name: echo ZeroTier Info
                 run: |
                   echo ${{ secrets.ZEROTIER_NETWORK_ID }} 
                   echo ${{ secrets.ZEROTIER_CENTRAL_TOKEN }}
-
             -   name: ZeroTier
                 uses: zerotier/github-action@v1.0.1
                 with:
                     network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
                     auth_token: ${{ secrets.ZEROTIER_CENTRAL_TOKEN }}
-
             -   name: ping hostname
                 shell: bash
                 run: |
@@ -87,7 +62,6 @@ jobs:
                       let count=count-1
                     done
                     echo "ping success"
-
             -   name: copy tar to target hostname
                 shell: bash
                 run: |

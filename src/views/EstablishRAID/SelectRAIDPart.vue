@@ -2,10 +2,8 @@
 import { watch, ref } from "vue";
 import { RAIDStrategy } from "./controlData.d";
 import { selectStorageList, selectRAIDStrategy, context } from "./controlData";
-import {
-    SSDStatus,
-    HDDStatus,
-} from "@views/StorageManager/controlData.ts";
+import { SSDStatus, HDDStatus } from "@views/StorageManager/controlData.ts";
+import { expansionMinDiskSize } from "@views/EstablishRAID/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import SelectStrategy from "./SelectStrategy.vue";
 import { NPopover } from "naive-ui";
@@ -31,7 +29,7 @@ for (let [key, item] of allDiskStatus) {
     if (!item.exit) {
         // 无硬盘
         storageNone.push(key);
-    } else if (item?.unused) {
+    } else if (item?.unused && item.size && item.size >= expansionMinDiskSize.value) {
         // 可选
         storageSelectable.push(key);
     } else {
@@ -41,7 +39,12 @@ for (let [key, item] of allDiskStatus) {
 }
 let availableSpacePercentage = ref(0),
     readunantSpacePercentage = ref(0),
-    availableSpace = ref(0);
+    availableSpace = ref(0),
+    availableSpaceByStorageSpace = ref(0);
+diskListByStorageSpace.value.forEach((item) => {
+    availableSpaceByStorageSpace.value += allDiskStatus.get(item)?.size ?? 0;
+});
+
 watch(
     selectStorageList,
     (newVal) => {
@@ -94,11 +97,36 @@ watch(
     },
     { immediate: true }
 );
+import { UI_DISK_INFO_TYPE } from "@views/StorageManager/controlData.d";
+const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) => {
+    // 扩容页面&当前磁盘列表中的磁盘
+    if (diskListByStorageSpace.value.includes(key)) {
+        return "Current";
+    }
+    // 被占用
+    else if (item?.RaidAssignment) {
+        return `${item?.RaidAssignment}`;
+    }
+    // 没有被占用&磁盘太小
+    else if (item.size && item.size < expansionMinDiskSize.value) {
+        return `太小`;
+    }
+    // 可选
+    else if (storageSelectable.includes(key)) {
+        return item.type;
+    }
+    // 空槽
+    else {
+        return "Empty";
+    }
+};
 
 // extened capacity
-import {
-    diskListByStorageSpace,
-} from "@views/EstablishRAID/controlData.ts";
+import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
+// const determineWhetherSelectable = (key: string) => {
+//     // 可选择盘
+//     storageSelectable.includes(key)
+// };
 </script>
 
 <template name="SelectRAIDPart">
@@ -114,7 +142,11 @@ import {
         <div>
             <div class="mb-2">
                 <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-                    Please select the desired hard disk
+                    {{
+                        context !== "Modify"
+                        ? `Please select the desired hard disk`
+                        : `Select the hard drive(s) you want to add`
+                    }}
                 </span>
             </div>
 
@@ -137,16 +169,16 @@ import {
                                 </span>
                                 <span></span>
                                 <span class="text-center text-xs font-normal font-['Roboto']">
-                                    {{
-                                        diskListByStorageSpace.includes(key)
-                                        ? "Current"
-                                        : item.type || "Empty"
-                                    }}
+                                    {{ obtainCurrentDiskCardDescription(item, key) }}
                                 </span>
                             </label>
                         </template>
                         <div v-if="item?.RaidAssignment">Used by {{ item?.RaidAssignment }}</div>
                         <div v-else-if="item?.unused">未使用的磁盘</div>
+                        <div v-else-if="context === 'Modify' && item.size && item.size < expansionMinDiskSize
+                            ">
+                            至少 {{ convertSizeToReadable(expansionMinDiskSize) }}
+                        </div>
                         <div v-else>{{ item?.type }} Used</div>
                     </NPopover>
                 </template>
@@ -180,7 +212,7 @@ import {
                 </span>
                 <div>
                     <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto']">
-                        Estimated available
+                        {{context !== "Modify" ? "Estimated available" : "Expected expansion from 100GB to"}}
                     </span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
                         {{ convertSizeToReadable(availableSpace) }}

@@ -105,7 +105,7 @@ const resultRAIDInfo = reactive<{
 // 选择磁盘
 const selectedFidDisk = ref<string>()
 // 最小的盘尺寸
-const needMinNewDiskSize = ref<number>(0)
+const expansionMinDiskSize = ref<number>(0)
 const needFirstAidRaid = ref<string>()
 // 扩容
 const diskListByStorageSpace = ref<string[]>([])
@@ -122,7 +122,7 @@ const clear = (): void => {
     resultRAIDInfo.success = true
     resultRAIDInfo.capacity = 0
     selectedFidDisk.value = ''
-    needMinNewDiskSize.value = 0
+    expansionMinDiskSize.value = 0
     needFirstAidRaid.value = ''
     diskListByStorageSpace.value = []
     extendRaidPath.value = ''
@@ -137,7 +137,7 @@ export {
     stepByStep,
     resultRAIDInfo,
     selectedFidDisk,
-    needMinNewDiskSize,
+    expansionMinDiskSize,
     needFirstAidRaid,
     diskListByStorageSpace,
     extendRaidPath,

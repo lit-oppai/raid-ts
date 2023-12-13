@@ -3,129 +3,14 @@ import { ref, reactive } from 'vue'
 import openAPI from '@/network'
 
 // Setting Data Types && Naming conventions for Constants.
-type DISK_TYPE = 'SSD' | 'HDD' | 'NVME' | 'SATA'
-type DISK_INFO_TYPE = {
-    index: number
-    avail: boolean
-    name: string
-    size: number
-    health: string | boolean
-    free: boolean
-    temperature: number
-    type: DISK_TYPE
-    path: string
-    model: string
-    // "need_format": boolean,
-    // "serial": "NF6243T000696",
-    // "supported": boolean,
-    children: Array<
-        | {
-            mount_point: string
-            name: string
-            raid: boolean
-            raid_level: number
-            path: string
-            size: number
-            supported: boolean
-        }
-        | undefined
-    >
-    children_number: number
-    support: boolean
-    rota: boolean
-}
-type UI_DISK_INFO_TYPE = {
-    exit: boolean
-    health: boolean
-    temperature: number
-    name?: string
-    size?: number
-    type?: DISK_TYPE
-    path?: string
-    model?: string
-    // RAID 备选盘 1、状态健康 2、未被占用
-    // 2023年12月01日 不再使用备选盘，只有未使用的盘可以进入 raid
-    // "candidate"?: boolean,
-    RaidAssignment?: string
-    // "occupied"?: string,
-    unused?: boolean
-    children?: Array<
-        | {
-            mount_point: string
-            name: string
-            raid: boolean
-            raid_level: number
-            path: string
-            size: number
-            supported: boolean
-        }
-        | undefined
-    >
-    children_number?: number
-    support?: boolean
-}
-type STORAGE_TYPE = 'ext4' | 'xfs' | 'ntfs' | 'fat32' | 'exfat'
-type STORAGE_INFO_TYPE = {
-    uuid?: string
-    name: string // KeyID
-    path: string
-    mount_point: string
-    size: string | number
-    avail?: string | number
-    used: string | number
-    type?: STORAGE_TYPE
-    drive_name?: string
-
-    label?: string
-    children?: Array<
-        | {
-            mount_point: string
-            name: string
-            raid: boolean
-            raid_level: number
-        }
-        | undefined
-    >
-    // "persisted_in": string,
-    // sata、nvme
-    disk_type?: DISK_TYPE
-    health: boolean
-    // "raid": boolean,
-    raid_level?: number
-    shortage?: boolean
-    devices?: Array<{ health: boolean }>
-}
-type UI_STORAGE_INFO_TYPE = {
-    uuid?: string
-    name: string // KeyID
-    // "mount_point": string,
-    size: string | number
-    avail: string | number
-    used: string | number
-    // "type": STORAGE_TYPE,
-    path: string
-    // "drive_name": string,
-    raid: boolean
-    raid_level?: number
-    label: string
-    // "children": Array<{ mount_point: string, name: string, raid: boolean, raid_level: number } | undefined>,
-    // "persisted_in": string,
-    disk_type: DISK_TYPE
-    health: boolean
-    shortage?: boolean
-}
-type STORAGE_USAGE_INFO_TYPE = {
-    // 系统空间占用量
-    SystemUsage: 2340421632
-    // 数据空间占用量
-    DataUsage: number
-    // 数据空间剩余量
-    DataFree: number
-    // 文件空间占用量
-    FilesUsage: number
-    // 文件空间剩余量
-    FilesFree: number
-}
+import {
+    DISK_TYPE,
+    DISK_INFO_TYPE,
+    UI_DISK_INFO_TYPE,
+    STORAGE_INFO_TYPE,
+    UI_STORAGE_INFO_TYPE,
+    STORAGE_USAGE_INFO_TYPE,
+} from './controlData.d'
 // type DISK_STATUS_TYPE = {
 // }
 // Data Acquisition.
@@ -258,7 +143,7 @@ const rinseDiskInfo = (
         if (name === 'System') {
             dataUsage = Number(storage.used)
             dataFree = Number(storage.avail)
-            name = EnumStorageNames.System;
+            name = EnumStorageNames.System
             sysStorageInfo = {
                 name,
                 uuid: storage?.uuid,
@@ -269,23 +154,25 @@ const rinseDiskInfo = (
                 path: storage.path,
                 label: name,
                 health: storage.health,
-                raid: false,
+                raid: false
             }
         } else {
             // TODO：优化，后端统一返回数值，统一返回数据单位。此处，当时 raid 时，size 为字节。
             let storageSize = Number(storage.size)
+            let storageUsedSize = Number(storage.used)
             if (storage?.raid_level !== undefined) {
                 storageSize *= 1024
+                storageUsedSize *= 1024
             }
-            fileFree += storageSize - Number(storage.used)
-            filesUsage += Number(storage.used)
+            fileFree += storageSize - storageUsedSize
+            filesUsage += storageUsedSize
             storageInfoMap.set(name, {
                 uuid: storage?.uuid,
                 // "mount_point": string,
                 name: name,
-                size: storage.size,
-                avail: storageSize - Number(storage.used),
-                used: storage.used,
+                size: storageSize,
+                avail: storageSize - storageUsedSize,
+                used: storageUsedSize,
                 disk_type: storage?.disk_type?.toUpperCase() as DISK_TYPE,
                 path: storage.path,
                 // "drive_name": string,
