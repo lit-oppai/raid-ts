@@ -4,3 +4,17 @@
 /* ref Roboto Font */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,600;1,400;1,600&display=swap');
 
+/* MircoApp CSS: frame layout. */
+html,
+body {
+    height: 100%;
+}
+#icewhale-settings-app {
+    height: 100%;
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
