@@ -137,6 +137,7 @@ const rinseDiskInfo = (
         dataFree = 0,
         fileFree = 0,
         filesUsage = 0
+    storageInfoMap.clear()
     storageInfo.map((storage: STORAGE_INFO_TYPE): void => {
         // TODO: 优化, 在后端统一“ZimaOS-HD” 名称。
         let name = storage.name
