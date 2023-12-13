@@ -62,7 +62,7 @@ const statuClass = computed(() => {
 <template>
     <NPopover trigger="hover" placement="bottom">
         <template #trigger>
-            <svg ref="ZimaCubeSketchRef" width="16" height="56" viewBox="0 0 16 56" fill="none" :opacity="exitLampOpacity"
+            <svg ref="ZimaCubeSketchRef" width="16" height="56" viewBox="0 0 16 56" fill="none" :opacity="exitLampOpacity" class="outline-none"
                 xmlns="http://www.w3.org/2000/svg">
                 <g>
                     <rect x="0" y="0" width="16" height="56" rx="3" fill="white" />
