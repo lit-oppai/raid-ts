@@ -284,8 +284,8 @@ storageInfoMap.forEach((item) => {
                     v-for="[label, item] in storageInfoMap" :key="label"
                     @click="goToStorageDetailPage(item.raid, item.name)">
                     <div class="w-6 h-6 flex justify-center items-center">
-                        <Image :src="HDDSVG" v-if="item.disk_type === 'SATA'" />
-                        <Image :src="SSDSVG" v-else-if="item.disk_type === 'NVME'" />
+                        <Image :src="HDDSVG" v-if="item.type === 'HDD'" />
+                        <Image :src="SSDSVG" v-else-if="item.type === 'SSD'" />
                         <Image :src="RaidSVG" v-else />
                     </div>
                     <div class="flex-grow flex flex-col py-2 space-y-1">
@@ -304,10 +304,10 @@ storageInfoMap.forEach((item) => {
                         </div>
                         <div class="flex" v-if="item.health">
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto']">{{
-                                item.disk_type
+                                item.type
                             }}</span>
-                            <span class="text-neutral-400 text-xs font-normal font-['Roboto']">{{
-                                convertSizeToReadable(item.size) }} /
+                            <span class="text-neutral-400 text-xs font-normal font-['Roboto'] whitespace-pre">
+                                · {{ convertSizeToReadable(item.size) }}/
                             </span>
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto']">{{
                                 convertSizeToReadable(item.used ?? 0) }} Used</span>
