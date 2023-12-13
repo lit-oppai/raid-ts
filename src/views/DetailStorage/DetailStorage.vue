@@ -55,7 +55,7 @@ const disabledStorage = async (): Promise<void> => {
     <div class="os_bg_white_card mt-2">
         <div class="flex px-3 space-x-3 items-center rounded-md os_list">
             <div class="w-6 h-6 flex justify-center items-center">
-                <Image :src="HDDSVG" class="h-6 w-6" v-if="storageInfo?.disk_type === 'SATA'"></Image>
+                <Image :src="HDDSVG" class="h-6 w-6" v-if="storageInfo?.type === 'SSD'"></Image>
                 <Image :src="SSDSVG" class="h-6 w-6" v-else></Image>
             </div>
             <div class="flex-grow flex flex-col py-2 space-y-1">
