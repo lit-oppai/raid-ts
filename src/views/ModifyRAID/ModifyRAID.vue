@@ -14,7 +14,7 @@ import {
 } from "@views/EstablishRAID/controlView.ts";
 import {
     selectRAIDStrategy,
-    needMinNewDiskSize,
+    expansionMinDiskSize,
 } from "@views/EstablishRAID/controlData.ts";
 import { RAIDStrategy } from "@views/EstablishRAID/controlData.d";
 import {
@@ -34,7 +34,7 @@ const diskInfoByStorageSpace = ref<Device[]>([]);
 
 const needFirstAid = ref(false);
 const needNewDisk = ref(false);
-// const needMinNewDiskSize = ref(0);
+// const expansionMinDiskSize = ref(0);
 const loadRaid = async () => {
     await raid.getRaids(storageInfo?.path).then((res) => {
         selectRAIDStrategy.value = ("RAID" + res.data.data?.[0].raid_level) as RAIDStrategy;
@@ -46,7 +46,7 @@ const loadRaid = async () => {
         needFirstAid.value =
             diskInfoByStorageSpace.value.filter((i) => !i.health).length !== 0;
         needNewDisk.value = res.data.data?.[0].shortage ?? false;
-        needMinNewDiskSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
+        expansionMinDiskSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
     });
 };
 
@@ -123,7 +123,7 @@ import { mapIndexForDiskHub } from "@views/StorageManager/controlData.ts";
 const extenedCapacity = (): void => {
     // perpare data
     selectRAIDStrategy.value = ("RAID" + storageInfo?.raid_level) as RAIDStrategy;
-    // needMinNewDiskSize
+    // expansionMinDiskSize 已经赋值
     diskListByStorageSpace.value = diskInfoByStorageSpace.value.map((item) => {
         return mapIndexForDiskHub.get(item.index as number);
     }) as string[];
@@ -169,7 +169,7 @@ const extenedCapacity = (): void => {
 
         <div class="flex items-center bg-gray-50 rounded-md h-10 px-3 gap-4" v-if="needNewDisk">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']" v-if="showAddingDiskButton">
-                Need new hard drive · At least {{ convertSizeToReadable(needMinNewDiskSize) }}
+                Need new hard drive · At least {{ convertSizeToReadable(expansionMinDiskSize) }}
             </span>
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']" v-else>
                 The hard drive has been ejected. Please power off, replace and restart.
@@ -214,7 +214,7 @@ const extenedCapacity = (): void => {
                     <i class="casa-alert-outline text-2xl text-rose-500"></i>
                     <span class="text-neutral-400 text-xs font-normal font-['Roboto'] flex-grow ml-3">
                         Replace a hard drive of at least
-                        {{ convertSizeToReadable(needMinNewDiskSize) }}
+                        {{ convertSizeToReadable(expansionMinDiskSize) }}
                         to restore functionality.
                     </span>
                 </div>

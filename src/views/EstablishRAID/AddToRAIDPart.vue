@@ -21,13 +21,13 @@ const loadNewDiskStatus = async () => {
 // 获取选择的硬盘
 import {
     selectedFidDisk,
-    needMinNewDiskSize
+    expansionMinDiskSize
 } from '@views/EstablishRAID/controlData.ts'
 onMounted(async () => {
     await loadNewDiskStatus()
     selectedFidDisk.value =
         newDiskStatus.value?.find(
-            item => item.size && item.size >= needMinNewDiskSize.value
+            item => item.size && item.size >= expansionMinDiskSize.value
         )?.path ?? ''
 })
 </script>
@@ -44,7 +44,7 @@ onMounted(async () => {
             <label class="flex items-center h-10 bg-white rounded-md border border-neutral-300 gap-2 px-3 cursor-pointer"
                 v-for="(item, index) in newDiskStatus" :key="index" :for="`select${index}`" :class="{
                     'opacity-50':
-                        item && item.size && needMinNewDiskSize > item.size
+                        item && item.size && expansionMinDiskSize > item.size
                 }">
                 <Image :src="item.type === 'HDD' ? HDDSVG : SSDSVG" class="h-6 w-6"></Image>
                 <span class="align-baseline text-zinc-800 text-sm font-medium font-['Roboto']">
@@ -53,7 +53,7 @@ onMounted(async () => {
                 </span>
                 <div class="flex-grow"></div>
                 <input type="radio" :id="`select${index}`" :value="item.path" v-model="selectedFidDisk"
-                    v-if="item && item.size && needMinNewDiskSize <= item.size" />
+                    v-if="item && item.size && expansionMinDiskSize <= item.size" />
             </label>
         </div>
     </template>

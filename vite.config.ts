@@ -52,7 +52,7 @@ export default ({ mode }) => {
                     },
                     target: `http://${process.env.VITE_OPEN_API_DEV_IP}:${process.env.VITE_OPEN_API_DEV_PORT}`,
                     changeOrigin: true,
-                }
+                },
             }
         },
     })

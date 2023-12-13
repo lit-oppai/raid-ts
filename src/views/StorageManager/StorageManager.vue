@@ -228,7 +228,7 @@ storageInfoMap.forEach((item) => {
         </div>
         <div v-else>
             <!-- notice or create RAID -->
-            <div class="os_bg_white_card">
+            <div class="os_bg_white_card" v-if="RAIDCandidateDiskCount > 0 || unhealthyLable">
                 <div class="flex px-3 space-x-3 items-center h-10 rounded-md bg-rose-100 cursor-pointer"
                     v-if="unhealthyLable" @click="goToStorageDetailPage(true, unhealthyLable)">
                     <div class="w-6 h-6 flex justify-center items-center">

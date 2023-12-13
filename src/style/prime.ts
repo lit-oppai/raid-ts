@@ -45,7 +45,7 @@ export default {
         root: ({ state }: any) => ({
             class: [
                 'rounded-xl shadow-lg border-0',
-                'h-[calc(100vh_-_4rem)]',
+                'h-[calc(100%_-_4rem)]',
                 'max-h-90 transform scale-100',
                 'm-0 !w-[40.25rem]',
                 'dark:border dark:border-blue-900/40',

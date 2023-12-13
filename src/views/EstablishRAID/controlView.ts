@@ -60,7 +60,7 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
             title: 'Create RAID'
         },
         Modify: {
-            title: '扩容RAID5'
+            title: 'Expand RAID capacity'
         },
         FirstAid: {
             title: 'First Aid RAID'
