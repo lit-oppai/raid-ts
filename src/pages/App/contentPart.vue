@@ -12,7 +12,7 @@ const title = computed(() => route.meta.title);
 function onClose() {
     messageBus("mircoapp_communicate", {
         action: 'close',
-        name: 'icewhale_connect'
+        name: 'icewhale_settings'
     });
 }
 </script>
