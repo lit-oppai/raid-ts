@@ -11,8 +11,7 @@ import {
     UI_STORAGE_INFO_TYPE,
     STORAGE_USAGE_INFO_TYPE,
 } from './controlData.d'
-// type DISK_STATUS_TYPE = {
-// }
+
 // Data Acquisition.
 async function getDiskInfo(): Promise<DISK_INFO_TYPE[] | any> {
     return openAPI.disk.getDisks().then((res: any) => res.data.data)
