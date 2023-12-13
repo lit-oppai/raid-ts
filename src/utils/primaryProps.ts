@@ -1,15 +1,15 @@
-let WUJIE_PROPS: any = {};
+let WUJIE_PROPS: any = {}
 
 declare global {
     interface Window {
         $wujie: {
-            props: any;
+            props: any
         }
     }
 }
 
 if (window?.$wujie?.props) {
-    WUJIE_PROPS = { ...window?.$wujie.props };
+    WUJIE_PROPS = { ...window?.$wujie.props }
 }
 
 // Function:
