@@ -59,7 +59,7 @@ type UI_DISK_INFO_TYPE = {
     children_number?: number
     support?: boolean
 }
-type STORAGE_TYPE = 'ext4' | 'xfs' | 'ntfs' | 'fat32' | 'exfat'
+type STORAGE_TYPE = 'SSD' | 'HDD' | 'RAID0' | 'RAID1' | 'RAID5'
 type STORAGE_INFO_TYPE = {
     uuid?: string
     name: string // KeyID
@@ -105,7 +105,8 @@ type UI_STORAGE_INFO_TYPE = {
     label: string
     // "children": Array<{ mount_point: string, name: string, raid: boolean, raid_level: number } | undefined>,
     // "persisted_in": string,
-    disk_type: DISK_TYPE
+    // disk_type: DISK_TYPE
+    type: STORAGE_TYPE
     health: boolean
     shortage?: boolean
 }
