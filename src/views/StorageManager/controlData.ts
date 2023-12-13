@@ -64,6 +64,7 @@ const rinseDiskInfo = (
     disksInfo: DISK_INFO_TYPE[],
     storageInfo: STORAGE_INFO_TYPE[]
 ) => {
+    RAIDCandidateDiskCount.value = 0
     disksInfo.map((disk: any) => {
         // if (disk.type === "HDD" && disk.index > 0) {
         if (disk.index < 7 && disk.index > 0) {
@@ -199,9 +200,18 @@ const initStorageInfo = async (): Promise<void> => {
     const disksInfo = await getDiskInfo()
     const storageInfo = await getStorageInfo()
     // reload lifecycle.
-    storageInfoMap.clear()
-    RAIDCandidateDiskCount.value = 0
     rinseDiskInfo(disksInfo, storageInfo)
+}
+const destroyStorageInfo = (): void => {
+    HDDStatus.clear()
+    SSDStatus.clear()
+    storageInfoMap.clear()
+    sysStorageInfo = {}
+    RAIDCandidateDiskCount.value = 0
+    usageStatus.value.DataUsage = 0
+    usageStatus.value.DataFree = 0
+    usageStatus.value.FilesUsage = 0
+    usageStatus.value.FilesFree = 0
 }
 export default initStorageInfo
 export {
@@ -209,7 +219,9 @@ export {
     SSDStatus,
     storageInfoMap,
     sysStorageInfo,
+    initStorageInfo,
     initStorageInfo as reloadServiceData,
+    destroyStorageInfo,
     RAIDCandidateDiskCount,
     usageStatus,
     mapIndexForDiskHub

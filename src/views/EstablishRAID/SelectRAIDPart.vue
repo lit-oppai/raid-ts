@@ -188,10 +188,10 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
             <div class="flex flex-col space-y-1 mt-4">
                 <template v-for="key in [...selectStorageList, ...diskListByStorageSpace]" :key="key">
                     <div class="flex items-center h-10 bg-gray-50 rounded-md pr-4">
-                        <span class="ml-1 w-[34px] text-center">
+                        <span class="ml-1 w-[34px] text-center text-neutral-400">
                             {{ key }}
                         </span>
-                        <span class="mx-2">
+                        <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
                             {{ allDiskStatus.get(key)?.name }}
                         </span>
                         <span class="flex-grow text-neutral-400 text-xs font-normal font-['Roboto']">
