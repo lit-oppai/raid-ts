@@ -198,17 +198,21 @@ const extendCapacity = () => {
 
         <Button label="Previous" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="context !== 'FirstAid' &&
             currentStepName !== 'ResultRAIDPart' &&
-            currentStepName !== 'ResultRAIDPart'
+            currentStepName !== 'ResultRAIDPart' &&
+            context === 'Modify' &&
+            currentStepName !== 'SelectRAIDPart'
             "></Button>
         <Button label="Next" severity="primary" size="medium" @click="stepByStep('next')" v-show="context !== 'FirstAid' &&
             currentStepName !== 'ConfirmRAIDPart' &&
             currentStepName !== 'ResultRAIDPart'
             " :disabled="checkNextStep"></Button>
 
-        <Button label="创建" severity="primary" size="medium" @click="createStorage"
-            v-show="context !== 'FirstAid' && currentStepName === 'ConfirmRAIDPart'" :disabled="(context !== 'CreateStorage' && selectStorageList.length < 2) ||
-                !checkedCreateRAID
-                "></Button>
+        <Button label="创建" severity="primary" size="medium" @click="createStorage" v-show="context !== 'FirstAid' &&
+            context !== 'Modify' &&
+            currentStepName === 'ConfirmRAIDPart'
+            " :disabled="(context !== 'CreateStorage' && selectStorageList.length < 2) ||
+        !checkedCreateRAID
+        "></Button>
 
         <!-- Result Part -->
         <Button :label="resultRAIDInfo.btnText" severity="primary" size="medium" @click="resultRAIDInfo.butFunc"
