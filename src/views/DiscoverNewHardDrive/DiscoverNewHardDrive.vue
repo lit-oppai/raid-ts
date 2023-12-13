@@ -21,6 +21,7 @@ import { stepByStep } from "@views/EstablishRAID/controlData.ts";
 //     );
 // });
 import { disk } from "@network/index.ts";
+import { mapIndexForDiskHub } from "@views/StorageManager/controlData.ts";
 const allNewDiskStatus = ref(new Map());
 const loadAllNewDiskStatus = (): void => {
     disk.getDisks("show").then((res) => {
@@ -29,8 +30,7 @@ const loadAllNewDiskStatus = (): void => {
                 res.data.data
                     .filter((item) => item.model !== "System")
                     .map((item) => {
-                        const indexHub = ["0", "1", "2", "3", "4", "5", "6", "A", "B", "C", "D"];
-                        return [indexHub[item?.index ?? 0], item];
+                        return [mapIndexForDiskHub.get(item.index as number), item];
                     })
             );
         }
