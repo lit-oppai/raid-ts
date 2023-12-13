@@ -149,7 +149,7 @@ const extenedCapacity = (): void => {
     <div class="bg-white rounded-lg space-y-1 p-3">
         <!-- Traversing -->
         <div v-for="(item, index) in diskInfoByStorageSpace" :key="index">
-            <div class="flex items-center bg-gray-50 rounded-md h-10 px-3 gap-3">
+            <div class="flex items-center bg-gray-50 rounded-md h-10 pr-3">
                 <span class="ml-1 w-[34px] text-center text-neutral-400">
                     {{ mapIndexForDiskHub.get(item.index as number) }}
                 </span>
