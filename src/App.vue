@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
-import menuPart from '@pages/App/menuPart.vue';
+// import menuPart from '@pages/App/menuPart.vue';
 import contentPart from '@pages/App/contentPart.vue';
 import DynamicDialog from 'primevue/dynamicdialog';
 </script>
@@ -9,9 +9,9 @@ import DynamicDialog from 'primevue/dynamicdialog';
 <template>
 	<Splitter class="os_panel">
 		<!-- menu bar start -->
-		<SplitterPanel :size="20" class="panel_left">
+		<!-- <SplitterPanel :size="20" class="panel_left">
 			<menuPart></menuPart>
-		</SplitterPanel>
+		</SplitterPanel> -->
 		<!-- menu bar end -->
 
 		<SplitterPanel :size="80" class="panel_right">
