@@ -1,4 +1,5 @@
-type DISK_TYPE = 'SSD' | 'HDD' | 'NVME' | 'SATA'
+type DISK_TYPE = 'SSD' | 'HDD'
+type RAID_STRATEGY_TYPE = 'RAID0' | 'RAID1' | 'RAID5'
 type DISK_INFO_TYPE = {
     index: number
     avail: boolean
@@ -43,6 +44,7 @@ type UI_DISK_INFO_TYPE = {
     // 2023年12月01日 不再使用备选盘，只有未使用的盘可以进入 raid
     // "candidate"?: boolean,
     RaidAssignment?: string
+    RaidStrategy?: RAID_STRATEGY_TYPE | string
     // "occupied"?: string,
     unused?: boolean
     children?: Array<
@@ -60,7 +62,7 @@ type UI_DISK_INFO_TYPE = {
     children_number?: number
     support?: boolean
 }
-type STORAGE_TYPE = 'SSD' | 'HDD' | 'RAID0' | 'RAID1' | 'RAID5'
+type STORAGE_TYPE = DISK_TYPE | RAID_STRATEGY_TYPE
 type STORAGE_INFO_TYPE = {
     uuid?: string
     name: string // KeyID
