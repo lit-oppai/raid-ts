@@ -107,6 +107,10 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
     else if (!item?.unused && item?.RaidStrategy !== "") {
         return `${item?.RaidStrategy}`;
     }
+    // 被非 raid占用
+    else if (!item?.unused) {
+        return item.type;
+    }
     // 没有被占用&磁盘太小
     else if (item.size && item.size < expansionMinDiskSize.value) {
         return `太小`;
@@ -118,7 +122,8 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
     // 空槽
     else if (storageNone.includes(key)) {
         return "Empty";
-    } else {
+    }
+    else {
         return "未知"
     }
 };
