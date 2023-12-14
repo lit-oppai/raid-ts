@@ -56,7 +56,9 @@ initEstablishRAID();
 // disable raid
 import { useRouter } from "vue-router";
 const router = useRouter();
+const isLoadingDisabledButton = ref<boolean>(false)
 const disabledRaid = async (): Promise<void> => {
+    isLoadingDisabledButton.value = true;
     await raid
         .deleteRaid(storageInfo?.path ?? "")
         .then((res) => {
@@ -69,6 +71,9 @@ const disabledRaid = async (): Promise<void> => {
         })
         .catch((err) => {
             console.log(err);
+        })
+        .finally(() => {
+            isLoadingDisabledButton.value = false;
         });
 };
 
@@ -246,7 +251,7 @@ const extenedCapacity = (): void => {
                 Format and Disable
             </span>
 
-            <Button label="Disable" severity="accent" size="medium" @click="disabledRaid"></Button>
+            <Button label="Disable" severity="accent" size="medium" @click="disabledRaid" :loading="isLoadingDisabledButton"></Button>
         </div>
     </div>
 </template>
