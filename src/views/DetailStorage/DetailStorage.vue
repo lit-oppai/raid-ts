@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import Image from "primevue/image";
 import Button from "primevue/button";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
@@ -31,7 +32,9 @@ const showCheckFormat = (): void => {
     formatePath.value = storageInfo?.path ?? "";
     showEstablishRAID("CreateStorage");
 };
+const isLoadingDisabledButton = ref<boolean>(false);
 const disabledStorage = async (): Promise<void> => {
+    isLoadingDisabledButton.value = true
     await storage
         .deleteStorage(storageInfo?.path ?? "")
         .then((res) => {
@@ -44,6 +47,8 @@ const disabledStorage = async (): Promise<void> => {
         })
         .catch((err) => {
             console.log(err);
+        }).finally(() => {
+            isLoadingDisabledButton.value = false
         });
 };
 </script>
@@ -91,7 +96,7 @@ const disabledStorage = async (): Promise<void> => {
             </span>
 
             <Button label="Format" severity="accent" size="medium" @click="showCheckFormat" class="mr-4"></Button>
-            <Button label="Disable" severity="accent" size="medium" @click="disabledStorage"></Button>
+            <Button label="Disable" severity="accent" size="medium" @click="disabledStorage" :loading="isLoadingDisabledButton"></Button>
         </div>
     </div>
 </template>
