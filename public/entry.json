@@ -4,7 +4,6 @@
     "en_us": "settings"
   },
   "prefetch": true,
-  "exec": true,
   "entry": "/modules/icewhale_settings/index.html",
   "icon": "/modules/icewhale_settings/raid.svg",
   "description": "Icewhale Settings",

@@ -61,7 +61,10 @@ const createSingleStorage = () => {
         })
         .finally(() => {
             stepByStep("next");
-            resultRAIDInfo.butFunc = closeEstablishRAID;
+            resultRAIDInfo.butFunc = () => {
+                reloadServiceData();
+                closeEstablishRAID;
+            } 
         });
 };
 const createRAID = () => {
