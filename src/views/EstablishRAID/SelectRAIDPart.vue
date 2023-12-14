@@ -104,8 +104,8 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
         return "Current";
     }
     // 被raid占用
-    else if (!item?.unused && item?.RaidAssignment) {
-        return `${item?.RaidAssignment}`;
+    else if (!item?.unused && item?.RaidStrategy !== "") {
+        return `${item?.RaidStrategy}`;
     }
     // 没有被占用&磁盘太小
     else if (item.size && item.size < expansionMinDiskSize.value) {

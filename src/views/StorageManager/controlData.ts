@@ -83,6 +83,7 @@ const rinseDiskInfo = (
                     (disk.children[0]?.raid === true &&
                         disk.children[0]?.storage_name) ||
                     '',
+                RaidStrategy: disk.children[0]?.raid_level ? 'RAID' + disk.children[0]?.raid_level : '',
                 unused: disk.free,
                 children: disk.children,
                 children_number: disk.children_number,
@@ -106,6 +107,7 @@ const rinseDiskInfo = (
                         (disk.children[0]?.raid === true &&
                             disk.children[0]?.storage_name) ||
                         '',
+                    RaidStrategy: disk.children[0]?.raid_level ? 'RAID' + disk.children[0]?.raid_level : '',
                     unused: disk.free,
                     children: disk.children,
                     children_number: disk.children_number,
