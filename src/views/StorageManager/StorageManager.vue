@@ -2,6 +2,7 @@
 import { onBeforeMount, ref } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
+import Skeleton from 'primevue/skeleton';
 import { NPopover } from "naive-ui";
 
 import RaidSVG from "@assets/img/StorageManager/Raid.svg";
@@ -16,7 +17,7 @@ import {
 } from "@views/EstablishRAID/controlView.ts";
 import ZimaCubeCard from "@views/StorageManager/ZimaCubeCard.vue";
 import initStoragePageData from "./controlData.ts";
-import { storageInfoMap, usageStatus, RAIDCandidateDiskCount } from "./controlData.ts";
+import { storageInfoMap, usageStatus, RAIDCandidateDiskCount, isLoadingStorageInfo } from "./controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
@@ -219,7 +220,11 @@ storageInfoMap.forEach((item) => {
         <div class="flex mt-6 mb-2">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-tight">Data Space</span>
         </div>
-        <div v-if="RAIDCandidateDiskCount === 0 && storageInfoMap.size === 0"
+        <div v-if="isLoadingStorageInfo" class="w-full">
+            <Skeleton height="5.75rem"></Skeleton>
+            <Skeleton height="8.25rem"></Skeleton>
+        </div>
+        <div v-else-if="RAIDCandidateDiskCount === 0 && storageInfoMap.size === 0"
             class="flex flex-col items-center justify-center">
             <Image :src="cryingFaceSVG"></Image>
             <span>
@@ -327,6 +332,7 @@ storageInfoMap.forEach((item) => {
             </div>
         </div>
     </div>
+    <!-- TODO:<Suspense> is an experimental feature and its API will likely change. -->
     <Suspense v-else>
         <router-view></router-view>
     </Suspense>
