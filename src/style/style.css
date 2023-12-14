@@ -8,6 +8,8 @@
 html,
 body {
     height: 100%;
+    /* The  base application will have an impact here  */
+    padding: 0 !important;
 }
 #icewhale-settings-app {
     height: 100%;
