@@ -218,12 +218,6 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
 
 // Data Lifecycle Management.
 const initStoragePageData = async (): Promise<void> => {
-
-    // const disksInfo = await getDiskInfo()
-    // const storageInfo = await getStorageInfo()
-    // // reload lifecycle.
-    // rinseDiskInfo(disksInfo)
-    // rinseStorageInfo(storageInfo)
     initDiskInfo();
     initStorageInfo();
 }
@@ -250,5 +244,6 @@ export {
     destroyStorageInfo,
     RAIDCandidateDiskCount,
     usageStatus,
-    IndexForDiskHubMap
+    IndexForDiskHubMap,
+    isLoadingStorageInfo,
 }
