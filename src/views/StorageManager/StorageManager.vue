@@ -22,7 +22,7 @@ import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
 const route = useRoute();
 const router = useRouter();
-const pathDeep = computed(() => route.matched.length === 1);
+const isFirstRoutePath = computed(() => route.matched.length === 1);
 const sysRate = computed(() => {
     return (
         (usageStatus.value?.SystemUsage /
@@ -86,7 +86,7 @@ storageInfoMap.forEach((item) => {
 </script>
 
 <template>
-    <div v-if="pathDeep">
+    <div v-if="isFirstRoutePath">
         <!-- Storage Sketch Part -->
         <div class="storage_image">
             <ZimaCubeCard></ZimaCubeCard>
