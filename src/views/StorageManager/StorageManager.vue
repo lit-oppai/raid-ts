@@ -15,7 +15,7 @@ import {
     showEstablishRAID,
 } from "@views/EstablishRAID/controlView.ts";
 import ZimaCubeCard from "@views/StorageManager/ZimaCubeCard.vue";
-import initStorageInfo from "./controlData.ts";
+import initStoragePageData from "./controlData.ts";
 import { storageInfoMap, usageStatus, RAIDCandidateDiskCount } from "./controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
@@ -65,7 +65,7 @@ const filesFreeRate = computed(() => {
     ).toFixed(0);
 });
 onBeforeMount(() => {
-    initStorageInfo();
+    initStoragePageData();
     initEstablishRAID();
 });
 const goToStorageDetailPage = (isRaid: boolean, label: string) => {

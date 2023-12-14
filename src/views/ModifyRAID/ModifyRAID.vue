@@ -124,13 +124,13 @@ import {
     extendRaidPath,
     nameStorage,
 } from "@views/EstablishRAID/controlData.ts";
-import { mapIndexForDiskHub } from "@views/StorageManager/controlData.ts";
+import { IndexForDiskHubMap } from "@views/StorageManager/controlData.ts";
 const extenedCapacity = (): void => {
     // perpare data
     selectRAIDStrategy.value = ("RAID" + storageInfo?.raid_level) as RAIDStrategy;
     // expansionMinDiskSize 已经赋值
     diskListByStorageSpace.value = diskInfoByStorageSpace.value.map((item) => {
-        return mapIndexForDiskHub.get(item.index as number);
+        return IndexForDiskHubMap.get(item.index as number);
     }) as string[];
     extendRaidPath.value = storageInfo?.path ?? "";
     nameStorage.value = storageInfo?.name ?? "";
@@ -156,7 +156,7 @@ const extenedCapacity = (): void => {
         <div v-for="(item, index) in diskInfoByStorageSpace" :key="index">
             <div class="flex items-center bg-gray-50 rounded-md h-10 pr-3">
                 <span class="ml-1 w-[34px] text-center text-neutral-400">
-                    {{ mapIndexForDiskHub.get(item.index as number) }}
+                    {{ IndexForDiskHubMap.get(item.index as number) }}
                 </span>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
                     {{ item.model }}
