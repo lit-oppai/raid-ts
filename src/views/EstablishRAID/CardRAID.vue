@@ -21,25 +21,29 @@ interface RaidStrategyInfo {
     speed: number
     capacity: number
     minDisks: number
+    tip: string
 }
 const raidStrategyInfoMap: Record<string, RaidStrategyInfo> = {
     RAID0: {
         security: 1,
         speed: 4,
         capacity: 50,
-        minDisks: 2
+        minDisks: 2,
+        tip: "RAID0 evenly distributes data across two or more hard drives to improve read and write speeds, it lacks redundancy, and a failure of one drive results in the loss of all data."
     },
     RAID1: {
         security: 4,
         speed: 1,
         capacity: 50,
-        minDisks: 2
+        minDisks: 2,
+        tip: "RAID1 duplicates identical data onto two hard drives, providing redundant backup to enhance data availability. If one drive fails, data can still be recovered from the other drive."
     },
     RAID5: {
         security: 2,
         speed: 3,
         capacity: 83,
-        minDisks: 3
+        minDisks: 3,
+        tip: "RAID 5 distributes data across multiple hard drives and using parity for redundancy. In case of drive failure, data can be recovered from the remaining drives and parity information."
     }
 }
 const currentRaidStrategyInfo = computed(() => {
@@ -65,27 +69,24 @@ const showRequirePopover = ref(false)
 
             <span class="flex-grow"></span>
             <div @click="e => e.stopPropagation()">
-                <NPopover trigger="hover" placement="bottom-end" scrollable content-style="padding-right: 0;">
+                <NPopover trigger="hover" placement="bottom-end" scrollable
+                    content-style="padding:0.75rem 0.75rem 0.375rem;">
                     <template #trigger>
                         <Image :src="questionSVG" class="flex-shrink"></Image>
                     </template>
-                    <div class="max-w-[156px]">
-                        <!-- 头部 -->
-                        <!-- <div class="flex justify-between items-center">
+                    <!-- <div class="max-w-[156px]"> -->
+                    <!-- 头部 -->
+                    <!-- <div class="flex justify-between items-center">
                                                 <span class="text-slate-800 text-base font-semibold font-['Roboto']">
                                                     Clarification
                                                 </span>
                                                 <i class="casa-close-outline"></i>
                                             </div> -->
-                        <!-- 内容 -->
-                        <div class="max-h-[162px] scrollbar-container">
-                            RAID 5 utilizes striping and parity-checking
-                            technology, distributing data across multiple hard
-                            drives and using parity for redundancy. In case of
-                            drive failure, data can be recovered from the
-                            remaining drives and parity information.
-                        </div>
+                    <!-- 内容 -->
+                    <div class="w-[188px] h-[178px]">
+                        {{ currentRaidStrategyInfo.tip }}
                     </div>
+                    <!-- </div> -->
                 </NPopover>
             </div>
         </div>
