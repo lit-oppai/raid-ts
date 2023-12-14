@@ -1,4 +1,6 @@
 #!/bin/bash
+#获取 env 
+source .env.local
 
 #运行 pnpm 命令
 pnpm run build
@@ -11,6 +13,11 @@ if [ $? -eq 0 ]; then
     cp -rf build/sysroot/* /
 
     echo "Complete deployment."
+    if [ $? -eq 0 ]; then
+        curl -X POST -H "Content-Type: application/json" -d '{"msg_type":"text","content":{"text":"IceWhale-Settings-UI updated 本地更新"}}' https://open.feishu.cn/open-apis/bot/v2/hook/$NOTICE_KEY
+        echo "\n\t successfully sent notice message."
+    fi
+
 else
     echo "Deployment failure."
 fi
