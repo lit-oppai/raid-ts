@@ -135,9 +135,9 @@ const extenedCapacity = (): void => {
 <template>
     <!-- Warnning Info -->
     <div class="w-full px-3 py-2.5 bg-rose-100 rounded-md justify-start items-center gap-2 inline-flex mt-4"
-        v-if="needNewDisk">
+        v-if="needFirstAid">
         <Image :src="warningIntense"></Image>
-        <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow align-baseline">
+        <span class="grow shrink basis-0 text-orange-500 text-sm font-normal font-['Roboto'] align-baseline">
             The data has been locked for read-only access. Please replace it for recovery
             operations.
         </span>
@@ -156,7 +156,7 @@ const extenedCapacity = (): void => {
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
                     {{ item.model }}
                 </span>
-                <span class="px-1 py-px bg-rose-100 rounded justify-center items-center gap-0.5 inline-flex"
+                <span class="mx-3 px-1 py-px bg-rose-100 rounded justify-center items-center gap-0.5 inline-flex"
                     v-if="!item.health">
                     <Image :src="warningRedSVG" class="h-4 w-4 fill-red-500"></Image>
                     <span class="text-rose-500 text-xs font-normal font-['Roboto']"> Damaged </span>
@@ -198,7 +198,7 @@ const extenedCapacity = (): void => {
             </span>
         </div>
         <div class="bg-white rounded-lg flex flex-col py-1">
-            <div class="h-9 flex items-center px-4">
+            <div class="h-10 flex items-center px-4">
                 <Image :src="protectSVG" class="h-6 w-6"></Image>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
                     Verification and Recovery
@@ -213,8 +213,8 @@ const extenedCapacity = (): void => {
             </div>
             <template v-if="needFirstAid">
                 <div class="w-full h-px bg-gray-200"></div>
-                <div class="h-8 flex items-center px-4 pb-1">
-                    <i class="casa-alert-outline text-2xl text-rose-500"></i>
+                <div class="h-9 flex items-center px-4 pb-1">
+                    <i class="w-6 flex items-center justify-center casa-alert-outline text-base text-rose-500"></i>
                     <span class="text-neutral-400 text-xs font-normal font-['Roboto'] flex-grow ml-3">
                         Replace a hard drive of at least
                         {{ convertSizeToReadable(expansionMinDiskSize) }}
