@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { disk } from "@network/index.ts";
-import { mapIndexForDiskHub } from "@views/StorageManager/controlData.ts";
+import { IndexForDiskHubMap } from "@views/StorageManager/controlData.ts";
 const allNewDiskStatus = ref(new Map());
 const loadAllNewDiskStatus = (): void => {
     disk.getDisks("show").then((res) => {
@@ -9,7 +9,7 @@ const loadAllNewDiskStatus = (): void => {
                 res.data.data
                     .filter((item) => item.model !== "System")
                     .map((item) => {
-                        return [mapIndexForDiskHub.get(item.index as number), item];
+                        return [IndexForDiskHubMap.get(item.index as number), item];
                     })
             );
         }

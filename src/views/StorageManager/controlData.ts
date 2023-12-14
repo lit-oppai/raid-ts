@@ -46,7 +46,7 @@ const usageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     FilesFree: 0
 })
 
-const mapIndexForDiskHub = new Map<number, string>([
+const IndexForDiskHubMap = new Map<number, string>([
     [1, '1'],
     [2, '2'],
     [3, '3'],
@@ -60,10 +60,14 @@ const mapIndexForDiskHub = new Map<number, string>([
     [94, 'D']
 ])
 import { EnumStorageNames } from './const'
-// Data Cleaning.
+// --- DATA CLEANING ---
+// load disk info
+const initDiskInfo = async (): Promise<void> => {
+    const disksInfo = await getDiskInfo()
+    rinseDiskInfo(disksInfo)
+}
 const rinseDiskInfo = (
-    disksInfo: DISK_INFO_TYPE[],
-    storageInfo: STORAGE_INFO_TYPE[]
+    disksInfo: DISK_INFO_TYPE[]
 ) => {
     RAIDCandidateDiskCount.value = 0
     disksInfo.map((disk: any) => {
@@ -91,7 +95,7 @@ const rinseDiskInfo = (
             })
             disk.free && RAIDCandidateDiskCount.value++
         } else if (['SSD', 'NVME'].includes(disk.type) && disk.index) {
-            const key = mapIndexForDiskHub.get(disk.index)
+            const key = IndexForDiskHubMap.get(disk.index)
             key &&
                 SSDStatus.set(key, {
                     exit: true,
@@ -127,7 +131,7 @@ const rinseDiskInfo = (
         }
     }
     for (let i = 91; i < 95; i++) {
-        const key = mapIndexForDiskHub.get(i)
+        const key = IndexForDiskHubMap.get(i)
         if (key && typeof SSDStatus.get(key) !== 'object') {
             SSDStatus.set(key, {
                 exit: false,
@@ -137,6 +141,15 @@ const rinseDiskInfo = (
             })
         }
     }
+}
+// load storage info
+const isLoadingStorageInfo = ref<boolean>(false)
+const initStorageInfo = async (): Promise<void> => {
+    isLoadingStorageInfo.value = true
+    const storageInfo = await getStorageInfo()
+    rinseStorageInfo(storageInfo)
+}
+const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => { 
     // 存储用量
     let dataUsage = 0,
         dataFree = 0,
@@ -200,15 +213,21 @@ const rinseDiskInfo = (
         FilesUsage: filesUsage,
         FilesFree: fileFree
     }
+    isLoadingStorageInfo.value = false
 }
 
 // Data Lifecycle Management.
-const initStorageInfo = async (): Promise<void> => {
-    const disksInfo = await getDiskInfo()
-    const storageInfo = await getStorageInfo()
-    // reload lifecycle.
-    rinseDiskInfo(disksInfo, storageInfo)
+const initStoragePageData = async (): Promise<void> => {
+
+    // const disksInfo = await getDiskInfo()
+    // const storageInfo = await getStorageInfo()
+    // // reload lifecycle.
+    // rinseDiskInfo(disksInfo)
+    // rinseStorageInfo(storageInfo)
+    initDiskInfo();
+    initStorageInfo();
 }
+
 const destroyStorageInfo = (): void => {
     HDDStatus.clear()
     SSDStatus.clear()
@@ -220,16 +239,16 @@ const destroyStorageInfo = (): void => {
     usageStatus.value.FilesUsage = 0
     usageStatus.value.FilesFree = 0
 }
-export default initStorageInfo
+export default initStoragePageData
 export {
     HDDStatus,
     SSDStatus,
     storageInfoMap,
     sysStorageInfo,
-    initStorageInfo,
-    initStorageInfo as reloadServiceData,
+    initStoragePageData,
+    initStoragePageData as reloadServiceData,
     destroyStorageInfo,
     RAIDCandidateDiskCount,
     usageStatus,
-    mapIndexForDiskHub
+    IndexForDiskHubMap
 }
