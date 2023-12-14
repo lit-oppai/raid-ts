@@ -179,7 +179,7 @@ const rinseDiskInfo = (
                 size: storageSize,
                 avail: storageSize - storageUsedSize,
                 used: storageUsedSize,
-                type: (storage.raid_level !== undefined ? 'RAID' + storage.raid_level : storage?.disk_type?.toUpperCase()) as STORAGE_TYPE,
+                type: (storage.raid_level !== undefined ? 'RAID' + storage.raid_level : storage?.disk_type?.toUpperCase() === 'SATA' ? 'HDD' : 'SSD') as STORAGE_TYPE,
                 // disk_type: storage?.disk_type?.toUpperCase() as DISK_TYPE,
                 path: storage.path,
                 // "drive_name": string,
