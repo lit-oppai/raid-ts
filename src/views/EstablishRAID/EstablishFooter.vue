@@ -40,6 +40,7 @@ const createStorage = () => {
             break;
     }
 };
+import { loadAllNewDiskStatus } from '@views/DiscoverNewHardDrive/controlData.ts'
 const createSingleStorage = () => {
     // openAPI.storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
     openAPI.storage
@@ -63,7 +64,8 @@ const createSingleStorage = () => {
             stepByStep("next");
             resultRAIDInfo.butFunc = () => {
                 reloadServiceData();
-                closeEstablishRAID;
+                loadAllNewDiskStatus();
+                closeEstablishRAID();
             } 
         });
 };

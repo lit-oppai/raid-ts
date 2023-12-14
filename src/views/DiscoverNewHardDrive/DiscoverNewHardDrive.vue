@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from "vue";
+import { onBeforeMount } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 // import diskSVG from '@assets/img/StorageManager/disk.svg';
@@ -20,22 +20,26 @@ import { stepByStep } from "@views/EstablishRAID/controlData.ts";
 //             .filter((item) => !item[1].support || item[1].unused)
 //     );
 // });
-import { disk } from "@network/index.ts";
-import { mapIndexForDiskHub } from "@views/StorageManager/controlData.ts";
-const allNewDiskStatus = ref(new Map());
-const loadAllNewDiskStatus = (): void => {
-    disk.getDisks("show").then((res) => {
-        if (res.status === 200 && res.data.data) {
-            allNewDiskStatus.value = new Map(
-                res.data.data
-                    .filter((item) => item.model !== "System")
-                    .map((item) => {
-                        return [mapIndexForDiskHub.get(item.index as number), item];
-                    })
-            );
-        }
-    });
-};
+// import { disk } from "@network/index.ts";
+// import { mapIndexForDiskHub } from "@views/StorageManager/controlData.ts";
+// const allNewDiskStatus = ref(new Map());
+// const loadAllNewDiskStatus = (): void => {
+//     disk.getDisks("show").then((res) => {
+//         if (res.status === 200 && res.data.data) {
+//             allNewDiskStatus.value = new Map(
+//                 res.data.data
+//                     .filter((item) => item.model !== "System")
+//                     .map((item) => {
+//                         return [mapIndexForDiskHub.get(item.index as number), item];
+//                     })
+//             );
+//         }
+//     });
+// };
+import {
+    allNewDiskStatus,
+    loadAllNewDiskStatus
+} from '@views/DiscoverNewHardDrive/controlData.ts'
 
 onBeforeMount(() => {
     loadAllNewDiskStatus();
