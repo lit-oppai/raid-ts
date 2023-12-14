@@ -85,7 +85,7 @@ export default {
         footer: {
             class: ['shrink-0 ', 'h-16', 'border-t-2 bg-white text-gray-700 px-6 pb-6 pt-3 text-right rounded-b-xl', 'dark:bg-gray-900  dark:text-white/80']
         },
-        mask: ({  }: any) => ({
+        mask: ({ }: any) => ({
             class: ['transition duration-200', 'bg-black/40']
         }),
         transition: ({ props }: any) => {
@@ -125,4 +125,18 @@ export default {
                             };
         }
     },
+    skeleton: {
+        root: ({ props }: any) => ({
+            class: [
+                'overflow-hidden',
+                '!mb-2',
+                'bg-gray-300 dark:bg-gray-800',
+                'after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:content after:w-full after:h-full after:bg-blue-400 after:left-full after:transform after:translate-x-full after:z-10 after:bg-gradient-to-r after:from-transparent after:via-white after:to-transparent animate-pulse',
+                {
+                    'rounded-md': props.shape !== 'circle',
+                    'rounded-full': props.shape == 'circle'
+                }
+            ]
+        })
+    }
 }
