@@ -119,7 +119,8 @@ const rinseDiskInfo = (
             HDDStatus.set(i + '', {
                 exit: false,
                 health: false,
-                temperature: 0
+                temperature: 0,
+                expect_type: '3.5inch HDD',
             })
         }
     }
@@ -129,7 +130,8 @@ const rinseDiskInfo = (
             SSDStatus.set(key, {
                 exit: false,
                 health: false,
-                temperature: 0
+                temperature: 0,
+                expect_type: "2.5inch SSD",
             })
         }
     }
