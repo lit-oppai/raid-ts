@@ -21,6 +21,8 @@ import {
 import openAPI from "@network/index.ts";
 import { RaidBodyRaidLevelEnum } from "@icewhale/zimaos-localstorage-openapi";
 import { closeEstablishRAID } from "./controlView";
+import { useRouter } from "vue-router"
+const router = useRouter();
 
 const pathList = computed(() => {
     return (
@@ -140,8 +142,9 @@ const confirmFirstAid = () => {
             resultRAIDInfo.btnText = "Done";
             resultRAIDInfo.success = true;
             resultRAIDInfo.butFunc = () => {
-                reloadServiceData();
+                // reloadServiceData();
                 closeEstablishRAID();
+                router.push('/storage')
             };
         })
         .catch((err) => {
@@ -149,8 +152,11 @@ const confirmFirstAid = () => {
             resultRAIDInfo.btnText = "Restart";
             resultRAIDInfo.success = false;
             resultRAIDInfo.butFunc = () => {
-                reloadServiceData();
-                closeEstablishRAID();
+                // reloadServiceData();
+                // TODO: 直接更改数据不是最佳实践。。。
+                stepByStep("prev");
+                stepByStep("prev");
+                stepByStep("prev");
             };
         })
         .finally(() => {
@@ -173,8 +179,9 @@ const extendCapacity = () => {
             resultRAIDInfo.btnText = "Done";
             resultRAIDInfo.success = true;
             resultRAIDInfo.butFunc = () => {
-                reloadServiceData();
+                // reloadServiceData();
                 closeEstablishRAID();
+                router.push('/storage')
             };
         })
         .catch((err) => {
@@ -182,8 +189,11 @@ const extendCapacity = () => {
             resultRAIDInfo.btnText = "Restart";
             resultRAIDInfo.success = false;
             resultRAIDInfo.butFunc = () => {
-                reloadServiceData();
-                closeEstablishRAID();
+                // reloadServiceData();
+                // TODO: 直接更改数据不是最佳实践。。。
+                stepByStep("prev");
+                stepByStep("prev");
+                stepByStep("prev");
             };
         })
         .finally(() => {
