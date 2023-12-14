@@ -1,0 +1,72 @@
+name: push-test-server
+
+on:
+    push:
+    workflow_dispatch:
+
+jobs:
+    release:
+
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [ 20.x ]
+            # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+        steps:
+            -   uses: actions/checkout@v3
+            -   name: '使用 Use Node.js ${{ matrix.node-version }}'
+                uses: actions/setup-node@v3
+                with:
+                    node-version: ${{ matrix.node-version }}
+            -   uses: pnpm/action-setup@v2
+                name: Install pnpm
+                with:
+                    version: 8.6
+                    run_install: false
+            -   name: Get pnpm store directory
+                shell: bash
+                run: |
+                    echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+            -   name: '缓存 Cache'
+                uses: actions/cache@v3
+                id: cache-dependencies
+                with:
+                    path: ${{ env.STORE_PATH }}
+                    key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                    restore-keys: |
+                        ${{ runner.os }}-pnpm-store-
+            -   run: pnpm install
+            -   run: pnpm run build
+            -   run: |
+                    tar -zcvf linux-all-icewhale-settings-ui-v99.99.99.tar.gz build
+                    ls
+            -   name: install sshpass
+                run: sudo apt install sshpass --yes
+            -   name: echo ZeroTier Info
+                run: |
+                  echo ${{ secrets.ZEROTIER_NETWORK_ID }} 
+                  echo ${{ secrets.ZEROTIER_CENTRAL_TOKEN }}
+            -   name: ZeroTier
+                uses: zerotier/github-action@v1.0.1
+                with:
+                    network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
+                    auth_token: ${{ secrets.ZEROTIER_CENTRAL_TOKEN }}
+            -   name: ping hostname
+                shell: bash
+                run: |
+                    count=10
+                    while ! ping -c 1 10.147.18.11 ; do
+                      echo "waiting..." ;
+                      sleep 1 ;
+                      let count=count-1
+                    done
+                    echo "ping success"
+            -   name: copy tar to target hostname
+                shell: bash
+                run: |
+                    sshpass -p "${{ secrets.ssh_password }}" scp -r -o StrictHostKeyChecking=no -P 22 ./linux-all-icewhale-settings-ui-v99.99.99.tar.gz root@10.147.18.11:/var/www/download
+                    echo "ping success"
+            -   name: send message
+                run: |
+                    curl -X POST -H "Content-Type: application/json" -d '{"msg_type":"text","content":{"text":"IceWhale-Settings-UI updated"}}'  https://open.feishu.cn/open-apis/bot/v2/hook/eb8f45c7-9636-4b64-84f2-a66d9aeb9d30
