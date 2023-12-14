@@ -81,6 +81,7 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
     }
     dialogInstance = dialog.open(EstablishRAID, {
         props: {
+            draggable: false,
             header: showType[type].title,
             style: {
                 width: '50vw',
