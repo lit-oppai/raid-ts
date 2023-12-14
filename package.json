@@ -20,7 +20,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@icewhale/zimaos-localstorage-openapi": "0.4.9-alpha13",
+    "@icewhale/zimaos-localstorage-openapi": "0.4.9-alpha14",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.1",
     "@vitejs/plugin-vue": "^4.5.0",
