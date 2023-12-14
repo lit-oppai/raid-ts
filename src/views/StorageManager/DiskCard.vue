@@ -37,8 +37,10 @@ const exitLampOpacity = computed(() => {
     return props.source.exit ? 1 : 0.5;
 });
 const statuTitle = computed(() => {
-    if (!props.source.exit || props.source.unused) {
+    if (!props.source.exit) {
         return "Empty";
+    } else if (props.source.unused) {
+        return ""
     }
     return (
         (props.source.health === "true" ? "healthy" : "unhealthy") +
@@ -85,12 +87,13 @@ const statuClass = computed(() => {
                 </filter>
             </svg>
         </template>
-        <div v-if="source?.model && props.source.exit && !props.source.unused">
+        
+        <div v-if="source?.model && props.source.exit">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                 {{ source?.model }} {{ convertSizeToReadable(source?.size) }}
             </span>
         </div>
-        <div>
+        <div v-if="statuTitle">
             <!-- <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">状态 : </span> -->
             <span class="text-sm font-['Roboto'] leading-5" :class="statuClass">{{
                 statuTitle
