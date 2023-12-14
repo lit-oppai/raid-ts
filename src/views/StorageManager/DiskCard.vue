@@ -38,7 +38,7 @@ const exitLampOpacity = computed(() => {
 });
 const statuTitle = computed(() => {
     if (!props.source.exit || props.source.unused) {
-        return "空闲";
+        return "Empty";
     }
     return (
         (props.source.health === "true" ? "healthy" : "unhealthy") +
@@ -53,9 +53,9 @@ const statuColor = computed(() => {
 });
 const statuClass = computed(() => {
     if (!props.source.exit || props.source.unused) {
-        return "text-zinc-800";
+        return "text-zinc-800 font-normal";
     }
-    return props.source.health === "true" ? "text-green-600" : "text-red-600";
+    return props.source.health === "true" ? "text-green-600 font-medium" : "text-red-600 font-medium";
 });
 </script>
 
@@ -92,7 +92,7 @@ const statuClass = computed(() => {
         </div>
         <div>
             <!-- <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">状态 : </span> -->
-            <span class="text-sm font-medium font-['Roboto'] leading-5" :class="statuClass">{{
+            <span class="text-sm font-['Roboto'] leading-5" :class="statuClass">{{
                 statuTitle
             }}</span>
         </div>
@@ -108,7 +108,7 @@ const statuClass = computed(() => {
         <div v-else>
             <!-- <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">类型 : </span> -->
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{
-                source?.type
+                source?.type || source?.expect_type
             }}</span>
         </div>
     </NPopover>

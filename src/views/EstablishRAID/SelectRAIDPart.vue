@@ -103,8 +103,8 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
     if (diskListByStorageSpace.value.includes(key)) {
         return "Current";
     }
-    // 被占用
-    else if (item?.RaidAssignment) {
+    // 被raid占用
+    else if (!item?.unused && item?.RaidAssignment) {
         return `${item?.RaidAssignment}`;
     }
     // 没有被占用&磁盘太小
@@ -116,8 +116,10 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
         return item.type;
     }
     // 空槽
-    else {
+    else if (storageNone.includes(key)) {
         return "Empty";
+    } else {
+        return "未知"
     }
 };
 
@@ -212,7 +214,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                 </span>
                 <div>
                     <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto']">
-                        {{context !== "Modify" ? "Estimated available" : "Expected expansion from 100GB to"}}
+                        {{ context !== "Modify" ? "Estimated available" : "Expected expansion from 100GB to" }}
                     </span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
                         {{ convertSizeToReadable(availableSpace) }}

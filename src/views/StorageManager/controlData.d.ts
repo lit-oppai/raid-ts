@@ -36,6 +36,7 @@ type UI_DISK_INFO_TYPE = {
     name?: string
     size?: number
     type?: DISK_TYPE
+    expect_type?: string
     path?: string
     model?: string
     // RAID 备选盘 1、状态健康 2、未被占用
