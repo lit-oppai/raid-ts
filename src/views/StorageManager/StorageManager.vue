@@ -4,7 +4,7 @@ import Image from "primevue/image";
 import Button from "primevue/button";
 import Skeleton from 'primevue/skeleton';
 import { NPopover } from "naive-ui";
-import { $t } from "@/i18n.ts";
+// import { $t } from "@/i18n.ts";
 
 import RaidSVG from "@assets/img/StorageManager/Raid.svg";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
@@ -102,7 +102,7 @@ storageInfoMap.forEach((item) => {
                         @click="goToStorageDetailPage(false, 'ZimaOS-HD')"></i>
                 </div>
                 <div class="space-x-1">
-                    <span class="text-neutral-400 text-xs font-normal font-['Roboto']">{{ $t("Available")}}</span>
+                    <span class="text-neutral-400 text-xs font-normal font-['Roboto']">{{ $t("Available") }}</span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">
                         {{ convertSizeToReadable(usageStatus.FilesFree).replace("0.00B", "--") }}
                     </span>
@@ -118,7 +118,7 @@ storageInfoMap.forEach((item) => {
                             </template>
                             <div>
                                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">
-                                    System
+                                    {{ $t("System") }}
                                 </span>
                             </div>
                             <div>
@@ -133,7 +133,7 @@ storageInfoMap.forEach((item) => {
                             </template>
                             <div>
                                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">
-                                    Data
+                                    {{ $t("Data") }}
                                 </span>
                             </div>
                             <div>
@@ -148,7 +148,7 @@ storageInfoMap.forEach((item) => {
                             </template>
                             <div>
                                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">
-                                    Available
+                                    {{ $t("Available") }}
                                 </span>
                             </div>
                             <div>
@@ -160,11 +160,15 @@ storageInfoMap.forEach((item) => {
                     </div>
                     <div class="space-x-1">
                         <span class="bg-amber-500 w-1.5 h-1.5 rounded-sm inline-block"></span>
-                        <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">System</span>
+                        <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">
+                            {{ $t("System") }}
+                        </span>
                     </div>
                     <div class="space-x-1">
                         <span class="bg-violet-500 w-1.5 h-1.5 rounded-sm inline-block"></span>
-                        <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">Data</span>
+                        <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">
+                            {{ $t("Data") }}
+                        </span>
                     </div>
                 </div>
                 <div class="flex-grow space-y-2">
@@ -175,7 +179,7 @@ storageInfoMap.forEach((item) => {
                             </template>
                             <div>
                                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">
-                                    Files
+                                    {{ $t("Files") }}
                                 </span>
                             </div>
                             <div>
@@ -190,7 +194,7 @@ storageInfoMap.forEach((item) => {
                             </template>
                             <div>
                                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">
-                                    Available
+                                    {{ $t("Available") }}
                                 </span>
                             </div>
                             <div>
@@ -257,7 +261,7 @@ storageInfoMap.forEach((item) => {
                         </div>
                     </div>
                     <div class="flex-grow text-sky-500 text-sm font-normal font-['Roboto'] leading-6">
-                        Discover the new hard drive
+                        {{ $t("Discover the new hard drive") }}
                     </div>
                     <div class="w-6 h-6 rounded os_list_action_icon">
                         <i class="casa-right-outline text-base"></i>
@@ -269,7 +273,7 @@ storageInfoMap.forEach((item) => {
                         <Image :src="RaidSVG" />
                     </div>
                     <div class="flex-grow text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
-                        To enhance data availability, capacity, and/or performance by
+                        {{ $t("Combine hard drive space by") }}
                         <span class="font-medium">RAID</span>.
                     </div>
                     <div class="flex-shrink-0">
@@ -277,7 +281,7 @@ storageInfoMap.forEach((item) => {
                         <!-- <button class="h-7 bg-sky-600 rounded-[14px] px-[14px]" @click="showEstablishRAID('Create')">
                             <span class="text-white text-sm font-normal font-['Roboto'] leading-5">创建</span>
                         </button> -->
-                        <Button label="Create" :severity="RAIDCandidateDiskCount > 2 ? 'primary' : 'neutral'" size="medium"
+                        <Button :label="$t('Create')" :severity="RAIDCandidateDiskCount > 2 ? 'primary' : 'neutral'" size="medium"
                             @click="showEstablishRAID('Create')"></Button>
                     </div>
                 </div>
