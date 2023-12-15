@@ -81,14 +81,14 @@ const disabledStorage = async (): Promise<void> => {
             </div>
 
             <span class="text-right text-neutral-400 text-sm font-normal font-['Roboto']">
-                {{ storageInfo?.health ? 'Healthy' : 'Unhealthy' }}
+                {{ storageInfo?.health ? $t('Healthy') : $t('Unhealthy') }}
             </span>
         </div>
     </div>
     <!-- General -->
     <div class="mt-6 space-y-2" v-if="storageName !== EnumStorageNames.System">
         <div class="">
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> General </span>
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> {{$t('General')}} </span>
         </div>
 
         <div class="bg-white rounded-lg h-11 flex items-center px-4">

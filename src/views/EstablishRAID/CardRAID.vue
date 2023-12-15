@@ -84,7 +84,7 @@ const showRequirePopover = ref(false)
                                             </div> -->
                     <!-- 内容 -->
                     <div class="w-[188px] h-[178px]">
-                        {{ currentRaidStrategyInfo.tip }}
+                        {{ $t(currentRaidStrategyInfo.tip) }}
                     </div>
                     <!-- </div> -->
                 </NPopover>
@@ -94,7 +94,7 @@ const showRequirePopover = ref(false)
         <div class="py-2">
             <div class="mb-1">
                 <span class="text-zinc-800 text-xs font-medium font-['Roboto'] group-active:text-white">
-                    Security
+                    {{ $t("Security") }}
                 </span>
             </div>
             <div class="flex space-x-1">
@@ -104,7 +104,7 @@ const showRequirePopover = ref(false)
             </div>
             <div class="mt-4 mb-1">
                 <span class="text-zinc-800 text-xs font-medium font-['Roboto'] group-active:text-white">
-                    Speed
+                    {{ $t("Speed") }}
                 </span>
             </div>
             <div class="flex space-x-1">
@@ -117,7 +117,7 @@ const showRequirePopover = ref(false)
         <div class="w-full h-px bg-gray-200"></div>
         <div class="flex justify-between">
             <span class="text-zinc-800 text-xs font-medium font-['Roboto'] group-active:text-white">
-                Max capacity
+                {{ $t("Max capacity") }}
             </span>
             <span class="text-neutral-400 text-xs font-normal font-['Roboto'] group-active:text-white">
                 {{ currentRaidStrategyInfo.capacity }}%
@@ -128,12 +128,11 @@ const showRequirePopover = ref(false)
             <template #trigger>
                 <div class="w-full h-px bg-gray-200"></div>
             </template>
-            At least {{ currentRaidStrategyInfo.minDisks }} hard drives are
-            required
+            {{ $t("At least {num} hard drives are required", { num: currentRaidStrategyInfo.minDisks }) }}
         </n-popover>
         <div class="flex justify-between">
             <span class="text-zinc-800 text-xs font-medium font-['Roboto'] group-active:text-white">
-                Min disks
+                {{ $t("Min disks") }}
             </span>
             <span class="text-neutral-400 text-xs font-normal font-['Roboto'] group-active:text-white">
                 {{ currentRaidStrategyInfo.minDisks }}

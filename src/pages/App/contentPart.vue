@@ -2,13 +2,16 @@
 import messageBus from '@utils/messageBus';
 import { useRoute } from 'vue-router';
 import router from '@pages/router.ts';
-import { computed } from 'vue';
-
+import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 //获取路由中的 mate 信息
 const route = useRoute();
 //获取路由中的 title 信息
-const title = computed(() => route.meta.title);
-
+const title = ref<string>();
+watch(() => route.meta.title, () => {
+    title.value = route.meta.title as string;
+});
 function onClose() {
     messageBus("mircoapp_communicate", {
         action: 'close',
@@ -22,7 +25,7 @@ function onClose() {
             <i class="casa-left-outline"></i>
         </div>
         <div class="top_title">
-            <span>{{ title }}</span>
+            <span>{{ t(title ?? '') }}</span>
         </div>
         <div class="top_center">
             <!-- search or active -->

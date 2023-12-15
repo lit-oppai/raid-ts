@@ -11,21 +11,24 @@ import {
 import { convertSizeToReadable } from "@utils/tools.ts";
 
 let svg: string, statusMessage: string;
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 if (resultRAIDInfo.success) {
     svg = successSVG;
-    if (context.value === "EnableStorage") {
-        statusMessage = "Enablement successful";
-    } else {
-        statusMessage = "Creation Successful";
-    }
+    // if (context.value === "EnableStorage") {
+    //     statusMessage = "Enablement successful";
+    // } else {
+    //     statusMessage = "Creation Successful";
+    // }
+    statusMessage = t("Success")
 } else {
     svg = errorSVG;
-    if (context.value === "EnableStorage") {
-        statusMessage = "Enablement failed";
-    } else {
-        statusMessage = "Creation Failed";
-    }
+    // if (context.value === "EnableStorage") {
+    //     statusMessage = "Enablement failed";
+    // } else {
+    //     statusMessage = "Creation Failed";
+    // }
+    statusMessage = t("Fail")
 }
 </script>
 <template name="ResultRAIDPart">
@@ -40,7 +43,7 @@ if (resultRAIDInfo.success) {
             class="max-w-[20.25rem] flex-grow mx-2 bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
             <div class="flex justify-between">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-                    Capacity :
+                    {{$t('Capacity')}} :
                 </span>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
                     {{ convertSizeToReadable(resultRAIDInfo.capacity) }}
@@ -49,7 +52,7 @@ if (resultRAIDInfo.success) {
             <div class="w-full h-px bg-gray-200"></div>
             <div class="flex justify-between">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-                    Storage Mode :
+                    {{$t('Storage')}} :
                 </span>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
                     {{ selectRAIDStrategy }}
@@ -58,7 +61,7 @@ if (resultRAIDInfo.success) {
             <div class="w-full h-px bg-gray-200"></div>
             <div class="flex justify-between">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-                    Use hard disk :
+                    {{$t('Hard drives')}} :
                 </span>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
                     {{ selectStorageList }}

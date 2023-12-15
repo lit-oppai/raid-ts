@@ -211,13 +211,13 @@ const extendCapacity = () => {
             currentStep < 2
             "></Button>
 
-        <Button label="Previous" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="context !== 'FirstAid' &&
+        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="context !== 'FirstAid' &&
             currentStepName !== 'ResultRAIDPart' &&
             currentStepName !== 'ResultRAIDPart' &&
             context === 'Modify' &&
             currentStepName !== 'SelectRAIDPart'
             "></Button>
-        <Button label="Next" severity="primary" size="medium" @click="stepByStep('next')" v-show="context !== 'FirstAid' &&
+        <Button :label="$t('Next')" severity="primary" size="medium" @click="stepByStep('next')" v-show="context !== 'FirstAid' &&
             currentStepName !== 'ConfirmRAIDPart' &&
             currentStepName !== 'ResultRAIDPart'
             " :disabled="checkNextStep"></Button>
@@ -230,18 +230,18 @@ const extendCapacity = () => {
         "></Button>
 
         <!-- Result Part -->
-        <Button :label="resultRAIDInfo.btnText" severity="primary" size="medium" @click="resultRAIDInfo.butFunc"
+        <Button :label="$t(resultRAIDInfo.btnText)" severity="primary" size="medium" @click="resultRAIDInfo.butFunc"
             v-show="currentStepName !== 'AddToRAIDPart' && currentStepName === 'ResultRAIDPart'"></Button>
 
         <!-- First Aid Part -->
         <Button label="Add" severity="primary" size="medium" @click="stepByStep('next')"
             v-show="currentStepName === 'AddToRAIDPart'" :disabled="!selectedFidDisk"></Button>
-        <Button label="Confirm" severity="primary" size="medium" @click="confirmFirstAid"
+        <Button :label="$t('Confirm')" severity="primary" size="medium" @click="confirmFirstAid"
             v-show="context === 'FirstAid' && currentStepName === 'ConfirmRAIDPart'"
             :disabled="!checkedCreateRAID"></Button>
 
         <!-- extened capacity -->
-        <Button label="Confirm" severity="primary" size="medium" @click="extendCapacity"
+        <Button :label="$t('Confirm')" severity="primary" size="medium" @click="extendCapacity"
             v-show="context === 'Modify' && currentStepName === 'ConfirmRAIDPart'" :disabled="!checkedCreateRAID"></Button>
     </div>
 </template>

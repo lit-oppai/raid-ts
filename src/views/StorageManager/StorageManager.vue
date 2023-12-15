@@ -2,7 +2,7 @@
 import { onBeforeMount, ref } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
-import Skeleton from 'primevue/skeleton';
+import Skeleton from "primevue/skeleton";
 import { NPopover } from "naive-ui";
 
 import RaidSVG from "@assets/img/StorageManager/Raid.svg";
@@ -17,7 +17,12 @@ import {
 } from "@views/EstablishRAID/controlView.ts";
 import ZimaCubeCard from "@views/StorageManager/ZimaCubeCard.vue";
 import initStoragePageData from "./controlData.ts";
-import { storageInfoMap, usageStatus, RAIDCandidateDiskCount, isLoadingStorageInfo } from "./controlData.ts";
+import {
+    storageInfoMap,
+    usageStatus,
+    RAIDCandidateDiskCount,
+    isLoadingStorageInfo,
+} from "./controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
@@ -101,7 +106,9 @@ storageInfoMap.forEach((item) => {
                         @click="goToStorageDetailPage(false, 'ZimaOS-HD')"></i>
                 </div>
                 <div class="space-x-1">
-                    <span class="text-neutral-400 text-xs font-normal font-['Roboto']">{{ $t("Available") }}</span>
+                    <span class="text-neutral-400 text-xs font-normal font-['Roboto']">{{
+                        $t("Available")
+                    }}</span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">
                         {{ convertSizeToReadable(usageStatus.FilesFree).replace("0.00B", "--") }}
                     </span>
@@ -214,7 +221,10 @@ storageInfoMap.forEach((item) => {
                             }}/
                             </span>
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto']">{{
-                                convertSizeToReadable(usageStatus.FilesUsage) }} Used</span>
+                                $t("{size} Used", {
+                                    size: convertSizeToReadable(usageStatus.FilesUsage),
+                                })
+                            }}</span>
                         </div>
                     </div>
                 </div>
@@ -222,7 +232,9 @@ storageInfoMap.forEach((item) => {
         </div>
         <!-- Data Space Part -->
         <div class="flex mt-6 mb-2">
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-tight">Data Space</span>
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-tight">{{
+                $t("Storage Space")
+            }}</span>
         </div>
         <div v-if="isLoadingStorageInfo" class="w-full">
             <Skeleton height="5.75rem"></Skeleton>
@@ -272,7 +284,7 @@ storageInfoMap.forEach((item) => {
                         <Image :src="RaidSVG" />
                     </div>
                     <div class="flex-grow text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
-                        {{ $t("Combine hard drive space by") }}
+                        {{ $t("Combine hard drive space by RAID.") }}
                         <span class="font-medium">RAID</span>.
                     </div>
                     <div class="flex-shrink-0">
@@ -280,8 +292,8 @@ storageInfoMap.forEach((item) => {
                         <!-- <button class="h-7 bg-sky-600 rounded-[14px] px-[14px]" @click="showEstablishRAID('Create')">
                             <span class="text-white text-sm font-normal font-['Roboto'] leading-5">创建</span>
                         </button> -->
-                        <Button :label="$t('Create')" :severity="RAIDCandidateDiskCount > 2 ? 'primary' : 'neutral'" size="medium"
-                            @click="showEstablishRAID('Create')"></Button>
+                        <Button :label="$t('Create')" :severity="RAIDCandidateDiskCount > 2 ? 'primary' : 'neutral'"
+                            size="medium" @click="showEstablishRAID('Create')"></Button>
                     </div>
                 </div>
             </div>
@@ -318,8 +330,10 @@ storageInfoMap.forEach((item) => {
                             <span class="text-neutral-400 text-xs font-normal font-['Roboto'] whitespace-pre">
                                 · {{ convertSizeToReadable(item.size) }}/
                             </span>
-                            <span class="text-zinc-800 text-xs font-normal font-['Roboto']">{{
-                                convertSizeToReadable(item.used ?? 0) }} Used</span>
+                            <span class="text-zinc-800 text-xs font-normal font-['Roboto']">
+                                {{
+                                    $t("{size} Used", { size: convertSizeToReadable(item.used ?? 0) })
+                                }}</span>
                         </div>
                         <div v-else>
                             <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
