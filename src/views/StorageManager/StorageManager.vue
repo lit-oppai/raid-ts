@@ -4,6 +4,7 @@ import Image from "primevue/image";
 import Button from "primevue/button";
 import Skeleton from 'primevue/skeleton';
 import { NPopover } from "naive-ui";
+import { $t } from "@/i18n.ts";
 
 import RaidSVG from "@assets/img/StorageManager/Raid.svg";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
@@ -101,7 +102,7 @@ storageInfoMap.forEach((item) => {
                         @click="goToStorageDetailPage(false, 'ZimaOS-HD')"></i>
                 </div>
                 <div class="space-x-1">
-                    <span class="text-neutral-400 text-xs font-normal font-['Roboto']">Available</span>
+                    <span class="text-neutral-400 text-xs font-normal font-['Roboto']">{{ $t("Available")}}</span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">
                         {{ convertSizeToReadable(usageStatus.FilesFree).replace("0.00B", "--") }}
                     </span>
