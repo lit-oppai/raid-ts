@@ -4,7 +4,6 @@ import Image from "primevue/image";
 import Button from "primevue/button";
 import Skeleton from 'primevue/skeleton';
 import { NPopover } from "naive-ui";
-// import { $t } from "@/i18n.ts";
 
 import RaidSVG from "@assets/img/StorageManager/Raid.svg";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
