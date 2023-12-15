@@ -1,4 +1,10 @@
 #!/bin/bash
+#判断当前是否为 linux 环境，如果不是退出并报错
+if [ "$(uname)" != "Linux" ]; then
+    echo "This script is only for deploy with Linux."
+    exit 1
+fi
+
 #获取 env 
 source .env.local
 
