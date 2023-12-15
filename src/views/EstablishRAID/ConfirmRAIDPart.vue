@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref, Ref, onMounted, computed } from "vue";
-import { nameStorage, checkedCreateRAID, context } from "./controlData.ts";
+import { nameStorage, selectRAIDStrategy, checkedCreateRAID, context } from "./controlData.ts";
 // const checked = ref(false)
-
+import { storageNameCollection } from '@views/StorageManager/controlData.ts';
+if(context.value === "Create" && selectRAIDStrategy.value !== "") {
+    nameStorage.value = storageNameCollection.beNamed(selectRAIDStrategy.value)
+}
 // const name = ref('Main-Storage')
 const nameRef: Ref<HTMLInputElement | null> = ref(null);
 // 在组件挂载时调用selectText()方法选中文本

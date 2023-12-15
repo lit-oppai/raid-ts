@@ -54,9 +54,9 @@ import {
     formatePath,
 } from "@views/EstablishRAID/controlData.ts";
 import { storage } from "@network/index.ts";
-
-const showCheckFormat = (name: string = "", path: string = ""): void => {
-    nameStorage.value = name;
+import { storageNameCollection } from '@views/StorageManager/controlData.ts';
+const showCheckFormat = (type: 'HDD' | 'SSD', path: string = ""): void => {
+    nameStorage.value = storageNameCollection.beNamed(type)
     formatePath.value = path;
     showEstablishRAID("CreateStorage");
 };
@@ -120,7 +120,7 @@ const showEnableStorage = (name: string, path: string): void => {
                     <Button label="Enable" severity="primary" size="medium"
                         @click="showEnableStorage(disk.name as string, disk.path as string)" v-if="disk.support"></Button>
                     <Button label="Format and Enable" severity="primary" size="medium"
-                        @click="showCheckFormat(disk.name, disk.path)" v-else></Button>
+                        @click="showCheckFormat(disk.type, disk.path)" v-else></Button>
                 </div>
                 <!-- Content -->
                 <div class="ml-9 mt-4 bg-gray-50 rounded-lg p-3 gap-2 flex flex-col" v-if="disk?.children_number ?? 0 > 0">
