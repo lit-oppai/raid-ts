@@ -27,8 +27,10 @@ if (storageName === EnumStorageNames.System) {
 }
 
 // format or disband function
+// 命名
+import { storageNameCollection } from '@views/StorageManager/controlData.ts';
 const showCheckFormat = (): void => {
-    nameStorage.value = storageInfo?.label ?? "";
+    nameStorage.value = (storageInfo && storageNameCollection.beNamed(storageInfo.type)) ?? storageInfo?.label ?? "";
     formatePath.value = storageInfo?.path ?? "";
     showEstablishRAID("CreateStorage");
 };

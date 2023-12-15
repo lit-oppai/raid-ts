@@ -149,7 +149,26 @@ const initStorageInfo = async (): Promise<void> => {
     const storageInfo = await getStorageInfo()
     rinseStorageInfo(storageInfo)
 }
-const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => { 
+// 处理命名
+class StorageNameCollection {
+    private storageNames: string[] = [];
+    addName(name: string): void {
+        this.storageNames.push(name)
+    };
+    hasName(name: string): boolean {
+        return this.storageNames.indexOf(name) > -1;
+    };
+    beNamed(storageType: keyof typeof EnumStorageNames): string {
+        const prefixName = EnumStorageNames[storageType];
+        let index = 1;
+        while (this.hasName(prefixName + index)) {
+            index++;
+        }
+        return prefixName + index;
+    };
+}
+const storageNameCollection = new StorageNameCollection();
+const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
     // 存储用量
     let dataUsage = 0,
         dataFree = 0,
@@ -157,6 +176,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
         filesUsage = 0
     storageInfoMap.clear()
     storageInfo.map((storage: STORAGE_INFO_TYPE): void => {
+        storageNameCollection.addName(storage.name);
         // TODO: 优化, 在后端统一“ZimaOS-HD” 名称。
         let name = storage.name
         if (name === 'System') {
@@ -242,6 +262,7 @@ export {
     initStoragePageData,
     initStoragePageData as reloadServiceData,
     destroyStorageInfo,
+    storageNameCollection,
     RAIDCandidateDiskCount,
     usageStatus,
     IndexForDiskHubMap,

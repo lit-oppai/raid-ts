@@ -56,20 +56,23 @@ interface ShowType {
 
 const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
     const showType: ShowType = {
+        // 创建 raid
         Create: {
             title: 'Create RAID'
         },
+        // 扩容 raid
         Modify: {
             title: 'Expand RAID capacity'
         },
+        // 急救 raid
         FirstAid: {
             title: 'First Aid RAID'
         },
-        // FormateDisk
+        // 格式化单个磁盘 FormateDisk
         CreateStorage: {
-            title: 'Create Storage | Enable new hard drive'
+            title: 'Enable new hard drive'
         },
-        // EnableStorage
+        // 启用单个磁盘或者单个空间 EnableStorage
         EnableStorage: {
             title: 'Enable new hard drive'
         }
