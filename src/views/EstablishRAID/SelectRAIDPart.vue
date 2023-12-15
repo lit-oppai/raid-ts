@@ -98,10 +98,12 @@ watch(
     { immediate: true }
 );
 import { UI_DISK_INFO_TYPE } from "@views/StorageManager/controlData.d";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) => {
     // 扩容页面&当前磁盘列表中的磁盘
     if (diskListByStorageSpace.value.includes(key)) {
-        return "Current";
+        return t("Current");
     }
     // 被raid占用
     else if (!item?.unused && item?.RaidStrategy !== "") {
@@ -122,9 +124,8 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
     // 空槽
     else if (storageNone.includes(key)) {
         return "Empty";
-    }
-    else {
-        return "未知"
+    } else {
+        return "未知";
     }
 };
 
@@ -151,8 +152,8 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                 <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
                     {{
                         context !== "Modify"
-                        ? `Please select the desired hard disk`
-                        : `Select the hard drive(s) you want to add`
+                        ? $t(`Select hard drives`)
+                        : $t(`Select the hard drive(s) you want to add`)
                     }}
                 </span>
             </div>
@@ -215,11 +216,15 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
         <div>
             <div class="mb-2 flex justify-between">
                 <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-                    Estimated usage
+                    {{ $t("Estimated usage") }}
                 </span>
                 <div>
                     <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto']">
-                        {{ context !== "Modify" ? "Estimated available" : "Expected expansion from 100GB to" }}
+                        {{
+                            context !== "Modify"
+                            ? $t("Estimated available")
+                            : $t("Expected expansion from {size} to",{size:0})
+                        }}
                     </span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
                         {{ convertSizeToReadable(availableSpace) }}
@@ -235,12 +240,15 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
             <div class="flex space-x-4 mt-2">
                 <div class="space-x-1">
                     <span class="bg-emerald-400 w-1.5 h-1.5 rounded-sm inline-block"></span>
-                    <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">Estimated available</span>
+                    <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">{{
+                        $t("Estimated available")
+                    }}</span>
                 </div>
                 <div class="space-x-1 flex-grow">
                     <span class="bg-amber-500 w-1.5 h-1.5 rounded-sm inline-block"></span>
-                    <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">Protection and
-                        redundancy</span>
+                    <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">
+                        {{  $t("Protection and redundancy") }}
+                    </span>
                 </div>
                 <div>
                     <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto']">

@@ -40,12 +40,9 @@ const statuTitle = computed(() => {
     if (!props.source.exit) {
         return "Empty";
     } else if (props.source.unused) {
-        return ""
+        return "";
     }
-    return (
-        (props.source.health === "true" ? "healthy" : "unhealthy") +
-        ` ${props.source.temperature} °C`
-    );
+    return (props.source.health === "true" ? "healthy" : "unhealthy") + "{temperature}";
 });
 const statuColor = computed(() => {
     if (!props.source.exit || props.source.unused) {
@@ -57,15 +54,17 @@ const statuClass = computed(() => {
     if (!props.source.exit || props.source.unused) {
         return "text-zinc-800 font-normal";
     }
-    return props.source.health === "true" ? "text-green-600 font-medium" : "text-red-600 font-medium";
+    return props.source.health === "true"
+        ? "text-green-600 font-medium"
+        : "text-red-600 font-medium";
 });
 </script>
 
 <template>
     <NPopover trigger="hover" placement="bottom">
         <template #trigger>
-            <svg ref="ZimaCubeSketchRef" width="16" height="56" viewBox="0 0 16 56" fill="none" :opacity="exitLampOpacity" class="outline-none"
-                xmlns="http://www.w3.org/2000/svg">
+            <svg ref="ZimaCubeSketchRef" width="16" height="56" viewBox="0 0 16 56" fill="none" :opacity="exitLampOpacity"
+                class="outline-none" xmlns="http://www.w3.org/2000/svg">
                 <g>
                     <rect x="0" y="0" width="16" height="56" rx="3" fill="white" />
                     <circle name="colorB" cx="8" cy="8" r="2" :fill="statuColor" />
@@ -87,7 +86,7 @@ const statuClass = computed(() => {
                 </filter>
             </svg>
         </template>
-        
+
         <div v-if="source?.model && props.source.exit">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                 {{ source?.model }} {{ convertSizeToReadable(source?.size) }}
@@ -96,13 +95,15 @@ const statuClass = computed(() => {
         <div v-if="statuTitle">
             <!-- <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">状态 : </span> -->
             <span class="text-sm font-['Roboto'] leading-5" :class="statuClass">{{
-                statuTitle
+                $t(statuTitle, {
+                    temperature: props.source.temperature,
+                })
             }}</span>
         </div>
 
         <div v-if="source?.RaidAssignment">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">
-                Used by
+                {{ $t("Used by") }}
             </span>
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{
                 source?.RaidAssignment

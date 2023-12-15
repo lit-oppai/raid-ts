@@ -170,7 +170,7 @@ const extenedCapacity = (): void => {
         </div>
         <!-- Hard Drive Part -->
         <div class="mt-6 mb-2 mr-0.5">
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> Hard Drive </span>
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> {{ $t('Hard Drive') }} </span>
         </div>
         <div class="bg-white rounded-lg space-y-1 p-3">
             <!-- Traversing -->
@@ -189,7 +189,7 @@ const extenedCapacity = (): void => {
                     </span>
                     <span class="flex-grow"></span>
                     <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto'] mr-1" v-if="item.health">
-                        {{ item.health === true ? "Healthy" : "Unhealthy" }}
+                        {{ item.health === true ? $t('Healthy') : $t('Unhealthy') }}
                     </span>
                     <Button :loading="operationEjectLoading" label="Eject" severity="primary" size="medium"
                         @click="ejectDiskFromRaid(item.path as string)" v-else></Button>
@@ -212,7 +212,7 @@ const extenedCapacity = (): void => {
 
             <div class="pt-2 px-1">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-                    After inserting a new hard drive, you can expand the current RAID capacity.
+                    {{ $t('After inserting a new hard drive, you can expand the current RAID capacity.') }}
                 </span>
             </div>
         </div>
@@ -221,21 +221,21 @@ const extenedCapacity = (): void => {
         <div class="mt-6 space-y-2" v-if="selectRAIDStrategy !== 'RAID0'">
             <div class="mr-0.5">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-                    Data Protection
+                    {{ $t('Data Protection') }}
                 </span>
             </div>
             <div class="bg-white rounded-lg flex flex-col py-1">
                 <div class="h-10 flex items-center px-4">
                     <Image :src="protectSVG" class="h-6 w-6"></Image>
                     <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
-                        Verification and Recovery
+                        {{ $t('Verification and Recovery') }}
                     </span>
 
                     <span class="text-right text-neutral-400 text-sm font-normal font-['Roboto']" v-if="needFirstAid">
-                        Protecting · Read-only
+                        {{ $t('Protecting · Read-only') }}
                     </span>
                     <span class="text-right text-neutral-400 text-sm font-normal font-['Roboto']" v-else>
-                        In Protection
+                        {{ $t('In Protection') }}
                     </span>
                 </div>
                 <template v-if="needFirstAid">
@@ -254,7 +254,7 @@ const extenedCapacity = (): void => {
         <!-- General -->
         <div class="mt-6 space-y-2">
             <div class="mr-0.5">
-                <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> General </span>
+                <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> {{$t('General')}} </span>
             </div>
 
             <!-- TODO0 无损坏 && raid5 && 存在空槽位 -->
@@ -262,19 +262,19 @@ const extenedCapacity = (): void => {
                 v-if="storageInfo?.raid_level === 5 && !needFirstAid">
                 <Image :src="diskSVG" class="h-6 w-6"></Image>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
-                    Expand capacity
+                    {{ $t('Expand capacity') }}
                 </span>
 
-                <Button label="Add Drive" severity="secondary" size="medium" @click="extenedCapacity"></Button>
+                <Button :label="$t('Add Drive')" severity="secondary" size="medium" @click="extenedCapacity"></Button>
             </div>
 
             <div class="bg-white rounded-lg h-11 flex items-center px-4">
                 <Image :src="warningSVG" class="h-6 w-6"></Image>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
-                    Format and Disable
+                    {{$t('Format and Disable')}}
                 </span>
 
-                <Button label="Disable" severity="accent" size="medium" @click="disabledRaid"
+                <Button :label="$t('Disable')" severity="accent" size="medium" @click="disabledRaid"
                     :loading="isLoadingDisabledButton"></Button>
             </div>
         </div>

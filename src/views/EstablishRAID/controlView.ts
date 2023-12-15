@@ -53,28 +53,30 @@ interface ShowType {
         title: string
     }
 }
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
     const showType: ShowType = {
         // 创建 raid
         Create: {
-            title: 'Create RAID'
+            title: t('Create RAID')
         },
         // 扩容 raid
         Modify: {
-            title: 'Expand RAID capacity'
+            title: t('Expand RAID capacity')
         },
         // 急救 raid
         FirstAid: {
-            title: 'First Aid RAID'
+            // title: t('First Aid RAID')
+            title: t('Recovery RAID')
         },
         // 格式化单个磁盘 FormateDisk
         CreateStorage: {
-            title: 'Enable new hard drive'
+            title: t('Enable new hard drive')
         },
         // 启用单个磁盘或者单个空间 EnableStorage
         EnableStorage: {
-            title: 'Enable new hard drive'
+            title: t('Enable new hard drive')
         }
     }
     changeContext(type as EntranceContextType)

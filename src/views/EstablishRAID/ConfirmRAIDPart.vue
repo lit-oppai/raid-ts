@@ -29,7 +29,7 @@ const textName = computed(() => {
             v-show="context !== 'FirstAid' && context !== 'Modify'">
             <div class="mt-4 mb-10">
                 <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-                    {{ textName }}
+                    {{ $t(textName) }}
                 </span>
             </div>
             <div class="mr-2 mt-3 flex flex-col space-y-[6px]">
@@ -37,7 +37,7 @@ const textName = computed(() => {
                     class="selection:bg-sky-100 h-[20px] px-3 py-1.5 rounded box-content border border-zinc-200 hover:border-sky-600 active:border-sky-600 focus-visible:border-sky-600 outline-none text-sky-600 text-sm font-normal font-['Roboto']" />
 
                 <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
-                    The name cannot be changed after this step.
+                    {{ $t("The name can not be changed after this step.") }}
                 </span>
             </div>
         </div>
@@ -61,7 +61,7 @@ const textName = computed(() => {
             <div class="flex justify-end items-center mt-16">
                 <input name="confirm" type="checkbox" v-model="checkedCreateRAID" class="mr-2 w-5 h-5 cursor-pointer" />
                 <span class="text-zinc-800 text-sm font-normal font-['Roboto']">
-                    I am aware of this and confirm the operation.
+                    {{$t("I am aware of this and confirm the operation.")}}
                 </span>
             </div>
         </div>
