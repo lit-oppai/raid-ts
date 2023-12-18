@@ -338,8 +338,9 @@ storageInfoMap.forEach((item) => {
                         <div v-else>
                             <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
                                 {{
-                                    $t(`The data has been locked for read-only access. Click to enter the recovery
-                                process.`)
+                                    $t(
+                                        "The data has been locked for read-only access. Click to enter the recovery process."
+                                    )
                                 }}
                             </span>
                         </div>
