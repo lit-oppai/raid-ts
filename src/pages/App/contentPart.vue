@@ -25,7 +25,7 @@ function onClose() {
             <i class="casa-left-outline"></i>
         </div>
         <div class="top_title">
-            <span>{{ t(title ?? '') }}</span>
+            <span>{{ t(title ?? 'undefinde') }}</span>
         </div>
         <div class="top_center">
             <!-- search or active -->

@@ -97,8 +97,8 @@ const disabledStorage = async (): Promise<void> => {
                 Format and Disband
             </span>
 
-            <Button label="Format" severity="accent" size="medium" @click="showCheckFormat" class="mr-4"></Button>
-            <Button label="Disable" severity="accent" size="medium" @click="disabledStorage" :loading="isLoadingDisabledButton"></Button>
+            <Button :label="$t('Format')" severity="accent" size="medium" @click="showCheckFormat" class="mr-4"></Button>
+            <Button :label="$t('Disable')" severity="accent" size="medium" @click="disabledStorage" :loading="isLoadingDisabledButton"></Button>
         </div>
     </div>
 </template>
