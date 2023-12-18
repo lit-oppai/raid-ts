@@ -38,8 +38,8 @@ import { stepByStep } from "@views/EstablishRAID/controlData.ts";
 // };
 import {
     allNewDiskStatus,
-    loadAllNewDiskStatus
-} from '@views/DiscoverNewHardDrive/controlData.ts'
+    loadAllNewDiskStatus,
+} from "@views/DiscoverNewHardDrive/controlData.ts";
 
 onBeforeMount(() => {
     loadAllNewDiskStatus();
@@ -54,9 +54,9 @@ import {
     formatePath,
 } from "@views/EstablishRAID/controlData.ts";
 import { storage } from "@network/index.ts";
-import { storageNameCollection } from '@views/StorageManager/controlData.ts';
-const showCheckFormat = (type: 'HDD' | 'SSD', path: string = ""): void => {
-    nameStorage.value = storageNameCollection.beNamed(type)
+import { storageNameCollection } from "@views/StorageManager/controlData.ts";
+const showCheckFormat = (type: "HDD" | "SSD", path: string = ""): void => {
+    nameStorage.value = storageNameCollection.beNamed(type);
     formatePath.value = path;
     showEstablishRAID("CreateStorage");
 };
@@ -93,8 +93,9 @@ const showEnableStorage = (name: string, path: string): void => {
         <!-- Traversing Part -->
         <div v-for="[label, disk] in allNewDiskStatus" :key="label">
             <div class="mt-6 mb-2">
-                <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-                    Hard drive bay {{ label }}
+                <span v-t="{ path: `DiscoverNewHardDrive.driveBay{label}`, args: { label } }"
+                    class="text-neutral-400 text-sm font-normal font-['Roboto']">
+                    <!-- Hard drive bay {{ label }} -->
                 </span>
             </div>
             <div class="w-full bg-white rounded-lg px-4 py-3">
@@ -108,16 +109,16 @@ const showEnableStorage = (name: string, path: string): void => {
                         </span>
 
                         <!-- paperwork start -->
-                        <span class="text-neutral-400 text-xs font-normal font-['Roboto']" v-if="disk.support">
-                            Enable directly while preserving data.
+                        <span v-t="`DiscoverNewHardDrive.requiresFormattingReminder.${disk.support}`" class="text-neutral-400 text-xs font-normal font-['Roboto']">
+                            <!-- Enable directly while preserving data. -->
                         </span>
-                        <span class="text-neutral-400 text-xs font-normal font-['Roboto']" v-else>
+                        <!-- <span class="text-neutral-400 text-xs font-normal font-['Roboto']" v-else>
                             Please check and back up the data before formatting.
-                        </span>
+                        </span> -->
                         <!-- paperwork end -->
                     </div>
                     <div class="flex-grow"></div>
-                    <Button label="Enable" severity="primary" size="medium"
+                    <Button :label="$t('Enable')" severity="primary" size="medium"
                         @click="showEnableStorage(disk.name as string, disk.path as string)" v-if="disk.support"></Button>
                     <Button :label="$t('Format and Enable')" severity="primary" size="medium"
                         @click="showCheckFormat(disk.type, disk.path)" v-else></Button>
@@ -138,18 +139,18 @@ const showEnableStorage = (name: string, path: string): void => {
                         </span>
                         <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto']"
                             v-else-if="item?.supported">
-                            Preserving data · {{ convertSizeToReadable(item?.size) }}
+                            {{ $t('DiscoverNewHardDrive.item.PreservingData') }} · {{ convertSizeToReadable(item?.size) }}
                         </span>
                         <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto']" v-else>
-                            Needs to be formatted · {{ convertSizeToReadable(item?.size ?? 0) }}
+                            {{ $t('DiscoverNewHardDrive.item.NeedsToBeFormatted') }} · {{ convertSizeToReadable(item?.size ?? 0) }}
                         </span>
                         <!-- paperwork end -->
 
                         <span class="flex-grow"></span>
 
                         <!-- paperwork start -->
-                        <Button label="Used" severity="secondary" size="small" v-if="item?.mount_point" disabled></Button>
-                        <Button label="Enable" severity="secondary" size="small"
+                        <Button :label="$t('Used')" severity="secondary" size="small" v-if="item?.mount_point" disabled></Button>
+                        <Button :label="$t('Enable')" severity="secondary" size="small"
                             @click="showEnableStorage(item?.name as string, item?.path as string)"
                             v-else-if="item?.supported"></Button>
                         <Button :label="$t('Format and Enable')" severity="secondary" size="small"

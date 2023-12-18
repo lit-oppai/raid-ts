@@ -256,7 +256,7 @@ storageInfoMap.forEach((item) => {
                         <Image :src="warningRedSVG" class="text-base fill-red-500"></Image>
                     </div>
                     <div class="flex-grow text-orange-500 text-sm font-normal font-['Roboto'] leading-6">
-                        Detected hard drive damaged
+                        {{ $t("Detected hard drive damaged") }}
                     </div>
                     <div class="w-6 h-6 rounded os_list_action_icon">
                         <i class="casa-right-outline text-base"></i>
@@ -319,7 +319,7 @@ storageInfoMap.forEach((item) => {
                                 v-if="!item.health">
                                 <Image :src="warningRedSVG" class="h-4 w-4 fill-red-500"></Image>
                                 <span class="text-rose-500 text-xs font-normal font-['Roboto']">
-                                    Damaged
+                                    {{ $t("Damaged") }}
                                 </span>
                             </span>
                         </div>
@@ -337,8 +337,10 @@ storageInfoMap.forEach((item) => {
                         </div>
                         <div v-else>
                             <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
-                                The data has been locked for read-only access. Click to enter the recovery
-                                process.
+                                {{
+                                    $t(`The data has been locked for read-only access. Click to enter the recovery
+                                process.`)
+                                }}
                             </span>
                         </div>
                     </div>
