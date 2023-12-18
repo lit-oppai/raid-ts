@@ -6,12 +6,10 @@ import {
     checkedCreateRAID,
     context,
 } from "./controlData.ts";
-// const checked = ref(false)
 import { storageNameCollection } from "@views/StorageManager/controlData.ts";
 if (context.value === "Create" && selectRAIDStrategy.value !== "") {
     nameStorage.value = storageNameCollection.beNamed(selectRAIDStrategy.value);
 }
-// const name = ref('Main-Storage')
 const nameRef: Ref<HTMLInputElement | null> = ref(null);
 // 在组件挂载时调用selectText()方法选中文本
 onMounted(() => {
@@ -23,9 +21,6 @@ function selectText(): void {
     inputElement?.select();
 }
 
-// const labelNameInput = computed(() => {
-//     return context.value === "CreateStorage" ? "Name Storage" : "Name RAID storage";
-// });
 </script>
 <template>
     <div class="w-full flex flex-col justify-center mt-6 space-y-4">
