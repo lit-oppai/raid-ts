@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
 declare type RouteChildMeta = RouteRecordRaw & {
     meta: {
@@ -65,7 +65,7 @@ export const routes: RouteMeta[] = [
     },
 ];
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 });
 
