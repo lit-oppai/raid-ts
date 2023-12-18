@@ -21,7 +21,7 @@ import {
 import openAPI from "@network/index.ts";
 import { RaidBodyRaidLevelEnum } from "@icewhale/zimaos-localstorage-openapi";
 import { closeEstablishRAID } from "./controlView";
-import { useRouter } from "vue-router"
+import { useRouter } from "vue-router";
 const router = useRouter();
 
 const pathList = computed(() => {
@@ -42,7 +42,7 @@ const createStorage = () => {
             break;
     }
 };
-import { loadAllNewDiskStatus } from '@views/DiscoverNewHardDrive/controlData.ts'
+import { loadAllNewDiskStatus } from "@views/DiscoverNewHardDrive/controlData.ts";
 const createSingleStorage = () => {
     // openAPI.storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
     openAPI.storage
@@ -68,7 +68,7 @@ const createSingleStorage = () => {
                 reloadServiceData();
                 loadAllNewDiskStatus();
                 closeEstablishRAID();
-            } 
+            };
         });
 };
 const createRAID = () => {
@@ -144,7 +144,7 @@ const confirmFirstAid = () => {
             resultRAIDInfo.butFunc = () => {
                 // reloadServiceData();
                 closeEstablishRAID();
-                router.push('/storage')
+                router.push("/storage");
             };
         })
         .catch((err) => {
@@ -181,7 +181,7 @@ const extendCapacity = () => {
             resultRAIDInfo.butFunc = () => {
                 // reloadServiceData();
                 closeEstablishRAID();
-                router.push('/storage')
+                router.push("/storage");
             };
         })
         .catch((err) => {
@@ -200,12 +200,15 @@ const extendCapacity = () => {
             stepByStep("next");
         });
 };
+
+// First Aid
+import { isExitNewDisk } from "@views/EstablishRAID/controlData.ts";
 </script>
 
 <template>
     <div class="space-x-4">
         <!-- step 1 -->
-        <Button label="Cancel" severity="neutral" size="medium" @click="closeEstablishRAID" v-show="context !== 'FirstAid' &&
+        <Button :label="$t('Cancel')" severity="neutral" size="medium" @click="closeEstablishRAID" v-show="context !== 'FirstAid' &&
             currentStepName !== 'OverviewPart' &&
             context === 'Modify' &&
             currentStep < 2
@@ -222,7 +225,7 @@ const extendCapacity = () => {
             currentStepName !== 'ResultRAIDPart'
             " :disabled="checkNextStep"></Button>
 
-        <Button label="创建" severity="primary" size="medium" @click="createStorage" v-show="context !== 'FirstAid' &&
+        <Button :label="$t('Create')" severity="primary" size="medium" @click="createStorage" v-show="context !== 'FirstAid' &&
             context !== 'Modify' &&
             currentStepName === 'ConfirmRAIDPart'
             " :disabled="(context !== 'CreateStorage' && selectStorageList.length < 2) ||
@@ -235,10 +238,12 @@ const extendCapacity = () => {
 
         <!-- First Aid Part -->
         <Button :label="$t('Add')" severity="primary" size="medium" @click="stepByStep('next')"
-            v-show="currentStepName === 'AddToRAIDPart'" :disabled="!selectedFidDisk"></Button>
+            v-show="currentStepName === 'AddToRAIDPart' && isExitNewDisk" :disabled="!selectedFidDisk"></Button>
         <Button :label="$t('Confirm')" severity="primary" size="medium" @click="confirmFirstAid"
-            v-show="context === 'FirstAid' && currentStepName === 'ConfirmRAIDPart'"
+            v-show="context === 'FirstAid' && currentStepName === 'ConfirmRAIDPart' && isExitNewDisk"
             :disabled="!checkedCreateRAID"></Button>
+        <Button :label="$t('Close')" severity="primary" size="medium" @click="closeEstablishRAID"
+            v-show="context === 'FirstAid' && currentStepName === 'AddToRAIDPart' && !isExitNewDisk"></Button>
 
         <!-- extened capacity -->
         <Button :label="$t('Confirm')" severity="primary" size="medium" @click="extendCapacity"

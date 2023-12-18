@@ -110,6 +110,8 @@ const needFirstAidRaid = ref<string>()
 // 扩容
 const diskListByStorageSpace = ref<string[]>([])
 const extendRaidPath = ref<string>()
+// FirstAid RAID
+const isExitNewDisk= ref<boolean>(false)
 
 const clear = (): void => {
     currentStep.value = 0
@@ -141,6 +143,7 @@ export {
     needFirstAidRaid,
     diskListByStorageSpace,
     extendRaidPath,
+    isExitNewDisk,
     // resultRAID,
     // resultCapacity,
     // TODO: 暂时放在 controlView.ts 中。

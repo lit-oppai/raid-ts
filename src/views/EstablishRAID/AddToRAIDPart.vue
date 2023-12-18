@@ -30,10 +30,19 @@ onMounted(async () => {
             (item) => item.size && item.size >= expansionMinDiskSize.value
         )?.path ?? "";
 });
+import { isExitNewDisk } from "@views/EstablishRAID/controlData.ts";
+import { watch } from "vue";
+watch(newDiskStatus, (val) => {
+    if (val?.length) {
+        isExitNewDisk.value = true;
+    } else {
+        isExitNewDisk.value = false;
+    }
+});
 </script>
 
 <template name="AddToRAIDPart">
-    <template v-if="true">
+    <template v-if="newDiskStatus?.length">
         <div class="mt-6 mb-4">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                 {{
