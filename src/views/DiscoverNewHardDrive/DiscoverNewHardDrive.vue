@@ -119,7 +119,7 @@ const showEnableStorage = (name: string, path: string): void => {
                     <div class="flex-grow"></div>
                     <Button label="Enable" severity="primary" size="medium"
                         @click="showEnableStorage(disk.name as string, disk.path as string)" v-if="disk.support"></Button>
-                    <Button label="Format and Enable" severity="primary" size="medium"
+                    <Button :label="$t('Format and Enable')" severity="primary" size="medium"
                         @click="showCheckFormat(disk.type, disk.path)" v-else></Button>
                 </div>
                 <!-- Content -->
@@ -152,7 +152,7 @@ const showEnableStorage = (name: string, path: string): void => {
                         <Button label="Enable" severity="secondary" size="small"
                             @click="showEnableStorage(item?.name as string, item?.path as string)"
                             v-else-if="item?.supported"></Button>
-                        <Button label="Format and Enable" severity="secondary" size="small"
+                        <Button :label="$t('Format and Enable')" severity="secondary" size="small"
                             @click="showCheckFormat(item?.name, item?.path)" v-else></Button>
                         <!-- paperwork end -->
                     </div>
