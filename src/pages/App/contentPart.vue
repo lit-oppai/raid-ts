@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import messageBus from '@utils/messageBus';
-import { useRoute } from 'vue-router';
-import router from '@pages/router.ts';
+import { useRoute, useRouter } from 'vue-router';
+// import router from '@pages/router.ts';
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 //获取路由中的 mate 信息
 const route = useRoute();
+const router = useRouter();
 //获取路由中的 title 信息
 const title = ref<string>();
 watch(() => route.meta.title, () => {
