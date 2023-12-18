@@ -6,7 +6,16 @@
     "Data": "数据",
     "Files": "文件",
     "Discover the new hard drive": "发现新硬盘",
+    "Detected hard drive damaged": "发现硬盘损坏",
+    "Damaged": "损坏",
     "Combine hard drive space by RAID.": "通过RAID组合多硬盘",
+    "The data has been locked for read-only access. Click to enter the recovery process.": "数据已被锁定为只读模式，点击进入恢复流程。",
+    "The data has been locked for read-only access. Please add new hard drive(s).": "数据已被锁定为只读模式，请添加新硬盘。",
+    "The data has been locked for read-only access. Please replace it for recovery operations.": "数据已被锁定为只读模式，请替换硬盘以开始恢复流程。",
+    "Eject": "推出",
+    "Replace a hard drive of at least {size} to restore functionality.": "请替换大于{size}的硬盘以恢复正常使用。",
+    "The hard drive has been ejected. Please power off, replace and restart.": "硬盘已推出，请关机并替换新硬盘后重新启动。",
+  "Need new hard drive(s) · At least {size}": "需要大于{size}的新硬盘",
     "Create": "创建",
     "{size} Used": "{size} 已用",
     "Storage Space": "存储空间",
@@ -52,7 +61,7 @@
     "After inserting a new hard drive, you can expand the current RAID capacity.": "插入新硬盘后可扩展现有RAID阵列空间。",
     "Data Protection": "数据保护",
     "Verification and Recovery": "认证与恢复",
-    "Protecting · Read-only": "保护中 · 只读",
+    "Protecting · Read-only": "保护中 · 只读模式",
     "In Protection": "保护中",
     "Expand capacity": "扩展空间",
     "General": "通用",
@@ -64,16 +73,18 @@
     "Confirm": "确认",
     "Format": "格式化",
     "Format and Enable": "格式化硬盘",
+    "Enable": "启用",
+    "Used": "已启用",
     "ConfirmRAIDPART": {
         "labelNameInput": {
             "Create": "为RAID存储命名",
-            "CreateStorage": "命名 Storage"
+            "CreateStorage": "为空间命名"
         },
         "noteNameInput": "在此之后无法更改名称",
         "titleUserAgreement": {
             "Create": "开始创建RAID",
             "Modify": "开始创建RAID",
-            "CreateStorage": "Format hard drive"
+            "CreateStorage": "开始硬盘格式化"
         },
         "contentUserAgreement1": {
             "Create": "创建RAID空间阵列将格式化所选的硬盘，",
@@ -87,5 +98,18 @@
         },
         "contentUserAgreement3": "请提前备份重要文件。在此过程中，请勿拔出硬盘或关闭ZimaCube以避免系统错误。",
         "signUserAgreement": "我已知晓并确认操作"
-    }
+    },
+    "DiscoverNewHardDrive": {
+        "driveBay{label}": "硬盘仓 {label}",
+        "requiresFormattingReminder": {
+            "true": "请在格式化硬盘前检查与备份文件。",
+            "false": "保留数据并直接启用。"
+        },
+        "item": {
+            "PreservingData": "保留数据",
+            "NeedsToBeFormatted": "需要格式化"
+        }
+    },
+    "Add": "添加",
+    "Power off": "关机"
 }

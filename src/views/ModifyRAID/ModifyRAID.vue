@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
-import Skeleton from 'primevue/skeleton';
+import Skeleton from "primevue/skeleton";
 import protectSVG from "@assets/img/StorageManager/protect.svg";
 import diskSVG from "@assets/img/StorageManager/disk.svg";
 import warningSVG from "@assets/img/StorageManager/warning.svg";
@@ -18,10 +18,7 @@ import {
     expansionMinDiskSize,
 } from "@views/EstablishRAID/controlData.ts";
 import { RAIDStrategy } from "@views/EstablishRAID/controlData.d";
-import {
-    storageInfoMap,
-    reloadServiceData,
-} from "@views/StorageManager/controlData.ts";
+import { storageInfoMap, reloadServiceData } from "@views/StorageManager/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute } from "vue-router";
 import { raid } from "@network/index.ts";
@@ -39,7 +36,8 @@ const needNewDisk = ref(false);
 const isLoadingDiskInfoByStorageSpace = ref<boolean>(false);
 const loadRaid = async () => {
     isLoadingDiskInfoByStorageSpace.value = true;
-    await raid.getRaids(storageInfo?.path)
+    await raid
+        .getRaids(storageInfo?.path)
         .then((res) => {
             selectRAIDStrategy.value = ("RAID" + res.data.data?.[0].raid_level) as RAIDStrategy;
             diskInfoByStorageSpace.value = res.data.data?.[0].devices ?? [];
@@ -63,7 +61,7 @@ initEstablishRAID();
 // disable raid
 import { useRouter } from "vue-router";
 const router = useRouter();
-const isLoadingDisabledButton = ref<boolean>(false)
+const isLoadingDisabledButton = ref<boolean>(false);
 const disabledRaid = async (): Promise<void> => {
     isLoadingDisabledButton.value = true;
     await raid
@@ -164,13 +162,22 @@ const extenedCapacity = (): void => {
             v-if="needFirstAid">
             <Image :src="warningIntense"></Image>
             <span class="grow shrink basis-0 text-orange-500 text-sm font-normal font-['Roboto'] align-baseline">
-                The data has been locked for read-only access. Please replace it for recovery
-                operations.
+                {{
+                    needNewDisk
+                    ? $t(
+                        "The data has been locked for read-only access. Please add new hard drive(s)."
+                    )
+                    : $t(
+                        `The data has been locked for read-only access. Please replace it for recovery operations.`
+                    )
+                }}
             </span>
         </div>
         <!-- Hard Drive Part -->
         <div class="mt-6 mb-2 mr-0.5">
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> {{ $t('Hard Drive') }} </span>
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
+                {{ $t("Hard Drive") }}
+            </span>
         </div>
         <div class="bg-white rounded-lg space-y-1 p-3">
             <!-- Traversing -->
@@ -185,34 +192,46 @@ const extenedCapacity = (): void => {
                     <span class="mx-3 px-1 py-px bg-rose-100 rounded justify-center items-center gap-0.5 inline-flex"
                         v-if="!item.health">
                         <Image :src="warningRedSVG" class="h-4 w-4 fill-red-500"></Image>
-                        <span class="text-rose-500 text-xs font-normal font-['Roboto']"> Damaged </span>
+                        <span class="text-rose-500 text-xs font-normal font-['Roboto']">
+                            {{ $t("Damaged") }}
+                        </span>
                     </span>
                     <span class="flex-grow"></span>
                     <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto'] mr-1" v-if="item.health">
-                        {{ item.health === true ? $t('Healthy') : $t('Unhealthy') }}
+                        {{ item.health === true ? $t("Healthy") : $t("Unhealthy") }}
                     </span>
-                    <Button :loading="operationEjectLoading" label="Eject" severity="primary" size="medium"
+                    <Button :loading="operationEjectLoading" :label="$t('Eject')" severity="primary" size="medium"
                         @click="ejectDiskFromRaid(item.path as string)" v-else></Button>
                 </div>
             </div>
 
             <div class="flex items-center bg-gray-50 rounded-md h-10 px-3 gap-4" v-if="needNewDisk">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']" v-if="showAddingDiskButton">
-                    Need new hard drive · At least {{ convertSizeToReadable(expansionMinDiskSize) }}
+                    {{
+                        $t("Need new hard drive · At least {size}", {
+                            size: convertSizeToReadable(expansionMinDiskSize),
+                        })
+                    }}
                 </span>
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']" v-else>
-                    The hard drive has been ejected. Please power off, replace and restart.
+                    {{
+                        $t("The hard drive has been ejected. Please power off, replace and restart.")
+                    }}
                 </span>
                 <span class="flex-grow"></span>
                 <!-- TODO：添加 socket 到框架，以触发 -->
-                <Button label="Add" severity="primary" size="medium" @click="openFirstAid"
+                <Button :label="$t('Add')" severity="primary" size="medium" @click="openFirstAid"
                     v-if="showAddingDiskButton"></Button>
-                <Button label="Power off" severity="primary" size="medium" @click="targetPawerOff()" v-else></Button>
+                <Button :label="$t('Power off')" severity="primary" size="medium" @click="targetPawerOff()" v-else></Button>
             </div>
 
             <div class="pt-2 px-1">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-                    {{ $t('After inserting a new hard drive, you can expand the current RAID capacity.') }}
+                    {{
+                        $t(
+                            "After inserting a new hard drive, you can expand the current RAID capacity."
+                        )
+                    }}
                 </span>
             </div>
         </div>
@@ -221,21 +240,21 @@ const extenedCapacity = (): void => {
         <div class="mt-6 space-y-2" v-if="selectRAIDStrategy !== 'RAID0'">
             <div class="mr-0.5">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-                    {{ $t('Data Protection') }}
+                    {{ $t("Data Protection") }}
                 </span>
             </div>
             <div class="bg-white rounded-lg flex flex-col py-1">
                 <div class="h-10 flex items-center px-4">
                     <Image :src="protectSVG" class="h-6 w-6"></Image>
                     <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
-                        {{ $t('Verification and Recovery') }}
+                        {{ $t("Verification and Recovery") }}
                     </span>
 
                     <span class="text-right text-neutral-400 text-sm font-normal font-['Roboto']" v-if="needFirstAid">
-                        {{ $t('Protecting · Read-only') }}
+                        {{ $t("Protecting · Read-only") }}
                     </span>
                     <span class="text-right text-neutral-400 text-sm font-normal font-['Roboto']" v-else>
-                        {{ $t('In Protection') }}
+                        {{ $t("In Protection") }}
                     </span>
                 </div>
                 <template v-if="needFirstAid">
@@ -243,9 +262,11 @@ const extenedCapacity = (): void => {
                     <div class="h-9 flex items-center px-4 pb-1">
                         <i class="w-6 flex items-center justify-center casa-alert-outline text-base text-rose-500"></i>
                         <span class="text-neutral-400 text-xs font-normal font-['Roboto'] flex-grow ml-3">
-                            Replace a hard drive of at least
-                            {{ convertSizeToReadable(expansionMinDiskSize) }}
-                            to restore functionality.
+                            {{
+                                $t(`Replace a hard drive of at least {size} to restore functionality.`, {
+                                    size: convertSizeToReadable(expansionMinDiskSize),
+                                })
+                            }}
                         </span>
                     </div>
                 </template>
@@ -254,7 +275,9 @@ const extenedCapacity = (): void => {
         <!-- General -->
         <div class="mt-6 space-y-2">
             <div class="mr-0.5">
-                <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> {{$t('General')}} </span>
+                <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
+                    {{ $t("General") }}
+                </span>
             </div>
 
             <!-- TODO0 无损坏 && raid5 && 存在空槽位 -->
@@ -262,7 +285,7 @@ const extenedCapacity = (): void => {
                 v-if="storageInfo?.raid_level === 5 && !needFirstAid">
                 <Image :src="diskSVG" class="h-6 w-6"></Image>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
-                    {{ $t('Expand capacity') }}
+                    {{ $t("Expand capacity") }}
                 </span>
 
                 <Button :label="$t('Add Drive')" severity="secondary" size="medium" @click="extenedCapacity"></Button>
@@ -271,7 +294,7 @@ const extenedCapacity = (): void => {
             <div class="bg-white rounded-lg h-11 flex items-center px-4">
                 <Image :src="warningSVG" class="h-6 w-6"></Image>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
-                    {{$t('Format and Disable')}}
+                    {{ $t("Format and Disable") }}
                 </span>
 
                 <Button :label="$t('Disable')" severity="accent" size="medium" @click="disabledRaid"
