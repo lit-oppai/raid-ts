@@ -234,7 +234,7 @@ const extendCapacity = () => {
             v-show="currentStepName !== 'AddToRAIDPart' && currentStepName === 'ResultRAIDPart'"></Button>
 
         <!-- First Aid Part -->
-        <Button label="Add" severity="primary" size="medium" @click="stepByStep('next')"
+        <Button :label="$t('Add')" severity="primary" size="medium" @click="stepByStep('next')"
             v-show="currentStepName === 'AddToRAIDPart'" :disabled="!selectedFidDisk"></Button>
         <Button :label="$t('Confirm')" severity="primary" size="medium" @click="confirmFirstAid"
             v-show="context === 'FirstAid' && currentStepName === 'ConfirmRAIDPart'"
