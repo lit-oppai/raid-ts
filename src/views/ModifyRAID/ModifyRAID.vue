@@ -83,9 +83,11 @@ const disabledRaid = async (): Promise<void> => {
 };
 
 // ejct disk
-const operationEjectLoading = ref<boolean>(false);
+// const operationEjectLoading = ref<boolean>(false);
+const pathOperationEject = ref<string>("");
 const ejectDiskFromRaid = async (path: string): Promise<void> => {
-    operationEjectLoading.value = true;
+    // operationEjectLoading.value = true;
+    pathOperationEject.value = path;
     await raid
         .updateRaid({ path: storageInfo?.path ?? "", action: "remove", devices: [path] })
         .then((res) => {
@@ -100,7 +102,8 @@ const ejectDiskFromRaid = async (path: string): Promise<void> => {
             console.log(err);
         })
         .finally(() => {
-            operationEjectLoading.value = false;
+            // operationEjectLoading.value = false;
+            pathOperationEject.value = "";
             showAddingDiskButton.value = false;
         });
 };
@@ -200,7 +203,7 @@ const extenedCapacity = (): void => {
                     <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto'] mr-1" v-if="item.health">
                         {{ item.health === true ? $t("Healthy") : $t("Unhealthy") }}
                     </span>
-                    <Button :loading="operationEjectLoading" :label="$t('Eject')" severity="primary" size="medium"
+                    <Button :loading="pathOperationEject === item.path" :label="$t('Eject')" severity="primary" size="medium"
                         @click="ejectDiskFromRaid(item.path as string)" v-else></Button>
                 </div>
             </div>
