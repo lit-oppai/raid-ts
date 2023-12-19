@@ -202,6 +202,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
             // TODO：优化，后端统一返回数值，统一返回数据单位。此处，当时 raid 时，size 为字节。
             let storageSize = Number(storage.size)
             let storageUsedSize = Number(storage.used)
+            let storageHealth = storage?.devices?.every(device => device.health) ?? storage.health;
             if (storage?.raid_level !== undefined) {
                 storageSize *= 1024
                 storageUsedSize *= 1024
@@ -222,13 +223,11 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                 raid: storage.raid_level !== undefined,
                 raid_level: storage.raid_level,
                 label: name,
-                health:
-                    storage?.devices?.every(device => device.health) ||
-                    storage.health,
+                health: storageHealth,
                 shortage: storage.shortage
             })
-            if (storage.health !== undefined && !storage.health && storage.raid_level !== undefined) {
-
+            
+            if (storageHealth !== undefined && !storageHealth && storage.raid_level !== undefined) {
                 unhealthyLable.value = storage.name;
             }
         }
