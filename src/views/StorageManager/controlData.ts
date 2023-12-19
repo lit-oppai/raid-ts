@@ -222,7 +222,8 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                     storage.health,
                 shortage: storage.shortage
             })
-            if (!storage.health && storage.raid_level !== undefined) {
+            if (storage.health !== undefined && !storage.health && storage.raid_level !== undefined) {
+                
                 unhealthyLable.value = storage.name;
             }
         }
