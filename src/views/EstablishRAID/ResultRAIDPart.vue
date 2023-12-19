@@ -11,8 +11,6 @@ import {
 import { convertSizeToReadable } from "@utils/tools.ts";
 
 let svg: string, statusMessage: string;
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
 if (resultRAIDInfo.success) {
     svg = successSVG;
     // if (context.value === "EnableStorage") {
@@ -20,7 +18,7 @@ if (resultRAIDInfo.success) {
     // } else {
     //     statusMessage = "Creation Successful";
     // }
-    statusMessage = t("Success")
+    statusMessage = "Success"
 } else {
     svg = errorSVG;
     // if (context.value === "EnableStorage") {
@@ -28,14 +26,14 @@ if (resultRAIDInfo.success) {
     // } else {
     //     statusMessage = "Creation Failed";
     // }
-    statusMessage = t("Fail")
+    statusMessage = "Fail"
 }
 </script>
 <template name="ResultRAIDPart">
     <div class="flex flex-col items-center space-y-7 mt-20">
         <Image :src="svg"></Image>
         <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-            {{ statusMessage }}
+            {{ $t(statusMessage) }}
         </span>
     </div>
     <div class="mt-3 flex justify-center" v-if="context !== 'EnableStorage'">
