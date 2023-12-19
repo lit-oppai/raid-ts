@@ -16,7 +16,6 @@ import {
 // Data Acquisition.
 async function getDiskInfo(): Promise<DISK_INFO_TYPE[] | any> {
     return openAPI.disk.getDisks().then((res: any) => res.data.data)
-    // return axios.get("http://127.0.0.1:4523/m1/1026187-0-default/v1/disks").then((res) => res.data.data);
 }
 async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
     const a = await openAPI.raid.getRaids().then((res: any) => res.data.data)
@@ -24,12 +23,9 @@ async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
         .getStorage('show')
         .then((res: any) => res.data.data)
     return [...a, ...b]
-    // return StorageMethodsService.getStorage('show', '/').then((res: any) => res.data.data);
-    // return axios.get("http://127.0.0.1:4523/m1/1026187-0-default/v1/cloud").then((res) => res.data.data);
 }
-// const HDDStatus = ref<UI_DISK_INFO_TYPE[]>([])
+
 const HDDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
-// const SSDStatus = ref<UI_DISK_INFO_TYPE[]>([])
 const SSDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
 //  除去系统盘之外的 storage
 const storageInfoMap = reactive(new Map<string, UI_STORAGE_INFO_TYPE>())

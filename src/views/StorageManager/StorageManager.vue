@@ -84,12 +84,7 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
 
 // 检测错误信息
 import { unhealthyLable } from "@views/StorageManager/controlData.ts";
-// const unhealthyLable = ref<string>();
-// storageInfoMap.forEach((item) => {
-//     if (!item.health && item.raid) {
-//         unhealthyLable.value = item.name;
-//     }
-// });
+
 </script>
 
 <template>
@@ -290,9 +285,6 @@ import { unhealthyLable } from "@views/StorageManager/controlData.ts";
                     </div>
                     <div class="flex-shrink-0">
                         <!-- TODO：  1、统一组件 2、两个盘应该为灰色 -->
-                        <!-- <button class="h-7 bg-sky-600 rounded-[14px] px-[14px]" @click="showEstablishRAID('Create')">
-                            <span class="text-white text-sm font-normal font-['Roboto'] leading-5">创建</span>
-                        </button> -->
                         <Button :label="$t('Create')" :severity="RAIDCandidateDiskCount > 2 ? 'primary' : 'neutral'"
                             size="medium" @click="showEstablishRAID('Create')"></Button>
                     </div>
