@@ -37,13 +37,38 @@ for (let [key, item] of allDiskStatus) {
         storageDisabled.push(key);
     }
 }
+const calculateRAIDCapacity = (strategy: RAIDStrategy, diskList: (number)[]) => {
+    let totalSize = 0,
+        minSize = 0;
+    diskList.forEach((diskSize) => {
+        totalSize += diskSize ?? 0;
+        minSize =
+            minSize !== 0
+                ? Math.min(diskSize ?? 0)
+                : diskSize ?? 0;
+    });
+    switch (strategy) {
+        case "RAID0":
+            return totalSize;
+        case "RAID1":
+            return minSize;
+        case "RAID5":
+            // 至少三块硬盘
+            if (diskList.length > 2) {
+                return minSize * (diskList.length - 1);
+            } else {
+                return 0;
+            }
+    }
+};
 let availableSpacePercentage = ref(0),
     readunantSpacePercentage = ref(0),
     availableSpace = ref(0),
     availableSpaceByStorageSpace = ref(0);
-diskListByStorageSpace.value.forEach((item) => {
-    availableSpaceByStorageSpace.value += allDiskStatus.get(item)?.size ?? 0;
-});
+if (selectRAIDStrategy.value) {
+    availableSpaceByStorageSpace.value = calculateRAIDCapacity(selectRAIDStrategy.value, diskListByStorageSpace.value.map((item) => allDiskStatus.get(item)?.size ?? 0))
+}
+
 
 watch(
     selectStorageList,
@@ -120,7 +145,7 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
         return item.type;
     }
     // 没有被占用&磁盘太小
-    else if (item.size && diskListByStorageSpace.value.length  && item.size < expansionMinDiskSize.value) {
+    else if (item.size && diskListByStorageSpace.value.length && item.size < expansionMinDiskSize.value) {
         return `太小`;
     }
     // 可选
@@ -226,7 +251,10 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                         {{
                             context !== "Modify"
                             ? $t("Estimated available")
-                            : $t("Expected expansion from {size} to", { size: 0 })
+                            : $t("Expected expansion from {size} to", {
+                                size:
+                                    convertSizeToReadable(availableSpaceByStorageSpace)
+                            })
                         }}
                     </span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
