@@ -158,12 +158,16 @@ class StorageNameCollection {
     };
     beNamed(storageType: keyof typeof EnumStorageNames): string {
         const prefixName = EnumStorageNames[storageType];
-        let index = 1;
+        let index = 0;
         while (this.hasName(prefixName + index)) {
             index++;
         }
-        return prefixName + index;
+
+        return index === 0 ? prefixName : prefixName + index;
     };
+    clear(): void {
+        this.storageNames.length = 0;
+    }
 }
 const storageNameCollection = new StorageNameCollection();
 const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
@@ -173,6 +177,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
         fileFree = 0,
         filesUsage = 0
     storageInfoMap.clear()
+    storageNameCollection.clear();
     storageInfo.map((storage: STORAGE_INFO_TYPE): void => {
         storageNameCollection.addName(storage.name);
         // TODO: 优化, 在后端统一“ZimaOS-HD” 名称。
@@ -223,7 +228,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                 shortage: storage.shortage
             })
             if (storage.health !== undefined && !storage.health && storage.raid_level !== undefined) {
-                
+
                 unhealthyLable.value = storage.name;
             }
         }
