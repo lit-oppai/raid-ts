@@ -33,6 +33,8 @@ const HDDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
 const SSDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
 //  除去系统盘之外的 storage
 const storageInfoMap = reactive(new Map<string, UI_STORAGE_INFO_TYPE>())
+const unhealthyLable = ref<string>();
+
 // 系统 storage 信息
 let sysStorageInfo = reactive<UI_STORAGE_INFO_TYPE | any>({})
 // RAID 候选盘数量
@@ -224,6 +226,9 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                     storage.health,
                 shortage: storage.shortage
             })
+            if (!storage.health && storage.raid_level !== undefined) {
+                unhealthyLable.value = storage.name;
+            }
         }
     })
     usageStatus.value = {
@@ -258,6 +263,7 @@ export {
     HDDStatus,
     SSDStatus,
     storageInfoMap,
+    unhealthyLable,
     sysStorageInfo,
     initStoragePageData,
     initStoragePageData as reloadServiceData,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
@@ -83,12 +83,13 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
 };
 
 // 检测错误信息
-const unhealthyLable = ref<string>();
-storageInfoMap.forEach((item) => {
-    if (!item.health && item.raid) {
-        unhealthyLable.value = item.name;
-    }
-});
+import { unhealthyLable } from "@views/StorageManager/controlData.ts";
+// const unhealthyLable = ref<string>();
+// storageInfoMap.forEach((item) => {
+//     if (!item.health && item.raid) {
+//         unhealthyLable.value = item.name;
+//     }
+// });
 </script>
 
 <template>
