@@ -87,18 +87,20 @@
         "noteNameInput": "The name can not be changed after this step.",
         "titleUserAgreement": {
             "Create": "Initiate RAID creation",
-            "Modify": "Initiate RAID creation",
+            "Modify": "Add hard drive to RAID",
             "FirstAid": "Add hard drive to RAID",
             "CreateStorage": "Initiate the formatting of the hard drive"
         },
         "contentUserAgreement1": {
             "Create": "Creating a RAID array will initialize the selected hard drive, ",
-            "Modify": "Creating a RAID array will initialize the selected hard drive, ",
+            "Modify": "",
+            "FirstAid": "",
             "CreateStorage": ""
         },
         "contentUserAgreement2": {
             "Create": "and all files on the hard drive will be deleted and cannot be recovered. ",
             "Modify": "and all files on the hard drive will be deleted and cannot be recovered. ",
+            "FirstAid": "and all files on the hard drive will be deleted and cannot be recovered. ",
             "CreateStorage": "All files on the hard drive will be deleted and cannot be recovered. "
         },
         "contentUserAgreement3": "Please back up important files on the hard drive in advance. During this process, please do not unplug the hard drive or shut down ZimaCube to avoid system errors. ",
