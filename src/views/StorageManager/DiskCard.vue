@@ -42,7 +42,7 @@ const statuTitle = computed(() => {
     } else if (props.source.unused) {
         return "";
     }
-    return (props.source.health === "true" ? "healthy" : "unhealthy") + " {temperature}";
+    return (props.source.health === "true" ? "healthy" : "unhealthy") + " {temperature}℃";
 });
 const statuColor = computed(() => {
     if (!props.source.exit || props.source.unused) {
