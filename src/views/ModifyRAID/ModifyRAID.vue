@@ -55,7 +55,7 @@ const loadRaid = async () => {
         });
 };
 
-loadRaid(); // TODO
+await loadRaid(); // TODO
 initEstablishRAID();
 
 // disable raid
