@@ -88,17 +88,20 @@
         "noteNameInput": "在此之后无法更改名称",
         "titleUserAgreement": {
             "Create": "开始创建RAID",
-            "Modify": "开始创建RAID",
+            "Modify": "添加新硬盘至RAID",
+            "FirstAid": "添加新硬盘至RAID",
             "CreateStorage": "开始硬盘格式化"
         },
         "contentUserAgreement1": {
             "Create": "创建RAID空间阵列将格式化所选的硬盘，",
-            "Modify": "创建RAID空间阵列将格式化所选的硬盘，",
+            "Modify": "",
+            "FirstAid": "",
             "CreateStorage": ""
         },
         "contentUserAgreement2": {
             "Create": "硬盘上的所有数据将被清空且无法恢复。",
             "Modify": "硬盘上的所有数据将被清空且无法恢复。",
+            "FirstAid": "硬盘上的所有数据将被清空且无法恢复。",
             "CreateStorage": "硬盘上的所有数据将被清空且无法恢复，"
         },
         "contentUserAgreement3": "请提前备份重要文件。在此过程中，请勿拔出硬盘或关闭ZimaCube以避免系统错误。",
