@@ -102,10 +102,16 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) => {
     // 扩容页面&当前磁盘列表中的磁盘
-    if (diskListByStorageSpace.value.includes(key)) {
+    // 空槽
+    if (storageNone.includes(key)) {
+        return "Empty";
+    }
+    // in current disk list of storage space
+    else if (diskListByStorageSpace.value.includes(key)) {
         return t("Current");
     }
     // 被raid占用
+    // in other disk list of storage space
     else if (!item?.unused && item?.RaidStrategy !== "") {
         return `${item?.RaidStrategy}`;
     }
@@ -114,17 +120,14 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
         return item.type;
     }
     // 没有被占用&磁盘太小
-    else if (item.size && item.size < expansionMinDiskSize.value) {
+    else if (item.size && diskListByStorageSpace.value.length  && item.size < expansionMinDiskSize.value) {
         return `太小`;
     }
     // 可选
     else if (storageSelectable.includes(key)) {
         return item.type;
     }
-    // 空槽
-    else if (storageNone.includes(key)) {
-        return "Empty";
-    } else {
+    else {
         return "未知";
     }
 };
@@ -223,7 +226,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                         {{
                             context !== "Modify"
                             ? $t("Estimated available")
-                            : $t("Expected expansion from {size} to",{size:0})
+                            : $t("Expected expansion from {size} to", { size: 0 })
                         }}
                     </span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
@@ -247,7 +250,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                 <div class="space-x-1 flex-grow">
                     <span class="bg-amber-500 w-1.5 h-1.5 rounded-sm inline-block"></span>
                     <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">
-                        {{  $t("Protection and redundancy") }}
+                        {{ $t("Protection and redundancy") }}
                     </span>
                 </div>
                 <div>
