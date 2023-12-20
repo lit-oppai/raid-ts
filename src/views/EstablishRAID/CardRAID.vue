@@ -27,7 +27,7 @@ const raidStrategyInfoMap: Record<string, RaidStrategyInfo> = {
     RAID0: {
         security: 1,
         speed: 4,
-        capacity: 50,
+        capacity: 100,
         minDisks: 2,
         tip: "RAID0 evenly distributes data across two or more hard drives to improve read and write speeds, it lacks redundancy, and a failure of one drive results in the loss of all data."
     },
@@ -41,7 +41,7 @@ const raidStrategyInfoMap: Record<string, RaidStrategyInfo> = {
     RAID5: {
         security: 2,
         speed: 3,
-        capacity: 83,
+        capacity: 66,
         minDisks: 3,
         tip: "RAID 5 distributes data across multiple hard drives and using parity for redundancy. In case of drive failure, data can be recovered from the remaining drives and parity information."
     }
