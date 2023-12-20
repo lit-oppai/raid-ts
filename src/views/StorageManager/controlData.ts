@@ -182,6 +182,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
         filesUsage = 0
     storageInfoMap.clear()
     storageNameCollection.clear();
+    unhealthyLable.value = undefined;
     storageInfo.map((storage: STORAGE_INFO_TYPE): void => {
         storageNameCollection.addName(storage.name);
         // TODO: 优化, 在后端统一“ZimaOS-HD” 名称。
