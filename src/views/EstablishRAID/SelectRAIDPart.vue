@@ -44,7 +44,7 @@ const calculateRAIDCapacity = (strategy: RAIDStrategy, diskList: (number)[]) => 
         totalSize += diskSize ?? 0;
         minSize =
             minSize !== 0
-                ? Math.min(diskSize ?? 0)
+                ? Math.min(diskSize, minSize)
                 : diskSize ?? 0;
     });
     switch (strategy) {
@@ -257,6 +257,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                             })
                         }}
                     </span>
+                    &nbsp;
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
                         {{ convertSizeToReadable(availableSpace) }}
                     </span>
