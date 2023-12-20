@@ -222,7 +222,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
 
             <!-- 选择的磁盘信息展示 -->
             <div class="flex flex-col space-y-1 mt-4">
-                <template v-for="key in [...selectStorageList, ...diskListByStorageSpace]" :key="key">
+                <template v-for="key in [...selectStorageList, ...diskListByStorageSpace].sort((a: string, b: string) => (a > b ? 1 : -1))" :key="key">
                     <div class="flex items-center h-10 bg-gray-50 rounded-md pr-4">
                         <span class="ml-1 w-[34px] text-center text-neutral-400">
                             {{ key }}
