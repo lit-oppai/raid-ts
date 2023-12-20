@@ -203,8 +203,8 @@ const extenedCapacity = (): void => {
                     <span class="text-right text-neutral-400 text-xs font-normal font-['Roboto'] mr-1" v-if="item.health">
                         {{ item.health === true ? $t("Healthy") : $t("Unhealthy") }}
                     </span>
-                    <Button :loading="pathOperationEject === item.path" :label="$t('Eject')" severity="primary" size="medium"
-                        @click="ejectDiskFromRaid(item.path as string)" v-else></Button>
+                    <Button :loading="pathOperationEject === item.path" :label="$t('Eject')" severity="primary"
+                        size="medium" @click="ejectDiskFromRaid(item.path as string)" v-else></Button>
                 </div>
             </div>
 

@@ -85,6 +85,15 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
 // 检测错误信息
 import { unhealthyLable } from "@views/StorageManager/controlData.ts";
 
+// socket
+import { socket } from "@network/socket.ts";
+// TODO: 事件管理
+socket.on("local-storage:disk:added", () => {
+    initStoragePageData();
+});
+socket.on("local-storage:disk:removed", () => {
+    initStoragePageData();
+});
 </script>
 
 <template>
