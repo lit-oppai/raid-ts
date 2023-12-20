@@ -149,25 +149,29 @@ const initStorageInfo = async (): Promise<void> => {
 }
 // 处理命名
 class StorageNameCollection {
-    private storageNames: string[] = [];
+    private storageNames = new Set<string>();
     addName(name: string): void {
-        this.storageNames.push(name)
+        this.storageNames.add(name)
     };
     hasName(name: string): boolean {
-        return this.storageNames.indexOf(name) > -1;
+        return this.storageNames.has(name);
     };
     beNamed(storageType: keyof typeof EnumStorageNames): string {
         const prefixName = EnumStorageNames[storageType];
-        let index = 0;
+        if (!this.hasName(prefixName)) {
+            return prefixName;
+        }
+
+        let index = 1;
         while (this.hasName(prefixName + index)) {
             index++;
         }
 
-        return index === 0 ? prefixName : prefixName + index;
+        return prefixName + index;
     };
     clear(): void {
-        this.storageNames.length = 0;
-    }
+        this.storageNames.clear();
+    };
 }
 const storageNameCollection = new StorageNameCollection();
 const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
@@ -226,7 +230,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                 health: storageHealth,
                 shortage: storage.shortage
             })
-            
+
             if (storageHealth !== undefined && !storageHealth && storage.raid_level !== undefined) {
                 unhealthyLable.value = storage.name;
             }
