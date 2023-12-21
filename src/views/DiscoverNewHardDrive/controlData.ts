@@ -9,6 +9,8 @@ const loadAllNewDiskStatus = (): void => {
                 res.data.data
                     .filter((item) => item.model !== "System")
                     .map((item) => {
+                        // TODO: 数据处理，理应与 storage 数据模型保持一致，后续理应创建统一处理后端数据的函数
+                        item.type = item.rota ? 'HDD' : 'SSD';
                         return [IndexForDiskHubMap.get(item.index as number), item];
                     })
             );
