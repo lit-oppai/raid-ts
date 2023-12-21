@@ -30,13 +30,15 @@ const route = useRoute();
 const router = useRouter();
 const isFirstRoutePath = computed(() => route.matched.length === 1);
 const sysRate = computed(() => {
-    return usageStatus.value ? (
-        (usageStatus.value?.SystemUsage /
-            (usageStatus.value?.SystemUsage +
-                usageStatus.value?.DataFree +
-                usageStatus.value?.DataUsage)) *
-        100
-    ).toFixed(0) : 0;
+    return usageStatus.value
+        ? (
+            (usageStatus.value?.SystemUsage /
+                (usageStatus.value?.SystemUsage +
+                    usageStatus.value?.DataFree +
+                    usageStatus.value?.DataUsage)) *
+            100
+        ).toFixed(0)
+        : 0;
 });
 const dataRate = computed(() => {
     return (
