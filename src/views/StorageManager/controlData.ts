@@ -1,6 +1,6 @@
 // TODO: Replace with fetch API.
 import { ref, reactive } from 'vue'
-import openAPI from '@/network'
+import openAPI from '@network/index.ts'
 
 // Setting Data Types && Naming conventions for Constants.
 import {
