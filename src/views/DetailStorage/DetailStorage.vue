@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
 import warningSVG from "@assets/img/StorageManager/warning.svg";
 //
-import {
-    storageInfoMap,
-    reloadServiceData,
-} from "@views/StorageManager/controlData.ts";
+import { storageInfoMap, reloadServiceData } from "@views/StorageManager/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import { showEstablishRAID } from "@views/EstablishRAID/controlView.ts";
@@ -19,26 +16,27 @@ import { storage } from "@network/index.ts";
 const route = useRoute();
 const router = useRouter();
 const storageName = route.params.storageName as string;
-import { EnumStorageNames } from '@views/StorageManager/const.ts';
-import { sysStorageInfo } from '@views/StorageManager/controlData.ts';
-let storageInfo = storageInfoMap.get(storageName);
-if (storageName === EnumStorageNames.System) {
-    storageInfo = sysStorageInfo;
-}
+import { EnumStorageNames } from "@views/StorageManager/const.ts";
+import { sysStorageInfo } from "@views/StorageManager/controlData.ts";
+
+let storageInfo = computed(() => {
+    if (storageName === EnumStorageNames.System) {
+        return sysStorageInfo;
+    }
+    return storageInfoMap.get(storageName)
+});
 
 // format or disband function
-// 命名
-import { storageNameCollection } from '@views/StorageManager/controlData.ts';
 const showCheckFormat = (): void => {
-    nameStorage.value = (storageInfo && storageNameCollection.beNamed(storageInfo.type)) ?? storageInfo?.label ?? "";
-    formatePath.value = storageInfo?.path ?? "";
+    nameStorage.value = storageInfo.value?.label ?? "";
+    formatePath.value = storageInfo.value?.path ?? "";
     showEstablishRAID("CreateStorage");
 };
 const isLoadingDisabledButton = ref<boolean>(false);
 const disabledStorage = async (): Promise<void> => {
-    isLoadingDisabledButton.value = true
+    isLoadingDisabledButton.value = true;
     await storage
-        .deleteStorage(storageInfo?.path ?? "")
+        .deleteStorage(storageInfo.value?.path ?? "")
         .then((res) => {
             if (res.status === 200) {
                 router.push({ name: "storage" });
@@ -49,8 +47,9 @@ const disabledStorage = async (): Promise<void> => {
         })
         .catch((err) => {
             console.log(err);
-        }).finally(() => {
-            isLoadingDisabledButton.value = false
+        })
+        .finally(() => {
+            isLoadingDisabledButton.value = false;
         });
 };
 </script>
@@ -81,14 +80,16 @@ const disabledStorage = async (): Promise<void> => {
             </div>
 
             <span class="text-right text-neutral-400 text-sm font-normal font-['Roboto']">
-                {{ storageInfo?.health ? $t('Healthy') : $t('Unhealthy') }}
+                {{ storageInfo?.health ? $t("Healthy") : $t("Unhealthy") }}
             </span>
         </div>
     </div>
     <!-- General -->
     <div class="mt-6 space-y-2" v-if="storageName !== EnumStorageNames.System">
         <div class="">
-            <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> {{$t('General')}} </span>
+            <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
+                {{ $t("General") }}
+            </span>
         </div>
 
         <div class="bg-white rounded-lg h-11 flex items-center px-4">
@@ -98,7 +99,8 @@ const disabledStorage = async (): Promise<void> => {
             </span>
 
             <Button :label="$t('Format')" severity="accent" size="medium" @click="showCheckFormat" class="mr-4"></Button>
-            <Button :label="$t('Disable')" severity="accent" size="medium" @click="disabledStorage" :loading="isLoadingDisabledButton"></Button>
+            <Button :label="$t('Disable')" severity="accent" size="medium" @click="disabledStorage"
+                :loading="isLoadingDisabledButton"></Button>
         </div>
     </div>
 </template>
