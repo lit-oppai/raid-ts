@@ -172,6 +172,9 @@ class StorageNameCollection {
     clear(): void {
         this.storageNames.clear();
     };
+    log(label: string = "storageNames"): void {
+        console.log(label, this.storageNames);
+    }
 }
 const storageNameCollection = new StorageNameCollection();
 const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
