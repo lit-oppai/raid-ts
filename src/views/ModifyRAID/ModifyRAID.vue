@@ -113,14 +113,9 @@ import messageBus from "@utils/messageBus";
 const showAddingDiskButton = ref(true);
 const targetPawerOff = (): void => {
     showAddingDiskButton.value = true;
-    // TODO: 主应用关机通知，目前不确定时间名称
     messageBus("mircoapp_communicate", {
         action: "power_off",
         name: "icewhale_settings",
-    });
-    messageBus("dashboardsetting_shutdown", {
-        action: "power_off",
-        name: "icewhale_storage",
     });
 };
 
