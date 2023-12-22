@@ -4,7 +4,7 @@ import Image from 'primevue/image'
 import questionSVG from '@assets/img/EstablishRAID/question.svg'
 // import recommendSVG from '@assets/img/EstablishRAID/recommend.svg';
 import { currentStep } from './controlData.ts'
-import { defineProps, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 const addStep = () => {
     if (props.disable) {
         return
