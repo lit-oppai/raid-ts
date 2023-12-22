@@ -41,7 +41,7 @@ const raidStrategyInfoMap: Record<string, RaidStrategyInfo> = {
     RAID5: {
         security: 2,
         speed: 3,
-        capacity: 66,
+        capacity: 67,
         minDisks: 3,
         tip: "RAID 5 distributes data across multiple hard drives and using parity for redundancy. In case of drive failure, data can be recovered from the remaining drives and parity information."
     }
