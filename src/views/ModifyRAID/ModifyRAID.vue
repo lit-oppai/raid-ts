@@ -241,7 +241,7 @@ const extenedCapacity = (): void => {
                     {{ $t("Data Protection") }}
                 </span>
             </div>
-            <div class="bg-white rounded-lg flex flex-col py-1">
+            <div class="bg-white rounded-lg flex flex-col">
                 <div class="h-10 flex items-center px-4">
                     <Image :src="protectSVG" class="h-6 w-6"></Image>
                     <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
