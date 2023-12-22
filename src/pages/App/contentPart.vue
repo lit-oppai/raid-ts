@@ -1,22 +1,25 @@
 <script setup lang="ts">
-import messageBus from '@utils/messageBus';
-import { useRoute, useRouter } from 'vue-router';
+import messageBus from "@utils/messageBus";
+import { useRoute, useRouter } from "vue-router";
 // import router from '@pages/router.ts';
-import { ref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 //获取路由中的 mate 信息
 const route = useRoute();
 const router = useRouter();
 //获取路由中的 title 信息
 const title = ref<string>();
-watch(() => route.meta.title, () => {
-    title.value = route.meta.title as string;
-});
+watch(
+    () => route.meta.title,
+    () => {
+        title.value = route.meta.title as string;
+    }
+);
 function onClose() {
     messageBus("mircoapp_communicate", {
-        action: 'close',
-        name: 'icewhale_settings'
+        action: "close",
+        name: "icewhale_settings",
     });
 }
 </script>
@@ -28,7 +31,7 @@ function onClose() {
                     <i class="casa-left-outline"></i>
                 </div>
                 <div class="top_title">
-                    <span>{{ t(title ?? 'undefinde') }}</span>
+                    <span>{{ t(title ?? "undefinde") }}</span>
                 </div>
             </div>
         </transition>
@@ -56,7 +59,7 @@ function onClose() {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity .2s;
+    transition: opacity 0.2s;
 }
 
 .fade-enter-from,
@@ -75,7 +78,7 @@ function onClose() {
 
 .slide-fade-enter-from {
     opacity: 0;
-    transform: translateX(.5rem);
+    transform: translateX(0.5rem);
 }
 
 .slide-fade-leave-to {
