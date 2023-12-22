@@ -38,7 +38,7 @@ export const routes: RouteMeta[] = [
         path: '/storage',
         component: () => import('./storage/index.ts'),
         name: 'storage',
-        icon: 'casa-settings-outline',
+        icon: 'casa-storage-outline',
         meta: {
             title: 'Storage Manager',
         },
