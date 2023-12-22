@@ -187,10 +187,10 @@ const extenedCapacity = (): void => {
                     <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
                         {{ item.model }}
                     </span>
-                    <span class="mx-3 px-1 py-px bg-rose-100 rounded justify-center items-center gap-0.5 inline-flex"
+                    <span class="mx-3 px-1 py-px bg-rose-100 rounded gap-0.5 flex justify-center items-center"
                         v-if="!item.health">
-                        <Image :src="warningRedSVG" class="h-4 w-4 fill-red-500"></Image>
-                        <span class="text-rose-500 text-xs font-normal font-['Roboto']">
+                        <Image :src="warningRedSVG" class="h-4 w-4 fill-orange-500"></Image>
+                        <span class="text-orange-500 text-xs font-normal font-['Roboto'] self-baseline">
                             {{ $t("Damaged") }}
                         </span>
                     </span>
