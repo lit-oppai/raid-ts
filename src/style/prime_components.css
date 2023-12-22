@@ -1,7 +1,12 @@
 @import './animation.css';
+/* ref Roboto Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,600;1,400;1,600&display=swap');
 @tailwind base;
 @tailwind components;
-
+/* 
+TODO: not support max-*:
+TODO:
+*/
 /*
 	os and underscore indicate components or custom styles.
  */
@@ -34,7 +39,7 @@
             }
 
             .top_title {
-                @apply text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal;
+                @apply text-zinc-800 text-base font-semibold font-roboto leading-normal;
             }
 
             /* actions */
@@ -67,7 +72,7 @@
 
         /* content in panel right */
         .panel_content {
-            @apply px-4;
+            @apply px-4 pb-4;
             @apply h-[calc(100%_-_56px)] overflow-y-auto;
         }
     }
@@ -79,13 +84,13 @@
         /* layout */
         .menu_bar_title {
             @apply mx-5 mt-5 px-1 max-md:hidden;
-            @apply text-slate-800 text-base font-medium font-['Roboto'] leading-normal;
+            @apply text-slate-800 text-base font-medium font-roboto leading-normal;
         }
 
         .menu_bar_author {
             @apply flex space-x-2.5 items-center;
             @apply flex-grow-0 flex-shrink-0 m-5 px-1 pt-4;
-            @apply text-zinc-800 text-sm font-normal font-['Roboto'] leading-tight;
+            @apply text-zinc-800 text-sm font-normal font-roboto leading-tight;
             @screen max-md {
                 @apply mx-0;
                 .author_name {
@@ -102,7 +107,7 @@
                 /* routers */
                 button {
                     @apply w-full h-12 inline-flex items-center rounded;
-                    @apply text-zinc-800 text-sm font-normal font-['Roboto'] leading-tight;
+                    @apply text-zinc-800 text-sm font-normal font-roboto leading-tight;
                     @screen max-md {
                         @apply inline text-center text-2xl;
                     }
@@ -136,7 +141,7 @@
 
         button {
             @apply w-full h-12 inline-flex items-center rounded;
-            @apply text-zinc-800 text-sm font-normal font-['Roboto'] leading-tight;
+            @apply text-zinc-800 text-sm font-normal font-roboto leading-tight;
             @screen max-md {
                 @apply inline text-center text-2xl;
             }
