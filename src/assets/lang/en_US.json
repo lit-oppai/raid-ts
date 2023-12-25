@@ -118,5 +118,6 @@
         }
     },
     "Add": "Add",
-    "Power off": "Power off"
+    "Power off": "Power off",
+    "Need new hard drive · At least {size}": "Need new hard drive · At least {size}"
 }
