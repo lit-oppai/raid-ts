@@ -34,7 +34,12 @@ for (let [key, item] of allDiskStatus) {
     // 1.Create a Raid array.
     // 2.Expand the Raid array.
     // An unhealthy disk has various possible problems.
-    else if (item?.unused && item.health && item.size && item.size >= expansionMinDiskSize.value) {
+    else if (
+        item?.unused &&
+        item.health &&
+        item.size &&
+        item.size >= expansionMinDiskSize.value
+    ) {
         // 可选
         storageSelectable.push(key);
     } else {
@@ -42,15 +47,12 @@ for (let [key, item] of allDiskStatus) {
         storageDisabled.push(key);
     }
 }
-const calculateRAIDCapacity = (strategy: RAIDStrategy, diskList: (number)[]) => {
+const calculateRAIDCapacity = (strategy: RAIDStrategy, diskList: number[]) => {
     let totalSize = 0,
         minSize = 0;
     diskList.forEach((diskSize) => {
         totalSize += diskSize ?? 0;
-        minSize =
-            minSize !== 0
-                ? Math.min(diskSize, minSize)
-                : diskSize ?? 0;
+        minSize = minSize !== 0 ? Math.min(diskSize, minSize) : diskSize ?? 0;
     });
     switch (strategy) {
         case "RAID0":
@@ -71,9 +73,11 @@ let availableSpacePercentage = ref(0),
     availableSpace = ref(0),
     availableSpaceByStorageSpace = ref(0);
 if (selectRAIDStrategy.value) {
-    availableSpaceByStorageSpace.value = calculateRAIDCapacity(selectRAIDStrategy.value, diskListByStorageSpace.value.map((item) => allDiskStatus.get(item)?.size ?? 0))
+    availableSpaceByStorageSpace.value = calculateRAIDCapacity(
+        selectRAIDStrategy.value,
+        diskListByStorageSpace.value.map((item) => allDiskStatus.get(item)?.size ?? 0)
+    );
 }
-
 
 watch(
     selectStorageList,
@@ -152,18 +156,21 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
         return item.type;
     }
     // 没有被占用&磁盘太小
-    else if (item.size && diskListByStorageSpace.value.length && item.size < expansionMinDiskSize.value) {
+    else if (
+        item.size &&
+        diskListByStorageSpace.value.length &&
+        item.size < expansionMinDiskSize.value
+    ) {
         return `Too small`;
     }
     // No unhealthy disk is occupied.
-    else if (!item?.unused && !item.health) {
+    else if (item?.unused && !item.health) {
         return item.type;
     }
     // 可选
     else if (storageSelectable.includes(key)) {
         return item.type;
-    }
-    else {
+    } else {
         return "未知";
     }
 };
@@ -265,8 +272,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                             context !== "Modify"
                             ? $t("Estimated available")
                             : $t("Expected expansion from {size} to", {
-                                size:
-                                    convertSizeToReadable(availableSpaceByStorageSpace)
+                                size: convertSizeToReadable(availableSpaceByStorageSpace),
                             })
                         }}
                     </span>
