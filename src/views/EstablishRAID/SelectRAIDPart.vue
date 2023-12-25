@@ -161,7 +161,7 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
         diskListByStorageSpace.value.length &&
         item.size < expansionMinDiskSize.value
     ) {
-        return `Too small`;
+        return `Smaller`;
     }
     // No unhealthy disk is occupied.
     else if (item?.unused && !item.health) {
