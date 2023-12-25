@@ -119,5 +119,6 @@
     },
     "Add": "Add",
     "Power off": "Power off",
+    "Too small": "Too small",
     "Need new hard drive · At least {size}": "Need new hard drive · At least {size}"
 }
