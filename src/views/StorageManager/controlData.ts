@@ -73,7 +73,7 @@ const rinseDiskInfo = (
         if (disk.index < 7 && disk.index > 0) {
             HDDStatus.set(disk.index + '', {
                 exit: true,
-                health: disk.health,
+                health: disk.health === 'true',
                 temperature: disk.temperature,
                 name: disk.name,
                 size: disk.size,
@@ -97,7 +97,7 @@ const rinseDiskInfo = (
             key &&
                 SSDStatus.set(key, {
                     exit: true,
-                    health: disk.health,
+                    health: disk.health === 'true',
                     temperature: disk.temperature,
                     name: disk.name,
                     size: disk.size,
