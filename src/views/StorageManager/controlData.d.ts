@@ -5,7 +5,7 @@ type DISK_INFO_TYPE = {
     avail: boolean
     name: string
     size: number
-    health: string | boolean
+    health: string
     free: boolean
     temperature: number
     type: DISK_TYPE
