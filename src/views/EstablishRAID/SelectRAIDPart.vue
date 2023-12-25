@@ -155,6 +155,10 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
     else if (item.size && diskListByStorageSpace.value.length && item.size < expansionMinDiskSize.value) {
         return `太小`;
     }
+    // No unhealthy disk is occupied.
+    else if (!item?.unused && !item.health) {
+        return item.type;
+    }
     // 可选
     else if (storageSelectable.includes(key)) {
         return item.type;
