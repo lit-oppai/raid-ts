@@ -15,7 +15,7 @@ const props = defineProps({
         type: Object,
         default: () => {
             return {
-                health: "false",
+                health: false,
                 temperature: "0",
             };
         },
@@ -42,13 +42,13 @@ const statuTitle = computed(() => {
     } else if (props.source.unused) {
         return "";
     }
-    return (props.source.health === "true" ? "healthy" : "unhealthy") + " {temperature}℃";
+    return (props.source.health ? "healthy" : "unhealthy") + " {temperature}℃";
 });
 const statuColor = computed(() => {
     if (!props.source.exit || props.source.unused) {
         return unknownColor;
     }
-    return props.source.health === "true" ? healthyColor : unhealthyColor;
+    return props.source.health ? healthyColor : unhealthyColor;
 });
 const statuClass = computed(() => {
     if (!props.source.exit || props.source.unused) {
