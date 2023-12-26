@@ -135,7 +135,6 @@ import { UI_DISK_INFO_TYPE } from "@views/StorageManager/controlData.d";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) => {
-    console.log(item, key);
 
     // 扩容页面&当前磁盘列表中的磁盘
     // 空槽
