@@ -74,7 +74,25 @@ const selectStorageList = customRef((track, trigger) => {
     }
 })
 // 当前操作的存储池名称
-const nameStorage = ref('Main-Storage')
+// const nameStorage = ref('Main-Storage')
+
+import { useForm } from 'vee-validate'
+import * as yup from 'yup'
+const { defineField, handleSubmit } = useForm({
+    validationSchema: yup.object({
+        NameStorageSchema: yup
+            .string()
+            .required()
+            .matches(
+                /^[a-zA-Z0-9_\-\u4e00-\u9fa5]+$/,
+                'Name must be a string of numbers, letters, underscores, or hyphens'
+            )
+    })
+})
+const [nameStorage, nameStorageAttrs] = defineField('NameStorageSchema', {
+    validateOnModelUpdate: false,
+})
+
 const checkedCreateRAID = ref<boolean>(false)
 // Getting RAID Status
 type Orientation = 'next' | 'prev'
@@ -111,7 +129,7 @@ const needFirstAidRaid = ref<string>()
 const diskListByStorageSpace = ref<string[]>([])
 const extendRaidPath = ref<string>()
 // FirstAid RAID
-const isExitNewDisk= ref<boolean>(false)
+const isExitNewDisk = ref<boolean>(false)
 
 const clear = (): void => {
     currentStep.value = 0
@@ -134,7 +152,9 @@ export {
     currentStepName,
     selectRAIDStrategy,
     selectStorageList,
+    handleSubmit as nameStorageHandleSubmit,
     nameStorage,
+    nameStorageAttrs,
     checkedCreateRAID,
     stepByStep,
     resultRAIDInfo,

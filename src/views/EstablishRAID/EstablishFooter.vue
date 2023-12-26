@@ -31,7 +31,9 @@ const pathList = computed(() => {
         }) ?? []
     );
 });
-const createStorage = () => {
+
+const createStorage = nameStorageHandleSubmit(() => {
+    // onSuccess.
     stepByStep("next");
     switch (context.value) {
         case "CreateStorage":
@@ -41,7 +43,9 @@ const createStorage = () => {
             createRAID();
             break;
     }
-};
+}, ({ errors }) => {
+    alert(errors.NameStorageSchema);
+});
 import { loadAllNewDiskStatus } from "@views/DiscoverNewHardDrive/controlData.ts";
 const createSingleStorage = () => {
     // openAPI.storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
@@ -203,6 +207,11 @@ const extendCapacity = () => {
 
 // First Aid
 import { isExitNewDisk } from "@views/EstablishRAID/controlData.ts";
+
+// nameStorage validate.
+import { nameStorageHandleSubmit } from "@views/EstablishRAID/controlData.ts";
+
+
 </script>
 
 <template>
