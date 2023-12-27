@@ -37,7 +37,7 @@ for (let [key, item] of allDiskStatus) {
     else if (
         item?.unused &&
         item.health &&
-        item.size &&
+        item.size !== undefined &&
         item.size >= expansionMinDiskSize.value
     ) {
         // 可选
@@ -227,6 +227,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                             </label>
                         </template>
                         <div v-if="item?.RaidAssignment">Used by {{ item?.RaidAssignment }}</div>
+                        <div v-else-if="item?.unused && !item.health">{{ $t('unhealthy') }}</div>
                         <div v-else-if="item?.unused">未使用的磁盘</div>
                         <div v-else-if="context === 'Modify' && item.size && item.size < expansionMinDiskSize
                             ">
