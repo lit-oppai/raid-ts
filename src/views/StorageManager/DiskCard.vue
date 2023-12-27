@@ -45,7 +45,7 @@ const statuTitle = computed(() => {
     return (props.source.health ? "healthy" : "unhealthy") + " {temperature}℃";
 });
 const statuColor = computed(() => {
-    if (!props.source.exit || props.source.unused) {
+    if (!props.source.exit || props.source.health && props.source.unused) {
         return unknownColor;
     }
     return props.source.health ? healthyColor : unhealthyColor;
