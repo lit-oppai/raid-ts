@@ -4,6 +4,11 @@ import SplitterPanel from "primevue/splitterpanel";
 import menuPart from "@pages/App/menuPart.vue";
 import contentPart from "@pages/App/contentPart.vue";
 import DynamicDialog from "primevue/dynamicdialog";
+import i18n from './i18n'
+import { socket } from '@network/socket.ts';
+socket.on('casaos-ui:topbar:dashboardsetting_language', (res: any) => {
+    i18n.global.locale = res.Properties.casaos_lang;
+})
 </script>
 
 <template>
