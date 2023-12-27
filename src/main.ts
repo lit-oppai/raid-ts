@@ -6,10 +6,7 @@ import i18n from './i18n'
 import router from '@pages/router.ts'
 import PrimeVue from 'primevue/config'
 import DialogService from 'primevue/dialogservice';
-import { socket } from '@network/socket.ts';
-socket.on('casaos-ui:topbar:dashboardsetting_language', (res:any) => {
-    i18n.global.locale = res.Properties.casaos_lang;
-})
+
 createApp(App)
 	.use(PrimeVue, {
 		unstyled: true,
