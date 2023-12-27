@@ -32,6 +32,7 @@ const diskInfoByStorageSpace = ref<Device[]>([]);
 
 const needFirstAid = ref(false);
 const needNewDisk = ref(false);
+const isReady = ref(false);
 // const expansionMinDiskSize = ref(0);
 const isLoadingDiskInfoByStorageSpace = ref<boolean>(false);
 const loadRaid = async () => {
@@ -49,6 +50,7 @@ const loadRaid = async () => {
                 diskInfoByStorageSpace.value.filter((i) => !i.health).length !== 0;
             needNewDisk.value = res.data.data?.[0].shortage ?? false;
             expansionMinDiskSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
+            isReady.value = res.data.data?.[0].status === 'idle';
         })
         .finally(() => {
             isLoadingDiskInfoByStorageSpace.value = false;
@@ -199,7 +201,7 @@ const extenedCapacity = (): void => {
                         {{ item.health === true ? $t("Healthy") : $t("Unhealthy") }}
                     </span>
                     <Button :loading="pathOperationEject === item.path" :label="$t('Eject')" severity="primary"
-                        size="medium" @click="ejectDiskFromRaid(item.path as string)" v-else></Button>
+                        size="medium" @click="ejectDiskFromRaid(item.path as string)" v-else-if="isReady"></Button>
                 </div>
             </div>
 
@@ -280,7 +282,7 @@ const extenedCapacity = (): void => {
 
             <!-- TODO0 无损坏 && raid5 && 存在空槽位 -->
             <div class="bg-white rounded-lg h-11 flex items-center px-4"
-                v-if="storageInfo?.raid_level === 5 && !needFirstAid">
+                v-if="storageInfo?.raid_level === 5 && !needFirstAid && isReady">
                 <Image :src="diskSVG" class="h-6 w-6"></Image>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
                     {{ $t("Expand capacity") }}
