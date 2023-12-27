@@ -70,6 +70,7 @@ const rinseDiskInfo = (
     RAIDCandidateDiskCount.value = 0
     disksInfo.map((disk: any) => {
         // if (disk.type === "HDD" && disk.index > 0) {
+        disk.free && RAIDCandidateDiskCount.value++
         if (disk.index < 7 && disk.index > 0) {
             HDDStatus.set(disk.index + '', {
                 exit: true,
@@ -91,7 +92,6 @@ const rinseDiskInfo = (
                 children_number: disk.children_number,
                 support: disk.support
             })
-            disk.free && RAIDCandidateDiskCount.value++
         } else if (['SSD', 'NVME'].includes(disk.type) && disk.index) {
             const key = IndexForDiskHubMap.get(disk.index)
             key &&
@@ -115,7 +115,6 @@ const rinseDiskInfo = (
                     children_number: disk.children_number,
                     support: disk.support
                 })
-            disk.free && RAIDCandidateDiskCount.value++
         }
     })
     for (let i = 1; i < 7; i++) {
