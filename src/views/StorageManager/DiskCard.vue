@@ -54,7 +54,7 @@ const statuClass = computed(() => {
     if (!props.source.exit || props.source.unused) {
         return "text-zinc-800 font-normal";
     }
-    return props.source.health === "true"
+    return props.source.health
         ? "text-green-600 font-medium"
         : "text-red-600 font-medium";
 });
