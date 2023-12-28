@@ -36,7 +36,7 @@ for (let [key, item] of allDiskStatus) {
     // An unhealthy disk has various possible problems.
     else if (
         item?.unused &&
-        item.health &&
+        // item.health &&
         item.size !== undefined &&
         item.size >= expansionMinDiskSize.value
     ) {
