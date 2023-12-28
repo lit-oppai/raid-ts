@@ -207,9 +207,9 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
             }
         } else {
             // TODO：优化，后端统一返回数值，统一返回数据单位。此处，当时 raid 时，size 为字节。
-            let storageSize = Number(storage.size)
-            let storageUsedSize = Number(storage.used)
-            let storageHealth = storage?.devices?.every(device => device.health) && storage.shortage !== true;
+            let storageSize:number = Number(storage.size)
+            let storageUsedSize:number = Number(storage.used)
+            let storageHealth: boolean = storage.devices && storage.devices?.every(device => device.health) && storage.shortage !== true;
             if (storage?.raid_level !== undefined) {
                 storageSize *= 1024
                 storageUsedSize *= 1024

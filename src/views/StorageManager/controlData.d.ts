@@ -90,8 +90,8 @@ type STORAGE_INFO_TYPE = {
     health: boolean
     // "raid": boolean,
     raid_level?: number
-    shortage?: boolean
-    devices?: Array<{ health: boolean }>
+    shortage: boolean
+    devices: Array<{ health: boolean }>
 }
 type UI_STORAGE_INFO_TYPE = {
     uuid?: string
