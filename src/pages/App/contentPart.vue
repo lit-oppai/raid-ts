@@ -25,7 +25,8 @@ function onClose() {
 </script>
 <template>
     <div class="panel_top">
-        <transition mode="out-in" name="slide-fade">
+        <transition mode="out-in" class="animate-fade animate-once animate-duration-200 animate-ease-in">
+            <!-- <transition mode="out-in" name="slide-fade"> -->
             <div :key="title" class="flex items-center">
                 <div class="top_left" @click="router.go(-1)" v-if="route.matched.length > 1">
                     <i class="casa-left-outline"></i>
@@ -47,7 +48,7 @@ function onClose() {
     <!-- 路由匹配到的组件将渲染在这里 -->
     <div class="panel_content">
         <router-view v-slot="{ Component }">
-            <transition mode="out-in" class="animate-fade-left animate-once animate-duration-200 animate-ease-in">
+            <transition mode="out-in" class="animate-fade animate-once animate-duration-200 animate-ease-in">
                 <div :key="route.fullPath">
                     <component :is="Component" />
                 </div>
