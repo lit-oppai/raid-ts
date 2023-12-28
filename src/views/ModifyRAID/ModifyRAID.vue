@@ -33,6 +33,8 @@ const diskInfoByStorageSpace = ref<Device[]>([]);
 const needFirstAid = ref(false);
 const needNewDisk = ref(false);
 const isReady = ref(false);
+const showAddingDiskButton = ref(true);
+
 // const expansionMinDiskSize = ref(0);
 const isLoadingDiskInfoByStorageSpace = ref<boolean>(false);
 const loadRaid = async () => {
@@ -45,12 +47,13 @@ const loadRaid = async () => {
 
             // TODO: 为了做急救功能，此为相反的数据
             // diskInfoByStorageSpace.value[0].health = !diskInfoByStorageSpace.value[0].health;
-
+            
             needFirstAid.value =
-                diskInfoByStorageSpace.value.filter((i) => !i.health).length !== 0;
+                diskInfoByStorageSpace.value.filter((i) => !i.health).length !== 0 || res.data.data?.[0].shortage === true;
             needNewDisk.value = res.data.data?.[0].shortage ?? false;
             expansionMinDiskSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
             isReady.value = res.data.data?.[0].status === 'idle';
+            showAddingDiskButton.value = res.data.data?.[0].shortage === true;
         })
         .finally(() => {
             isLoadingDiskInfoByStorageSpace.value = false;
@@ -104,17 +107,13 @@ const ejectDiskFromRaid = async (path: string): Promise<void> => {
             console.log(err);
         })
         .finally(() => {
-            // operationEjectLoading.value = false;
             pathOperationEject.value = "";
-            showAddingDiskButton.value = false;
         });
 };
 
 // power off
 import messageBus from "@utils/messageBus";
-const showAddingDiskButton = ref(true);
 const targetPawerOff = (): void => {
-    showAddingDiskButton.value = true;
     messageBus("mircoapp_communicate", {
         action: "power_off",
         name: "icewhale_settings",
