@@ -32,20 +32,23 @@ const pathList = computed(() => {
     );
 });
 
-const createStorage = nameStorageHandleSubmit(() => {
-    // onSuccess.
-    stepByStep("next");
-    switch (context.value) {
-        case "CreateStorage":
-            createSingleStorage();
-            break;
-        default:
-            createRAID();
-            break;
+const createStorage = nameStorageHandleSubmit(
+    () => {
+        // onSuccess.
+        stepByStep("next");
+        switch (context.value) {
+            case "CreateStorage":
+                createSingleStorage();
+                break;
+            default:
+                createRAID();
+                break;
+        }
+    },
+    ({ errors }) => {
+        alert(errors.NameStorageSchema);
     }
-}, ({ errors }) => {
-    alert(errors.NameStorageSchema);
-});
+);
 import { loadAllNewDiskStatus } from "@views/DiscoverNewHardDrive/controlData.ts";
 const createSingleStorage = () => {
     // openAPI.storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
@@ -212,8 +215,6 @@ import { isExitNewDisk } from "@views/EstablishRAID/controlData.ts";
 
 // nameStorage validate.
 import { nameStorageHandleSubmit } from "@views/EstablishRAID/controlData.ts";
-
-
 </script>
 
 <template>
@@ -225,11 +226,8 @@ import { nameStorageHandleSubmit } from "@views/EstablishRAID/controlData.ts";
             currentStep < 2
             "></Button>
 
-        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="context !== 'FirstAid' &&
-            currentStepName !== 'ResultRAIDPart' &&
-            currentStepName !== 'ResultRAIDPart' &&
-            context === 'Modify' &&
-            currentStepName !== 'SelectRAIDPart'
+        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="(context !== 'FirstAid' && currentStepName !== 'ResultRAIDPart') ||
+            (context === 'Modify' && currentStepName !== 'SelectRAIDPart')
             "></Button>
         <Button :label="$t('Next')" severity="primary" size="medium" @click="stepByStep('next')" v-show="context !== 'FirstAid' &&
             currentStepName !== 'ConfirmRAIDPart' &&
@@ -250,11 +248,10 @@ import { nameStorageHandleSubmit } from "@views/EstablishRAID/controlData.ts";
         <!-- First Aid Part -->
         <Button :label="$t('Add')" severity="primary" size="medium" @click="stepByStep('next')"
             v-show="currentStepName === 'AddToRAIDPart' && isExitNewDisk" :disabled="!selectedFidDisk"></Button>
-        <Button :label="$t('Confirm')" severity="primary" size="medium" @click="confirmFirstAid"
-            v-show="context === 'FirstAid' && currentStepName === 'ConfirmRAIDPart' && isExitNewDisk"
-            :disabled="!checkedCreateRAID"></Button>
-        <Button :label="$t('Close')" severity="primary" size="medium" @click="closeEstablishRAID"
-            v-show="context === 'FirstAid' && currentStepName === 'AddToRAIDPart' && !isExitNewDisk"></Button>
+        <Button :label="$t('Confirm')" severity="primary" size="medium" @click="confirmFirstAid" v-show="context === 'FirstAid' && currentStepName === 'ConfirmRAIDPart' && isExitNewDisk
+            " :disabled="!checkedCreateRAID"></Button>
+        <Button :label="$t('Close')" severity="primary" size="medium" @click="closeEstablishRAID" v-show="context === 'FirstAid' && currentStepName === 'AddToRAIDPart' && !isExitNewDisk
+            "></Button>
 
         <!-- extened capacity -->
         <Button :label="$t('Confirm')" severity="primary" size="medium" @click="extendCapacity"
