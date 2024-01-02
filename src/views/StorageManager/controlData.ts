@@ -220,8 +220,9 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
             let storageUsedSize: number = Number(storage.used)
             let storageHealth: boolean =
                 storage.devices &&
-                storage.devices?.every(device => device.health) &&
-                storage.shortage !== true
+                storage.devices?.every((device: { health: any }) => device.health) &&
+                storage.shortage !== true ||
+                storage.health
             if (storage?.raid_level !== undefined) {
                 storageSize *= 1024
                 storageUsedSize *= 1024
