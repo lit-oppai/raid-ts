@@ -64,7 +64,7 @@ const createSingleStorage = () => {
             console.log(err);
             resultRAIDInfo.success = false;
             resultRAIDInfo.btnText = "Restart";
-            resultRAIDInfo.messages = err.data?.message ?? "";
+            resultRAIDInfo.messages = err.response?.data?.message ?? "";
         })
         .finally(() => {
             stepByStep("next");
@@ -96,7 +96,7 @@ const createRAID = () => {
             console.log(err);
             resultRAIDInfo.btnText = "Restart";
             resultRAIDInfo.success = false;
-            resultRAIDInfo.messages = err.data?.message ?? "";
+            resultRAIDInfo.messages = err.response?.data?.message ?? "";
             resultRAIDInfo.butFunc = () => {
                 // TODO: 直接更改数据不是最佳实践。。。
                 stepByStep("prev");
@@ -155,6 +155,7 @@ const confirmFirstAid = () => {
             console.log(err);
             resultRAIDInfo.btnText = "Restart";
             resultRAIDInfo.success = false;
+            resultRAIDInfo.messages = err.response?.data?.message ?? "";
             resultRAIDInfo.butFunc = () => {
                 // reloadServiceData();
                 // TODO: 直接更改数据不是最佳实践。。。
@@ -192,6 +193,7 @@ const extendCapacity = () => {
             console.log(err);
             resultRAIDInfo.btnText = "Restart";
             resultRAIDInfo.success = false;
+            resultRAIDInfo.messages = err.response?.data?.message ?? "";
             resultRAIDInfo.butFunc = () => {
                 // reloadServiceData();
                 // TODO: 直接更改数据不是最佳实践。。。
