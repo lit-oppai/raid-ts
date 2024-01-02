@@ -10,18 +10,25 @@ import {
     STORAGE_TYPE,
     STORAGE_INFO_TYPE,
     UI_STORAGE_INFO_TYPE,
-    STORAGE_USAGE_INFO_TYPE,
+    STORAGE_USAGE_INFO_TYPE
 } from './controlData.d'
 
 // Data Acquisition.
 async function getDiskInfo(): Promise<DISK_INFO_TYPE[] | any> {
-    return openAPI.disk.getDisks().then((res: any) => res.data.data)
+    return openAPI.disk
+        .getDisks()
+        .then((res: any) => res.data.data)
+        .catch(() => [])
 }
 async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
-    const a = await openAPI.raid.getRaids().then((res: any) => res.data.data)
+    const a = await openAPI.raid
+        .getRaids()
+        .then((res: any) => res.data.data)
+        .catch(() => [])
     const b = await openAPI.storage
         .getStorage('show')
         .then((res: any) => res.data.data)
+        .catch(() => [])
     return [...a, ...b]
 }
 
@@ -29,7 +36,7 @@ const HDDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
 const SSDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
 //  除去系统盘之外的 storage
 const storageInfoMap = reactive(new Map<string, UI_STORAGE_INFO_TYPE>())
-const unhealthyLable = ref<string>();
+const unhealthyLable = ref<string>()
 
 // 系统 storage 信息
 let sysStorageInfo = reactive<UI_STORAGE_INFO_TYPE | any>({})
@@ -64,9 +71,7 @@ const initDiskInfo = async (): Promise<void> => {
     const disksInfo = await getDiskInfo()
     rinseDiskInfo(disksInfo)
 }
-const rinseDiskInfo = (
-    disksInfo: DISK_INFO_TYPE[]
-) => {
+const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
     RAIDCandidateDiskCount.value = 0
     disksInfo.map((disk: any) => {
         // if (disk.type === "HDD" && disk.index > 0) {
@@ -86,7 +91,9 @@ const rinseDiskInfo = (
                     (disk.children[0]?.raid === true &&
                         disk.children[0]?.storage_name) ||
                     '',
-                RaidStrategy: disk.children[0]?.raid_level ? 'RAID' + disk.children[0]?.raid_level : '',
+                RaidStrategy: disk.children[0]?.raid_level
+                    ? 'RAID' + disk.children[0]?.raid_level
+                    : '',
                 unused: disk.free,
                 children: disk.children,
                 children_number: disk.children_number,
@@ -109,7 +116,9 @@ const rinseDiskInfo = (
                         (disk.children[0]?.raid === true &&
                             disk.children[0]?.storage_name) ||
                         '',
-                    RaidStrategy: disk.children[0]?.raid_level ? 'RAID' + disk.children[0]?.raid_level : '',
+                    RaidStrategy: disk.children[0]?.raid_level
+                        ? 'RAID' + disk.children[0]?.raid_level
+                        : '',
                     unused: disk.free,
                     children: disk.children,
                     children_number: disk.children_number,
@@ -123,7 +132,7 @@ const rinseDiskInfo = (
                 exit: false,
                 health: false,
                 temperature: 0,
-                expect_type: '3.5inch HDD',
+                expect_type: '3.5inch HDD'
             })
         }
     }
@@ -134,7 +143,7 @@ const rinseDiskInfo = (
                 exit: false,
                 health: false,
                 temperature: 0,
-                expect_type: "2.5inch SSD",
+                expect_type: '2.5inch SSD'
             })
         }
     }
@@ -148,34 +157,34 @@ const initStorageInfo = async (): Promise<void> => {
 }
 // 处理命名
 class StorageNameCollection {
-    private storageNames = new Set<string>();
+    private storageNames = new Set<string>()
     addName(name: string): void {
         this.storageNames.add(name)
-    };
+    }
     hasName(name: string): boolean {
-        return this.storageNames.has(name);
-    };
+        return this.storageNames.has(name)
+    }
     beNamed(storageType: keyof typeof EnumStorageNames): string {
-        const prefixName = EnumStorageNames[storageType];
+        const prefixName = EnumStorageNames[storageType]
         if (!this.hasName(prefixName)) {
-            return prefixName;
+            return prefixName
         }
 
-        let index = 1;
+        let index = 1
         while (this.hasName(prefixName + index)) {
-            index++;
+            index++
         }
 
-        return prefixName + index;
-    };
+        return prefixName + index
+    }
     clear(): void {
-        this.storageNames.clear();
-    };
-    log(label: string = "storageNames"): void {
-        console.log(label, this.storageNames);
+        this.storageNames.clear()
+    }
+    log(label: string = 'storageNames'): void {
+        console.log(label, this.storageNames)
     }
 }
-const storageNameCollection = new StorageNameCollection();
+const storageNameCollection = new StorageNameCollection()
 const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
     // 存储用量
     let dataUsage = 0,
@@ -183,10 +192,10 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
         fileFree = 0,
         filesUsage = 0
     storageInfoMap.clear()
-    storageNameCollection.clear();
-    unhealthyLable.value = undefined;
+    storageNameCollection.clear()
+    unhealthyLable.value = undefined
     storageInfo.map((storage: STORAGE_INFO_TYPE): void => {
-        storageNameCollection.addName(storage.name);
+        storageNameCollection.addName(storage.name)
         // TODO: 优化, 在后端统一“ZimaOS-HD” 名称。
         let name = storage.name
         if (name === 'System') {
@@ -207,9 +216,12 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
             }
         } else {
             // TODO：优化，后端统一返回数值，统一返回数据单位。此处，当时 raid 时，size 为字节。
-            let storageSize:number = Number(storage.size)
-            let storageUsedSize:number = Number(storage.used)
-            let storageHealth: boolean = storage.devices && storage.devices?.every(device => device.health) && storage.shortage !== true;
+            let storageSize: number = Number(storage.size)
+            let storageUsedSize: number = Number(storage.used)
+            let storageHealth: boolean =
+                storage.devices &&
+                storage.devices?.every(device => device.health) &&
+                storage.shortage !== true
             if (storage?.raid_level !== undefined) {
                 storageSize *= 1024
                 storageUsedSize *= 1024
@@ -223,7 +235,11 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                 size: storageSize,
                 avail: storageSize - storageUsedSize,
                 used: storageUsedSize,
-                type: (storage.raid_level !== undefined ? 'RAID' + storage.raid_level : storage?.disk_type?.toUpperCase() === 'SATA' ? 'HDD' : 'SSD') as STORAGE_TYPE,
+                type: (storage.raid_level !== undefined
+                    ? 'RAID' + storage.raid_level
+                    : storage?.disk_type?.toUpperCase() === 'SATA'
+                        ? 'HDD'
+                        : 'SSD') as STORAGE_TYPE,
                 // disk_type: storage?.disk_type?.toUpperCase() as DISK_TYPE,
                 path: storage.path,
                 // "drive_name": string,
@@ -234,8 +250,12 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                 shortage: storage.shortage
             })
 
-            if (storageHealth !== undefined && !storageHealth && storage.raid_level !== undefined) {
-                unhealthyLable.value = storage.name;
+            if (
+                storageHealth !== undefined &&
+                !storageHealth &&
+                storage.raid_level !== undefined
+            ) {
+                unhealthyLable.value = storage.name
             }
         }
     })
@@ -251,8 +271,8 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
 
 // Data Lifecycle Management.
 const initStoragePageData = async (): Promise<void> => {
-    initDiskInfo();
-    initStorageInfo();
+    initDiskInfo()
+    initStorageInfo()
 }
 
 const destroyStorageInfo = (): void => {
@@ -280,5 +300,5 @@ export {
     RAIDCandidateDiskCount,
     usageStatus,
     IndexForDiskHubMap,
-    isLoadingStorageInfo,
+    isLoadingStorageInfo
 }
