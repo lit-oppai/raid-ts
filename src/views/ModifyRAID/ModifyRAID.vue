@@ -43,16 +43,20 @@ const loadRaid = async () => {
         .getRaids(storageInfo?.path)
         .then((res) => {
             selectRAIDStrategy.value = ("RAID" + res.data.data?.[0].raid_level) as RAIDStrategy;
-            diskInfoByStorageSpace.value = res.data.data?.[0].devices?.sort((a,b)=> Number(a.index) - Number(b.index)) ?? [];
+            diskInfoByStorageSpace.value =
+                res.data.data?.[0].devices?.sort((a, b) => {
+                    return Number(a.index) - Number(b.index);
+                }) ?? [];
 
             // TODO: 为了做急救功能，此为相反的数据
             // diskInfoByStorageSpace.value[0].health = !diskInfoByStorageSpace.value[0].health;
-            
+
             needFirstAid.value =
-                diskInfoByStorageSpace.value.filter((i) => !i.health).length !== 0 || res.data.data?.[0].shortage === true;
+                diskInfoByStorageSpace.value.filter((i) => !i.health).length !== 0 ||
+                res.data.data?.[0].shortage === true;
             needNewDisk.value = res.data.data?.[0].shortage ?? false;
             expansionMinDiskSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
-            isReady.value = res.data.data?.[0].status === 'idle';
+            isReady.value = res.data.data?.[0].status === "idle";
             showAddingDiskButton.value = res.data.data?.[0].shortage === true;
         })
         .finally(() => {
