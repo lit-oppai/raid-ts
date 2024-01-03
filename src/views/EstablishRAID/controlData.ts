@@ -85,7 +85,7 @@ const { defineField, handleSubmit } = useForm({
             .required()
             .matches(
                 /^[a-zA-Z0-9_\-\u4e00-\u9fa5]+$/,
-                'Name must be a string of numbers, letters, underscores, or hyphens'
+                'Name must be a string of numbers, letters, underscores, or hyphens(0~9,a~zA~Z,_,-).'
             )
     })
 })
