@@ -164,7 +164,7 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
     else if (storageSelectable.includes(key)) {
         return item.type;
     } else {
-        return "未知";
+        return "Unknown";
     }
 };
 
