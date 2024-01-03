@@ -292,7 +292,6 @@ socket.on("local-storage:disk:removed", () => {
                     </div>
                     <div class="flex-grow text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
                         {{ $t("Combine hard drive space by RAID.") }}
-                        <span class="font-medium">RAID</span>.
                     </div>
                     <div class="flex-shrink-0">
                         <!-- TODO：  1、统一组件 2、两个盘应该为灰色 -->
