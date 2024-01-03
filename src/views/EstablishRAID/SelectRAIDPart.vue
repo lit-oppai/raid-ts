@@ -147,8 +147,8 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
     }
     // 被raid占用
     // in other disk list of storage space
-    else if (!item?.unused && item?.name !== "") {
-        return `${item?.name}`;
+    else if (!item?.unused && item?.RaidAssignment !== "") {
+        return `Used`;
     }
     // 被非 raid占用
     else if (!item?.unused) {
