@@ -67,7 +67,7 @@ if (resultRAIDInfo.success) {
             </div>
         </div>
         <span v-else-if="resultRAIDInfo.messages" class="text-neutral-400 text-sm font-normal font-['Roboto']">
-            Describe the cause of the user's failure, what caused it and because of {{ resultRAIDInfo.messages }}.
+            {{ resultRAIDInfo.messages }}.
         </span>
     </div>
 </template>
