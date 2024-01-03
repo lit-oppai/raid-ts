@@ -107,7 +107,7 @@ TODO:
                 /* routers */
                 button {
                     @apply w-full h-12 inline-flex items-center rounded;
-                    @apply text-zinc-800 text-sm font-normal font-roboto leading-tight;
+                    @apply text-sm font-normal font-roboto leading-tight;
                     @screen max-md {
                         @apply inline text-center text-2xl;
                     }
@@ -119,7 +119,7 @@ TODO:
                         }
                     }
                     &:hover {
-                        @apply bg-sky-500 text-white;
+                        @apply bg-gray-100 text-zinc-800;
                     }
                     span:not(:first-child) {
                         @apply max-md:hidden;
@@ -128,7 +128,7 @@ TODO:
 
                 /* active route */
                 &.router-link-active {
-                    @apply bg-gray-100;
+                    @apply bg-sky-500 text-white;
                 }
             }
         }
