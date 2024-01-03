@@ -98,7 +98,7 @@ const ejectDiskFromRaid = async (path: string): Promise<void> => {
         .then((res) => {
             if (res.status === 200) {
                 // reloadServiceData();
-                loadRaid();
+                // loadRaid();
             } else {
                 console.log("eject failed");
             }
