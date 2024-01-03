@@ -154,7 +154,7 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
         diskListByStorageSpace.value.length &&
         item.size < expansionMinDiskSize.value
     ) {
-        return `Smaller`;
+        return `Disable`;
     }
     // No unhealthy disk is occupied.
     else if (item?.unused && !item.health) {
@@ -216,14 +216,19 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                                 </span>
                             </label>
                         </template>
-                        <div v-if="item?.RaidAssignment">Used by {{ item?.RaidAssignment }}</div>
-                        <div v-else-if="item?.unused && !item.health">{{ $t("unhealthy") }}</div>
+                        <div v-if="item?.unused && !item.health">{{ $t("unhealthy") }}</div>
                         <div v-else-if="item?.unused">未使用的磁盘</div>
                         <div v-else-if="context === 'Modify' && item.size && item.size < expansionMinDiskSize
                             ">
-                            {{ $t('At least {size}',{size:convertSizeToReadable(expansionMinDiskSize)}) }}
+                            {{
+                                $t("At least {size}", {
+                                    size: convertSizeToReadable(expansionMinDiskSize),
+                                })
+                            }}
                         </div>
-                        <div v-else>{{ item?.RaidAssignment }} Used</div>
+                        <div v-else>
+                            {{ $t("Used by {assignment}", { assignment: item?.RaidAssignment }) }}
+                        </div>
                     </NPopover>
                 </template>
             </div>
