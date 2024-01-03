@@ -106,7 +106,7 @@ const statuClass = computed(() => {
                 {{ $t("Used by") }}
             </span>
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{
-                source?.RaidAssignment
+                ` ${source?.RaidAssignment}`
             }}</span>
         </div>
         <div v-else>
