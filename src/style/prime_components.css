@@ -129,6 +129,9 @@ TODO:
                 /* active route */
                 &.router-link-active {
                     @apply bg-sky-500 text-white;
+                    button:hover{
+                        @apply bg-sky-500 text-white;
+                    }
                 }
             }
         }
