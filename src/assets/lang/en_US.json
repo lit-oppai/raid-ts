@@ -25,7 +25,6 @@
   "Empty": "Empty",
   "healthy {temperature}℃": "healthy {temperature}℃",
   "unhealthy {temperature}℃": "unhealthy {temperature}℃",
-  "Used by": "Used by",
   "Create RAID": "Create RAID",
   "Expand RAID capacity": "Expand RAID capacity",
   "Recovery RAID": "Recovery RAID",
@@ -122,5 +121,6 @@
   "Need new hard drive · At least {size}": "Need new hard drive · At least {size}",
   "unhealthy": "unhealthy",
   "At least {size}": "At least {size}",
-  "Unknown": "Unknown"
+  "Unknown": "Unknown",
+  "Used by {assignment}": "Used by {assignment}"
 }
