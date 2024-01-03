@@ -107,13 +107,13 @@ TODO:
                 /* routers */
                 button {
                     @apply w-full h-12 inline-flex items-center rounded;
-                    @apply text-sm font-normal font-roboto leading-tight;
+                    @apply text-sm font-normal font-roboto leading-6;
                     @screen max-md {
                         @apply inline text-center text-2xl;
                     }
 
                     span::before {
-                        @apply w-6 h-6 mx-2 my-auto;
+                        @apply text-base leading-6 ml-2 my-auto;
                         @screen max-md {
                             @apply w-8 h-8 mx-1;
                         }
