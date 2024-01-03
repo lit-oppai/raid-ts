@@ -14,13 +14,13 @@ import {
 } from './controlData.d'
 
 // Data Acquisition.
-async function getDiskInfo (): Promise<DISK_INFO_TYPE[] | any> {
+async function getDiskInfo(): Promise<DISK_INFO_TYPE[] | any> {
     return openAPI.disk
         .getDisks()
         .then((res: any) => res.data.data)
         .catch(() => [])
 }
-async function getStorageInfo (): Promise<STORAGE_INFO_TYPE[]> {
+async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
     const a = await openAPI.raid
         .getRaids()
         .then((res: any) => res.data.data)
@@ -115,7 +115,7 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
                     RaidAssignment:
                         (disk.children[0]?.raid === true &&
                             disk.children[0]?.storage_name) ||
-                        '',
+                        disk.name,
                     RaidStrategy: disk.children[0]?.raid_level
                         ? 'RAID' + disk.children[0]?.raid_level
                         : '',
@@ -158,13 +158,13 @@ const initStorageInfo = async (): Promise<void> => {
 // 处理命名
 class StorageNameCollection {
     private storageNames = new Set<string>()
-    addName (name: string): void {
+    addName(name: string): void {
         this.storageNames.add(name)
     }
-    hasName (name: string): boolean {
+    hasName(name: string): boolean {
         return this.storageNames.has(name)
     }
-    beNamed (storageType: keyof typeof EnumStorageNames): string {
+    beNamed(storageType: keyof typeof EnumStorageNames): string {
         const prefixName = EnumStorageNames[storageType]
         if (!this.hasName(prefixName)) {
             return prefixName
@@ -177,10 +177,10 @@ class StorageNameCollection {
 
         return prefixName + index
     }
-    clear (): void {
+    clear(): void {
         this.storageNames.clear()
     }
-    log (label: string = 'storageNames'): void {
+    log(label: string = 'storageNames'): void {
         console.log(label, this.storageNames)
     }
 }
@@ -222,10 +222,10 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
             // raid 健康的定义：所有盘健康，且无盘缺失。
             let storageHealth: boolean = isRaid
                 ? storage.shortage !== true &&
-                  storage.devices &&
-                  storage.devices?.every(
-                      (device: { health: any }) => device.health
-                  )
+                storage.devices &&
+                storage.devices?.every(
+                    (device: { health: any }) => device.health
+                )
                 : storage.health
 
             if (isRaid) {
@@ -244,8 +244,8 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                 type: (isRaid
                     ? 'RAID' + storage.raid_level
                     : storage?.disk_type?.toUpperCase() === 'SATA'
-                    ? 'HDD'
-                    : 'SSD') as STORAGE_TYPE,
+                        ? 'HDD'
+                        : 'SSD') as STORAGE_TYPE,
                 // disk_type: storage?.disk_type?.toUpperCase() as DISK_TYPE,
                 path: storage.path,
                 // "drive_name": string,
