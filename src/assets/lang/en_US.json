@@ -122,5 +122,6 @@
   "unhealthy": "unhealthy",
   "At least {size}": "At least {size}",
   "Unknown": "Unknown",
-  "Used by {assignment}": "Used by {assignment}"
+  "Used by {assignment}": "Used by {assignment}",
+  "Used by": "Used by"
 }
