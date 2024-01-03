@@ -8,6 +8,7 @@ const loadAllNewDiskStatus = (): void => {
             allNewDiskStatus.value = new Map(
                 res.data.data
                     .filter((item) => item.model !== "System")
+                    .sort((a, b) => Number(a.index) - Number(b.index))
                     .map((item) => {
                         // TODO: 数据处理，理应与 storage 数据模型保持一致，后续理应创建统一处理后端数据的函数
                         item.type = item.rota ? 'HDD' : 'SSD';
