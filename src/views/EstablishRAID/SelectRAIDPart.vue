@@ -135,7 +135,6 @@ import { UI_DISK_INFO_TYPE } from "@views/StorageManager/controlData.d";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) => {
-
     // 扩容页面&当前磁盘列表中的磁盘
     // 空槽
     if (storageNone.includes(key)) {
@@ -145,14 +144,9 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
     else if (diskListByStorageSpace.value.includes(key)) {
         return t("Current");
     }
-    // 被raid占用
     // in other disk list of storage space
-    else if (!item?.unused && item?.RaidAssignment !== "") {
-        return `Used`;
-    }
-    // 被非 raid占用
     else if (!item?.unused) {
-        return item.type;
+        return `Used`;
     }
     // 没有被占用&磁盘太小
     else if (
@@ -223,13 +217,13 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                             </label>
                         </template>
                         <div v-if="item?.RaidAssignment">Used by {{ item?.RaidAssignment }}</div>
-                        <div v-else-if="item?.unused && !item.health">{{ $t('unhealthy') }}</div>
+                        <div v-else-if="item?.unused && !item.health">{{ $t("unhealthy") }}</div>
                         <div v-else-if="item?.unused">未使用的磁盘</div>
                         <div v-else-if="context === 'Modify' && item.size && item.size < expansionMinDiskSize
                             ">
                             至少 {{ convertSizeToReadable(expansionMinDiskSize) }}
                         </div>
-                        <div v-else>{{ item?.type }} Used</div>
+                        <div v-else>{{ item?.RaidAssignment }} Used</div>
                     </NPopover>
                 </template>
             </div>
