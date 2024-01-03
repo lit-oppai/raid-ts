@@ -99,6 +99,7 @@ const ejectDiskFromRaid = async (path: string): Promise<void> => {
             if (res.status === 200) {
                 // reloadServiceData();
                 // loadRaid();
+                showAddingDiskButton.value = true;
             } else {
                 console.log("eject failed");
             }
