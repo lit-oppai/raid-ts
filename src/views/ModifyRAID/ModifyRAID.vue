@@ -43,7 +43,7 @@ const loadRaid = async () => {
         .getRaids(storageInfo?.path)
         .then((res) => {
             selectRAIDStrategy.value = ("RAID" + res.data.data?.[0].raid_level) as RAIDStrategy;
-            diskInfoByStorageSpace.value = res.data.data?.[0].devices ?? [];
+            diskInfoByStorageSpace.value = res.data.data?.[0].devices?.sort((a,b)=> Number(a.index) - Number(b.index)) ?? [];
 
             // TODO: 为了做急救功能，此为相反的数据
             // diskInfoByStorageSpace.value[0].health = !diskInfoByStorageSpace.value[0].health;
