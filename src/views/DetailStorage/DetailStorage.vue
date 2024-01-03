@@ -95,7 +95,7 @@ const disabledStorage = async (): Promise<void> => {
         <div class="bg-white rounded-lg h-11 flex items-center px-4">
             <Image :src="warningSVG" class="h-6 w-6"></Image>
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
-                Format and Disband
+                {{ $t("Format and Disable")}}
             </span>
 
             <Button :label="$t('Format')" severity="accent" size="medium" @click="showCheckFormat" class="mr-4"></Button>
