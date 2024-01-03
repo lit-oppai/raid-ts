@@ -221,7 +221,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                         <div v-else-if="item?.unused">未使用的磁盘</div>
                         <div v-else-if="context === 'Modify' && item.size && item.size < expansionMinDiskSize
                             ">
-                            至少 {{ convertSizeToReadable(expansionMinDiskSize) }}
+                            {{ $t('At least {size}',{size:convertSizeToReadable(expansionMinDiskSize)}) }}
                         </div>
                         <div v-else>{{ item?.RaidAssignment }} Used</div>
                     </NPopover>
