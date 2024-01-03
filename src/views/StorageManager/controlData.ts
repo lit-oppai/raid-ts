@@ -90,6 +90,7 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
                 RaidAssignment:
                     (disk.children[0]?.raid === true &&
                         disk.children[0]?.storage_name) ||
+                    disk?.storage_name ||
                     '',
                 RaidStrategy: disk.children[0]?.raid_level
                     ? 'RAID' + disk.children[0]?.raid_level
@@ -115,7 +116,8 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
                     RaidAssignment:
                         (disk.children[0]?.raid === true &&
                             disk.children[0]?.storage_name) ||
-                        disk.name,
+                        disk?.storage_name ||
+                        '',
                     RaidStrategy: disk.children[0]?.raid_level
                         ? 'RAID' + disk.children[0]?.raid_level
                         : '',
