@@ -176,10 +176,6 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
 
 // extened capacity
 import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
-// const determineWhetherSelectable = (key: string) => {
-//     // 可选择盘
-//     storageSelectable.includes(key)
-// };
 </script>
 
 <template name="SelectRAIDPart">
