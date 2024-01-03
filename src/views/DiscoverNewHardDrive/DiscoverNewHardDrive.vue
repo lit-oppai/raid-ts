@@ -2,40 +2,10 @@
 import { onBeforeMount } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
-// import diskSVG from '@assets/img/StorageManager/disk.svg';
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
-// import {
-//     HDDStatus,
-//     SSDStatus,
-// } from "@views/StorageManager/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { stepByStep } from "@views/EstablishRAID/controlData.ts";
-// const filtedArray = Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) => a[0] > b[0] ? 1 : -1).filter((item) => item[1].unused);
-// const allDiskStatus = computed(() => {
-//     // TODO: 新硬盘页面， 产品要求特殊处理，加上未被挂载分区的硬盘。
-//     return new Map(
-//         Array.from(new Map([...SSDStatus, ...HDDStatus]))
-//             .sort((a, b) => (a[0] > b[0] ? 1 : -1))
-//             .filter((item) => !item[1].support || item[1].unused)
-//     );
-// });
-// import { disk } from "@network/index.ts";
-// import { IndexForDiskHubMap } from "@views/StorageManager/controlData.ts";
-// const allNewDiskStatus = ref(new Map());
-// const loadAllNewDiskStatus = (): void => {
-//     disk.getDisks("show").then((res) => {
-//         if (res.status === 200 && res.data.data) {
-//             allNewDiskStatus.value = new Map(
-//                 res.data.data
-//                     .filter((item) => item.model !== "System")
-//                     .map((item) => {
-//                         return [IndexForDiskHubMap.get(item.index as number), item];
-//                     })
-//             );
-//         }
-//     });
-// };
 import {
     allNewDiskStatus,
     loadAllNewDiskStatus,
