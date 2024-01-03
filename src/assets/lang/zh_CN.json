@@ -122,5 +122,6 @@
   "Power off": "关机",
   "Smaller": "太小",
   "Need new hard drive · At least {size}": "需要新硬盘 · 至少 {size}",
-  "unhealthy": "不健康"
+  "unhealthy": "不健康",
+  "At least {size}": "至少 {size}"
 }
