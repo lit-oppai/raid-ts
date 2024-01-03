@@ -25,7 +25,6 @@
   "Empty": "闲置",
   "healthy {temperature}℃": "健康 {temperature}℃",
   "unhealthy {temperature}℃": "不健康 {temperature}℃",
-  "Used by": "使用中：",
   "Create RAID": "创建 RAID",
   "Expand RAID capacity": "扩展RAID空间",
   "Recovery RAID": "恢复 RAID 阵列",
@@ -123,5 +122,6 @@
   "Need new hard drive · At least {size}": "需要新硬盘 · 至少 {size}",
   "unhealthy": "不健康",
   "At least {size}": "至少 {size}",
-  "Unknown": "未知"
+  "Unknown": "未知",
+  "Used by {assignment}": "使用中：{assignment}"
 }
