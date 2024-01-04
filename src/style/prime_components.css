@@ -112,8 +112,11 @@ TODO:
                         @apply inline text-center text-2xl;
                     }
 
+                    span:first-child {
+                        @apply text-xl leading-6;
+                    }
                     span::before {
-                        @apply text-base leading-6 ml-2 my-auto;
+                        @apply ml-2 my-auto;
                         @screen max-md {
                             @apply w-8 h-8 mx-1;
                         }
