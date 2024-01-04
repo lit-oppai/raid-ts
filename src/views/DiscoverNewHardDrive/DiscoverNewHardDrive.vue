@@ -124,7 +124,7 @@ const showEnableStorage = (name: string, path: string): void => {
                             @click="showEnableStorage(item?.name as string, item?.path as string)"
                             v-else-if="item?.supported"></Button>
                         <Button :label="$t('Format and Enable')" severity="secondary" size="small"
-                            @click="showCheckFormat(item?.name, item?.path)" v-else></Button>
+                            @click="showCheckFormat(disk.type, item?.path)" v-else></Button>
                         <!-- paperwork end -->
                     </div>
                 </div>
