@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
@@ -21,7 +21,7 @@ import { RAIDStrategy } from "@views/EstablishRAID/controlData.d";
 import { storageInfoMap, reloadServiceData } from "@views/StorageManager/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute } from "vue-router";
-import { raid } from "@network/index.ts";
+import { /*disk,*/ raid } from "@network/index.ts";
 import { Device } from "@icewhale/zimaos-localstorage-openapi";
 import minBy from "lodash/minBy";
 
@@ -56,7 +56,9 @@ const loadRaid = async () => {
                 res.data.data?.[0].shortage === true;
             needNewDisk.value = res.data.data?.[0].shortage ?? false;
             expansionMinDiskSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
-            isReady.value = res.data.data?.[0].status === "idle";
+            isReady.value =
+                res.data.data?.[0].status === "idle" ||
+                (res.data.data?.[0].status as string) === "";
             showAddingDiskButton.value = res.data.data?.[0].shortage === true;
         })
         .finally(() => {
@@ -101,9 +103,9 @@ const ejectDiskFromRaid = async (path: string): Promise<void> => {
         .updateRaid({ path: storageInfo?.path ?? "", action: "remove", devices: [path] })
         .then((res) => {
             if (res.status === 200) {
-                // reloadServiceData();
-                // loadRaid();
-                showAddingDiskButton.value = true;
+                // loadRaid(); // Prohibited to use because the restart data is not saved on the server.
+                showAddingDiskButton.value = false;
+                needNewDisk.value = true;
             } else {
                 console.log("eject failed");
             }
@@ -115,6 +117,15 @@ const ejectDiskFromRaid = async (path: string): Promise<void> => {
             pathOperationEject.value = "";
         });
 };
+
+watch(
+    () => showAddingDiskButton.value === false && needNewDisk.value === true,
+    (v) => {
+        diskInfoByStorageSpace.value = v
+            ? diskInfoByStorageSpace.value.filter((i) => i.health)
+            : diskInfoByStorageSpace.value;
+    }
+);
 
 // power off
 import messageBus from "@utils/messageBus";
@@ -139,6 +150,9 @@ import {
     nameStorage,
 } from "@views/EstablishRAID/controlData.ts";
 import { IndexForDiskHubMap } from "@views/StorageManager/controlData.ts";
+function getDiskHubIndex(index: number): string {
+    return IndexForDiskHubMap.get(index) ?? "";
+}
 const extenedCapacity = (): void => {
     // perpare data
     selectRAIDStrategy.value = ("RAID" + storageInfo?.raid_level) as RAIDStrategy;
@@ -188,7 +202,8 @@ const extenedCapacity = (): void => {
             <div v-for="(item, index) in diskInfoByStorageSpace" :key="index">
                 <div class="flex items-center bg-gray-50 rounded-md h-10 pr-3">
                     <span class="ml-1 w-[34px] text-center text-neutral-400">
-                        {{ IndexForDiskHubMap.get(item.index as number) }}
+                        <!-- TODO: After API provides the index, remove the placeholder index -->
+                        {{ getDiskHubIndex(item.index || index) }}
                     </span>
                     <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
                         {{ item.model }}
