@@ -56,9 +56,9 @@ const loadRaid = async () => {
                 res.data.data?.[0].shortage === true;
             needNewDisk.value = res.data.data?.[0].shortage ?? false;
             expansionMinDiskSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
-            isReady.value =
-                res.data.data?.[0].status === "idle" ||
-                (res.data.data?.[0].status as string) === "";
+            isReady.value = true;
+                // res.data.data?.[0].status === "idle" ||
+                // (res.data.data?.[0].status as string) === "";
             showAddingDiskButton.value = res.data.data?.[0].shortage === true;
         })
         .finally(() => {
@@ -202,7 +202,7 @@ const extenedCapacity = (): void => {
             <div v-for="(item, index) in diskInfoByStorageSpace" :key="index">
                 <div class="flex items-center bg-gray-50 rounded-md h-10 pr-3">
                     <span class="ml-1 w-[34px] text-center text-neutral-400">
-                        <!-- TODO: After API provides the index, remove the placeholder index -->
+                        <!-- TODO: API 补充 index 之后，去掉替补 index -->
                         {{ getDiskHubIndex(item.index || index) }}
                     </span>
                     <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
