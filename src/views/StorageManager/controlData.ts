@@ -73,6 +73,10 @@ const initDiskInfo = async (): Promise<void> => {
 }
 const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
     RAIDCandidateDiskCount.value = 0
+    // clear
+    HDDStatus.clear();
+    SSDStatus.clear();
+    // rinse
     disksInfo.map((disk: any) => {
         // if (disk.type === "HDD" && disk.index > 0) {
         disk.free && RAIDCandidateDiskCount.value++
@@ -193,9 +197,11 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
         dataFree = 0,
         fileFree = 0,
         filesUsage = 0
+    // clear
     storageInfoMap.clear()
     storageNameCollection.clear()
     unhealthyLable.value = undefined
+    // rinse
     storageInfo.map((storage: STORAGE_INFO_TYPE): void => {
         storageNameCollection.addName(storage.name)
         // TODO: 优化, 在后端统一“ZimaOS-HD” 名称。
