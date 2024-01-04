@@ -108,7 +108,6 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
             // (window as any)?.gc && (window as any)?.gc();
             // (window as any)?.collectGarbage && (window as any)?.collectGarbage();
             reloadServiceData();
-            clear();
         },
         templates: {
             footer: footer
