@@ -215,6 +215,19 @@ import { isExitNewDisk } from "@views/EstablishRAID/controlData.ts";
 
 // nameStorage validate.
 import { nameStorageHandleSubmit } from "@views/EstablishRAID/controlData.ts";
+
+function showPreviousButton() {
+    // 选择RAID 页面
+    if(context.value === 'Modify' && currentStepName.value === 'SelectRAIDPart') {
+        return false;
+    }
+    if (context.value === 'CreateStorage' && currentStepName.value === 'ConfirmRAIDPart') {
+        return false;
+    }
+    if (context.value !== "FirstAid" && currentStepName.value !== "ResultRAIDPart") {
+        return true;
+    }
+}
 </script>
 
 <template>
@@ -226,9 +239,7 @@ import { nameStorageHandleSubmit } from "@views/EstablishRAID/controlData.ts";
             currentStep < 2
             "></Button>
 
-        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="(context !== 'FirstAid' && currentStepName !== 'ResultRAIDPart') ||
-            (context === 'Modify' && currentStepName !== 'SelectRAIDPart')
-            "></Button>
+        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="showPreviousButton()"></Button>
         <Button :label="$t('Next')" severity="primary" size="medium" @click="stepByStep('next')" v-show="context !== 'FirstAid' &&
             currentStepName !== 'ConfirmRAIDPart' &&
             currentStepName !== 'ResultRAIDPart'
