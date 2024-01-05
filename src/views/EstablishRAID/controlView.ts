@@ -1,10 +1,7 @@
 // ref https://codesandbox.io/s/plfs2x?file=/src/App.vue:1006-1069
 import { markRaw, defineAsyncComponent, ref, Ref, watch } from 'vue'
 import { useDialog } from 'primevue/usedialog'
-import {
-    currentStepName,
-    changeContext,
-} from './controlData.ts'
+import { currentStepName, changeContext } from './controlData.ts'
 import { EntranceContextType } from './controlData.d'
 import { reloadServiceData } from '@views/StorageManager/controlData.ts'
 
@@ -41,7 +38,7 @@ watch(
             case 'ResultRAIDPart':
                 closable.value = false
                 footer.value = markRaw(EstablishFooter)
-                break;
+                break
             default:
                 closable.value = true
                 footer.value = markRaw(EstablishFooter)
@@ -58,7 +55,10 @@ interface ShowType {
 }
 // import { useI18n } from 'vue-i18n'
 // const { t } = useI18n()
-const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
+const showEstablishRAID = (
+    type: keyof ShowType = 'Create',
+    option: { onClose: () => void, [key: string]: any } = { onClose: () => { } }
+): void => {
     const showType: ShowType = {
         // 创建 raid
         Create: {
@@ -75,13 +75,17 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
             // title: t('First Aid RAID')
             title: 'Recovery RAID'
         },
-        // 格式化单个磁盘 FormateDisk
+        // 创建单个磁盘、空间
         CreateStorage: {
             title: 'Enable new hard drive'
         },
         // 启用单个磁盘或者单个空间 EnableStorage
         EnableStorage: {
             title: 'Enable new hard drive'
+        },
+        // 格式化单个磁盘
+        FormatStorage: {
+            title: 'Format hard drive'
         }
     }
     changeContext(type as EntranceContextType)
@@ -105,7 +109,8 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
             closable
         },
         onClose: () => {
-            reloadServiceData();
+            reloadServiceData()
+            option?.onClose()
         },
         templates: {
             footer: footer

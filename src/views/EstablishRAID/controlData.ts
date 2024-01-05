@@ -92,6 +92,7 @@ const { defineField, handleSubmit } = useForm({
 const [nameStorage, nameStorageAttrs] = defineField('NameStorageSchema', {
     validateOnModelUpdate: false,
 })
+const displayNameStorage = ref<boolean>(true)
 
 const checkedCreateRAID = ref<boolean>(false)
 // Getting RAID Status
@@ -136,6 +137,7 @@ const clear = (): void => {
     selectRAIDStrategy.value = ''
     selectStorageList.value = []
     nameStorage.value = 'Main-Storage'
+    displayNameStorage.value = true
     checkedCreateRAID.value = false
     resultRAIDInfo.btnText = ''
     resultRAIDInfo.butFunc = () => { }
@@ -155,6 +157,7 @@ export {
     handleSubmit as nameStorageHandleSubmit,
     nameStorage,
     nameStorageAttrs,
+    displayNameStorage,
     checkedCreateRAID,
     stepByStep,
     resultRAIDInfo,
