@@ -37,7 +37,7 @@ function selectText(): void {
             </div>
             <div class="mr-2 mt-3 flex flex-col space-y-[6px]">
                 <input ref="nameRef" id="name" v-model="nameStorage" v-bind="nameStorageAttrs"  autocomplete="Main-Storage" type="text" force
-                    class="selection:bg-sky-100 h-[20px] px-3 py-1.5 rounded box-content border border-zinc-200 hover:border-sky-600 active:border-sky-600 focus-visible:border-sky-600 outline-none text-sky-600 text-sm font-normal font-['Roboto']" />
+                    class="selection:bg-sky-100 bg-white h-[20px] px-3 py-1.5 rounded box-content border border-zinc-200 hover:border-sky-600 active:border-sky-600 focus-visible:border-sky-600 outline-none text-sky-600 text-sm font-normal font-['Roboto']" />
 
                 <span v-t="`ConfirmRAIDPART.noteNameInput`" class="text-neutral-400 text-xs font-normal font-['Roboto']">
                     <!-- {{ $t("The name can not be changed after this step.") }} -->
@@ -65,7 +65,7 @@ function selectText(): void {
                 </span>
             </div>
             <div class="flex justify-end items-center mt-16">
-                <input name="confirm" type="checkbox" v-model="checkedCreateRAID" class="mr-2 w-5 h-5 cursor-pointer" />
+                <input name="confirm" type="checkbox" v-model="checkedCreateRAID" class="mr-2 w-5 h-5 bg-white cursor-pointer" />
                 <span v-t="`ConfirmRAIDPART.signUserAgreement`" class="text-zinc-800 text-sm font-normal font-['Roboto']">
                     <!-- {{ $t("I am aware of this and confirm the operation.") }} -->
                 </span>
