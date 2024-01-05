@@ -25,6 +25,7 @@ import {
 } from "@views/EstablishRAID/controlData.ts";
 import { storage } from "@network/index.ts";
 import { storageNameCollection } from "@views/StorageManager/controlData.ts";
+import router from "@/pages/router";
 const showCheckFormat = (type: "HDD" | "SSD", path: string = ""): void => {
     nameStorage.value = storageNameCollection.beNamed(type);
     formatePath.value = path;
@@ -49,9 +50,14 @@ const showEnableStorage = (name: string, path: string): void => {
             resultRAIDInfo.btnText = "Restart";
         })
         .finally(() => {
-            resultRAIDInfo.butFunc = () => {
-                loadAllNewDiskStatus();
+            resultRAIDInfo.butFunc = async () => {
+                await loadAllNewDiskStatus();
                 closeEstablishRAID();
+                console.log(allNewDiskStatus.value);
+                
+                if(allNewDiskStatus.value.size === 0) {
+                    router.go(-1);
+                }
             };
             stepByStep("next");
         });
