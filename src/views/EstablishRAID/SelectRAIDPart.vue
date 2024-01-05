@@ -227,7 +227,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                             }}
                         </div>
                         <div v-else>
-                            {{ $t("Used by {assignment}", { assignment: item?.RaidAssignment }) }}
+                            {{ $t("Used by {assignment}", { assignment: item?.allocatedStorageSpace }) }}
                         </div>
                     </NPopover>
                 </template>

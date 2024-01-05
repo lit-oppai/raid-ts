@@ -44,7 +44,7 @@ export type UI_DISK_INFO_TYPE = {
     // RAID 备选盘 1、状态健康 2、未被占用
     // 2023年12月01日 不再使用备选盘，只有未使用的盘可以进入 raid
     // "candidate"?: boolean,
-    RaidAssignment?: string
+    allocatedStorageSpace?: string
     RaidStrategy?: RAID_STRATEGY_TYPE | string
     // "occupied"?: string,
     unused?: boolean

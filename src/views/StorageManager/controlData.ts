@@ -91,11 +91,9 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
                 path: disk.path,
                 model: disk.model,
                 // "candidate": disk.health && disk.children.length <= 1 && (disk.children[0]?.raid ?? false) === false,
-                RaidAssignment:
-                    (disk.children[0]?.raid === true &&
-                        disk.children[0]?.storage_name) ||
-                    disk?.storage_name ||
-                    '',
+                allocatedStorageSpace:
+                    disk.children[0]?.storage_name ||
+                    disk?.storage_name,
                 RaidStrategy: disk.children[0]?.raid_level
                     ? 'RAID' + disk.children[0]?.raid_level
                     : '',
@@ -117,11 +115,9 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
                     path: disk.path,
                     model: disk.model,
                     // "candidate": disk.health && disk.children.length <= 1 && (disk.children[0]?.raid ?? false) === false,
-                    RaidAssignment:
-                        (disk.children[0]?.raid === true &&
-                            disk.children[0]?.storage_name) ||
-                        disk?.storage_name ||
-                        '',
+                    allocatedStorageSpace:
+                        disk.children[0]?.storage_name ||
+                        disk?.storage_name,
                     RaidStrategy: disk.children[0]?.raid_level
                         ? 'RAID' + disk.children[0]?.raid_level
                         : '',
