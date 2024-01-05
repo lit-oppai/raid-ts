@@ -3,8 +3,7 @@ import { markRaw, defineAsyncComponent, ref, Ref, watch } from 'vue'
 import { useDialog } from 'primevue/usedialog'
 import {
     currentStepName,
-    clear,
-    changeContext
+    changeContext,
 } from './controlData.ts'
 import { EntranceContextType } from './controlData.d'
 import { reloadServiceData } from '@views/StorageManager/controlData.ts'
@@ -39,6 +38,10 @@ watch(
                 closable.value = false
                 footer.value = null
                 break
+            case 'ResultRAIDPart':
+                closable.value = false
+                footer.value = markRaw(EstablishFooter)
+                break;
             default:
                 closable.value = true
                 footer.value = markRaw(EstablishFooter)
@@ -102,11 +105,6 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
             closable
         },
         onClose: () => {
-            // currentStep.value = 0;
-            // // 垃圾回收
-            // // dialog = null;
-            // (window as any)?.gc && (window as any)?.gc();
-            // (window as any)?.collectGarbage && (window as any)?.collectGarbage();
             reloadServiceData();
         },
         templates: {
