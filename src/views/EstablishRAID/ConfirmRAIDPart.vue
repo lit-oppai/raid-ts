@@ -65,7 +65,7 @@ function selectText(): void {
                 </span>
             </div>
             <div class="flex justify-end items-center mt-16">
-                <input name="confirm" type="checkbox" v-model="checkedCreateRAID" class="mr-2 w-5 h-5 bg-white cursor-pointer" />
+                <input name="confirm" type="checkbox" v-model="checkedCreateRAID" style="color-scheme: none;" class="mr-2 w-5 h-5 bg-white cursor-pointer" />
                 <span v-t="`ConfirmRAIDPART.signUserAgreement`" class="text-zinc-800 text-sm font-normal font-['Roboto']">
                     <!-- {{ $t("I am aware of this and confirm the operation.") }} -->
                 </span>
