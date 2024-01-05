@@ -217,7 +217,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                             </label>
                         </template>
                         <div v-if="item?.unused && !item.health">{{ $t("unhealthy") }}</div>
-                        <div v-else-if="item?.unused">未使用的磁盘</div>
+                        <div v-else-if="item?.unused">{{ $t('Available') }}</div>
                         <div v-else-if="context === 'Modify' && item.size && item.size < expansionMinDiskSize
                             ">
                             {{
