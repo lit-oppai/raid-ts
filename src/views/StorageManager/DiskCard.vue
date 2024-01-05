@@ -101,12 +101,12 @@ const statuClass = computed(() => {
             }}</span>
         </div>
 
-        <div v-if="source?.RaidAssignment">
+        <div v-if="source?.allocatedStorageSpace">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">
                 {{ $t("Used by") }}
             </span>
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{
-                ` ${source?.RaidAssignment}`
+                ` ${source?.allocatedStorageSpace}`
             }}</span>
         </div>
         <div v-else>
