@@ -27,7 +27,7 @@ function selectText(): void {
     <div class="w-full flex flex-col justify-center mt-6 space-y-4">
         <!-- AddToRAIDPart not show. -->
         <div class="bg-gray-50 rounded-lg border border-gray-200 px-6 pt-[2px] grid grid-cols-2"
-            v-show="context !== 'FirstAid' && context !== 'Modify'">
+            v-show="context !== 'FirstAid' && context !== 'Modify' && context !== 'CreateStorage'">
             <div class="mt-4 mb-10">
                 <span v-t="`ConfirmRAIDPART.labelNameInput.${context}`"
                     class="text-zinc-800 text-base font-semibold font-['Roboto']">
