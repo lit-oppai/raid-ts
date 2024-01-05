@@ -18,7 +18,7 @@ import {
     expansionMinDiskSize,
 } from "@views/EstablishRAID/controlData.ts";
 import { RAIDStrategy } from "@views/EstablishRAID/controlData.d";
-import { storageInfoMap, reloadServiceData } from "@views/StorageManager/controlData.ts";
+import { reloadServiceData } from "@views/StorageManager/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute } from "vue-router";
 import { /*disk,*/ raid } from "@network/index.ts";
@@ -27,8 +27,9 @@ import minBy from "lodash/minBy";
 
 const route = useRoute();
 const storageName = route.params.storageName as string;
-const storageInfo = storageInfoMap.get(storageName);
+const storagePath = route.query.path as string;
 const diskInfoByStorageSpace = ref<Device[]>([]);
+const storageLevel = ref<number>();
 
 const needFirstAid = ref(false);
 const needNewDisk = ref(false);
@@ -40,9 +41,10 @@ const isLoadingDiskInfoByStorageSpace = ref<boolean>(false);
 const loadRaid = async () => {
     isLoadingDiskInfoByStorageSpace.value = true;
     await raid
-        .getRaids(storageInfo?.path)
+        .getRaids(storagePath)
         .then((res) => {
             selectRAIDStrategy.value = ("RAID" + res.data.data?.[0].raid_level) as RAIDStrategy;
+            storageLevel.value = res.data.data?.[0].raid_level;
             diskInfoByStorageSpace.value =
                 res.data.data?.[0].devices?.sort((a, b) => {
                     return Number(a.index) - Number(b.index);
@@ -76,7 +78,7 @@ const isLoadingDisabledButton = ref<boolean>(false);
 const disabledRaid = async (): Promise<void> => {
     isLoadingDisabledButton.value = true;
     await raid
-        .deleteRaid(storageInfo?.path ?? "")
+        .deleteRaid(storagePath ?? "")
         .then((res) => {
             if (res.status === 200) {
                 router.push({ name: "storage" });
@@ -100,7 +102,7 @@ const ejectDiskFromRaid = async (path: string): Promise<void> => {
     // operationEjectLoading.value = true;
     pathOperationEject.value = path;
     await raid
-        .updateRaid({ path: storageInfo?.path ?? "", action: "remove", devices: [path] })
+        .updateRaid({ path: storagePath ?? "", action: "remove", devices: [path] })
         .then((res) => {
             if (res.status === 200) {
                 // loadRaid(); // Prohibited to use because the restart data is not saved on the server.
@@ -139,7 +141,7 @@ const targetPawerOff = (): void => {
 // open first aid page
 import { needFirstAidRaid } from "@views/EstablishRAID/controlData.ts";
 const openFirstAid = (): void => {
-    needFirstAidRaid.value = storageInfo?.path ?? "";
+    needFirstAidRaid.value = storagePath ?? "";
     showEstablishRAID("FirstAid");
 };
 
@@ -155,13 +157,13 @@ function getDiskHubIndex(index: number): string {
 }
 const extenedCapacity = (): void => {
     // perpare data
-    selectRAIDStrategy.value = ("RAID" + storageInfo?.raid_level) as RAIDStrategy;
+    selectRAIDStrategy.value = ("RAID" + storageLevel.value) as RAIDStrategy;
     // expansionMinDiskSize 已经赋值
     diskListByStorageSpace.value = diskInfoByStorageSpace.value.map((item) => {
         return IndexForDiskHubMap.get(item.index as number);
     }) as string[];
-    extendRaidPath.value = storageInfo?.path ?? "";
-    nameStorage.value = storageInfo?.name ?? "";
+    extendRaidPath.value = storagePath ?? "";
+    nameStorage.value = storageName ?? "";
     showEstablishRAID("Modify");
 };
 </script>
@@ -301,7 +303,7 @@ const extenedCapacity = (): void => {
 
             <!-- TODO0 无损坏 && raid5 && 存在空槽位 -->
             <div class="bg-white rounded-lg h-11 flex items-center px-4"
-                v-if="storageInfo?.raid_level === 5 && !needFirstAid && isReady">
+                v-if="storageLevel === 5 && !needFirstAid && isReady">
                 <Image :src="diskSVG" class="h-6 w-6"></Image>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
                     {{ $t("Expand capacity") }}

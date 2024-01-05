@@ -77,8 +77,16 @@ onBeforeMount(() => {
     initEstablishRAID();
 });
 const goToStorageDetailPage = (isRaid: boolean, label: string) => {
+    const path: string = storageInfoMap.get(label)?.path ?? "";
     if (isRaid) {
-        router.push(`/storage/ModifyRAID/${label}`);
+        if (path === "") {
+            console.error("path is empty");
+            return;
+        }
+        router.push({
+            path: `/storage/ModifyRAID/${label}`,
+            query: { path }
+        });
     } else {
         router.push(`/storage/DetailStorage/${label}`);
     }
