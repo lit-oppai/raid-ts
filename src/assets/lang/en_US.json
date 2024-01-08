@@ -25,7 +25,6 @@
   "Empty": "Empty",
   "healthy {temperature}℃": "healthy {temperature}℃",
   "unhealthy {temperature}℃": "unhealthy {temperature}℃",
-  "Used by": "Used by",
   "Create RAID": "Create RAID",
   "Expand RAID capacity": "Expand RAID capacity",
   "Recovery RAID": "Recovery RAID",
@@ -66,7 +65,7 @@
   "Protecting · Read-only": "Protecting · Read-only",
   "In Protection": "In Protection",
   "Expand capacity": "Expand capacity",
-  "General": "Gemeral",
+  "General": "General",
   "Add Drive": "Add Drive",
   "Format and Disable": "Format and Disable",
   "Disable": "Disable",
@@ -76,7 +75,7 @@
   "Close": "Close",
   "Confirm": "Confirm",
   "Format": "Format",
-  "Format and Enable": "Format hard drive",
+  "Format and Enable": "format and enable",
   "Enable": "Enable",
   "Used": "Used",
   "ConfirmRAIDPART": {
@@ -119,7 +118,10 @@
   },
   "Add": "Add",
   "Power off": "Power off",
-  "Smaller": "Smaller",
   "Need new hard drive · At least {size}": "Need new hard drive · At least {size}",
-  "unhealthy": "unhealthy"
+  "unhealthy": "unhealthy",
+  "At least {size}": "At least {size}",
+  "Unknown": "Unknown",
+  "Used by {assignment}": "Used by {assignment}",
+  "Used by": "Used by"
 }

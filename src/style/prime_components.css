@@ -107,19 +107,22 @@ TODO:
                 /* routers */
                 button {
                     @apply w-full h-12 inline-flex items-center rounded;
-                    @apply text-zinc-800 text-sm font-normal font-roboto leading-tight;
+                    @apply text-sm font-normal font-roboto leading-6;
                     @screen max-md {
                         @apply inline text-center text-2xl;
                     }
 
+                    span:first-child {
+                        @apply text-xl leading-6;
+                    }
                     span::before {
-                        @apply w-6 h-6 mx-2 my-auto;
+                        @apply ml-2 my-auto;
                         @screen max-md {
                             @apply w-8 h-8 mx-1;
                         }
                     }
                     &:hover {
-                        @apply bg-sky-500 text-white;
+                        @apply bg-gray-100 text-zinc-800;
                     }
                     span:not(:first-child) {
                         @apply max-md:hidden;
@@ -128,7 +131,10 @@ TODO:
 
                 /* active route */
                 &.router-link-active {
-                    @apply bg-gray-100;
+                    @apply bg-sky-500 text-white;
+                    button:hover{
+                        @apply bg-sky-500 text-white;
+                    }
                 }
             }
         }

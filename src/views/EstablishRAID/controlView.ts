@@ -1,19 +1,12 @@
 // ref https://codesandbox.io/s/plfs2x?file=/src/App.vue:1006-1069
-import { markRaw, defineAsyncComponent, ref, Ref, watch } from 'vue'
+import { defineAsyncComponent, ref, watch } from 'vue'
 import { useDialog } from 'primevue/usedialog'
-import {
-    currentStepName,
-    clear,
-    changeContext
-} from './controlData.ts'
+import { currentStepName, changeContext } from './controlData.ts'
 import { EntranceContextType } from './controlData.d'
 import { reloadServiceData } from '@views/StorageManager/controlData.ts'
 
 const EstablishRAID = defineAsyncComponent(
     () => import('@views/EstablishRAID/EstablishRAID.vue')
-)
-const EstablishFooter = defineAsyncComponent(
-    () => import('@views/EstablishRAID/EstablishFooter.vue')
 )
 
 let dialog: any = null
@@ -25,23 +18,31 @@ const initEstablishRAID = (): void => {
     dialog = useDialog()
 }
 
-const footer: Ref<typeof EstablishFooter | null> = ref(null)
 const closable = ref<boolean>(true)
 watch(
     currentStepName,
     newVal => {
         switch (newVal) {
-            case 'OverviewPart':
-                closable.value = true
-                footer.value = null
-                break
+            // case 'OverviewPart':
+            //     closable.value = true
+            //     break
             case 'CreatingRAIDPart':
                 closable.value = false
-                footer.value = null
                 break
+            case 'ResultRAIDPart':
+                closable.value = false
+                break
+            // case 'SelectRAIDPart':
+            //     closable.value = true
+            //     break
+            // case 'ConfirmRAIDPart':
+            //     closable.value = true
+            //     break
+            // case 'AddToRAIDPart':
+            //     closable.value = true
+            //     break
             default:
                 closable.value = true
-                footer.value = markRaw(EstablishFooter)
                 break
         }
     },
@@ -55,7 +56,10 @@ interface ShowType {
 }
 // import { useI18n } from 'vue-i18n'
 // const { t } = useI18n()
-const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
+const showEstablishRAID = (
+    type: keyof ShowType = 'Create',
+    option: { onClose: () => void, [key: string]: any } = { onClose: () => { } }
+): void => {
     const showType: ShowType = {
         // 创建 raid
         Create: {
@@ -72,13 +76,17 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
             // title: t('First Aid RAID')
             title: 'Recovery RAID'
         },
-        // 格式化单个磁盘 FormateDisk
+        // 创建单个磁盘、空间
         CreateStorage: {
             title: 'Enable new hard drive'
         },
         // 启用单个磁盘或者单个空间 EnableStorage
         EnableStorage: {
             title: 'Enable new hard drive'
+        },
+        // 格式化单个磁盘
+        FormatStorage: {
+            title: 'Format hard drive'
         }
     }
     changeContext(type as EntranceContextType)
@@ -102,16 +110,10 @@ const showEstablishRAID = (type: keyof ShowType = 'Create'): void => {
             closable
         },
         onClose: () => {
-            // currentStep.value = 0;
-            // // 垃圾回收
-            // // dialog = null;
-            // (window as any)?.gc && (window as any)?.gc();
-            // (window as any)?.collectGarbage && (window as any)?.collectGarbage();
-            reloadServiceData();
-            clear();
+            reloadServiceData()
+            option?.onClose()
         },
         templates: {
-            footer: footer
         }
     })
 }

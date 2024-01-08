@@ -10,7 +10,7 @@ import { storageInfoMap, reloadServiceData } from "@views/StorageManager/control
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import { showEstablishRAID } from "@views/EstablishRAID/controlView.ts";
-import { nameStorage, formatePath } from "@views/EstablishRAID/controlData.ts";
+import { nameStorage, displayNameStorage, formatePath } from "@views/EstablishRAID/controlData.ts";
 import { storage } from "@network/index.ts";
 
 const route = useRoute();
@@ -29,8 +29,14 @@ let storageInfo = computed(() => {
 // format or disband function
 const showCheckFormat = (): void => {
     nameStorage.value = storageInfo.value?.label ?? "";
+    displayNameStorage.value = false;
     formatePath.value = storageInfo.value?.path ?? "";
-    showEstablishRAID("CreateStorage");
+    showEstablishRAID("CreateStorage", {
+        onClose: () => {
+            // router.go(-1)
+            displayNameStorage.value = true;
+        }
+    });
 };
 const isLoadingDisabledButton = ref<boolean>(false);
 const disabledStorage = async (): Promise<void> => {
@@ -95,7 +101,7 @@ const disabledStorage = async (): Promise<void> => {
         <div class="bg-white rounded-lg h-11 flex items-center px-4">
             <Image :src="warningSVG" class="h-6 w-6"></Image>
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
-                Format and Disband
+                {{ $t("Format and Disable")}}
             </span>
 
             <Button :label="$t('Format')" severity="accent" size="medium" @click="showCheckFormat" class="mr-4"></Button>

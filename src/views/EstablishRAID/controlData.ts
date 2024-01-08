@@ -85,13 +85,14 @@ const { defineField, handleSubmit } = useForm({
             .required()
             .matches(
                 /^[a-zA-Z0-9_\-\u4e00-\u9fa5]+$/,
-                'Name must be a string of numbers, letters, underscores, or hyphens'
+                'Name must be a string of numbers, letters, underscores, or hyphens(0~9,a~zA~Z,_,-).'
             )
     })
 })
 const [nameStorage, nameStorageAttrs] = defineField('NameStorageSchema', {
-    validateOnModelUpdate: false,
+    validateOnModelUpdate: false
 })
+const displayNameStorage = ref<boolean>(true)
 
 const checkedCreateRAID = ref<boolean>(false)
 // Getting RAID Status
@@ -136,6 +137,7 @@ const clear = (): void => {
     selectRAIDStrategy.value = ''
     selectStorageList.value = []
     nameStorage.value = 'Main-Storage'
+    displayNameStorage.value = true
     checkedCreateRAID.value = false
     resultRAIDInfo.btnText = ''
     resultRAIDInfo.butFunc = () => { }
@@ -155,6 +157,7 @@ export {
     handleSubmit as nameStorageHandleSubmit,
     nameStorage,
     nameStorageAttrs,
+    displayNameStorage,
     checkedCreateRAID,
     stepByStep,
     resultRAIDInfo,

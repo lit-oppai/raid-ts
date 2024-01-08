@@ -12,14 +12,9 @@ import { context } from "./controlData.ts";
             {{ context === 'FirstAid' ? $t('Recovery in progress') : $t("Creating...") }}
         </span>
     </div>
-    <div class="mt-3">
+    <div class="mt-3 mx-6">
         <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
             {{ $t('During this process, please do not unplug the hard drive or shut down ZimaCube to avoid system errors.') }}
         </span>
     </div>
-    <!-- <div class="mt-2">
-        <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
-            To avoid waiting for an extended period, you can click ‘Run in the background’.
-        </span>
-    </div> -->
 </template>

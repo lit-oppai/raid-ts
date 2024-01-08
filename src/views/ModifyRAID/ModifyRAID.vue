@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
@@ -18,17 +18,18 @@ import {
     expansionMinDiskSize,
 } from "@views/EstablishRAID/controlData.ts";
 import { RAIDStrategy } from "@views/EstablishRAID/controlData.d";
-import { storageInfoMap, reloadServiceData } from "@views/StorageManager/controlData.ts";
+import { reloadServiceData } from "@views/StorageManager/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute } from "vue-router";
-import { raid } from "@network/index.ts";
+import { /*disk,*/ raid } from "@network/index.ts";
 import { Device } from "@icewhale/zimaos-localstorage-openapi";
 import minBy from "lodash/minBy";
 
 const route = useRoute();
 const storageName = route.params.storageName as string;
-const storageInfo = storageInfoMap.get(storageName);
+const storagePath = route.query.path as string;
 const diskInfoByStorageSpace = ref<Device[]>([]);
+const storageLevel = ref<number>();
 
 const needFirstAid = ref(false);
 const needNewDisk = ref(false);
@@ -40,19 +41,26 @@ const isLoadingDiskInfoByStorageSpace = ref<boolean>(false);
 const loadRaid = async () => {
     isLoadingDiskInfoByStorageSpace.value = true;
     await raid
-        .getRaids(storageInfo?.path)
+        .getRaids(storagePath)
         .then((res) => {
             selectRAIDStrategy.value = ("RAID" + res.data.data?.[0].raid_level) as RAIDStrategy;
-            diskInfoByStorageSpace.value = res.data.data?.[0].devices ?? [];
+            storageLevel.value = res.data.data?.[0].raid_level;
+            diskInfoByStorageSpace.value =
+                res.data.data?.[0].devices?.sort((a, b) => {
+                    return Number(a.index) - Number(b.index);
+                }) ?? [];
 
             // TODO: 为了做急救功能，此为相反的数据
             // diskInfoByStorageSpace.value[0].health = !diskInfoByStorageSpace.value[0].health;
-            
+
             needFirstAid.value =
-                diskInfoByStorageSpace.value.filter((i) => !i.health).length !== 0 || res.data.data?.[0].shortage === true;
+                diskInfoByStorageSpace.value.filter((i) => !i.health).length !== 0 ||
+                res.data.data?.[0].shortage === true;
             needNewDisk.value = res.data.data?.[0].shortage ?? false;
             expansionMinDiskSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
-            isReady.value = res.data.data?.[0].status === 'idle';
+            isReady.value = true;
+                // res.data.data?.[0].status === "idle" ||
+                // (res.data.data?.[0].status as string) === "";
             showAddingDiskButton.value = res.data.data?.[0].shortage === true;
         })
         .finally(() => {
@@ -70,7 +78,7 @@ const isLoadingDisabledButton = ref<boolean>(false);
 const disabledRaid = async (): Promise<void> => {
     isLoadingDisabledButton.value = true;
     await raid
-        .deleteRaid(storageInfo?.path ?? "")
+        .deleteRaid(storagePath ?? "")
         .then((res) => {
             if (res.status === 200) {
                 router.push({ name: "storage" });
@@ -94,11 +102,12 @@ const ejectDiskFromRaid = async (path: string): Promise<void> => {
     // operationEjectLoading.value = true;
     pathOperationEject.value = path;
     await raid
-        .updateRaid({ path: storageInfo?.path ?? "", action: "remove", devices: [path] })
+        .updateRaid({ path: storagePath ?? "", action: "remove", devices: [path] })
         .then((res) => {
             if (res.status === 200) {
-                // reloadServiceData();
-                loadRaid();
+                // loadRaid(); // Prohibited to use because the restart data is not saved on the server.
+                showAddingDiskButton.value = false;
+                needNewDisk.value = true;
             } else {
                 console.log("eject failed");
             }
@@ -110,6 +119,15 @@ const ejectDiskFromRaid = async (path: string): Promise<void> => {
             pathOperationEject.value = "";
         });
 };
+
+watch(
+    () => showAddingDiskButton.value === false && needNewDisk.value === true,
+    (v) => {
+        diskInfoByStorageSpace.value = v
+            ? diskInfoByStorageSpace.value.filter((i) => i.health)
+            : diskInfoByStorageSpace.value;
+    }
+);
 
 // power off
 import messageBus from "@utils/messageBus";
@@ -123,7 +141,7 @@ const targetPawerOff = (): void => {
 // open first aid page
 import { needFirstAidRaid } from "@views/EstablishRAID/controlData.ts";
 const openFirstAid = (): void => {
-    needFirstAidRaid.value = storageInfo?.path ?? "";
+    needFirstAidRaid.value = storagePath ?? "";
     showEstablishRAID("FirstAid");
 };
 
@@ -134,15 +152,18 @@ import {
     nameStorage,
 } from "@views/EstablishRAID/controlData.ts";
 import { IndexForDiskHubMap } from "@views/StorageManager/controlData.ts";
+function getDiskHubIndex(index: number): string {
+    return IndexForDiskHubMap.get(index) ?? "";
+}
 const extenedCapacity = (): void => {
     // perpare data
-    selectRAIDStrategy.value = ("RAID" + storageInfo?.raid_level) as RAIDStrategy;
+    selectRAIDStrategy.value = ("RAID" + storageLevel.value) as RAIDStrategy;
     // expansionMinDiskSize 已经赋值
     diskListByStorageSpace.value = diskInfoByStorageSpace.value.map((item) => {
         return IndexForDiskHubMap.get(item.index as number);
     }) as string[];
-    extendRaidPath.value = storageInfo?.path ?? "";
-    nameStorage.value = storageInfo?.name ?? "";
+    extendRaidPath.value = storagePath ?? "";
+    nameStorage.value = storageName ?? "";
     showEstablishRAID("Modify");
 };
 </script>
@@ -183,7 +204,8 @@ const extenedCapacity = (): void => {
             <div v-for="(item, index) in diskInfoByStorageSpace" :key="index">
                 <div class="flex items-center bg-gray-50 rounded-md h-10 pr-3">
                     <span class="ml-1 w-[34px] text-center text-neutral-400">
-                        {{ IndexForDiskHubMap.get(item.index as number) }}
+                        <!-- TODO: API 补充 index 之后，去掉替补 index -->
+                        {{ getDiskHubIndex(item.index || index) }}
                     </span>
                     <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
                         {{ item.model }}
@@ -281,7 +303,7 @@ const extenedCapacity = (): void => {
 
             <!-- TODO0 无损坏 && raid5 && 存在空槽位 -->
             <div class="bg-white rounded-lg h-11 flex items-center px-4"
-                v-if="storageInfo?.raid_level === 5 && !needFirstAid && isReady">
+                v-if="storageLevel === 5 && !needFirstAid && isReady">
                 <Image :src="diskSVG" class="h-6 w-6"></Image>
                 <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
                     {{ $t("Expand capacity") }}

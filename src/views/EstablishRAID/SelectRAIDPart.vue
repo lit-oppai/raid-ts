@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { watch, ref } from "vue";
+import { watch, ref, computed } from "vue";
 import { RAIDStrategy } from "./controlData.d";
-import { selectStorageList, selectRAIDStrategy, context } from "./controlData";
+import { selectStorageList, selectRAIDStrategy, context, stepByStep } from "./controlData";
 import { SSDStatus, HDDStatus } from "@views/StorageManager/controlData.ts";
-import { expansionMinDiskSize } from "@views/EstablishRAID/controlData.ts";
+import { expansionMinDiskSize, currentStepName, currentStep } from "@views/EstablishRAID/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import SelectStrategy from "./SelectStrategy.vue";
+import Button from "primevue/button";
 import { NPopover } from "naive-ui";
+import { closeEstablishRAID } from "./controlView.ts";
+
 // const list = typeof RAIDStrategy
 const strategies: RAIDStrategy[] = ["RAID0", "RAID1", "RAID5"];
 // const allDiskTemp = new Map([...SSDStatus, ...HDDStatus]);
@@ -36,7 +39,7 @@ for (let [key, item] of allDiskStatus) {
     // An unhealthy disk has various possible problems.
     else if (
         item?.unused &&
-        // item.health &&
+        item.health &&
         item.size !== undefined &&
         item.size >= expansionMinDiskSize.value
     ) {
@@ -135,7 +138,6 @@ import { UI_DISK_INFO_TYPE } from "@views/StorageManager/controlData.d";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) => {
-
     // 扩容页面&当前磁盘列表中的磁盘
     // 空槽
     if (storageNone.includes(key)) {
@@ -145,14 +147,9 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
     else if (diskListByStorageSpace.value.includes(key)) {
         return t("Current");
     }
-    // 被raid占用
     // in other disk list of storage space
-    else if (!item?.unused && item?.RaidStrategy !== "") {
-        return `${item?.RaidStrategy}`;
-    }
-    // 被非 raid占用
     else if (!item?.unused) {
-        return item.type;
+        return `Used`;
     }
     // 没有被占用&磁盘太小
     else if (
@@ -160,7 +157,7 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
         diskListByStorageSpace.value.length &&
         item.size < expansionMinDiskSize.value
     ) {
-        return `Smaller`;
+        return `Disable`;
     }
     // No unhealthy disk is occupied.
     else if (item?.unused && !item.health) {
@@ -170,21 +167,34 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
     else if (storageSelectable.includes(key)) {
         return item.type;
     } else {
-        return "未知";
+        return "Unknown";
     }
 };
 
 // extened capacity
 import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
-// const determineWhetherSelectable = (key: string) => {
-//     // 可选择盘
-//     storageSelectable.includes(key)
-// };
+
+// 
+const checkNextStep = computed<boolean>(() => {
+    // 选择RAID 页面
+    if (currentStepName.value === "SelectRAIDPart") {
+        switch (selectRAIDStrategy.value) {
+            case "RAID0":
+            case "RAID1":
+                return selectStorageList.value.length < 2;
+            case "RAID5":
+                return diskListByStorageSpace.value.length
+                    ? selectStorageList.value.length < 1
+                    : selectStorageList.value.length < 3;
+        }
+    }
+    return false;
+});
 </script>
 
 <template name="SelectRAIDPart">
     <!-- 外框布局 -->
-    <div class="space-y-6 mt-6">
+    <div class="space-y-6 mt-6 px-6 flex-grow">
         <!-- select strategy -->
         <!-- 扩容没有策略选择 -->
         <div class="flex space-x-4" v-if="context !== 'Modify'">
@@ -226,14 +236,19 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                                 </span>
                             </label>
                         </template>
-                        <div v-if="item?.RaidAssignment">Used by {{ item?.RaidAssignment }}</div>
-                        <div v-else-if="item?.unused && !item.health">{{ $t('unhealthy') }}</div>
-                        <div v-else-if="item?.unused">未使用的磁盘</div>
+                        <div v-if="item?.unused && !item.health">{{ $t("unhealthy") }}</div>
+                        <div v-else-if="item?.unused">{{ $t('Available') }}</div>
                         <div v-else-if="context === 'Modify' && item.size && item.size < expansionMinDiskSize
                             ">
-                            至少 {{ convertSizeToReadable(expansionMinDiskSize) }}
+                            {{
+                                $t("At least {size}", {
+                                    size: convertSizeToReadable(expansionMinDiskSize),
+                                })
+                            }}
                         </div>
-                        <div v-else>{{ item?.type }} Used</div>
+                        <div v-else>
+                            {{ $t("Used by {assignment}", { assignment: item?.allocatedStorageSpace }) }}
+                        </div>
                     </NPopover>
                 </template>
             </div>
@@ -248,7 +263,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                             {{ key }}
                         </span>
                         <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
-                            {{ allDiskStatus.get(key)?.name }}
+                            {{ allDiskStatus.get(key)?.model }}
                         </span>
                         <span class="flex-grow text-neutral-400 text-xs font-normal font-['Roboto']">
                         </span>
@@ -308,5 +323,10 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                 </div>
             </div>
         </div>
+    </div>
+    <div class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2">
+        <Button :label="$t('Cancel')" severity="neutral" size="medium" @click="closeEstablishRAID"></Button>
+        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="currentStep > 0"></Button>
+        <Button :label="$t('Next')" severity="primary" size="medium" @click="stepByStep('next')" :disabled="checkNextStep"></Button>
     </div>
 </template>

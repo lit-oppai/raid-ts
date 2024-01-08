@@ -77,8 +77,16 @@ onBeforeMount(() => {
     initEstablishRAID();
 });
 const goToStorageDetailPage = (isRaid: boolean, label: string) => {
+    const path: string = storageInfoMap.get(label)?.path ?? "";
     if (isRaid) {
-        router.push(`/storage/ModifyRAID/${label}`);
+        if (path === "") {
+            console.error("path is empty");
+            return;
+        }
+        router.push({
+            path: `/storage/ModifyRAID/${label}`,
+            query: { path }
+        });
     } else {
         router.push(`/storage/DetailStorage/${label}`);
     }
@@ -292,7 +300,6 @@ socket.on("local-storage:disk:removed", () => {
                     </div>
                     <div class="flex-grow text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
                         {{ $t("Combine hard drive space by RAID.") }}
-                        <span class="font-medium">RAID</span>.
                     </div>
                     <div class="flex-shrink-0">
                         <!-- TODO：  1、统一组件 2、两个盘应该为灰色 -->

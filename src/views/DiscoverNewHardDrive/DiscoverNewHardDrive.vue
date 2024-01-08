@@ -2,40 +2,10 @@
 import { onBeforeMount } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
-// import diskSVG from '@assets/img/StorageManager/disk.svg';
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
-// import {
-//     HDDStatus,
-//     SSDStatus,
-// } from "@views/StorageManager/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { stepByStep } from "@views/EstablishRAID/controlData.ts";
-// const filtedArray = Array.from(new Map([...SSDStatus, ...HDDStatus])).sort((a, b) => a[0] > b[0] ? 1 : -1).filter((item) => item[1].unused);
-// const allDiskStatus = computed(() => {
-//     // TODO: 新硬盘页面， 产品要求特殊处理，加上未被挂载分区的硬盘。
-//     return new Map(
-//         Array.from(new Map([...SSDStatus, ...HDDStatus]))
-//             .sort((a, b) => (a[0] > b[0] ? 1 : -1))
-//             .filter((item) => !item[1].support || item[1].unused)
-//     );
-// });
-// import { disk } from "@network/index.ts";
-// import { IndexForDiskHubMap } from "@views/StorageManager/controlData.ts";
-// const allNewDiskStatus = ref(new Map());
-// const loadAllNewDiskStatus = (): void => {
-//     disk.getDisks("show").then((res) => {
-//         if (res.status === 200 && res.data.data) {
-//             allNewDiskStatus.value = new Map(
-//                 res.data.data
-//                     .filter((item) => item.model !== "System")
-//                     .map((item) => {
-//                         return [IndexForDiskHubMap.get(item.index as number), item];
-//                     })
-//             );
-//         }
-//     });
-// };
 import {
     allNewDiskStatus,
     loadAllNewDiskStatus,
@@ -55,6 +25,7 @@ import {
 } from "@views/EstablishRAID/controlData.ts";
 import { storage } from "@network/index.ts";
 import { storageNameCollection } from "@views/StorageManager/controlData.ts";
+import router from "@/pages/router";
 const showCheckFormat = (type: "HDD" | "SSD", path: string = ""): void => {
     nameStorage.value = storageNameCollection.beNamed(type);
     formatePath.value = path;
@@ -79,9 +50,14 @@ const showEnableStorage = (name: string, path: string): void => {
             resultRAIDInfo.btnText = "Restart";
         })
         .finally(() => {
-            resultRAIDInfo.butFunc = () => {
-                loadAllNewDiskStatus();
+            resultRAIDInfo.butFunc = async () => {
+                await loadAllNewDiskStatus();
                 closeEstablishRAID();
+                console.log(allNewDiskStatus.value);
+                
+                if(allNewDiskStatus.value.size === 0) {
+                    router.go(-1);
+                }
             };
             stepByStep("next");
         });
@@ -109,7 +85,7 @@ const showEnableStorage = (name: string, path: string): void => {
                         </span>
 
                         <!-- paperwork start -->
-                        <span v-t="`DiscoverNewHardDrive.requiresFormattingReminder.${disk.support}`" class="text-neutral-400 text-xs font-normal font-['Roboto']">
+                        <span v-t="`DiscoverNewHardDrive.requiresFormattingReminder.${!disk.support}`" class="text-neutral-400 text-xs font-normal font-['Roboto']">
                             <!-- Enable directly while preserving data. -->
                         </span>
                         <!-- <span class="text-neutral-400 text-xs font-normal font-['Roboto']" v-else>
@@ -154,7 +130,7 @@ const showEnableStorage = (name: string, path: string): void => {
                             @click="showEnableStorage(item?.name as string, item?.path as string)"
                             v-else-if="item?.supported"></Button>
                         <Button :label="$t('Format and Enable')" severity="secondary" size="small"
-                            @click="showCheckFormat(item?.name, item?.path)" v-else></Button>
+                            @click="showCheckFormat(disk.type, item?.path)" v-else></Button>
                         <!-- paperwork end -->
                     </div>
                 </div>

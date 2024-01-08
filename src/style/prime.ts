@@ -72,10 +72,10 @@ export default {
         closeButtonIcon: 'w-4 h-4 inline-block',
         content: ({ state }: any) => ({
             class: [
+                'flex flex-col',
                 'overflow-y-auto',
                 'h-full',
-                'bg-white text-gray-700 px-6',
-                'dark:bg-gray-900  dark:text-white/80 ',
+                'bg-white text-gray-700',
                 {
                     grow: state.maximized,
                     'rounded-bl-lg rounded-br-lg': false
