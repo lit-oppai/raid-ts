@@ -243,7 +243,7 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                             {{ key }}
                         </span>
                         <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
-                            {{ allDiskStatus.get(key)?.name }}
+                            {{ allDiskStatus.get(key)?.model }}
                         </span>
                         <span class="flex-grow text-neutral-400 text-xs font-normal font-['Roboto']">
                         </span>
