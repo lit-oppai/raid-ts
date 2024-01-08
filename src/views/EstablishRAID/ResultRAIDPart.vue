@@ -13,19 +13,9 @@ import { convertSizeToReadable } from "@utils/tools.ts";
 let svg: string, statusMessage: string;
 if (resultRAIDInfo.success) {
     svg = successSVG;
-    // if (context.value === "EnableStorage") {
-    //     statusMessage = "Enablement successful";
-    // } else {
-    //     statusMessage = "Creation Successful";
-    // }
     statusMessage = "Success"
 } else {
     svg = errorSVG;
-    // if (context.value === "EnableStorage") {
-    //     statusMessage = "Enablement failed";
-    // } else {
-    //     statusMessage = "Creation Failed";
-    // }
     statusMessage = "Fail"
 }
 </script>
