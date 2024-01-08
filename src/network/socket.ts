@@ -9,9 +9,9 @@ const baseURL = `${openApiDevIP}:${openApiDevPort}`;
 const wsURL = `${wsProtocol}//${baseURL}`;
 
 export const socket = io(wsURL, {
-    // transports: ["websocket", "polling"],
-    transports: ["websocket"],
+    transports: ["websocket", "polling"],
+    // transports: ["websocket"],
     path: "/v2/message_bus/socket.io",
-    reconnection: true,
+    reconnection: false,
     autoConnect: true,
 })
