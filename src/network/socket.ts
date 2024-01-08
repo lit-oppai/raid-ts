@@ -12,6 +12,6 @@ export const socket = io(wsURL, {
     // transports: ["websocket", "polling"],
     transports: ["websocket"],
     path: "/v2/message_bus/socket.io",
-    reconnection: false,
+    reconnection: true,
     autoConnect: true,
 })
