@@ -13,6 +13,9 @@ const convertSizeToReadable = (size: number | string) => {
         size = size / 1024
         index++
     }
+    if (size < 0.01) {
+        return "--"
+    }
     return size.toFixed(2) + unit[index]
 }
 
