@@ -85,7 +85,7 @@ const showEnableStorage = (name: string, path: string): void => {
                         </span>
 
                         <!-- paperwork start -->
-                        <span v-t="`DiscoverNewHardDrive.requiresFormattingReminder.${disk.support}`" class="text-neutral-400 text-xs font-normal font-['Roboto']">
+                        <span v-t="`DiscoverNewHardDrive.requiresFormattingReminder.${!disk.support}`" class="text-neutral-400 text-xs font-normal font-['Roboto']">
                             <!-- Enable directly while preserving data. -->
                         </span>
                         <!-- <span class="text-neutral-400 text-xs font-normal font-['Roboto']" v-else>
