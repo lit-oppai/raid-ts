@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { watch, ref } from "vue";
+import { watch, ref, computed } from "vue";
 import { RAIDStrategy } from "./controlData.d";
-import { selectStorageList, selectRAIDStrategy, context } from "./controlData";
+import { selectStorageList, selectRAIDStrategy, context, stepByStep } from "./controlData";
 import { SSDStatus, HDDStatus } from "@views/StorageManager/controlData.ts";
-import { expansionMinDiskSize } from "@views/EstablishRAID/controlData.ts";
+import { expansionMinDiskSize, currentStepName, currentStep } from "@views/EstablishRAID/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import SelectStrategy from "./SelectStrategy.vue";
+import Button from "primevue/button";
 import { NPopover } from "naive-ui";
+import { closeEstablishRAID } from "./controlView.ts";
+
 // const list = typeof RAIDStrategy
 const strategies: RAIDStrategy[] = ["RAID0", "RAID1", "RAID5"];
 // const allDiskTemp = new Map([...SSDStatus, ...HDDStatus]);
@@ -170,11 +173,28 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
 
 // extened capacity
 import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
+
+// 
+const checkNextStep = computed<boolean>(() => {
+    // 选择RAID 页面
+    if (currentStepName.value === "SelectRAIDPart") {
+        switch (selectRAIDStrategy.value) {
+            case "RAID0":
+            case "RAID1":
+                return selectStorageList.value.length < 2;
+            case "RAID5":
+                return diskListByStorageSpace.value.length
+                    ? selectStorageList.value.length < 1
+                    : selectStorageList.value.length < 3;
+        }
+    }
+    return false;
+});
 </script>
 
 <template name="SelectRAIDPart">
     <!-- 外框布局 -->
-    <div class="space-y-6 mt-6">
+    <div class="space-y-6 mt-6 px-6 flex-grow">
         <!-- select strategy -->
         <!-- 扩容没有策略选择 -->
         <div class="flex space-x-4" v-if="context !== 'Modify'">
@@ -303,5 +323,10 @@ import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
                 </div>
             </div>
         </div>
+    </div>
+    <div class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2">
+        <Button :label="$t('Cancel')" severity="neutral" size="medium" @click="closeEstablishRAID"></Button>
+        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="currentStep > 0"></Button>
+        <Button :label="$t('Next')" severity="primary" size="medium" @click="stepByStep('next')" :disabled="checkNextStep"></Button>
     </div>
 </template>

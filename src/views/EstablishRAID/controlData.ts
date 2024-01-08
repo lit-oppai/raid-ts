@@ -90,7 +90,7 @@ const { defineField, handleSubmit } = useForm({
     })
 })
 const [nameStorage, nameStorageAttrs] = defineField('NameStorageSchema', {
-    validateOnModelUpdate: false,
+    validateOnModelUpdate: false
 })
 const displayNameStorage = ref<boolean>(true)
 

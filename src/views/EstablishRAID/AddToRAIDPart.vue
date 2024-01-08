@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import Image from "primevue/image";
+import Button from "primevue/button";
+import { stepByStep } from "./controlData.ts";
+import { closeEstablishRAID } from "./controlView";
 // import diskSVG from '@assets/img/StorageManager/disk.svg';
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
@@ -43,7 +46,7 @@ watch(newDiskStatus, (val) => {
 
 <template name="AddToRAIDPart">
     <template v-if="newDiskStatus?.length">
-        <div class="mt-6 mb-4">
+        <div class="mt-6 mb-4 px-6">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                 {{
                     $t("Select a new hard drive of at least {size}", {
@@ -52,7 +55,7 @@ watch(newDiskStatus, (val) => {
                 }}
             </span>
         </div>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 px-6">
             <!-- Traversing Part -->
             <label class="flex items-center h-10 bg-white rounded-md border border-neutral-300 gap-2 px-3 cursor-pointer"
                 v-for="(item, index) in newDiskStatus" :key="index" :for="`select${index}`" :class="{
@@ -72,7 +75,14 @@ watch(newDiskStatus, (val) => {
     <template v-else>
         <div class="flex h-full flex-col items-center justify-center bg-white rounded-xl">
             <Image :src="cryingFaceSVG"> </Image>
-            {{ $t('No available hard drives') }}
+            {{ $t("No available hard drives") }}
         </div>
     </template>
+    <div class="flex-grow"></div>
+    <div class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2">
+        <Button :label="$t('Add')" severity="primary" size="medium" @click="stepByStep('next')"
+            v-show="isExitNewDisk" :disabled="!selectedFidDisk"></Button>
+        <Button :label="$t('Close')" severity="primary" size="medium" @click="closeEstablishRAID" v-show="!isExitNewDisk
+            "></Button>
+    </div>
 </template>
