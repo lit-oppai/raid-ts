@@ -1,5 +1,5 @@
 // ref https://codesandbox.io/s/plfs2x?file=/src/App.vue:1006-1069
-import { markRaw, defineAsyncComponent, ref, Ref, watch } from 'vue'
+import { defineAsyncComponent, ref, watch } from 'vue'
 import { useDialog } from 'primevue/usedialog'
 import { currentStepName, changeContext } from './controlData.ts'
 import { EntranceContextType } from './controlData.d'
@@ -7,9 +7,6 @@ import { reloadServiceData } from '@views/StorageManager/controlData.ts'
 
 const EstablishRAID = defineAsyncComponent(
     () => import('@views/EstablishRAID/EstablishRAID.vue')
-)
-const EstablishFooter = defineAsyncComponent(
-    () => import('@views/EstablishRAID/EstablishFooter.vue')
 )
 
 let dialog: any = null
@@ -21,27 +18,31 @@ const initEstablishRAID = (): void => {
     dialog = useDialog()
 }
 
-const footer: Ref<typeof EstablishFooter | null> = ref(null)
 const closable = ref<boolean>(true)
 watch(
     currentStepName,
     newVal => {
         switch (newVal) {
-            case 'OverviewPart':
-                closable.value = true
-                footer.value = null
-                break
+            // case 'OverviewPart':
+            //     closable.value = true
+            //     break
             case 'CreatingRAIDPart':
                 closable.value = false
-                footer.value = null
                 break
             case 'ResultRAIDPart':
                 closable.value = false
-                footer.value = markRaw(EstablishFooter)
                 break
+            // case 'SelectRAIDPart':
+            //     closable.value = true
+            //     break
+            // case 'ConfirmRAIDPart':
+            //     closable.value = true
+            //     break
+            // case 'AddToRAIDPart':
+            //     closable.value = true
+            //     break
             default:
                 closable.value = true
-                footer.value = markRaw(EstablishFooter)
                 break
         }
     },
@@ -113,7 +114,6 @@ const showEstablishRAID = (
             option?.onClose()
         },
         templates: {
-            footer: footer
         }
     })
 }
