@@ -46,7 +46,7 @@
   "Estimated available": "Estimated available",
   "Protection and redundancy": "Protection and redundancy",
   "Previous": "Previous",
-  "Next": "Next step",
+  "Next": "Next",
   "Formatting": "Formatting",
   "Creating": "Creating",
   "During this process, please do not unplug the hard drive or shut down ZimaCube to avoid system errors.": "During this process, please do not unplug the hard drive or shut down ZimaCube to avoid system errors.",
@@ -76,7 +76,7 @@
   "Close": "Close",
   "Confirm": "Confirm",
   "Format": "Format",
-  "Format and Enable": "format and enable",
+  "Format and Enable": "Format and Enable",
   "Enable": "Enable",
   "Used": "Used",
   "ConfirmRAIDPART": {
