@@ -234,7 +234,7 @@ switch (context.value) {
 }
 </script>
 <template>
-    <div class="flex-grow flex flex-col justify-start mt-6 space-y-4 mx-6">
+    <div class="flex-grow flex flex-col justify-start mt-6 space-y-4 px-6">
         <!-- AddToRAIDPart not show. -->
         <div class="bg-gray-50 rounded-lg border border-gray-200 px-6 pt-[2px] grid grid-cols-2"
             v-show="context !== 'FirstAid' && context !== 'Modify' && displayNameStorage">

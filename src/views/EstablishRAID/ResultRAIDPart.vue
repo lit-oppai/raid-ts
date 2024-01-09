@@ -23,13 +23,13 @@ console.log(resultRAIDInfo,111);
 
 </script>
 <template name="ResultRAIDPart">
-    <div class="flex flex-col items-center space-y-7 mt-20">
+    <div class="flex flex-col items-center space-y-7 mt-20 px-6">
         <Image :src="svg"></Image>
         <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
             {{ $t(statusMessage) }}
         </span>
     </div>
-    <div class="mt-3 flex justify-center" v-if="context !== 'EnableStorage'">
+    <div class="mt-3 flex justify-center px-6" v-if="context !== 'EnableStorage'">
         <div v-if="resultRAIDInfo.success && resultRAIDInfo.capacity"
             class="max-w-[20.25rem] flex-grow mx-2 bg-gray-50 rounded-lg border border-gray-200 p-4 space-y-3">
             <div class="flex justify-between">
