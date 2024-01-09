@@ -71,7 +71,10 @@ const createStorage = nameStorageHandleSubmit(
 const createSingleStorage = () => {
     // openAPI.storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
     openAPI.storage
-        .createStorage({ name: nameStorage.value, path: formatePath.value, format: true })
+        .createStorage(
+            { name: nameStorage.value, path: formatePath.value, format: true },
+            { timeout: 600000 }
+        )
         .then((res) => {
             if (res.status === 200) {
                 resultRAIDInfo.success = true;
@@ -101,11 +104,14 @@ const createRAID = () => {
     const raidLevel = Number(selectRAIDStrategy.value?.split("RAID")[1]);
 
     openAPI.raid
-        .createRaid({
-            devices: pathList.value,
-            name: nameStorage.value,
-            raid_level: (raidLevel as unknown) as RaidBodyRaidLevelEnum,
-        })
+        .createRaid(
+            {
+                devices: pathList.value,
+                name: nameStorage.value,
+                raid_level: (raidLevel as unknown) as RaidBodyRaidLevelEnum,
+            },
+            { timeout: 600000 }
+        )
         .then((res) => {
             resultRAIDInfo.capacity = (res.data.size ?? 0 - 0) * 1024;
             resultRAIDInfo.btnText = "Done";
@@ -285,7 +291,8 @@ switch (context.value) {
         </div>
     </div>
     <div class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2">
-        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="currentStep > 0"></Button>
+        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')"
+            v-show="currentStep > 0"></Button>
         <Button :label="$t(nextStepLabelButton)" severity="primary" size="medium" @click="nextStepLabelButtonHandle"
             :disabled="!checkedCreateRAID"></Button>
     </div>
