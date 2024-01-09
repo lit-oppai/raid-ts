@@ -1,15 +1,8 @@
 <script setup lang="ts">
 // import OverlayPanel from 'primevue/overlaypanel';
-import { ref, onMounted, watch } from "vue";
+import { ref, watch } from "vue";
 import { HDDStatus, SSDStatus } from "./controlData.ts";
 
-// const healthyColor = '#28C322'
-// const unhealthyColor = '#F26224'
-// const op = ref<OverlayPanel | null>(null)
-// const toggle = (event) => {
-//     op.value.toggle(event);
-// }
-// ----------------------—————————————————————————————————————————————————————————————————————————————————————————————————————
 let ZimaCubeSketchRef = ref<SVGSVGElement | null>(null);
 const setOpacity = (name: string, opacity: number) => {
     const svg = ZimaCubeSketchRef.value?.querySelectorAll(`[name=${name}]`);
@@ -19,17 +12,6 @@ const setOpacity = (name: string, opacity: number) => {
         });
     }
 };
-onMounted(() => {
-    // setOpacity('disk1', 0.5)
-    // setOpacity('disk2', 0.5)
-    // setOpacity('disk3', 0.5)
-    // setOpacity('disk4', 0.5)
-    // setOpacity('disk5', 0.5)
-    // setOpacity('diskABCD', 0.5)
-    // HDDStatus.value.forEach((item: any, index: any) => {
-    //     setOpacity(`disk${index + 1}`, item.exit ? 1 : 0.5)
-    // })
-});
 
 watch([HDDStatus, SSDStatus], ([newHDDVal, newSSDVal]) => {
     newHDDVal.forEach((item, index) => {
@@ -40,22 +22,6 @@ watch([HDDStatus, SSDStatus], ([newHDDVal, newSSDVal]) => {
         setOpacity(`diskABCD`, 0.5);
     }
 });
-// watch([HDDStatus.value, SSDStatus.value], ([newHDDVal, newSSDVal]) => {
-//     newHDDVal.forEach((item: any, index: any) => {
-//         setOpacity(`disk${index + 1}`, item.exit ? 1 : 0.5)
-//     })
-//     // 全部无效，则设置ABCD无效。
-//     if (newSSDVal.every((item: any) => !item.exit)) {
-//         setOpacity(`diskABCD`, 0.5)
-//     }
-// })
-// ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-// 配置
-// const test1 = 0.5
-// const invalidList = ['disk1', 'disk2', 'disk3', 'disk4', 'disk5', 'diskABCD']
-// ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-// import HHDInHub from './HHDInHub.vue';
-// import DiskCard from './DiskCard.vue';
 </script>
 
 <template>

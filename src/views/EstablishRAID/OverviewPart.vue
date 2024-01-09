@@ -2,8 +2,6 @@
 import CardRAID from "./CardRAID.vue";
 import { selectRAIDStrategy } from "./controlData.ts";
 import { RAIDCandidateDiskCount } from "@views/StorageManager/controlData.ts";
-// import { ref } from 'vue';
-// const selectRAIDStrategy = ref('');
 </script>
 <template name="OverviewPart">
     <div class="mx-6">
