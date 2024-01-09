@@ -19,7 +19,6 @@ if (resultRAIDInfo.success) {
     svg = errorSVG;
     statusMessage = "Fail";
 }
-console.log(resultRAIDInfo,111);
 
 </script>
 <template name="ResultRAIDPart">
