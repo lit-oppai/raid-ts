@@ -12,7 +12,7 @@ const axiosBaseURL = ``;
 const instance = axios.create({
     baseURL: axiosBaseURL,
     // one hour.
-    timeout: 6000000,
+    timeout: 60000,
     headers: {
         "Content-Type": "application/json",
     },
