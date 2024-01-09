@@ -23,24 +23,12 @@ watch(
     currentStepName,
     newVal => {
         switch (newVal) {
-            // case 'OverviewPart':
-            //     closable.value = true
-            //     break
             case 'CreatingRAIDPart':
                 closable.value = false
                 break
             case 'ResultRAIDPart':
                 closable.value = false
                 break
-            // case 'SelectRAIDPart':
-            //     closable.value = true
-            //     break
-            // case 'ConfirmRAIDPart':
-            //     closable.value = true
-            //     break
-            // case 'AddToRAIDPart':
-            //     closable.value = true
-            //     break
             default:
                 closable.value = true
                 break
