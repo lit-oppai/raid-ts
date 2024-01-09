@@ -3,19 +3,21 @@ import { ref } from "vue";
 import { LottieAnimation } from "lottie-web-vue";
 import creatingJSON from "@assets/img/EstablishRAID/creating.json";
 import EasterEgg from "@assets/img/EstablishRAID/easterEgg.json";
-import { context } from "./controlData.ts";
+import { context, onlyFormatSingleStorageSpace } from "./controlData.ts";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-let content:string = ''
+let content: string = ''
+
 switch (context.value) {
     case "FirstAid":
         content = t('Recovery in progress')
         break;
     case "CreateStorage":
-        content = `${t('Formatting')}...`
+        content = onlyFormatSingleStorageSpace.value ? `${t('Formatting')}...` : `${t('Creating')}...`
         break;
     default:
-        content = `${t('Creating')}...` 
+        content = `${t('Creating')}...`
+        break;
 }
 
 const showEasterEgg = ref(window.parent?.icewhale === 'welcome');

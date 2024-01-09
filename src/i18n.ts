@@ -11,6 +11,7 @@ const validLang = (lang: string) => {
 }
 
 const i18n = createI18n({
+    legacy: false,
     locale: validLang(lang) ? lang : "en_us",
     allowComposition: true,
     fallbackLocale: "en_us",

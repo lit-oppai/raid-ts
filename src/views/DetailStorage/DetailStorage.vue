@@ -10,7 +10,7 @@ import { storageInfoMap, reloadServiceData } from "@views/StorageManager/control
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import { showEstablishRAID } from "@views/EstablishRAID/controlView.ts";
-import { nameStorage, displayNameStorage, formatePath } from "@views/EstablishRAID/controlData.ts";
+import { nameStorage, onlyFormatSingleStorageSpace, formatePath } from "@views/EstablishRAID/controlData.ts";
 import { storage } from "@network/index.ts";
 
 const route = useRoute();
@@ -29,12 +29,12 @@ let storageInfo = computed(() => {
 // format or disband function
 const showCheckFormat = (): void => {
     nameStorage.value = storageInfo.value?.label ?? "";
-    displayNameStorage.value = false;
+    onlyFormatSingleStorageSpace.value = true;
     formatePath.value = storageInfo.value?.path ?? "";
     showEstablishRAID("CreateStorage", {
         onClose: () => {
             // router.go(-1)
-            displayNameStorage.value = true;
+            onlyFormatSingleStorageSpace.value = false;
         }
     });
 };

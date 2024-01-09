@@ -4,7 +4,7 @@ import Button from "primevue/button";
 import {
     nameStorage,
     nameStorageAttrs,
-    displayNameStorage,
+    onlyFormatSingleStorageSpace,
     selectRAIDStrategy,
     checkedCreateRAID,
     context,
@@ -243,7 +243,7 @@ switch (context.value) {
     <div class="flex-grow flex flex-col justify-start mt-6 space-y-4 px-6">
         <!-- AddToRAIDPart not show. -->
         <div class="bg-gray-50 rounded-lg border border-gray-200 px-6 pt-[2px] grid grid-cols-2"
-            v-show="context !== 'FirstAid' && context !== 'Modify' && displayNameStorage">
+            v-show="context !== 'FirstAid' && context !== 'Modify' && !onlyFormatSingleStorageSpace">
             <div class="mt-4 mb-10">
                 <span v-t="`ConfirmRAIDPART.labelNameInput.${context}`"
                     class="text-zinc-800 text-base font-semibold font-['Roboto']">
