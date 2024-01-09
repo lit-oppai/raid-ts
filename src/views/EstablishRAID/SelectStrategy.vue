@@ -20,8 +20,7 @@ const disabled = computed(() => {
         'bg-slate-50': strategy !== selectRAIDStrategy,
         'cursor-pointer': !disabled,
         'pointer-events-none opacity-20': disabled,
-    }" class="flex-grow h-9 rounded-md flex items-center px-4 justify-between active:bg-sky-600 group"
-        @click="selectRAIDStrategy = strategy">
+    }" class="flex-grow h-9 rounded-md flex items-center px-4 justify-between active:bg-sky-600 group">
         <span :class="{
             'text-white': strategy === selectRAIDStrategy,
             'text-sky-600': strategy !== selectRAIDStrategy && !disabled,
