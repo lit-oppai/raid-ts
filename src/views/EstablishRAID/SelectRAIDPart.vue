@@ -17,7 +17,6 @@ import { convertSizeToReadable } from "@utils/tools.ts";
 import SelectStrategy from "./SelectStrategy.vue";
 import Button from "primevue/button";
 import { NPopover } from "naive-ui";
-import { closeEstablishRAID } from "./controlView.ts";
 
 // const list = typeof RAIDStrategy
 const strategies: RAIDStrategy[] = ["RAID0", "RAID1", "RAID5"];
@@ -344,7 +343,6 @@ const clearSelectStorageList = (strategy: RAIDStrategy) => {
         </div>
     </div>
     <div class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2">
-        <Button :label="$t('Cancel')" severity="neutral" size="medium" @click="closeEstablishRAID"></Button>
         <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')"
             v-show="currentStep > 0"></Button>
         <Button :label="$t('Next')" severity="primary" size="medium" @click="stepByStep('next')"
