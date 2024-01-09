@@ -93,6 +93,7 @@ const createSingleStorage = () => {
                 reloadServiceData();
                 loadAllNewDiskStatus();
                 closeEstablishRAID();
+                router.go(-1);
             };
         });
 };
