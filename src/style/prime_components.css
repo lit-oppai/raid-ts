@@ -97,6 +97,9 @@ TODO:
                     @apply hidden;
                 }
             }
+            img {
+                @apply w-10 h-10 rounded-md;
+            }
         }
 
         .menu_bar_selector {

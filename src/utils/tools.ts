@@ -41,3 +41,11 @@ export {
     convertSizeToReadable,
     convertSizeToTargetUnit,
 }
+
+export function getUserInfo() {
+    const userInfo = localStorage.getItem('user')
+    if (userInfo) {
+        return JSON.parse(userInfo)
+    }
+    return null
+}

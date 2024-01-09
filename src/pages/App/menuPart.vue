@@ -3,6 +3,9 @@ import Image from 'primevue/image';
 import Button from 'primevue/button';
 import authorImage from '@assets/img/author.svg';
 import { routes } from '@pages/router.ts';
+import { getUserInfo } from '@utils/tools.ts';
+const userName: string = getUserInfo().username;
+const avatar: string = `v1/users/avatar?token=${localStorage.getItem("access_token")}`;
 </script>
 <!-- css components: os_panel menu_bar -->
 <template>
@@ -11,9 +14,9 @@ import { routes } from '@pages/router.ts';
             Setting
         </span>
         <div class="menu_bar_author">
-            <Image :src="authorImage"></Image>
+            <Image :src="avatar || authorImage"></Image>
             <span class="author_name">
-                name
+                {{ userName }}
             </span>
         </div>
 
