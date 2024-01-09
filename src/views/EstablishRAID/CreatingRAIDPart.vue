@@ -1,15 +1,31 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { LottieAnimation } from "lottie-web-vue";
 import creatingJSON from "@assets/img/EstablishRAID/creating.json";
 import EasterEgg from "@assets/img/EstablishRAID/easterEgg.json";
 import { context } from "./controlData.ts";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+let content:string = ''
+switch (context.value) {
+    case "FirstAid":
+        content = t('Recovery in progress')
+        break;
+    case "CreateStorage":
+        content = `${t('Formatting')}...`
+        break;
+    default:
+        content = `${t('Creating')}...` 
+}
+
+const showEasterEgg = ref(window.parent?.icewhale === 'welcome');
 </script>
 <template name="CreatingRAIDPart">
     <div class="flex flex-col items-center space-y-2 pt-[5%]">
         <LottieAnimation :animation-data="creatingJSON" loop class="w-[6.25rem] h-[6.25rem]" />
-        <LottieAnimation :animation-data="EasterEgg" loop v-if="false" />
+        <LottieAnimation :animation-data="EasterEgg" loop v-if="showEasterEgg" />
         <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-            {{ context === 'FirstAid' ? $t('Recovery in progress') : $t("Creating...") }}
+            {{ content }}
         </span>
     </div>
     <div class="mt-3 mx-6">

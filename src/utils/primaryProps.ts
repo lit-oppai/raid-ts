@@ -2,6 +2,7 @@ let WUJIE_PROPS: any = {}
 
 declare global {
     interface Window {
+        icewhale: string
         $wujie: {
             props: any
         }
