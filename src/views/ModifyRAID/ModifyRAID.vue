@@ -58,9 +58,9 @@ const loadRaid = async () => {
                 res.data.data?.[0].shortage === true;
             needNewDisk.value = res.data.data?.[0].shortage ?? false;
             expansionMinDiskSize.value = minBy(res.data.data?.[0].devices, "size")?.size ?? 0;
-            isReady.value = true;
-                // res.data.data?.[0].status === "idle" ||
-                // (res.data.data?.[0].status as string) === "";
+            isReady.value //= true;
+                res.data.data?.[0].status === "idle" ||
+                (res.data.data?.[0].status as string) === "";
             showAddingDiskButton.value = res.data.data?.[0].shortage === true;
         })
         .finally(() => {
