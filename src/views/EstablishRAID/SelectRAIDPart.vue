@@ -1,9 +1,18 @@
 <script setup lang="ts">
 import { watch, ref, computed } from "vue";
 import { RAIDStrategy } from "./controlData.d";
-import { selectStorageList, selectRAIDStrategy, context, stepByStep } from "./controlData";
+import {
+    selectStorageList,
+    selectRAIDStrategy,
+    context,
+    stepByStep,
+} from "./controlData";
 import { SSDStatus, HDDStatus } from "@views/StorageManager/controlData.ts";
-import { expansionMinDiskSize, currentStepName, currentStep } from "@views/EstablishRAID/controlData.ts";
+import {
+    expansionMinDiskSize,
+    currentStepName,
+    currentStep,
+} from "@views/EstablishRAID/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import SelectStrategy from "./SelectStrategy.vue";
 import Button from "primevue/button";
@@ -174,7 +183,7 @@ const obtainCurrentDiskCardDescription = (item: UI_DISK_INFO_TYPE, key: string) 
 // extened capacity
 import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
 
-// 
+//
 const checkNextStep = computed<boolean>(() => {
     // 选择RAID 页面
     if (currentStepName.value === "SelectRAIDPart") {
@@ -190,6 +199,14 @@ const checkNextStep = computed<boolean>(() => {
     }
     return false;
 });
+
+// clean selectStorageList.
+const clearSelectStorageList = (strategy: RAIDStrategy) => {
+    if (strategy !== selectRAIDStrategy.value) {
+        selectStorageList.value = [];
+        selectRAIDStrategy.value = strategy;    
+    }
+};
 </script>
 
 <template name="SelectRAIDPart">
@@ -199,7 +216,7 @@ const checkNextStep = computed<boolean>(() => {
         <!-- 扩容没有策略选择 -->
         <div class="flex space-x-4" v-if="context !== 'Modify'">
             <SelectStrategy v-for="strategy in strategies" :key="strategy" :strategy="strategy"
-                @click="selectStorageList = []"></SelectStrategy>
+                @click="clearSelectStorageList(strategy)"></SelectStrategy>
         </div>
         <!-- Please select the desired hard disk -->
         <div>
@@ -237,7 +254,7 @@ const checkNextStep = computed<boolean>(() => {
                             </label>
                         </template>
                         <div v-if="item?.unused && !item.health">{{ $t("unhealthy") }}</div>
-                        <div v-else-if="item?.unused">{{ $t('Available') }}</div>
+                        <div v-else-if="item?.unused">{{ $t("Available") }}</div>
                         <div v-else-if="context === 'Modify' && item.size && item.size < expansionMinDiskSize
                             ">
                             {{
@@ -247,7 +264,9 @@ const checkNextStep = computed<boolean>(() => {
                             }}
                         </div>
                         <div v-else>
-                            {{ $t("Used by {assignment}", { assignment: item?.allocatedStorageSpace }) }}
+                            {{
+                                $t("Used by {assignment}", { assignment: item?.allocatedStorageSpace })
+                            }}
                         </div>
                     </NPopover>
                 </template>
@@ -326,7 +345,9 @@ const checkNextStep = computed<boolean>(() => {
     </div>
     <div class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2">
         <Button :label="$t('Cancel')" severity="neutral" size="medium" @click="closeEstablishRAID"></Button>
-        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')" v-show="currentStep > 0"></Button>
-        <Button :label="$t('Next')" severity="primary" size="medium" @click="stepByStep('next')" :disabled="checkNextStep"></Button>
+        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')"
+            v-show="currentStep > 0"></Button>
+        <Button :label="$t('Next')" severity="primary" size="medium" @click="stepByStep('next')"
+            :disabled="checkNextStep"></Button>
     </div>
 </template>
