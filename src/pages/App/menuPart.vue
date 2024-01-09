@@ -5,6 +5,7 @@ import authorImage from '@assets/img/author.svg';
 import { routes } from '@pages/router.ts';
 import { getUserInfo } from '@utils/tools.ts';
 const userName: string = getUserInfo().username;
+// TODO ： 1、 local storage 相关没有 ts 提示 -- 提出常量部分作为映射。 2、本地存储的更新问题 -- 同步的门槛需要确定。
 const avatar: string = `v1/users/avatar?token=${localStorage.getItem("access_token")}`;
 </script>
 <!-- css components: os_panel menu_bar -->
