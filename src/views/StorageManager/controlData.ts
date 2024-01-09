@@ -306,5 +306,9 @@ export {
     RAIDCandidateDiskCount,
     usageStatus,
     IndexForDiskHubMap,
-    isLoadingStorageInfo
+    isLoadingStorageInfo,
+
+    // TODO: 统一命名   
+    // TODO：数据应该在不被使用的时候清除，数据应该有清晰地管理周期。-- 引入Hook
+
 }
