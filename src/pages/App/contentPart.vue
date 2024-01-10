@@ -3,8 +3,8 @@ import messageBus from "@utils/messageBus";
 import { useRoute, useRouter } from "vue-router";
 // import router from '@pages/router.ts';
 import { ref, watch } from "vue";
-// import { useI18n } from "vue-i18n";
-// const { t } = useI18n();
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 //获取路由中的 mate 信息
 const route = useRoute();
 const router = useRouter();
@@ -13,7 +13,7 @@ const title = ref<string>();
 watch(
     () => route.meta.title,
     () => {
-        title.value = route.meta.title as string;
+        title.value = t(`${route.meta.title}`);
     }
 );
 function onClose() {
@@ -32,7 +32,7 @@ function onClose() {
                     <i class="casa-left-outline"></i>
                 </div>
                 <div class="top_title">
-                    <span>{{ $t(title as string) }}</span>
+                    <span>{{ title }}</span>
                 </div>
             </div>
         </transition>
