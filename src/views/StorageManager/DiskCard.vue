@@ -33,25 +33,27 @@ const dynamicComponent: ReturnType<typeof defineAsyncComponent> = defineAsyncCom
 const pilotLampOpacity = computed(() => {
     return ["A", "B", "C", "D"].includes(props.part) ? 0 : 1;
 });
+
 const exitLampOpacity = computed(() => {
     return props.source.exit ? 1 : 0.5;
 });
+
 const statuTitle = computed(() => {
     if (!props.source.exit) {
         return "Empty";
-    } else if (props.source.unused) {
-        return "";
     }
     return (props.source.health ? "healthy" : "unhealthy") + " {temperature}℃";
 });
+
 const statuColor = computed(() => {
-    if (!props.source.exit || props.source.health && props.source.unused) {
+    if (!props.source.exit) {
         return unknownColor;
     }
     return props.source.health ? healthyColor : unhealthyColor;
 });
+
 const statuClass = computed(() => {
-    if (!props.source.exit || props.source.unused) {
+    if (!props.source.exit) {
         return "text-zinc-800 font-normal";
     }
     return props.source.health
