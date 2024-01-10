@@ -234,13 +234,11 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
 
             if (isRaid) {
                 storageSize *= 1024
-                storageUsedSize *= 1024
             }
             fileFree += storageSize - storageUsedSize
             filesUsage += storageUsedSize
             storageInfoMap.set(name, {
                 uuid: storage?.uuid,
-                // "mount_point": string,
                 name: name,
                 size: storageSize,
                 avail: storageSize - storageUsedSize,
@@ -250,9 +248,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                     : storage?.disk_type?.toUpperCase() === 'SATA'
                         ? 'HDD'
                         : 'SSD') as STORAGE_TYPE,
-                // disk_type: storage?.disk_type?.toUpperCase() as DISK_TYPE,
                 path: storage.path,
-                // "drive_name": string,
                 raid: isRaid,
                 raid_level: storage.raid_level,
                 label: name,
