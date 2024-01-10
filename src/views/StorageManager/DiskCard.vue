@@ -93,7 +93,6 @@ const statuClass = computed(() => {
             </span>
         </div>
         <div v-if="statuTitle">
-            <!-- <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">状态 : </span> -->
             <span class="text-sm font-['Roboto'] leading-5" :class="statuClass">{{
                 $t(statuTitle, {
                     temperature: props.source.temperature,
@@ -110,7 +109,6 @@ const statuClass = computed(() => {
             }}</span>
         </div>
         <div v-else>
-            <!-- <span class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5">类型 : </span> -->
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{
                 source?.type || source?.expect_type
             }}</span>
