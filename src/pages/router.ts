@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
 declare type RouteChildMeta = RouteRecordRaw & {
     meta: {
@@ -21,7 +21,7 @@ export const routes: RouteMeta[] = [
         path: '/',
         // component: () => import('./home'),
         redirect: 'storage',
-        name: 'home',
+        // name: 'home',
         icon: 'casa-settings-outline',
         meta: {
             title: 'Home',
@@ -30,7 +30,7 @@ export const routes: RouteMeta[] = [
     {
         path: '/network',
         component: () => import('./home'),
-        name: 'network',
+        // name: 'network',
         icon: 'casa-network-outline',
         meta: { title: 'Network', }
     },
@@ -65,7 +65,7 @@ export const routes: RouteMeta[] = [
     },
 ];
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 });
 
