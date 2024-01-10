@@ -64,11 +64,13 @@ const filesUsageRate = computed(() => {
     ).toFixed(0);
 });
 const filesFreeRate = computed(() => {
-    return (
-        (usageStatus.value?.FilesFree /
-            (usageStatus.value?.FilesUsage + usageStatus.value?.FilesFree)) *
-        100
-    ).toFixed(0);
+    return usageStatus.value?.FilesFree
+        ? (
+            (usageStatus.value?.FilesFree /
+                (usageStatus.value?.FilesUsage + usageStatus.value?.FilesFree)) *
+            100
+        ).toFixed(0)
+        : 100;
 });
 onBeforeMount(() => {
     initStoragePageData();
@@ -83,7 +85,7 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
         }
         router.push({
             path: `/storage/ModifyRAID/${label}`,
-            query: { path }
+            query: { path },
         });
     } else {
         router.push(`/storage/DetailStorage/${label}`);
@@ -112,6 +114,7 @@ socket.on("local-storage:disk:removed", () => {
         </div>
         <!-- Storage Usage Part -->
         <div class="storage_useage os_bg_white_card flex flex-col px-4 py-3">
+            <!-- Title -->
             <div class="w-full flex justify-between">
                 <div class="flex items-center space-x-1.5">
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">ZimaCube</span>
@@ -123,12 +126,14 @@ socket.on("local-storage:disk:removed", () => {
                         $t("Available")
                     }}</span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">
-                        {{ convertSizeToReadable(usageStatus.FilesFree).replace("0.00B", "--") }}
+                        {{ convertSizeToReadable(usageStatus.FilesFree) }}
                     </span>
                 </div>
             </div>
+            <!-- process bar -->
             <!-- TODO: Respondency -->
             <div class="flex space-x-3 mt-1">
+                <!-- System info -->
                 <div class="w-[120px] flex-shrink-0 grid grid-cols-2 gap-y-2">
                     <div class="col-span-2 flex flex-nowrap rounded-sm overflow-hidden cursor-help">
                         <NPopover trigger="hover">
@@ -190,7 +195,9 @@ socket.on("local-storage:disk:removed", () => {
                         </span>
                     </div>
                 </div>
+                <!-- Storage info -->
                 <div class="flex-grow space-y-2">
+                    <!-- Storage process bar -->
                     <div class="col-span-2 flex flex-nowrap rounded-sm overflow-hidden cursor-help">
                         <NPopover trigger="hover">
                             <template #trigger>
@@ -223,7 +230,8 @@ socket.on("local-storage:disk:removed", () => {
                             </div>
                         </NPopover>
                     </div>
-                    <div class="flex justify-between" v-if="usageStatus.FilesUsage || usageStatus.FilesFree">
+                    <!-- Storage remake -->
+                    <div class="flex justify-between">
                         <div class="space-x-1">
                             <span class="bg-green-400 w-1.5 h-1.5 rounded-sm inline-block"></span>
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">Files</span>
