@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, /* onMounted */ } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
@@ -10,8 +10,13 @@ import { storageInfoMap, reloadServiceData } from "@views/StorageManager/control
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import useEstablishRAID from "@views/EstablishRAID/controlView.ts";
-import { nameStorage, onlyFormatSingleStorageSpace, formatePath } from "@views/EstablishRAID/controlData.ts";
-import { storage } from "@network/index.ts";
+import {
+    nameStorage,
+    onlyFormatSingleStorageSpace,
+    formatePath,
+} from "@views/EstablishRAID/controlData.ts";
+import { storage, /* disk */ } from "@network/index.ts";
+/* import { DiskInfo } from "@icewhale/zimaos-localstorage-openapi"; */
 
 const { showEstablishRAID } = useEstablishRAID();
 const route = useRoute();
@@ -24,8 +29,24 @@ let storageInfo = computed(() => {
     if (storageName === EnumStorageNames.System) {
         return sysStorageInfo;
     }
-    return storageInfoMap.get(storageName)
+    // console.log(storageInfoMap, "storageInfoMap");
+
+    return storageInfoMap.get(storageName);
 });
+
+/* onMounted(async () => {
+    const diskInfo: DiskInfo = await disk
+        .getDiskInfo(storageInfo.value?.path ?? "")
+        .then((res) => {
+            if (res.data.data) return res.data.data;
+            return {} as DiskInfo;
+        })
+        .catch((err) => {
+            console.log(err);
+            return {} as DiskInfo;
+        });
+    console.log(diskInfo, "diskInfo");
+}); */
 
 // format or disband function
 const showCheckFormat = (): void => {
@@ -36,7 +57,7 @@ const showCheckFormat = (): void => {
         onClose: () => {
             // router.go(-1)
             onlyFormatSingleStorageSpace.value = false;
-        }
+        },
     });
 };
 const isLoadingDisabledButton = ref<boolean>(false);
@@ -102,7 +123,7 @@ const disabledStorage = async (): Promise<void> => {
         <div class="bg-white rounded-lg h-11 flex items-center px-4">
             <Image :src="warningSVG" class="h-6 w-6"></Image>
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] flex-grow ml-3">
-                {{ $t("Format and Disable")}}
+                {{ $t("Format and Disable") }}
             </span>
 
             <Button :label="$t('Format')" severity="accent" size="medium" @click="showCheckFormat" class="mr-4"></Button>
