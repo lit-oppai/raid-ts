@@ -22,7 +22,7 @@ const avatar: string = `/v1/users/avatar?token=${localStorage.getItem("access_to
         </div>
 
         <div class="menu_bar_selector">
-            <router-link v-for="item in routes" :to="item.path" class="os_menu">
+            <router-link v-for="item in routes.filter(t=> t?.name !== undefined)" :to="item.path" class="os_menu">
                 <Button :label="(item.name as string)" :icon="item.icon">
                 </Button>
             </router-link>
