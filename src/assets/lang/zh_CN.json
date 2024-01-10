@@ -77,7 +77,7 @@
   "Close": "关闭",
   "Confirm": "确认",
   "Format": "格式化",
-  "Format and Enable": "格式化硬盘",
+  "Format and Enable": "格式化并启用",
   "Enable": "启用",
   "Used": "已启用",
   "ConfirmRAIDPART": {
@@ -125,5 +125,6 @@
   "At least {size}": "至少 {size}",
   "Unknown": "未知",
   "Used by {assignment}": "使用中：{assignment}",
-  "Used by": "被使用中："
+  "Used by": "被使用中：",
+  "Format hard drive": "格式化磁盘"
 }
