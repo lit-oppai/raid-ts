@@ -126,5 +126,6 @@
   "Unknown": "未知",
   "Used by {assignment}": "使用中：{assignment}",
   "Used by": "被使用中：",
-  "Format hard drive": "格式化磁盘"
+  "Format hard drive": "格式化磁盘",
+  "Setting": "设置"
 }
