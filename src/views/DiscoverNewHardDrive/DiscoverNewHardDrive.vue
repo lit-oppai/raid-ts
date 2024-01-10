@@ -14,10 +14,7 @@ import {
 onBeforeMount(() => {
     loadAllNewDiskStatus();
 });
-import {
-    closeEstablishRAID,
-    showEstablishRAID,
-} from "@views/EstablishRAID/controlView.ts";
+import useEstablishRAID from "@views/EstablishRAID/controlView.ts";
 import {
     resultRAIDInfo,
     nameStorage,
@@ -26,6 +23,8 @@ import {
 import { storage } from "@network/index.ts";
 import { storageNameCollection } from "@views/StorageManager/controlData.ts";
 import router from "@/pages/router";
+
+const { showEstablishRAID, closeEstablishRAID } = useEstablishRAID();
 const showCheckFormat = (type: "HDD" | "SSD", path: string = ""): void => {
     nameStorage.value = storageNameCollection.beNamed(type);
     formatePath.value = path;

@@ -9,10 +9,11 @@ import warningSVG from "@assets/img/StorageManager/warning.svg";
 import { storageInfoMap, reloadServiceData } from "@views/StorageManager/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
-import { showEstablishRAID } from "@views/EstablishRAID/controlView.ts";
+import useEstablishRAID from "@views/EstablishRAID/controlView.ts";
 import { nameStorage, onlyFormatSingleStorageSpace, formatePath } from "@views/EstablishRAID/controlData.ts";
 import { storage } from "@network/index.ts";
 
+const { showEstablishRAID } = useEstablishRAID();
 const route = useRoute();
 const router = useRouter();
 const storageName = route.params.storageName as string;
