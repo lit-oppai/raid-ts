@@ -3,7 +3,7 @@ import { ref, onMounted } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import { stepByStep } from "./controlData.ts";
-import { closeEstablishRAID } from "./controlView";
+import useEstablishRAID from "./controlView";
 // import diskSVG from '@assets/img/StorageManager/disk.svg';
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
@@ -11,6 +11,8 @@ import cryingFaceSVG from "@assets/img/EstablishRAID/cryingFace.svg";
 import { disk } from "@network/index.ts";
 import { Disk } from "@icewhale/zimaos-localstorage-openapi";
 import { convertSizeToReadable } from "@utils/tools.ts";
+
+const { closeEstablishRAID } = useEstablishRAID();
 const newDiskStatus = ref<Disk[]>();
 const loadNewDiskStatus = async () => {
     await disk.getDisks("show").then((res) => {

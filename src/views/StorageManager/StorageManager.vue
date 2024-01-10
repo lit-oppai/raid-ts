@@ -10,11 +10,7 @@ import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
 import warningRedSVG from "@assets/img/StorageManager/warningRed.svg";
 import cryingFaceSVG from "@assets/img/EstablishRAID/cryingFace.svg";
-
-import {
-    initEstablishRAID,
-    showEstablishRAID,
-} from "@views/EstablishRAID/controlView.ts";
+import useEstablishRAID from "@views/EstablishRAID/controlView.ts";
 import ZimaCubeCard from "@views/StorageManager/ZimaCubeCard.vue";
 import initStoragePageData from "./controlData.ts";
 import {
@@ -26,6 +22,8 @@ import {
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
+
+const { showEstablishRAID, initEstablishRAID } = useEstablishRAID();
 const route = useRoute();
 const router = useRouter();
 const isFirstRoutePath = computed(() => route.matched.length === 1);

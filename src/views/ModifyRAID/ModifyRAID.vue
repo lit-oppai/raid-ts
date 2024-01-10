@@ -9,10 +9,7 @@ import warningSVG from "@assets/img/StorageManager/warning.svg";
 import warningRedSVG from "@assets/img/StorageManager/warningRed.svg";
 import warningIntense from "@assets/img/StorageManager/warningIntense.svg";
 // import Warning from '@assets/img/StorageManager/warning.vue';
-import {
-    showEstablishRAID,
-    initEstablishRAID,
-} from "@views/EstablishRAID/controlView.ts";
+import useEstablishRAID from "@views/EstablishRAID/controlView.ts";
 import {
     selectRAIDStrategy,
     expansionMinDiskSize,
@@ -25,6 +22,7 @@ import { /*disk,*/ raid } from "@network/index.ts";
 import { Device } from "@icewhale/zimaos-localstorage-openapi";
 import minBy from "lodash/minBy";
 
+const { showEstablishRAID, initEstablishRAID } = useEstablishRAID();
 const route = useRoute();
 const storageName = route.params.storageName as string;
 const storagePath = route.query.path as string;

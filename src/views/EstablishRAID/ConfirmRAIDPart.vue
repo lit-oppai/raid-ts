@@ -20,9 +20,11 @@ import {
     storageNameCollection,
     reloadServiceData,
 } from "@views/StorageManager/controlData.ts";
-import { closeEstablishRAID } from "./controlView";
+import useEstablishRAID from "./controlView";
 import { loadAllNewDiskStatus } from "@views/DiscoverNewHardDrive/controlData.ts";
 import { useRouter } from "vue-router";
+
+const { closeEstablishRAID } = useEstablishRAID();
 const router = useRouter();
 
 if (context.value === "Create" && selectRAIDStrategy.value !== "") {
