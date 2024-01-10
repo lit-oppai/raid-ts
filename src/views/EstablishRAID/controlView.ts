@@ -42,8 +42,8 @@ interface ShowType {
         title: string
     }
 }
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+// import { useI18n } from 'vue-i18n'
+// const { t } = useI18n()
 const showEstablishRAID = (
     type: keyof ShowType = 'Create',
     option: { onClose: () => void, [key: string]: any } = { onClose: () => { } }
