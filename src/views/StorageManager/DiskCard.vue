@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { defineAsyncComponent, computed } from "vue";
+import { defineAsyncComponent, computed, PropType } from "vue";
 import { NPopover } from "naive-ui";
 import { convertSizeToReadable } from "@utils/tools.ts";
+import { UI_DISK_INFO_TYPE } from "./controlData.d";
 
 const healthyColor = "#28C322";
 const unhealthyColor = "#F26224";
@@ -12,7 +13,7 @@ const props = defineProps({
         required: true,
     },
     source: {
-        type: Object,
+        type: Object as PropType<UI_DISK_INFO_TYPE>,
         default: () => {
             return {
                 health: false,
@@ -46,7 +47,7 @@ const statuTitle = computed(() => {
 });
 
 const statuColor = computed(() => {
-    if (!props.source.exit) {
+    if (!props.source.exit || (props.source.unused && props.source.health)) {
         return unknownColor;
     }
     return props.source.health ? healthyColor : unhealthyColor;
