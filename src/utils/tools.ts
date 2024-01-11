@@ -1,5 +1,5 @@
 // 单位转换:bit 转 GB、TB、PB、EB、ZB、YB
-const convertSizeToReadable = (size: number | string) => {
+const convertSizeToReadable = (size: number | string | undefined = 0) => {
     const unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
     let index = 0
     if (typeof size === 'string') {
