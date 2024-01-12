@@ -84,7 +84,7 @@ const disabledStorage = async (): Promise<void> => {
 <template>
     <!-- Storage Info List -->
     <div class="mt-6 mb-2">
-        <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> Storage </span>
+        <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> {{ $t('Hard Drive') }} </span>
     </div>
     <div class="os_bg_white_card mt-2">
         <div class="flex px-3 space-x-3 items-center rounded-md os_list">
