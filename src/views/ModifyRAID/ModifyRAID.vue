@@ -149,16 +149,16 @@ import {
     extendRaidPath,
     nameStorage,
 } from "@views/EstablishRAID/controlData.ts";
-import { IndexForDiskHubMap } from "@views/StorageManager/controlData.ts";
+import { INDEX_TO_DISK_HUB_MAP } from "@views/StorageManager/const.ts";
 function getDiskHubIndex(index: number): string {
-    return IndexForDiskHubMap.get(index) ?? "";
+    return INDEX_TO_DISK_HUB_MAP.get(index) ?? "";
 }
 const extenedCapacity = (): void => {
     // perpare data
     selectRAIDStrategy.value = ("RAID" + storageLevel.value) as RAIDStrategy;
     // expansionMinDiskSize 已经赋值
     diskListByStorageSpace.value = diskInfoByStorageSpace.value.map((item) => {
-        return IndexForDiskHubMap.get(item.index as number);
+        return INDEX_TO_DISK_HUB_MAP.get(item.index as number);
     }) as string[];
     extendRaidPath.value = storagePath ?? "";
     nameStorage.value = storageName ?? "";

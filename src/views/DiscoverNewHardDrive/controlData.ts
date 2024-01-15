@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { disk } from "@network/index.ts";
-import { IndexForDiskHubMap } from "@views/StorageManager/controlData.ts";
+import { INDEX_TO_DISK_HUB_MAP } from "@views/StorageManager/const.ts";
 const allNewDiskStatus = ref(new Map());
 const loadAllNewDiskStatus = async (): Promise<void> => {
     return disk.getDisks("show").then((res) => {
@@ -12,7 +12,7 @@ const loadAllNewDiskStatus = async (): Promise<void> => {
                     .map((item) => {
                         // TODO: 数据处理，理应与 storage 数据模型保持一致，后续理应创建统一处理后端数据的函数
                         item.type = item.rota ? 'HDD' : 'SSD';
-                        return [IndexForDiskHubMap.get(item.index as number), item];
+                        return [INDEX_TO_DISK_HUB_MAP.get(item.index as number), item];
                     })
             );
         }
