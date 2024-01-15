@@ -5,8 +5,8 @@ import openAPI from '@network/index.ts'
 // Setting Data Types && Naming conventions for Constants.
 import {
     DiskDriveType,
-    DISK_INFO_API_SCHEMA,
-    DISK_INFO_UI_TYPE,
+    DISK_API_SCHEMA,
+    DISK_UI_TYPE,
     StorageType,
     STORAGE_API_SCHEMA,
     STORAGE_UI_TYPE,
@@ -14,7 +14,7 @@ import {
 } from './controlData.d'
 
 // Data Acquisition.
-async function getDiskInfo(): Promise<DISK_INFO_API_SCHEMA[] | any> {
+async function getDiskInfo(): Promise<DISK_API_SCHEMA[] | any> {
     return openAPI.disk
         .getDisks()
         .then((res: any) => res.data.data)
@@ -32,8 +32,8 @@ async function getStorageInfo(): Promise<STORAGE_API_SCHEMA[]> {
     return [...a, ...b]
 }
 
-const HDDStatus = reactive(new Map<string, DISK_INFO_UI_TYPE>())
-const SSDStatus = reactive(new Map<string, DISK_INFO_UI_TYPE>())
+const HDDStatus = reactive(new Map<string, DISK_UI_TYPE>())
+const SSDStatus = reactive(new Map<string, DISK_UI_TYPE>())
 //  除去系统盘之外的 storage
 const storageInfoMap = reactive(new Map<string, STORAGE_UI_TYPE>())
 const unhealthyLable = ref<string>()
@@ -58,7 +58,7 @@ const initDiskInfo = async (): Promise<void> => {
     const disksInfo = await getDiskInfo()
     rinseDiskInfo(disksInfo)
 }
-const rinseDiskInfo = (disksInfo: DISK_INFO_API_SCHEMA[]) => {
+const rinseDiskInfo = (disksInfo: DISK_API_SCHEMA[]) => {
     RAIDCandidateDiskCount.value = 0
     // clear
     HDDStatus.clear();

@@ -1,7 +1,7 @@
 import { Raid as RAID_API_SCHEMA, Storage as STORAGE_API_SCHEMA } from "@icewhale/zimaos-localstorage-openapi"
 export type DiskDriveType = 'SSD' | 'HDD'
 export type RaidStrategy = 'RAID0' | 'RAID1' | 'RAID5'
-export interface DISK_INFO_API_SCHEMA {
+export interface DISK_API_SCHEMA {
     index: number
     avail: boolean
     name: string
@@ -31,7 +31,7 @@ export interface DISK_INFO_API_SCHEMA {
     support: boolean
     rota: boolean
 }
-export type DISK_INFO_UI_TYPE = {
+export type DISK_UI_TYPE = {
     exit: boolean
     health: boolean
     temperature: number
