@@ -145,7 +145,7 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
                 exit: false,
                 health: false,
                 temperature: 0,
-                expect_type: '2.5inch SSD'
+                expect_type: 'm.2 SSD'
             })
         }
     }
