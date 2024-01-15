@@ -4,7 +4,7 @@
 // 4. RAID1：Safe - Storage
 // 5. RAID0：Quick - Storage
 // 6. RAID5：Main - Storage
-export enum EnumStorageNames {
+export enum STORAGE_NAME_ENUM {
     System = 'ZimaOS-HD',
     HDD = 'HDD-Storage',
     SSD = 'SSD-Storage',

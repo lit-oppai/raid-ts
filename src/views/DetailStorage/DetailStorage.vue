@@ -22,11 +22,11 @@ const { showEstablishRAID } = useEstablishRAID();
 const route = useRoute();
 const router = useRouter();
 const storageName = route.params.storageName as string;
-import { EnumStorageNames } from "@views/StorageManager/const.ts";
+import { STORAGE_NAME_ENUM } from "@views/StorageManager/const.ts";
 import { sysStorageInfo } from "@views/StorageManager/controlData.ts";
 
 let storageInfo = computed(() => {
-    if (storageName === EnumStorageNames.System) {
+    if (storageName === STORAGE_NAME_ENUM.System) {
         return sysStorageInfo;
     }
     // console.log(storageInfoMap, "storageInfoMap");
@@ -113,7 +113,7 @@ const disabledStorage = async (): Promise<void> => {
         </div>
     </div>
     <!-- General -->
-    <div class="mt-6 space-y-2" v-if="storageName !== EnumStorageNames.System">
+    <div class="mt-6 space-y-2" v-if="storageName !== STORAGE_NAME_ENUM.System">
         <div class="">
             <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                 {{ $t("General") }}
