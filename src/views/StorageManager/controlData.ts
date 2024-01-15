@@ -51,7 +51,7 @@ const usageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     FilesFree: 0
 })
 import { INDEX_TO_DISK_HUB_MAP } from './const.ts'
-import { EnumStorageNames } from './const.ts'
+import { STORAGE_NAME_ENUM } from './const.ts'
 // --- DATA CLEANING ---
 // load disk info
 const initDiskInfo = async (): Promise<void> => {
@@ -153,8 +153,8 @@ class StorageNameCollection {
     hasName(name: string): boolean {
         return this.storageNames.has(name)
     }
-    beNamed(storageType: keyof typeof EnumStorageNames): string {
-        const prefixName = EnumStorageNames[storageType]
+    beNamed(storageType: keyof typeof STORAGE_NAME_ENUM): string {
+        const prefixName = STORAGE_NAME_ENUM[storageType]
         if (!this.hasName(prefixName)) {
             return prefixName
         }
@@ -192,7 +192,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_API_SCHEMA[]) => {
         if (name === 'System') {
             dataUsage = Number(storage.used)
             dataFree = Number(storage.avail)
-            name = EnumStorageNames.System
+            name = STORAGE_NAME_ENUM.System
             sysStorageInfo = {
                 name,
                 uuid: storage?.uuid,
