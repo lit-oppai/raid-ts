@@ -51,7 +51,7 @@ const usageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     FilesFree: 0
 })
 import { INDEX_TO_DISK_HUB_MAP } from './const.ts'
-import { EnumStorageNames } from './const'
+import { EnumStorageNames } from './const.ts'
 // --- DATA CLEANING ---
 // load disk info
 const initDiskInfo = async (): Promise<void> => {
