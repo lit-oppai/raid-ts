@@ -1,7 +1,7 @@
 import { Raid as RAID_API_SCHEMA, Storage as STORAGE_API_SCHEMA } from "@icewhale/zimaos-localstorage-openapi"
-export type DISK_TYPE = 'SSD' | 'HDD'
-export type RAID_STRATEGY_TYPE = 'RAID0' | 'RAID1' | 'RAID5'
-export type DISK_INFO_TYPE = {
+export type DiskDriveType = 'SSD' | 'HDD'
+export type RaidStrategy = 'RAID0' | 'RAID1' | 'RAID5'
+export interface DISK_INFO_API_SCHEMA {
     index: number
     avail: boolean
     name: string
@@ -9,7 +9,7 @@ export type DISK_INFO_TYPE = {
     health: string
     free: boolean
     temperature: number
-    type: DISK_TYPE
+    type: DiskDriveType
     path: string
     model: string
     // "need_format": boolean,
@@ -31,13 +31,13 @@ export type DISK_INFO_TYPE = {
     support: boolean
     rota: boolean
 }
-export type UI_DISK_INFO_TYPE = {
+export type DISK_INFO_UI_TYPE = {
     exit: boolean
     health: boolean
     temperature: number
     name?: string
     size?: number
-    type?: DISK_TYPE
+    type?: DiskDriveType
     expect_type?: string
     path?: string
     model?: string
@@ -45,7 +45,7 @@ export type UI_DISK_INFO_TYPE = {
     // 2023年12月01日 不再使用备选盘，只有未使用的盘可以进入 raid
     // "candidate"?: boolean,
     allocatedStorageSpace?: string
-    RaidStrategy?: RAID_STRATEGY_TYPE | string
+    RaidStrategy?: RaidStrategy | string
     // "occupied"?: string,
     unused?: boolean
     children?: Array<
@@ -63,32 +63,13 @@ export type UI_DISK_INFO_TYPE = {
     children_number?: number
     support?: boolean
 }
-export type STORAGE_TYPE = DISK_TYPE | RAID_STRATEGY_TYPE
+export type StorageType = DiskDriveType | RaidStrategy
 
-/* type RAID_API_SCHEMA = {
-    devices: Array<{
-        health: boolean
-        model: string
-        path: string
-        size: number
-        type: string
-    }>
-    finish_time: number
-    mount_point: string
-    name: string
-    path: string
-    percentage: number
-    raid_level: number
-    shortage: boolean
-    size: number
-    status: string
-    used: number
-} */
+export type STORAGE_API_SCHEMA = Record<RAID_API_SCHEMA | STORAGE_API_SCHEMA>
+// TODO: API Schema 并不符合实际。规范之后，使用下面的方式。
+// export interface STORAGE_API_SCHEMA extends STORAGE_API_SCHEMA extends RAID_API_SCHEMA{}
 
-
-export type STORAGE_INFO_TYPE = Record<RAID_API_SCHEMA | STORAGE_API_SCHEMA>
-
-export type UI_STORAGE_INFO_TYPE = {
+export type STORAGE_UI_TYPE = {
     uuid?: string
     name: string // KeyID
     size: string | number
@@ -98,7 +79,7 @@ export type UI_STORAGE_INFO_TYPE = {
     raid: boolean
     raid_level?: number
     label: string
-    type: STORAGE_TYPE
+    type: StorageType
     health: boolean
     shortage?: boolean
 }

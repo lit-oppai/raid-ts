@@ -4,23 +4,23 @@ import openAPI from '@network/index.ts'
 
 // Setting Data Types && Naming conventions for Constants.
 import {
-    DISK_TYPE,
-    DISK_INFO_TYPE,
-    UI_DISK_INFO_TYPE,
-    STORAGE_TYPE,
-    STORAGE_INFO_TYPE,
-    UI_STORAGE_INFO_TYPE,
+    DiskDriveType,
+    DISK_INFO_API_SCHEMA,
+    DISK_INFO_UI_TYPE,
+    StorageType,
+    STORAGE_API_SCHEMA,
+    STORAGE_UI_TYPE,
     STORAGE_USAGE_INFO_TYPE
 } from './controlData.d'
 
 // Data Acquisition.
-async function getDiskInfo(): Promise<DISK_INFO_TYPE[] | any> {
+async function getDiskInfo(): Promise<DISK_INFO_API_SCHEMA[] | any> {
     return openAPI.disk
         .getDisks()
         .then((res: any) => res.data.data)
         .catch(() => [])
 }
-async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
+async function getStorageInfo(): Promise<STORAGE_API_SCHEMA[]> {
     const a = await openAPI.raid
         .getRaids()
         .then((res: any) => res.data.data)
@@ -32,14 +32,14 @@ async function getStorageInfo(): Promise<STORAGE_INFO_TYPE[]> {
     return [...a, ...b]
 }
 
-const HDDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
-const SSDStatus = reactive(new Map<string, UI_DISK_INFO_TYPE>())
+const HDDStatus = reactive(new Map<string, DISK_INFO_UI_TYPE>())
+const SSDStatus = reactive(new Map<string, DISK_INFO_UI_TYPE>())
 //  除去系统盘之外的 storage
-const storageInfoMap = reactive(new Map<string, UI_STORAGE_INFO_TYPE>())
+const storageInfoMap = reactive(new Map<string, STORAGE_UI_TYPE>())
 const unhealthyLable = ref<string>()
 
 // 系统 storage 信息
-let sysStorageInfo = reactive<UI_STORAGE_INFO_TYPE | any>({})
+let sysStorageInfo = reactive<STORAGE_UI_TYPE | any>({})
 // RAID 候选盘数量
 const RAIDCandidateDiskCount = ref<number>(0)
 // 纯数值，方便后面组合计算比例
@@ -50,20 +50,7 @@ const usageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     FilesUsage: 0,
     FilesFree: 0
 })
-
-const IndexForDiskHubMap = new Map<number, string>([
-    [1, '1'],
-    [2, '2'],
-    [3, '3'],
-    [4, '4'],
-    [5, '5'],
-    [6, '6'],
-
-    [91, 'A'],
-    [92, 'B'],
-    [93, 'C'],
-    [94, 'D']
-])
+import { INDEX_TO_DISK_HUB_MAP } from './const.ts'
 import { EnumStorageNames } from './const'
 // --- DATA CLEANING ---
 // load disk info
@@ -71,7 +58,7 @@ const initDiskInfo = async (): Promise<void> => {
     const disksInfo = await getDiskInfo()
     rinseDiskInfo(disksInfo)
 }
-const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
+const rinseDiskInfo = (disksInfo: DISK_INFO_API_SCHEMA[]) => {
     RAIDCandidateDiskCount.value = 0
     // clear
     HDDStatus.clear();
@@ -103,7 +90,7 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
                 support: disk.support
             })
         } else if (['SSD', 'NVME'].includes(disk.type) && disk.index) {
-            const key = IndexForDiskHubMap.get(disk.index)
+            const key = INDEX_TO_DISK_HUB_MAP.get(disk.index)
             key &&
                 SSDStatus.set(key, {
                     exit: true,
@@ -139,7 +126,7 @@ const rinseDiskInfo = (disksInfo: DISK_INFO_TYPE[]) => {
         }
     }
     for (let i = 91; i < 95; i++) {
-        const key = IndexForDiskHubMap.get(i)
+        const key = INDEX_TO_DISK_HUB_MAP.get(i)
         if (key && typeof SSDStatus.get(key) !== 'object') {
             SSDStatus.set(key, {
                 exit: false,
@@ -187,7 +174,7 @@ class StorageNameCollection {
     }
 }
 const storageNameCollection = new StorageNameCollection()
-const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
+const rinseStorageInfo = (storageInfo: STORAGE_API_SCHEMA[]) => {
     // 存储用量
     let dataUsage = 0,
         dataFree = 0,
@@ -198,7 +185,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
     storageNameCollection.clear()
     unhealthyLable.value = undefined
     // rinse
-    storageInfo.map((storage: STORAGE_INFO_TYPE): void => {
+    storageInfo.map((storage: STORAGE_API_SCHEMA): void => {
         storageNameCollection.addName(storage.name)
         // TODO: 优化, 在后端统一“ZimaOS-HD” 名称。
         let name = storage.name
@@ -212,7 +199,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                 size: storage.size,
                 avail: storage.avail ?? 0,
                 used: storage.used,
-                disk_type: storage.disk_type as DISK_TYPE,
+                disk_type: storage.disk_type as DiskDriveType,
                 path: storage.path,
                 label: name,
                 health: storage.health,
@@ -247,7 +234,7 @@ const rinseStorageInfo = (storageInfo: STORAGE_INFO_TYPE[]) => {
                     ? 'RAID' + storage.raid_level
                     : storage?.disk_type?.toUpperCase() === 'SATA'
                         ? 'HDD'
-                        : 'SSD') as STORAGE_TYPE,
+                        : 'SSD') as StorageType,
                 path: storage.path,
                 raid: isRaid,
                 raid_level: storage.raid_level,
@@ -301,7 +288,6 @@ export {
     storageNameCollection,
     RAIDCandidateDiskCount,
     usageStatus,
-    IndexForDiskHubMap,
     isLoadingStorageInfo,
 
     // TODO: 统一命名   
