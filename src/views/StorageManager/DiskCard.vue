@@ -2,7 +2,7 @@
 import { defineAsyncComponent, computed, PropType } from "vue";
 import { NPopover } from "naive-ui";
 import { convertSizeToReadable } from "@utils/tools.ts";
-import { DISK_INFO_UI_TYPE } from "./controlData.d";
+import { DISK_UI_TYPE } from "./controlData.d";
 
 const healthyColor = "#28C322";
 const unhealthyColor = "#F26224";
@@ -13,7 +13,7 @@ const props = defineProps({
         required: true,
     },
     source: {
-        type: Object as PropType<DISK_INFO_UI_TYPE>,
+        type: Object as PropType<DISK_UI_TYPE>,
         default: () => {
             return {
                 health: false,
