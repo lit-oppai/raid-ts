@@ -17,7 +17,7 @@ import {
 import {
     HDDStatus,
     SSDStatus,
-    storageNameCollection,
+    collectionOfStorageNames,
     reloadServiceData,
 } from "@views/StorageManager/controlData.ts";
 import useEstablishRAID from "./controlView";
@@ -28,7 +28,7 @@ const { closeEstablishRAID } = useEstablishRAID();
 const router = useRouter();
 
 if (context.value === "Create" && selectRAIDStrategy.value !== "") {
-    nameStorage.value = storageNameCollection.beNamed(selectRAIDStrategy.value);
+    nameStorage.value = collectionOfStorageNames.beNamed(selectRAIDStrategy.value);
 }
 const nameRef: Ref<HTMLInputElement | null> = ref(null);
 // 在组件挂载时调用selectText()方法选中文本

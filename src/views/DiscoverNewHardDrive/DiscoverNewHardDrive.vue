@@ -21,12 +21,12 @@ import {
     formatePath,
 } from "@views/EstablishRAID/controlData.ts";
 import { storage } from "@network/index.ts";
-import { storageNameCollection } from "@views/StorageManager/controlData.ts";
+import { collectionOfStorageNames } from "@views/StorageManager/controlData.ts";
 import router from "@/pages/router";
 
 const { showEstablishRAID, closeEstablishRAID } = useEstablishRAID();
 const showCheckFormat = (type: "HDD" | "SSD", path: string = ""): void => {
-    nameStorage.value = storageNameCollection.beNamed(type);
+    nameStorage.value = collectionOfStorageNames.beNamed(type);
     formatePath.value = path;
     showEstablishRAID("CreateStorage");
 };

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, /* onMounted */ } from "vue";
+import { ref, computed, onBeforeMount,onMounted, onActivated, onUnmounted } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
@@ -47,7 +47,18 @@ let storageInfo = computed(() => {
         });
     console.log(diskInfo, "diskInfo");
 }); */
-
+onBeforeMount(() => {
+    console.log("onBeforeMount -- DetailStorage");
+});
+onMounted(() => {
+    console.log("onMounted -- DetailStorage");
+});
+onActivated(() => {
+    console.log("onActivated -- DetailStorage");
+});
+onUnmounted(() => {
+    console.log("onUnmounted -- DetailStorage");
+});
 // format or disband function
 const showCheckFormat = (): void => {
     nameStorage.value = storageInfo.value?.label ?? "";

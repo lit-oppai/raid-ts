@@ -1,5 +1,28 @@
+/* 
+    entity: storage page Data.
+    private methods:
+        1. initStoragePageData: init storage page data.
+        2. resetStoragePageData: destroy storage page data.
+        3. reloadServiceData: reload storage page data.
+        4. reloadStorageInfo: reload storage info.
+        5. reloadDiskInfo: reload disk info.
+    public method:
+        1. useStoragePageDataBindingLifecycle: use storage page data binding lifecycle.
+        2. useStorageInfo: use storage info.
+        3. useReloadStoragePageData: use reload storage info.
+    public property:
+        1. HDDStatus: HDD status.
+        2. SSDStatus: SSD status.
+        3. storageInfoMap: storage info.
+        4. unhealthyLabel: unhealthy disk of the storage lable.
+        5. sysStorageInfo: system storage info.
+        6. RAIDCandidateDiskCount: RAID candidate disk count.
+        7. totalStorageUsageStatus: usage status.
+        8. isStoragePageDataLoading: is loading storage info.
+        9. collectionOfStorageNames: storage name collection.
+ */
 // TODO: Replace with fetch API.
-import { ref, reactive } from 'vue'
+import { ref, reactive, onBeforeMount, onUnmounted } from 'vue'
 import openAPI from '@network/index.ts'
 
 // Setting Data Types && Naming conventions for Constants.
@@ -32,18 +55,19 @@ async function getStorageInfo(): Promise<STORAGE_API_SCHEMA[]> {
     return [...a, ...b]
 }
 
-const HDDStatus = reactive(new Map<string, DISK_UI_TYPE>())
-const SSDStatus = reactive(new Map<string, DISK_UI_TYPE>())
+export const HDDStatus = reactive(new Map<string, DISK_UI_TYPE>())
+export const SSDStatus = reactive(new Map<string, DISK_UI_TYPE>())
 //  除去系统盘之外的 storage
-const storageInfoMap = reactive(new Map<string, STORAGE_UI_TYPE>())
-const unhealthyLable = ref<string>()
+export const storageInfoMap = reactive(new Map<string, STORAGE_UI_TYPE>())
+export const unhealthyLabel = ref<string>()
 
 // 系统 storage 信息
-let sysStorageInfo = reactive<STORAGE_UI_TYPE | any>({})
+// TODO: it should be a constant.
+export let sysStorageInfo = reactive<STORAGE_UI_TYPE | any>({})
 // RAID 候选盘数量
-const RAIDCandidateDiskCount = ref<number>(0)
+export const RAIDCandidateDiskCount = ref<number>(0)
 // 纯数值，方便后面组合计算比例
-const usageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
+export const totalStorageUsageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     SystemUsage: 2340421632,
     DataUsage: 0,
     DataFree: 0,
@@ -51,6 +75,36 @@ const usageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     FilesFree: 0
 })
 import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP } from './const.ts'
+// process storage name
+class StorageNameCollection {
+    private storageNames = new Set<string>()
+    addName(name: string): void {
+        this.storageNames.add(name)
+    }
+    hasName(name: string): boolean {
+        return this.storageNames.has(name)
+    }
+    beNamed(storageType: keyof typeof STORAGE_NAME_ENUM): string {
+        const prefixName = STORAGE_NAME_ENUM[storageType]
+        if (!this.hasName(prefixName)) {
+            return prefixName
+        }
+
+        let index = 1
+        while (this.hasName(prefixName + index)) {
+            index++
+        }
+
+        return prefixName + index
+    }
+    clear(): void {
+        this.storageNames.clear()
+    }
+    log(label: string = 'storageNames'): void {
+        console.log(label, this.storageNames)
+    }
+}
+export const collectionOfStorageNames = new StorageNameCollection()
 // --- DATA CLEANING ---
 // load disk info
 const initDiskInfo = async (): Promise<void> => {
@@ -136,43 +190,11 @@ const rinseDiskInfo = (disksInfo: DISK_API_SCHEMA[]) => {
         }
     }
 }
-// load storage info
-const isLoadingStorageInfo = ref<boolean>(false)
+// load storage info 
 const initStorageInfo = async (): Promise<void> => {
-    isLoadingStorageInfo.value = true
     const storageInfo = await getStorageInfo()
     rinseStorageInfo(storageInfo)
 }
-// 处理命名
-class StorageNameCollection {
-    private storageNames = new Set<string>()
-    addName(name: string): void {
-        this.storageNames.add(name)
-    }
-    hasName(name: string): boolean {
-        return this.storageNames.has(name)
-    }
-    beNamed(storageType: keyof typeof STORAGE_NAME_ENUM): string {
-        const prefixName = STORAGE_NAME_ENUM[storageType]
-        if (!this.hasName(prefixName)) {
-            return prefixName
-        }
-
-        let index = 1
-        while (this.hasName(prefixName + index)) {
-            index++
-        }
-
-        return prefixName + index
-    }
-    clear(): void {
-        this.storageNames.clear()
-    }
-    log(label: string = 'storageNames'): void {
-        console.log(label, this.storageNames)
-    }
-}
-const storageNameCollection = new StorageNameCollection()
 const rinseStorageInfo = (storageInfo: STORAGE_API_SCHEMA[]) => {
     // 存储用量
     let dataUsage = 0,
@@ -181,11 +203,11 @@ const rinseStorageInfo = (storageInfo: STORAGE_API_SCHEMA[]) => {
         filesUsage = 0
     // clear
     storageInfoMap.clear()
-    storageNameCollection.clear()
-    unhealthyLable.value = undefined
+    collectionOfStorageNames.clear()
+    unhealthyLabel.value = undefined
     // rinse
     storageInfo.map((storage: STORAGE_API_SCHEMA): void => {
-        storageNameCollection.addName(storage.name)
+        collectionOfStorageNames.addName(storage.name)
         // TODO: 优化, 在后端统一“ZimaOS-HD” 名称。
         let name = storage.name
         if (name === 'System') {
@@ -243,53 +265,84 @@ const rinseStorageInfo = (storageInfo: STORAGE_API_SCHEMA[]) => {
             })
 
             if (isRaid && storageHealth !== undefined && !storageHealth) {
-                unhealthyLable.value = storage.name
+                unhealthyLabel.value = storage.name
             }
         }
     })
-    usageStatus.value = {
+    totalStorageUsageStatus.value = {
         SystemUsage: 2340421632,
         DataUsage: dataUsage,
         DataFree: dataFree,
         FilesUsage: filesUsage,
         FilesFree: fileFree
     }
-    isLoadingStorageInfo.value = false
 }
 
-// Data Lifecycle Management.
-const initStoragePageData = async (): Promise<void> => {
-    initDiskInfo()
-    initStorageInfo()
+// Data Lifecycle Management -- init.
+export const isStoragePageDataLoading = ref<boolean>(false)
+const initStoragePageData = (): void => {
+    isStoragePageDataLoading.value = true
+    Promise.all([initDiskInfo(), initStorageInfo()]).then(() => {
+        isStoragePageDataLoading.value = false
+    })
 }
 
-const destroyStorageInfo = (): void => {
+const resetStoragePageData = (): void => {
     HDDStatus.clear()
     SSDStatus.clear()
     storageInfoMap.clear()
     sysStorageInfo = {}
     RAIDCandidateDiskCount.value = 0
-    usageStatus.value.DataUsage = 0
-    usageStatus.value.DataFree = 0
-    usageStatus.value.FilesUsage = 0
-    usageStatus.value.FilesFree = 0
+    totalStorageUsageStatus.value.DataUsage = 0
+    totalStorageUsageStatus.value.DataFree = 0
+    totalStorageUsageStatus.value.FilesUsage = 0
+    totalStorageUsageStatus.value.FilesFree = 0
 }
-export default initStoragePageData
+// TODO: clear data when unmount.
+// Vue has complete management of it.
+const destroyStoragePageData = (): void => {
+    resetStoragePageData()
+}
+// socket
+import { socket } from "@network/socket.ts";
+export const useStoragePageDataBindingLifecycle = () => {
+    // First time init.
+    onBeforeMount(() => {
+        initStoragePageData()
+
+        socket.on("local-storage:disk:added", () => {
+            initStoragePageData();
+        });
+        socket.on("local-storage:disk:removed", () => {
+            initStoragePageData();
+        });
+    })
+    onUnmounted(() => {
+        destroyStoragePageData()
+        socket.off("local-storage:disk:added");
+        socket.off("local-storage:disk:removed");
+    })
+    return {
+        HDDStatus,
+        SSDStatus,
+        storageInfoMap,
+        unhealthyLabel,
+        sysStorageInfo,
+        RAIDCandidateDiskCount,
+        totalStorageUsageStatus,
+        isStoragePageDataLoading,
+        collectionOfStorageNames
+    }
+}
+// THINK: 直接返回数据与调用方法返回数据无差别。
+// 直接返回：调用简单，只读数据，无需考虑数据的生命周期。
+// 调用方法返回：可以添加逻辑、符合统一调用方式。
+export const useStorageInfo = () => {
+    return {
+        reloadServiceData: initStoragePageData,
+    }
+}
+
 export {
-    HDDStatus,
-    SSDStatus,
-    storageInfoMap,
-    unhealthyLable,
-    sysStorageInfo,
-    initStoragePageData,
     initStoragePageData as reloadServiceData,
-    destroyStorageInfo,
-    storageNameCollection,
-    RAIDCandidateDiskCount,
-    usageStatus,
-    isLoadingStorageInfo,
-
-    // TODO: 统一命名   
-    // TODO：数据应该在不被使用的时候清除，数据应该有清晰地管理周期。-- 引入Hook
-
 }
