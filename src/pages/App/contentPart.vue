@@ -49,7 +49,7 @@ function onClose() {
     <div class="panel_content">
         <router-view v-slot="{ Component }">
             <transition mode="out-in" class="animate-fade animate-once animate-duration-200 animate-ease-in">
-                <div :key="route.fullPath">
+                <div :key="route.hash">
                     <component :is="Component" />
                 </div>
             </transition>
