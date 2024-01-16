@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount } from "vue";
+import { onBeforeMount, onMounted, onActivated, onUnmounted } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
@@ -12,13 +12,19 @@ import warningRedSVG from "@assets/img/StorageManager/warningRed.svg";
 import cryingFaceSVG from "@assets/img/EstablishRAID/cryingFace.svg";
 import useEstablishRAID from "@views/EstablishRAID/controlView.ts";
 import ZimaCubeCard from "@views/StorageManager/ZimaCubeCard.vue";
-import initStoragePageData from "./controlData.ts";
 import {
-    storageInfoMap,
-    usageStatus,
-    RAIDCandidateDiskCount,
-    isLoadingStorageInfo,
+    // storageInfoMap,
+    // totalStorageUsageStatus,
+    // RAIDCandidateDiskCount,
+    // isStoragePageDataLoading,
+    useStoragePageDataBindingLifecycle,
 } from "./controlData.ts";
+const {
+    storageInfoMap,
+    totalStorageUsageStatus,
+    RAIDCandidateDiskCount,
+    isStoragePageDataLoading,
+} = useStoragePageDataBindingLifecycle();
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
@@ -28,53 +34,62 @@ const route = useRoute();
 const router = useRouter();
 const isFirstRoutePath = computed(() => route.matched.length === 1);
 const sysRate = computed(() => {
-    return usageStatus.value
+    return totalStorageUsageStatus.value
         ? (
-            (usageStatus.value?.SystemUsage /
-                (usageStatus.value?.SystemUsage +
-                    usageStatus.value?.DataFree +
-                    usageStatus.value?.DataUsage)) *
+            (totalStorageUsageStatus.value?.SystemUsage /
+                (totalStorageUsageStatus.value?.SystemUsage +
+                    totalStorageUsageStatus.value?.DataFree +
+                    totalStorageUsageStatus.value?.DataUsage)) *
             100
         ).toFixed(0)
         : 0;
 });
 const dataRate = computed(() => {
     return (
-        (usageStatus.value?.DataUsage /
-            (usageStatus.value?.SystemUsage +
-                usageStatus.value?.DataFree +
-                usageStatus.value?.DataUsage)) *
+        (totalStorageUsageStatus.value?.DataUsage /
+            (totalStorageUsageStatus.value?.SystemUsage +
+                totalStorageUsageStatus.value?.DataFree +
+                totalStorageUsageStatus.value?.DataUsage)) *
         100
     ).toFixed(0);
 });
 const freeRate = computed(() => {
     return (
-        (usageStatus.value?.DataFree /
-            (usageStatus.value?.SystemUsage +
-                usageStatus.value?.DataFree +
-                usageStatus.value?.DataUsage)) *
+        (totalStorageUsageStatus.value?.DataFree /
+            (totalStorageUsageStatus.value?.SystemUsage +
+                totalStorageUsageStatus.value?.DataFree +
+                totalStorageUsageStatus.value?.DataUsage)) *
         100
     ).toFixed(0);
 });
 const filesUsageRate = computed(() => {
     return (
-        (usageStatus.value?.FilesUsage /
-            (usageStatus.value?.FilesUsage + usageStatus.value?.FilesFree)) *
+        (totalStorageUsageStatus.value?.FilesUsage /
+            (totalStorageUsageStatus.value?.FilesUsage + totalStorageUsageStatus.value?.FilesFree)) *
         100
     ).toFixed(0);
 });
 const filesFreeRate = computed(() => {
-    return usageStatus.value?.FilesFree
+    return totalStorageUsageStatus.value?.FilesFree
         ? (
-            (usageStatus.value?.FilesFree /
-                (usageStatus.value?.FilesUsage + usageStatus.value?.FilesFree)) *
+            (totalStorageUsageStatus.value?.FilesFree /
+                (totalStorageUsageStatus.value?.FilesUsage + totalStorageUsageStatus.value?.FilesFree)) *
             100
         ).toFixed(0)
         : 100;
 });
 onBeforeMount(() => {
-    initStoragePageData();
+    console.log("onBeforeMount");
     initEstablishRAID();
+});
+onMounted(() => {
+    console.log("onMounted");
+});
+onActivated(() => {
+    console.log("onActivated");
+});
+onUnmounted(() => {
+    console.log("onUnmounted");
 });
 const goToStorageDetailPage = (isRaid: boolean, label: string) => {
     const path: string = storageInfoMap.get(label)?.path ?? "";
@@ -93,17 +108,8 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
 };
 
 // 检测错误信息
-import { unhealthyLable } from "@views/StorageManager/controlData.ts";
+import { unhealthyLabel } from "@views/StorageManager/controlData.ts";
 
-// socket
-import { socket } from "@network/socket.ts";
-// TODO: 事件管理
-socket.on("local-storage:disk:added", () => {
-    initStoragePageData();
-});
-socket.on("local-storage:disk:removed", () => {
-    initStoragePageData();
-});
 </script>
 
 <template>
@@ -126,7 +132,7 @@ socket.on("local-storage:disk:removed", () => {
                         $t("Available")
                     }}</span>
                     <span class="text-zinc-800 text-base font-semibold font-['Roboto'] leading-normal">
-                        {{ convertSizeToReadable(usageStatus.FilesFree) }}
+                        {{ convertSizeToReadable(totalStorageUsageStatus.FilesFree) }}
                     </span>
                 </div>
             </div>
@@ -147,7 +153,7 @@ socket.on("local-storage:disk:removed", () => {
                             </div>
                             <div>
                                 <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
-                                    {{ convertSizeToReadable(usageStatus?.SystemUsage || 0) }}
+                                    {{ convertSizeToReadable(totalStorageUsageStatus?.SystemUsage || 0) }}
                                 </span>
                             </div>
                         </NPopover>
@@ -162,7 +168,7 @@ socket.on("local-storage:disk:removed", () => {
                             </div>
                             <div>
                                 <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
-                                    {{ convertSizeToReadable(usageStatus?.DataUsage || 0) }}
+                                    {{ convertSizeToReadable(totalStorageUsageStatus?.DataUsage || 0) }}
                                 </span>
                             </div>
                         </NPopover>
@@ -177,7 +183,7 @@ socket.on("local-storage:disk:removed", () => {
                             </div>
                             <div>
                                 <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
-                                    {{ convertSizeToReadable(usageStatus?.DataFree || 0) }}
+                                    {{ convertSizeToReadable(totalStorageUsageStatus?.DataFree || 0) }}
                                 </span>
                             </div>
                         </NPopover>
@@ -210,7 +216,7 @@ socket.on("local-storage:disk:removed", () => {
                             </div>
                             <div>
                                 <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
-                                    {{ convertSizeToReadable(usageStatus?.FilesUsage) }}
+                                    {{ convertSizeToReadable(totalStorageUsageStatus?.FilesUsage) }}
                                 </span>
                             </div>
                         </NPopover>
@@ -225,7 +231,7 @@ socket.on("local-storage:disk:removed", () => {
                             </div>
                             <div>
                                 <span class="text-zinc-800 text-sm font-normal font-['Roboto'] leading-5">
-                                    {{ convertSizeToReadable(usageStatus?.FilesFree) }}
+                                    {{ convertSizeToReadable(totalStorageUsageStatus?.FilesFree) }}
                                 </span>
                             </div>
                         </NPopover>
@@ -238,12 +244,12 @@ socket.on("local-storage:disk:removed", () => {
                         </div>
                         <div>
                             <span class="text-neutral-400 text-xs font-normal font-['Roboto']">{{
-                                convertSizeToReadable(usageStatus.FilesFree + usageStatus.FilesUsage)
+                                convertSizeToReadable(totalStorageUsageStatus.FilesFree + totalStorageUsageStatus.FilesUsage)
                             }}/
                             </span>
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto']">{{
                                 $t("{size} Used", {
-                                    size: convertSizeToReadable(usageStatus.FilesUsage),
+                                    size: convertSizeToReadable(totalStorageUsageStatus.FilesUsage),
                                 })
                             }}</span>
                         </div>
@@ -257,7 +263,7 @@ socket.on("local-storage:disk:removed", () => {
                 $t("Storage Space")
             }}</span>
         </div>
-        <div v-if="isLoadingStorageInfo" class="w-full">
+        <div v-if="isStoragePageDataLoading" class="w-full">
             <Skeleton height="5.75rem"></Skeleton>
             <Skeleton height="8.25rem"></Skeleton>
         </div>
@@ -270,9 +276,9 @@ socket.on("local-storage:disk:removed", () => {
         </div>
         <div v-else>
             <!-- notice or create RAID -->
-            <div class="os_bg_white_card" v-if="RAIDCandidateDiskCount > 0 || unhealthyLable">
+            <div class="os_bg_white_card" v-if="RAIDCandidateDiskCount > 0 || unhealthyLabel">
                 <div class="flex px-3 space-x-3 items-center h-10 rounded-md bg-rose-100 cursor-pointer"
-                    v-if="unhealthyLable" @click="goToStorageDetailPage(true, unhealthyLable)">
+                    v-if="unhealthyLabel" @click="goToStorageDetailPage(true, unhealthyLabel)">
                     <div class="w-6 h-6 flex justify-center items-center">
                         <Image :src="warningRedSVG" class="text-base fill-red-500"></Image>
                     </div>
