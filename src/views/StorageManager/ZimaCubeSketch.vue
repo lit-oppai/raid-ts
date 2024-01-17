@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import OverlayPanel from 'primevue/overlaypanel';
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { HDDStatus, SSDStatus } from "./controlData.ts";
 
 let ZimaCubeSketchRef = ref<SVGSVGElement | null>(null);
@@ -12,15 +12,20 @@ const setOpacity = (name: string, opacity: number) => {
         });
     }
 };
-
-watch([HDDStatus, SSDStatus], ([newHDDVal, newSSDVal]) => {
-    newHDDVal.forEach((item, index) => {
-        setOpacity(`disk${index}`, item.exit ? 1 : 0.5);
-    });
-    // 全部无效，则设置ABCD无效。
-    if (Array.from(newSSDVal.values()).every((item: any) => !item.exit)) {
-        setOpacity(`diskABCD`, 0.5);
-    }
+onMounted(() => {
+    watch(
+        [HDDStatus, SSDStatus],
+        ([newHDDVal, newSSDVal]) => {
+            newHDDVal.forEach((item, index) => {
+                setOpacity(`disk${index}`, item.exit ? 1 : 0.5);
+            });
+            // 全部无效，则设置ABCD无效。
+            if (Array.from(newSSDVal.values()).every((item: any) => !item.exit)) {
+                setOpacity(`diskABCD`, 0.5);
+            }
+        },
+        { immediate: true }
+    );
 });
 </script>
 
