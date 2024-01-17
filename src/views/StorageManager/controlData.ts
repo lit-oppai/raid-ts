@@ -24,10 +24,7 @@
 // TODO: Replace with fetch API.
 import { ref, reactive, onBeforeMount, onUnmounted } from 'vue'
 import openAPI from '@network/index.ts'
-
-// Setting Data Types && Naming conventions for Constants.
 import {
-    DiskDriveType,
     DISK_API_SCHEMA,
     DISK_UI_TYPE,
     StorageType,
@@ -55,8 +52,6 @@ async function getStorageInfo(): Promise<STORAGE_API_SCHEMA[]> {
     return [...a, ...b]
 }
 
-export const HDDStatus = reactive(new Map<string, DISK_UI_TYPE>())
-export const SSDStatus = reactive(new Map<string, DISK_UI_TYPE>())
 //  除去系统盘之外的 storage
 export const storageInfoMap = reactive(new Map<string, STORAGE_UI_TYPE>())
 export const unhealthyLabel = ref<string>()
@@ -106,175 +101,133 @@ class StorageNameCollection {
 }
 export const collectionOfStorageNames = new StorageNameCollection()
 // --- DATA CLEANING ---
+// Utility Functions
+function createStorageStatus(type: string, defaultExpectType: string) {
+    const status = reactive(new Map<string, DISK_UI_TYPE>())
+    const setDefaultValues = (startIndex: number, endIndex: number) => {
+        for (let i = startIndex; i <= endIndex; i++) {
+            status.set(i.toString(), {
+                exit: false,
+                health: false,
+                temperature: 0,
+                expectType: defaultExpectType
+            })
+        }
+    }
+    return { status, setDefaultValues }
+}
+// Disk and Storage Info Initialization
+const { status: HDDStatus, setDefaultValues: setDefaultHDDValues } =
+    createStorageStatus('HDD', '3.5inch HDD')
+const { status: SSDStatus, setDefaultValues: setDefaultSSDValues } =
+    createStorageStatus('SSD', 'm.2 SSD')
+console.log(HDDStatus, SSDStatus);
+
 // load disk info
 const initDiskInfo = async (): Promise<void> => {
     const disksInfo = await getDiskInfo()
-    rinseDiskInfo(disksInfo)
-}
-const rinseDiskInfo = (disksInfo: DISK_API_SCHEMA[]) => {
+    // rinseDiskInfo(disksInfo)
+    setDefaultHDDValues(1, 6)
+    setDefaultSSDValues(91, 94)
     RAIDCandidateDiskCount.value = 0
-    // clear
-    HDDStatus.clear();
-    SSDStatus.clear();
-    // rinse
-    disksInfo.map((disk: any) => {
-        // if (disk.type === "HDD" && disk.index > 0) {
-        disk.free && RAIDCandidateDiskCount.value++
-        if (disk.index < 7 && disk.index > 0) {
-            HDDStatus.set(disk.index + '', {
-                exit: true,
-                health: disk.health === 'true',
-                temperature: disk.temperature,
-                name: disk.name,
-                size: disk.size,
-                type: disk.rota ? 'HDD' : 'SSD',
-                path: disk.path,
-                model: disk.model,
-                // "candidate": disk.health && disk.children.length <= 1 && (disk.children[0]?.raid ?? false) === false,
-                allocatedStorageSpace:
-                    disk.children[0]?.storage_name ||
-                    disk?.storage_name,
-                RaidStrategy: disk.children[0]?.raid_level
-                    ? 'RAID' + disk.children[0]?.raid_level
-                    : '',
-                unused: disk.free,
-                children: disk.children,
-                children_number: disk.children_number,
-                support: disk.support
-            })
-        } else if (['SSD', 'NVME'].includes(disk.type) && disk.index) {
-            const key = INDEX_TO_DISK_HUB_MAP.get(disk.index)
-            key &&
-                SSDStatus.set(key, {
-                    exit: true,
-                    health: disk.health === 'true',
-                    temperature: disk.temperature,
-                    name: disk.name,
-                    size: disk.size,
-                    type: disk.rota ? 'HDD' : 'SSD',
-                    path: disk.path,
-                    model: disk.model,
-                    // "candidate": disk.health && disk.children.length <= 1 && (disk.children[0]?.raid ?? false) === false,
-                    allocatedStorageSpace:
-                        disk.children[0]?.storage_name ||
-                        disk?.storage_name,
-                    RaidStrategy: disk.children[0]?.raid_level
-                        ? 'RAID' + disk.children[0]?.raid_level
-                        : '',
-                    unused: disk.free,
-                    children: disk.children,
-                    children_number: disk.children_number,
-                    support: disk.support
-                })
-        }
-    })
-    for (let i = 1; i < 7; i++) {
-        if (typeof HDDStatus.get(i + '') !== 'object') {
-            HDDStatus.set(i + '', {
-                exit: false,
-                health: false,
-                temperature: 0,
-                expect_type: '3.5inch HDD'
-            })
-        }
+    disksInfo.forEach(processDiskInfo)
+}
+// Disk Info Processing
+function processDiskInfo(disk: DISK_API_SCHEMA): void {
+    const indexStr = disk.index.toString()
+    const baseInfo: DISK_UI_TYPE = {
+        exit: true,
+        health: disk.health === 'true',
+        temperature: disk.temperature,
+        name: disk.name,
+        size: disk.size,
+        type: disk.rota ? 'HDD' : 'SSD',
+        path: disk.path,
+        model: disk.model,
+        allocatedStorageSpace:
+            disk.children[0]?.storage_name || disk?.storage_name,
+        RaidStrategy: disk.children[0]?.raid_level
+            ? 'RAID' + disk.children[0]?.raid_level
+            : '',
+        unused: disk.free,
+        children: disk.children,
+        children_number: disk.children_number,
+        support: disk.support
     }
-    for (let i = 91; i < 95; i++) {
-        const key = INDEX_TO_DISK_HUB_MAP.get(i)
-        if (key && typeof SSDStatus.get(key) !== 'object') {
-            SSDStatus.set(key, {
-                exit: false,
-                health: false,
-                temperature: 0,
-                expect_type: 'm.2 SSD'
-            })
+
+    disk.free && RAIDCandidateDiskCount.value++
+    if (disk.type === 'HDD' && disk.index > 0 && disk.index < 7) {
+        HDDStatus.set(indexStr, baseInfo)
+    } else if (['SSD', 'NVME'].includes(disk.type) && disk.index) {
+        const key = INDEX_TO_DISK_HUB_MAP.get(disk.index)
+        if (key) {
+            SSDStatus.set(key, baseInfo)
         }
     }
 }
+
 // load storage info 
 const initStorageInfo = async (): Promise<void> => {
     const storageInfo = await getStorageInfo()
-    rinseStorageInfo(storageInfo)
-}
-const rinseStorageInfo = (storageInfo: STORAGE_API_SCHEMA[]) => {
-    // 存储用量
-    let dataUsage = 0,
-        dataFree = 0,
-        fileFree = 0,
-        filesUsage = 0
     // clear
     storageInfoMap.clear()
     collectionOfStorageNames.clear()
     unhealthyLabel.value = undefined
-    // rinse
-    storageInfo.map((storage: STORAGE_API_SCHEMA): void => {
-        collectionOfStorageNames.addName(storage.name)
-        // TODO: 优化, 在后端统一“ZimaOS-HD” 名称。
-        let name = storage.name
-        if (name === 'System') {
-            dataUsage = Number(storage.used)
-            dataFree = Number(storage.avail)
-            name = STORAGE_NAME_ENUM.System
-            sysStorageInfo = {
-                name,
-                uuid: storage?.uuid,
-                size: storage.size,
-                avail: storage.avail ?? 0,
-                used: storage.used,
-                disk_type: storage.disk_type as DiskDriveType,
-                path: storage.path,
-                label: name,
-                health: storage.health,
-                raid: false
-            }
-        } else {
-            // TODO：优化，后端统一返回数值，统一返回数据单位。此处，当时 raid 时，size 为字节。
-            let storageSize: number = Number(storage.size)
-            let storageUsedSize: number = Number(storage.used)
-            const isRaid: boolean = storage.raid_level !== undefined
-            // raid 健康的定义：所有盘健康，且无盘缺失。
-            let storageHealth: boolean = isRaid
-                ? storage.shortage !== true &&
-                storage.devices &&
-                storage.devices?.every(
-                    (device: { health: any }) => device.health
-                )
-                : storage.health
+    totalStorageUsageStatus.value.DataUsage = 0
+    totalStorageUsageStatus.value.DataFree = 0
+    totalStorageUsageStatus.value.FilesUsage = 0
+    totalStorageUsageStatus.value.FilesFree = 0
 
-            if (isRaid) {
-                storageSize *= 1024
-            }
-            fileFree += storageSize - storageUsedSize
-            filesUsage += storageUsedSize
-            storageInfoMap.set(name, {
-                uuid: storage?.uuid,
-                name: name,
-                size: storageSize,
-                avail: storageSize - storageUsedSize,
-                used: storageUsedSize,
-                type: (isRaid
-                    ? 'RAID' + storage.raid_level
-                    : storage?.disk_type?.toUpperCase() === 'SATA'
-                        ? 'HDD'
-                        : 'SSD') as StorageType,
-                path: storage.path,
-                raid: isRaid,
-                raid_level: storage.raid_level,
-                label: name,
-                health: storageHealth,
-                shortage: storage.shortage
-            })
+    storageInfo.forEach(processStorageInfo)
+}
+// Storage Info Processing
+function processStorageInfo(storage: STORAGE_API_SCHEMA): void {
+    const name =
+        storage.name === 'System' ? STORAGE_NAME_ENUM.System : storage.name
+    const isRaid = storage.raid_level !== undefined
+    const storageSize = isRaid
+        ? Number(storage.size) * 1024
+        : Number(storage.size)
+    const storageUsedSize = Number(storage.used)
 
-            if (isRaid && storageHealth !== undefined && !storageHealth) {
-                unhealthyLabel.value = storage.name
-            }
-        }
-    })
-    totalStorageUsageStatus.value = {
-        SystemUsage: 2340421632,
-        DataUsage: dataUsage,
-        DataFree: dataFree,
-        FilesUsage: filesUsage,
-        FilesFree: fileFree
+    const storageHealth = isRaid
+        ? storage.shortage !== true &&
+        storage.devices?.every((device: { health: any }) => device.health)
+        : storage.health
+
+    const storageData: STORAGE_UI_TYPE = {
+        uuid: storage?.uuid,
+        name,
+        size: storageSize,
+        avail: storageSize - storageUsedSize,
+        used: storageUsedSize,
+        type: (isRaid
+            ? 'RAID' + storage.raid_level
+            : storage?.disk_type?.toUpperCase() === 'SATA'
+                ? 'HDD'
+                : 'SSD') as StorageType,
+        path: storage.path,
+        raid: isRaid,
+        raid_level: storage.raid_level,
+        label: name,
+        health: storageHealth,
+        shortage: storage.shortage
+    }
+
+    collectionOfStorageNames.addName(storage.name)
+
+    if (storage.name === 'System') {
+        sysStorageInfo = storageData
+        totalStorageUsageStatus.value.DataUsage = storageData.used
+        totalStorageUsageStatus.value.DataFree = storageData.avail
+    } else {
+        storageInfoMap.set(name, storageData)
+        totalStorageUsageStatus.value.FilesUsage += storageData.used
+        totalStorageUsageStatus.value.FilesFree += storageData.avail
+    }
+
+    if (isRaid && !storageHealth) {
+        unhealthyLabel.value = storage.name
     }
 }
 
@@ -305,22 +258,25 @@ const destroyStoragePageData = (): void => {
 }
 // socket
 import { socket } from "@network/socket.ts";
+// Socket Event Handlers
+function handleDiskAdded(): void {
+    initDiskInfo()
+}
+
+function handleDiskRemoved(): void {
+    initStoragePageData()
+}
 export const useStoragePageDataBindingLifecycle = () => {
     // First time init.
     onBeforeMount(() => {
         initStoragePageData()
-
-        socket.on("local-storage:disk:added", () => {
-            initStoragePageData();
-        });
-        socket.on("local-storage:disk:removed", () => {
-            initStoragePageData();
-        });
+        socket.on('local-storage:disk:added', handleDiskAdded)
+        socket.on('local-storage:disk:removed', handleDiskRemoved)
     })
     onUnmounted(() => {
         destroyStoragePageData()
-        socket.off("local-storage:disk:added");
-        socket.off("local-storage:disk:removed");
+        socket.off('local-storage:disk:added', handleDiskAdded)
+        socket.off('local-storage:disk:removed', handleDiskRemoved)
     })
     return {
         HDDStatus,
@@ -344,5 +300,7 @@ export const useStorageInfo = () => {
 }
 
 export {
+    HDDStatus,
+    SSDStatus,
     initStoragePageData as reloadServiceData,
 }

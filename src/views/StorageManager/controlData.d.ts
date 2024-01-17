@@ -15,6 +15,7 @@ export interface DISK_API_SCHEMA {
     // "need_format": boolean,
     // "serial": "NF6243T000696",
     // "supported": boolean,
+    storage_name: string
     children: Array<
         | {
             mount_point: string
@@ -24,6 +25,7 @@ export interface DISK_API_SCHEMA {
             path: string
             size: number
             supported: boolean
+            storage_name: string
         }
         | undefined
     >
@@ -38,7 +40,7 @@ export type DISK_UI_TYPE = {
     name?: string
     size?: number
     type?: DiskDriveType
-    expect_type?: string
+    expectType?: string
     path?: string
     model?: string
     // RAID 备选盘 1、状态健康 2、未被占用
@@ -72,9 +74,9 @@ export type STORAGE_API_SCHEMA = Record<RAID_API_SCHEMA | STORAGE_API_SCHEMA>
 export type STORAGE_UI_TYPE = {
     uuid?: string
     name: string // KeyID
-    size: string | number
-    avail: string | number
-    used: string | number
+    size: number
+    avail: number
+    used: number
     path: string
     raid: boolean
     raid_level?: number

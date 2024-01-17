@@ -113,7 +113,7 @@ const statuClass = computed(() => {
         </div>
         <div v-else>
             <span class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-5">{{
-                source?.type || source?.expect_type
+                source?.type || source?.expectType
             }}</span>
         </div>
     </NPopover>
