@@ -80,7 +80,7 @@ const disabledStorage = async (): Promise<void> => {
             <div class="flex-grow flex flex-col py-2 space-y-1">
                 <div>
                     <span class="text-zinc-800 text-base font-medium font-['Roboto'] leading-6">
-                        {{ storageInfo?.name }}
+                        {{ storageInfo?.driveName }}
                     </span>
                 </div>
                 <div class="flex">

@@ -210,7 +210,8 @@ function processStorageInfo(storage: STORAGE_API_SCHEMA): void {
         raid_level: storage.raid_level,
         label: name,
         health: storageHealth,
-        shortage: storage.shortage
+        shortage: storage.shortage,
+        driveName: storage?.drive_name,
     }
 
     collectionOfStorageNames.addName(storage.name)

@@ -84,6 +84,7 @@ export type STORAGE_UI_TYPE = {
     type: StorageType
     health: boolean
     shortage?: boolean
+    driveName?: string
 }
 export type STORAGE_USAGE_INFO_TYPE = {
     // 系统空间占用量
