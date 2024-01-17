@@ -52,7 +52,7 @@ function selectText(): void {
 import openAPI from "@network/index.ts";
 import { RaidBodyRaidLevelEnum } from "@icewhale/zimaos-localstorage-openapi";
 // nameStorage validate.
-import { nameStorageHandleSubmit } from "@views/EstablishRAID/controlData.ts";
+import { nameStorageHandleSubmit } from "@views/ProcessStorageModals/controlData.ts";
 const createStorage = nameStorageHandleSubmit(
     () => {
         // onSuccess.
@@ -143,8 +143,8 @@ const createRAID = () => {
 };
 
 // First Aid
-// import { isExitNewDisk } from "@views/EstablishRAID/controlData.ts";
-import { selectedFidDisk, needFirstAidRaid } from "@views/EstablishRAID/controlData.ts";
+// import { isExitNewDisk } from "@views/ProcessStorageModals/controlData.ts";
+import { selectedFidDisk, needFirstAidRaid } from "@views/ProcessStorageModals/controlData.ts";
 const confirmFirstAid = () => {
     stepByStep("next");
     openAPI.raid
@@ -182,7 +182,7 @@ const confirmFirstAid = () => {
 };
 
 // extened capacity
-import { extendRaidPath } from "@views/EstablishRAID/controlData.ts";
+import { extendRaidPath } from "@views/ProcessStorageModals/controlData.ts";
 const extendCapacity = () => {
     stepByStep("next");
     openAPI.raid
@@ -300,3 +300,6 @@ switch (context.value) {
     </div>
 </template>
 <style></style>
+./controlView.ts@/views/StorageManagerMode/controlData.ts@/views/StorageManagerMode/controlData.ts@/views/StorageManagerMode/controlData.ts
+./controlView.ts
+./controlView.ts

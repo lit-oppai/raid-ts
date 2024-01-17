@@ -50,9 +50,9 @@ export const routes: RouteMeta[] = [
                 meta: { title: 'New hard drive' }
             },
             {
-                path: 'ModifyRAID/:storageName',
-                component: () => import('./storage/ModifyRAID.ts'),
-                name: 'ModifyRAID',
+                path: 'DetailRaidStorage/:storageName',
+                component: () => import('./storage/DetailRaidStorage.ts'),
+                name: 'DetailRaidStorage',
                 meta: { title: 'Modify RAID' }
             },
             {
@@ -70,7 +70,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _, next) => {
-    // 对于path: 'ModifyRAID/:storageName', 更改meta: { title: 'Modify RAID', }
+    // 对于path: 'DetailRaidStorage/:storageName', 更改meta: { title: 'Modify RAID', }
     if (to.params.storageName) {
         to.meta.title = to.params.storageName
     }

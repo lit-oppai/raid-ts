@@ -7,7 +7,7 @@ import useEstablishRAID from "./controlView";
 // import diskSVG from '@assets/img/StorageManager/disk.svg';
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
-import cryingFaceSVG from "@assets/img/EstablishRAID/cryingFace.svg";
+import cryingFaceSVG from "@assets/img/ProcessStorageModals/cryingFace.svg";
 import { disk } from "@network/index.ts";
 import { Disk } from "@icewhale/zimaos-localstorage-openapi";
 import { convertSizeToReadable } from "@utils/tools.ts";
@@ -27,7 +27,7 @@ const loadNewDiskStatus = async () => {
 import {
     selectedFidDisk,
     expansionMinDiskSize,
-} from "@views/EstablishRAID/controlData.ts";
+} from "@views/ProcessStorageModals/controlData.ts";
 onMounted(async () => {
     await loadNewDiskStatus();
     selectedFidDisk.value =
@@ -35,7 +35,7 @@ onMounted(async () => {
             (item) => item.size && item.size >= expansionMinDiskSize.value
         )?.path ?? "";
 });
-import { isExitNewDisk } from "@views/EstablishRAID/controlData.ts";
+import { isExitNewDisk } from "@views/ProcessStorageModals/controlData.ts";
 import { watch } from "vue";
 watch(newDiskStatus, (val) => {
     if (val?.length) {
@@ -88,3 +88,6 @@ watch(newDiskStatus, (val) => {
             "></Button>
     </div>
 </template>
+./controlView.ts@/views/StorageManagerMode/controlData.ts@/views/StorageManagerMode/controlData.ts
+./controlView.ts
+./controlView.ts

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { NPopover } from 'naive-ui'
 import Image from 'primevue/image'
-import questionSVG from '@assets/img/EstablishRAID/question.svg'
-// import recommendSVG from '@assets/img/EstablishRAID/recommend.svg';
+import questionSVG from '@assets/img/ProcessStorageModals/question.svg'
+// import recommendSVG from '@assets/img/ProcessStorageModals/recommend.svg';
 import { currentStep } from './controlData.ts'
 import { computed, ref } from 'vue'
 const addStep = () => {

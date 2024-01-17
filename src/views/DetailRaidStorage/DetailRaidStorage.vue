@@ -9,12 +9,12 @@ import warningSVG from "@assets/img/StorageManager/warning.svg";
 import warningRedSVG from "@assets/img/StorageManager/warningRed.svg";
 import warningIntense from "@assets/img/StorageManager/warningIntense.svg";
 // import Warning from '@assets/img/StorageManager/warning.vue';
-import useEstablishRAID from "@views/EstablishRAID/controlView.ts";
+import useEstablishRAID from "@views/ProcessStorageModals/controlView.ts";
 import {
     selectRAIDStrategy,
     expansionMinDiskSize,
-} from "@views/EstablishRAID/controlData.ts";
-import { RAIDStrategy } from "@views/EstablishRAID/controlData.d";
+} from "@views/ProcessStorageModals/controlData.ts";
+import { RAIDStrategy } from "@views/ProcessStorageModals/controlData.d";
 import { reloadServiceData } from "@views/StorageManager/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute } from "vue-router";
@@ -137,7 +137,7 @@ const targetPawerOff = (): void => {
 };
 
 // open first aid page
-import { needFirstAidRaid } from "@views/EstablishRAID/controlData.ts";
+import { needFirstAidRaid } from "@views/ProcessStorageModals/controlData.ts";
 const openFirstAid = (): void => {
     needFirstAidRaid.value = storagePath ?? "";
     showEstablishRAID("FirstAid");
@@ -148,7 +148,7 @@ import {
     diskListByStorageSpace,
     extendRaidPath,
     nameStorage,
-} from "@views/EstablishRAID/controlData.ts";
+} from "@views/ProcessStorageModals/controlData.ts";
 import { INDEX_TO_DISK_HUB_MAP } from "@views/StorageManager/const.ts";
 function getDiskHubIndex(index: number): string {
     return INDEX_TO_DISK_HUB_MAP.get(index) ?? "";
@@ -322,3 +322,4 @@ const extenedCapacity = (): void => {
         </div>
     </template>
 </template>
+@/views/StorageManagerMode/controlView@/views/StorageManagerMode/controlData@/views/StorageManagerMode/controlData@/views/StorageManagerMode/controlData@/views/StorageManagerMode/controlData

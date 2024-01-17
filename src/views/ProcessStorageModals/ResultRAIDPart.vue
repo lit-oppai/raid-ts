@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Image from "primevue/image";
 import Button from "primevue/button";
-import errorSVG from "@assets/img/EstablishRAID/error.svg";
-import successSVG from "@assets/img/EstablishRAID/success.svg";
+import errorSVG from "@assets/img/ProcessStorageModals/error.svg";
+import successSVG from "@assets/img/ProcessStorageModals/success.svg";
 import {
     resultRAIDInfo,
     selectRAIDStrategy,

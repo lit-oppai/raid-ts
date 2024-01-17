@@ -10,8 +10,8 @@ let dialog: any = null
 let dialogInstance: any = null
 
 const useEstablishRAID = () => {
-    const EstablishRAID = defineAsyncComponent(
-        () => import('@views/EstablishRAID/EstablishRAID.vue')
+    const ProcessStorageModals = defineAsyncComponent(
+        () => import('@views/ProcessStorageModals/ProcessStorageModals.vue')
     )
     // TODO: 为了减少重复声明，做了 init 处理。但是非原子操作，会容易丢失 init 操作。
     // TODO: Reomve.
@@ -86,7 +86,7 @@ const useEstablishRAID = () => {
         if (!dialog) {
             initEstablishRAID()
         }
-        dialogInstance = dialog.open(EstablishRAID, {
+        dialogInstance = dialog.open(ProcessStorageModals, {
             props: {
                 draggable: false,
                 header: showType[type].title,
