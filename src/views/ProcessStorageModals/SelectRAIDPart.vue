@@ -12,7 +12,7 @@ import {
     expansionMinDiskSize,
     currentStepName,
     currentStep,
-} from "@views/EstablishRAID/controlData.ts";
+} from "@views/ProcessStorageModals/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import SelectStrategy from "./SelectStrategy.vue";
 import Button from "primevue/button";
@@ -180,7 +180,7 @@ const obtainCurrentDiskCardDescription = (item: DISK_UI_TYPE, key: string) => {
 };
 
 // extened capacity
-import { diskListByStorageSpace } from "@views/EstablishRAID/controlData.ts";
+import { diskListByStorageSpace } from "@views/ProcessStorageModals/controlData.ts";
 
 //
 const checkNextStep = computed<boolean>(() => {
@@ -349,3 +349,6 @@ const clearSelectStorageList = (strategy: RAIDStrategy) => {
             :disabled="checkNextStep"></Button>
     </div>
 </template>
+./controlData@/views/StorageManagerMode/controlData@/views/StorageManagerMode/controlData
+./controlData
+./controlData

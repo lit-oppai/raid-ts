@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { LottieAnimation } from "lottie-web-vue";
-import creatingJSON from "@assets/img/EstablishRAID/creating.json";
-import EasterEgg from "@assets/img/EstablishRAID/easterEgg.json";
+import creatingJSON from "@assets/img/ProcessStorageModals/creating.json";
+import EasterEgg from "@assets/img/ProcessStorageModals/easterEgg.json";
 import { context, onlyFormatSingleStorageSpace } from "./controlData.ts";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();

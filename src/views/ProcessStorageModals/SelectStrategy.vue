@@ -34,3 +34,6 @@ const disabled = computed(() => {
         }" class="casa-check-outline group-active:text-white text-base"></i>
     </div>
 </template>
+./controlData
+./controlData
+./controlData

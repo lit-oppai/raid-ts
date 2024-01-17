@@ -5,7 +5,7 @@ import Button from "primevue/button";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
 import { convertSizeToReadable } from "@utils/tools.ts";
-import { stepByStep } from "@views/EstablishRAID/controlData.ts";
+import { stepByStep } from "@views/ProcessStorageModals/controlData.ts";
 import {
     allNewDiskStatus,
     loadAllNewDiskStatus,
@@ -14,12 +14,12 @@ import {
 onBeforeMount(() => {
     loadAllNewDiskStatus();
 });
-import useEstablishRAID from "@views/EstablishRAID/controlView.ts";
+import useEstablishRAID from "@views/ProcessStorageModals/controlView.ts";
 import {
     resultRAIDInfo,
     nameStorage,
     formatePath,
-} from "@views/EstablishRAID/controlData.ts";
+} from "@views/ProcessStorageModals/controlData.ts";
 import { storage } from "@network/index.ts";
 import { collectionOfStorageNames } from "@views/StorageManager/controlData.ts";
 import router from "@/pages/router";
@@ -136,3 +136,4 @@ const showEnableStorage = (name: string, path: string): void => {
         </div>
     </div>
 </template>
+@/views/StorageManagerMode/controlData@/views/StorageManagerMode/controlView@/views/StorageManagerMode/controlData

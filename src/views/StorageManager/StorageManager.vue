@@ -9,8 +9,8 @@ import RaidSVG from "@assets/img/StorageManager/Raid.svg";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
 import warningRedSVG from "@assets/img/StorageManager/warningRed.svg";
-import cryingFaceSVG from "@assets/img/EstablishRAID/cryingFace.svg";
-import useEstablishRAID from "@views/EstablishRAID/controlView.ts";
+import cryingFaceSVG from "@assets/img/ProcessStorageModals/cryingFace.svg";
+import useEstablishRAID from "@views/ProcessStorageModals/controlView.ts";
 import ZimaCubeCard from "@views/StorageManager/ZimaCubeCard.vue";
 import {
     // storageInfoMap,
@@ -99,7 +99,7 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
             return;
         }
         router.push({
-            path: `/storage/ModifyRAID/${label}`,
+            path: `/storage/DetailRaidStorage/${label}`,
             query: { path },
         });
     } else {
@@ -380,3 +380,4 @@ import { unhealthyLabel } from "@views/StorageManager/controlData.ts";
         <router-view></router-view>
     </Suspense>
 </template>
+@/views/StorageManagerMode/controlView.ts

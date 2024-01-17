@@ -9,12 +9,12 @@ import warningSVG from "@assets/img/StorageManager/warning.svg";
 import { storageInfoMap, reloadServiceData } from "@views/StorageManager/controlData.ts";
 import { convertSizeToReadable } from "@utils/tools.ts";
 import { useRoute, useRouter } from "vue-router";
-import useEstablishRAID from "@views/EstablishRAID/controlView.ts";
+import useEstablishRAID from "@views/ProcessStorageModals/controlView.ts";
 import {
     nameStorage,
     onlyFormatSingleStorageSpace,
     formatePath,
-} from "@views/EstablishRAID/controlData.ts";
+} from "@views/ProcessStorageModals/controlData.ts";
 import { storage, /* disk */ } from "@network/index.ts";
 /* import { DiskInfo } from "@icewhale/zimaos-localstorage-openapi"; */
 
@@ -117,3 +117,4 @@ const disabledStorage = async (): Promise<void> => {
         </div>
     </div>
 </template>
+@/views/StorageManagerMode/controlView@/views/StorageManagerMode/controlData
