@@ -121,7 +121,6 @@ const { status: HDDStatus, setDefaultValues: setDefaultHDDValues } =
     createStorageStatus('HDD', '3.5inch HDD')
 const { status: SSDStatus, setDefaultValues: setDefaultSSDValues } =
     createStorageStatus('SSD', 'm.2 SSD')
-console.log(HDDStatus, SSDStatus);
 
 // load disk info
 const initDiskInfo = async (): Promise<void> => {

@@ -52,7 +52,6 @@ const showEnableStorage = (name: string, path: string): void => {
             resultRAIDInfo.butFunc = async () => {
                 await loadAllNewDiskStatus();
                 closeEstablishRAID();
-                console.log(allNewDiskStatus.value);
                 
                 if(allNewDiskStatus.value.size === 0) {
                     router.go(-1);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, onMounted, onActivated, onUnmounted } from "vue";
+import { onBeforeMount/* , onMounted, onActivated, onUnmounted */ } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
@@ -79,18 +79,18 @@ const filesFreeRate = computed(() => {
         : 100;
 });
 onBeforeMount(() => {
-    console.log("onBeforeMount");
+    // console.log("onBeforeMount");
     initEstablishRAID();
 });
-onMounted(() => {
-    console.log("onMounted");
-});
-onActivated(() => {
-    console.log("onActivated");
-});
-onUnmounted(() => {
-    console.log("onUnmounted");
-});
+// onMounted(() => {
+//     console.log("onMounted");
+// });
+// onActivated(() => {
+//     console.log("onActivated");
+// });
+// onUnmounted(() => {
+//     console.log("onUnmounted");
+// });
 const goToStorageDetailPage = (isRaid: boolean, label: string) => {
     const path: string = storageInfoMap.get(label)?.path ?? "";
     if (isRaid) {
