@@ -13,7 +13,7 @@ import {
     currentStepName,
     currentStep,
 } from "@views/ProcessStorageModals/controlData.ts";
-// import { convertSizeToReadable } from "@utils/tools.ts";
+
 import { convertSizeToReadable } from "@icewhale/ui-utils";
 import SelectStrategy from "./SelectStrategy.vue";
 import Button from "primevue/button";

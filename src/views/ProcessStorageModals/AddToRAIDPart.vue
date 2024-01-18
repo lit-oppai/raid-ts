@@ -10,7 +10,7 @@ import SSDSVG from "@assets/img/StorageManager/SSD.svg";
 import cryingFaceSVG from "@assets/img/ProcessStorageModals/cryingFace.svg";
 import { disk } from "@network/index.ts";
 import { Disk } from "@icewhale/zimaos-localstorage-openapi";
-// import { convertSizeToReadable } from "@utils/tools.ts";
+
 import { convertSizeToReadable } from "@icewhale/ui-utils";
 
 const { closeEstablishRAID } = useEstablishRAID();
