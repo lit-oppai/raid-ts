@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount/* , onMounted, onActivated, onUnmounted */ } from "vue";
+import { onBeforeMount /* , onMounted, onActivated, onUnmounted */ } from "vue";
 import Image from "primevue/image";
 import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
@@ -65,7 +65,8 @@ const freeRate = computed(() => {
 const filesUsageRate = computed(() => {
     return (
         (totalStorageUsageStatus.value?.FilesUsage /
-            (totalStorageUsageStatus.value?.FilesUsage + totalStorageUsageStatus.value?.FilesFree)) *
+            (totalStorageUsageStatus.value?.FilesUsage +
+                totalStorageUsageStatus.value?.FilesFree)) *
         100
     ).toFixed(0);
 });
@@ -73,7 +74,8 @@ const filesFreeRate = computed(() => {
     return totalStorageUsageStatus.value?.FilesFree
         ? (
             (totalStorageUsageStatus.value?.FilesFree /
-                (totalStorageUsageStatus.value?.FilesUsage + totalStorageUsageStatus.value?.FilesFree)) *
+                (totalStorageUsageStatus.value?.FilesUsage +
+                    totalStorageUsageStatus.value?.FilesFree)) *
             100
         ).toFixed(0)
         : 100;
@@ -109,7 +111,6 @@ const goToStorageDetailPage = (isRaid: boolean, label: string) => {
 
 // 检测错误信息
 import { unhealthyLabel } from "@views/StorageManager/controlData.ts";
-
 </script>
 
 <template>
@@ -188,13 +189,13 @@ import { unhealthyLabel } from "@views/StorageManager/controlData.ts";
                             </div>
                         </NPopover>
                     </div>
-                    <div class="space-x-1">
+                    <div class="space-x-1 flex items-center">
                         <span class="bg-amber-500 w-1.5 h-1.5 rounded-sm inline-block"></span>
                         <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">
                             {{ $t("System") }}
                         </span>
                     </div>
-                    <div class="space-x-1">
+                    <div class="space-x-1 flex items-center">
                         <span class="bg-violet-500 w-1.5 h-1.5 rounded-sm inline-block"></span>
                         <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">
                             {{ $t("Data") }}
@@ -238,13 +239,17 @@ import { unhealthyLabel } from "@views/StorageManager/controlData.ts";
                     </div>
                     <!-- Storage remake -->
                     <div class="flex justify-between">
-                        <div class="space-x-1">
+                        <div class="space-x-1 flex items-center">
                             <span class="bg-green-400 w-1.5 h-1.5 rounded-sm inline-block"></span>
-                            <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">Files</span>
+                            <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">{{
+                                $t("Files")
+                            }}</span>
                         </div>
-                        <div>
+                        <div class="h-4 flex items-center">
                             <span class="text-neutral-400 text-xs font-normal font-['Roboto']">{{
-                                convertSizeToReadable(totalStorageUsageStatus.FilesFree + totalStorageUsageStatus.FilesUsage)
+                                convertSizeToReadable(
+                                    totalStorageUsageStatus.FilesFree + totalStorageUsageStatus.FilesUsage
+                                )
                             }}/
                             </span>
                             <span class="text-zinc-800 text-xs font-normal font-['Roboto']">{{
@@ -380,4 +385,3 @@ import { unhealthyLabel } from "@views/StorageManager/controlData.ts";
         <router-view></router-view>
     </Suspense>
 </template>
-@/views/StorageManagerMode/controlView.ts
