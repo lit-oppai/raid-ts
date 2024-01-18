@@ -15,7 +15,7 @@ import {
     onlyFormatSingleStorageSpace,
     formatePath,
 } from "@views/ProcessStorageModals/controlData.ts";
-import { storage, /* disk */ } from "@network/index.ts";
+import { storage /* disk */ } from "@network/index.ts";
 /* import { DiskInfo } from "@icewhale/zimaos-localstorage-openapi"; */
 
 const { showEstablishRAID } = useEstablishRAID();
@@ -69,7 +69,9 @@ const disabledStorage = async (): Promise<void> => {
 <template>
     <!-- Storage Info List -->
     <div class="mt-6 mb-2">
-        <span class="text-neutral-400 text-sm font-normal font-['Roboto']"> {{ $t('Hard Drive') }} </span>
+        <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
+            {{ $t("Hard Drive") }}
+        </span>
     </div>
     <div class="os_bg_white_card mt-2">
         <div class="flex px-3 space-x-3 items-center rounded-md os_list">
@@ -84,8 +86,11 @@ const disabledStorage = async (): Promise<void> => {
                     </span>
                 </div>
                 <div class="flex">
-                    <span class="text-neutral-400 text-xs font-normal font-['Roboto']">Total {{
-                        convertSizeToReadable(storageInfo?.size ?? 0) }} /</span>
+                    <span class="text-neutral-400 text-xs font-normal font-['Roboto']">
+                        {{
+                            $t("Total{size}", { size: convertSizeToReadable(storageInfo?.size ?? 0) })
+                        }}
+                        /</span>
                     <span class="text-zinc-800 text-xs font-normal font-['Roboto']">{{
                         convertSizeToReadable(storageInfo?.used ?? 0)
                     }}</span>
