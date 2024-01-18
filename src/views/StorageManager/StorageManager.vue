@@ -25,7 +25,8 @@ const {
     RAIDCandidateDiskCount,
     isStoragePageDataLoading,
 } = useStoragePageDataBindingLifecycle();
-import { convertSizeToReadable } from "@utils/tools.ts";
+// import { convertSizeToReadable } from "@utils/tools.ts";
+import { convertSizeToReadable } from "@icewhale/ui-utils";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
 

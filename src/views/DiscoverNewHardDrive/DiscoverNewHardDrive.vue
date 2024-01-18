@@ -4,7 +4,8 @@ import Image from "primevue/image";
 import Button from "primevue/button";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
-import { convertSizeToReadable } from "@utils/tools.ts";
+// import { convertSizeToReadable } from "@utils/tools.ts";
+import { convertSizeToReadable } from "@icewhale/ui-utils";
 import { stepByStep } from "@views/ProcessStorageModals/controlData.ts";
 import {
     allNewDiskStatus,

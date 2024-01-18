@@ -9,7 +9,8 @@ import {
     selectStorageList,
     context,
 } from "./controlData.ts";
-import { convertSizeToReadable } from "@utils/tools.ts";
+// import { convertSizeToReadable } from "@utils/tools.ts";
+import { convertSizeToReadable } from "@icewhale/ui-utils";
 
 let svg: string, statusMessage: string;
 if (resultRAIDInfo.success) {

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { defineAsyncComponent, computed, PropType } from "vue";
 import { NPopover } from "naive-ui";
-import { convertSizeToReadable } from "@utils/tools.ts";
+// import { convertSizeToReadable } from "@utils/tools.ts";
+import { convertSizeToReadable } from "@icewhale/ui-utils";
 import { DISK_UI_TYPE } from "./controlData.d";
 
 const healthyColor = "#28C322";
