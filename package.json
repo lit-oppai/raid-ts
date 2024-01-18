@@ -11,6 +11,7 @@
     "upOpenAPI": "pnpm up '@icewhale/*' --latest"
   },
   "dependencies": {
+    "@icewhale/ui-utils": "workspace:^",
     "axios": "^1.6.3",
     "iconfonts-casaos": "^1.0.4",
     "primevue": "3.43.0",
