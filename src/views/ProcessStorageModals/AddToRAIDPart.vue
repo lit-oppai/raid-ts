@@ -88,6 +88,3 @@ watch(newDiskStatus, (val) => {
             "></Button>
     </div>
 </template>
-./controlView.ts@/views/StorageManagerMode/controlData.ts@/views/StorageManagerMode/controlData.ts
-./controlView.ts
-./controlView.ts

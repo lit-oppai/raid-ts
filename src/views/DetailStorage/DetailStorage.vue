@@ -122,4 +122,3 @@ const disabledStorage = async (): Promise<void> => {
         </div>
     </div>
 </template>
-@/views/StorageManagerMode/controlView@/views/StorageManagerMode/controlData

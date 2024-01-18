@@ -322,4 +322,3 @@ const extenedCapacity = (): void => {
         </div>
     </template>
 </template>
-@/views/StorageManagerMode/controlView@/views/StorageManagerMode/controlData@/views/StorageManagerMode/controlData@/views/StorageManagerMode/controlData@/views/StorageManagerMode/controlData

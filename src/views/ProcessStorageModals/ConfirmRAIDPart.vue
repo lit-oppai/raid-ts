@@ -300,6 +300,3 @@ switch (context.value) {
     </div>
 </template>
 <style></style>
-./controlView.ts@/views/StorageManagerMode/controlData.ts@/views/StorageManagerMode/controlData.ts@/views/StorageManagerMode/controlData.ts
-./controlView.ts
-./controlView.ts
