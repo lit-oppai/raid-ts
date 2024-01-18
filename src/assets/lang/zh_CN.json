@@ -128,5 +128,6 @@
   "Used by {assignment}": "使用中：{assignment}",
   "Used by": "被使用中：",
   "Format hard drive": "格式化磁盘",
-  "Setting": "设置"
+  "Setting": "设置",
+  "Total{size}": "总计 {size}"
 }
