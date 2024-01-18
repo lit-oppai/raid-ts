@@ -349,6 +349,3 @@ const clearSelectStorageList = (strategy: RAIDStrategy) => {
             :disabled="checkNextStep"></Button>
     </div>
 </template>
-./controlData@/views/StorageManagerMode/controlData@/views/StorageManagerMode/controlData
-./controlData
-./controlData

@@ -136,4 +136,3 @@ const showEnableStorage = (name: string, path: string): void => {
         </div>
     </div>
 </template>
-@/views/StorageManagerMode/controlData@/views/StorageManagerMode/controlView@/views/StorageManagerMode/controlData
