@@ -9,7 +9,7 @@ import RaidSVG from "@assets/img/StorageManager/Raid.svg";
 import HDDSVG from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG from "@assets/img/StorageManager/SSD.svg";
 import warningRedSVG from "@assets/img/StorageManager/warningRed.svg";
-import cryingFaceSVG from "@assets/img/ProcessStorageModals/cryingFace.svg";
+import supermanRaidSVG from '@/assets/img/StorageManager/supermanRaid.svg'
 import useEstablishRAID from "@views/ProcessStorageModals/controlView.ts";
 import ZimaCubeCard from "@views/StorageManager/ZimaCubeCard.vue";
 import {
@@ -275,7 +275,7 @@ import { unhealthyLabel } from "@views/StorageManager/controlData.ts";
         </div>
         <div v-else-if="RAIDCandidateDiskCount === 0 && storageInfoMap.size === 0"
             class="flex flex-col items-center justify-center">
-            <Image :src="cryingFaceSVG"></Image>
+            <Image :src="supermanRaidSVG"></Image>
             <span>
                 Shut down and insert the hard drive, while supporting RAID0, RAID1 and RAID5.
             </span>
