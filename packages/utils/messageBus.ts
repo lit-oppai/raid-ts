@@ -1,10 +1,11 @@
-import WUJIE_PROPS from "@utils/primaryProps.ts";
-import { api } from "@/network";
+// import WUJIE_PROPS from "@utils/primaryProps.ts";
+import { WUJIE_PROPS } from './primaryProps';
+import { api } from "./network.ts";
 
 // Function:
 // Send message to message bus.
 // TODO: Need to transform to socket.io.
-function messageBus(name: keyof typeof Messages, params?: string | { [key: string]: any }) {
+export function messageBus(name: keyof typeof Messages, params?: string | { [key: string]: any }) {
     type messageTypes = keyof typeof Messages;
     if (name as messageTypes in Messages) {
         const payload = (Messages[name as messageTypes] as Function)(params);
@@ -42,7 +43,7 @@ const intermediateProcessor = (
 };
 
 // TODO: Need to extract common methods to an npm package.
-const Messages = {
+export const Messages = {
     global_newvisit: () => {
         return intermediateProcessor(`${sourceID}:global:global_newvisit`);
     },
@@ -335,7 +336,3 @@ const Messages = {
         );
     },
 };
-
-export { Messages };
-
-export default messageBus;

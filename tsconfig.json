@@ -1,73 +1,73 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "skipLibCheck": true,
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    // 告诉 ts，在编译时，去对应的路径寻找文件。
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@network/*": [
-        "./src/network/*"
-      ],
-      "@views/*": [
-        "./src/views/*"
-      ],
-      "@pages/*": [
-        "./src/pages/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@assets/*": [
-        "./src/assets/*"
-      ],
-      "@style/*": [
-        "./src/style/*"
-      ],
+    "compilerOptions": {
+        "target": "ES2020",
+        "useDefineForClassFields": true,
+        "module": "ESNext",
+        "lib": [
+            "ES2020",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        "skipLibCheck": true,
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "preserve",
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        // 告诉 ts，在编译时，去对应的路径寻找文件。
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ],
+            "@components/*": [
+                "./src/components/*"
+            ],
+            "@network/*": [
+                "./src/network/*"
+            ],
+            "@views/*": [
+                "./src/views/*"
+            ],
+            "@pages/*": [
+                "./src/pages/*"
+            ],
+            "@utils/*": [
+                "./src/utils/*"
+            ],
+            "@assets/*": [
+                "./src/assets/*"
+            ],
+            "@style/*": [
+                "./src/style/*"
+            ],
+        },
+        // types 引入组件
+        "types": [
+            "naive-ui/volar",
+            "lodash"
+        ]
     },
-    // types 引入组件
-    "types": [
-      "naive-ui/volar",
-      "lodash"
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "vue-shim.d.ts",
+        "packages/**/*.ts",
+        "packages/**/*.d.ts",
+        "packages/**/*.tsx",
+        "packages/**/*.vue",
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        }
     ]
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "vue-shim.d.ts",
-    "packages/**/*.ts",
-    "packages/**/*.d.ts",
-    "packages/**/*.tsx",
-    "packages/**/*.vue",
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
 }
