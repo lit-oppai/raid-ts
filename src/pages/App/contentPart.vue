@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import messageBus from "@utils/messageBus";
+import { messageBus } from '@icewhale/ui-utils';
 import { useRoute, useRouter } from "vue-router";
 // import router from '@pages/router.ts';
 import { ref, watch } from "vue";

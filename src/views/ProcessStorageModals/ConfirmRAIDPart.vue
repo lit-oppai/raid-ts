@@ -49,7 +49,7 @@ function selectText(): void {
     inputElement?.select();
 }
 
-import openAPI from "@network/index.ts";
+import {storage, raid} from "@network/index.ts";
 import { RaidBodyRaidLevelEnum } from "@icewhale/zimaos-localstorage-openapi";
 // nameStorage validate.
 import { nameStorageHandleSubmit } from "@views/ProcessStorageModals/controlData.ts";
@@ -71,8 +71,8 @@ const createStorage = nameStorageHandleSubmit(
     }
 );
 const createSingleStorage = () => {
-    // openAPI.storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
-    openAPI.storage
+    // storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
+    storage
         .createStorage(
             { name: nameStorage.value, path: formatePath.value, format: true },
             { timeout: 600000 }
@@ -105,7 +105,7 @@ const createSingleStorage = () => {
 const createRAID = () => {
     const raidLevel = Number(selectRAIDStrategy.value?.split("RAID")[1]);
 
-    openAPI.raid
+    raid
         .createRaid(
             {
                 devices: pathList.value,
@@ -147,7 +147,7 @@ const createRAID = () => {
 import { selectedFidDisk, needFirstAidRaid } from "@views/ProcessStorageModals/controlData.ts";
 const confirmFirstAid = () => {
     stepByStep("next");
-    openAPI.raid
+    raid
         .updateRaid({
             devices: [selectedFidDisk.value as string],
             path: needFirstAidRaid.value,
@@ -185,7 +185,7 @@ const confirmFirstAid = () => {
 import { extendRaidPath } from "@views/ProcessStorageModals/controlData.ts";
 const extendCapacity = () => {
     stepByStep("next");
-    openAPI.raid
+    raid
         .updateRaid({
             devices: pathList.value,
             path: extendRaidPath.value ?? "",

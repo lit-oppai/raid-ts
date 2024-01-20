@@ -129,7 +129,7 @@ watch(
 );
 
 // power off
-import messageBus from "@utils/messageBus";
+import { messageBus } from "@icewhale/ui-utils";
 const targetPawerOff = (): void => {
     messageBus("mircoapp_communicate", {
         action: "power_off",
