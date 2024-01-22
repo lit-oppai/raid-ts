@@ -29,8 +29,8 @@ export const routes: RouteMeta[] = [
     },
     {
         path: '/network',
-        component: () => import('./home'),
-        // name: 'network',
+        component: () => import('./network/index.ts'),
+        name: 'network',
         icon: 'casa-network-outline',
         meta: { title: 'Network' }
     },

@@ -75,6 +75,7 @@ export default {
                 green: {
                     400: 'rgba(51, 204, 128, 1)',
                     500: 'rgba(40, 195, 34, 1)',
+                    default: "rgba(40, 195, 34, 1)",
                 },
             },
         },
