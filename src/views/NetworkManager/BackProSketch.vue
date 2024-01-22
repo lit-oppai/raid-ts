@@ -1,0 +1,192 @@
+<script setup lang="ts">
+import { ref, onMounted, watch } from "vue";
+
+const activedColor = "#007AE5";
+const BackProSketchRef = ref<SVGSVGElement | null>(null);
+const props = defineProps({
+    activedPort: {
+        type: Number,
+        default: 0,
+    },
+});
+const setSvgAttribute = (name: string, attribute: string, value: any) => {
+    const svg = BackProSketchRef.value?.querySelector(`[name=${name}]`);
+    svg && svg.setAttribute(attribute, value);
+};
+onMounted(() => {
+    watch(
+        () => props.activedPort,
+        (newVal) => {
+            newVal > 0 && setSvgAttribute("networkPort" + newVal, "fill", activedColor);
+        },
+        { immediate: true }
+    );
+});
+</script>
+<template>
+    <svg ref="BackProSketchRef" width="260" height="80" viewBox="0 0 260 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g opacity="0.8">
+            <g opacity="0.4" filter="url(#filter0_f_2531_15924)">
+                <path
+                    d="M18.811 54.2971C19.5686 53.4706 20.6384 53 21.7596 53H238.24C239.362 53 240.431 53.4706 241.189 54.2971L244.856 58.2971C247.207 60.8627 245.387 65 241.907 65H18.0929C14.6125 65 12.7925 60.8627 15.1443 58.2971L18.811 54.2971Z"
+                    fill="#6C7480" />
+            </g>
+            <g opacity="0.4" filter="url(#filter1_f_2531_15924)">
+                <path
+                    d="M17.8284 58.1716C18.5786 57.4214 19.596 57 20.6569 57H238.552C239.488 57 240.394 57.3281 241.113 57.9271L241.756 58.4636C243.193 59.6611 242.346 62 240.476 62H18.8284C17.0466 62 16.1543 59.8457 17.4142 58.5858L17.8284 58.1716Z"
+                    fill="#6C7480" />
+            </g>
+        </g>
+        <g filter="url(#filter2_iiii_2531_15924)">
+            <path
+                d="M16 8C16 3.58172 19.5817 0 24 0H236C240.418 0 244 3.58172 244 8V52C244 56.4183 240.418 60 236 60H24C19.5817 60 16 56.4183 16 52V8Z"
+                fill="url(#paint0_linear_2531_15924)" />
+        </g>
+        <g filter="url(#filter3_i_2531_15924)">
+            <path
+                d="M21 11C21 7.68629 23.6863 5 27 5H233C236.314 5 239 7.68629 239 11V49C239 52.3137 236.314 55 233 55H27C23.6863 55 21 52.3137 21 49V11Z"
+                fill="white" />
+        </g>
+        <path
+            d="M21.5 11C21.5 7.96243 23.9624 5.5 27 5.5H233C236.038 5.5 238.5 7.96243 238.5 11V49C238.5 52.0376 236.038 54.5 233 54.5H27C23.9624 54.5 21.5 52.0376 21.5 49V11Z"
+            stroke="#CFD8E5" />
+        <path
+            d="M55.5 39.5C54.6716 39.5 54 40.1716 54 41C54 41.8284 54.6716 42.5 55.5 42.5H62.5C63.3284 42.5 64 41.8284 64 41C64 40.1716 63.3284 39.5 62.5 39.5H55.5Z"
+            fill="#C0C6CC" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M51 41C51 38.7909 52.7909 37 55 37H63C65.2091 37 67 38.7909 67 41C67 43.2091 65.2091 45 63 45H55C52.7909 45 51 43.2091 51 41ZM55 38H63C64.6569 38 66 39.3431 66 41C66 42.6569 64.6569 44 63 44H55C53.3431 44 52 42.6569 52 41C52 39.3431 53.3431 38 55 38Z"
+            fill="#C0C6CC" />
+        <path
+            d="M79.5 39.5C78.6716 39.5 78 40.1716 78 41C78 41.8284 78.6716 42.5 79.5 42.5H86.5C87.3284 42.5 88 41.8284 88 41C88 40.1716 87.3284 39.5 86.5 39.5H79.5Z"
+            fill="#C0C6CC" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M75 41C75 38.7909 76.7909 37 79 37H87C89.2091 37 91 38.7909 91 41C91 43.2091 89.2091 45 87 45H79C76.7909 45 75 43.2091 75 41ZM79 38H87C88.6569 38 90 39.3431 90 41C90 42.6569 88.6569 44 87 44H79C77.3431 44 76 42.6569 76 41C76 39.3431 77.3431 38 79 38Z"
+            fill="#C0C6CC" />
+        <g opacity="0.2">
+            <path
+                d="M38 42.5C37.1716 42.5 36.5 41.8284 36.5 41C36.5 40.1716 37.1716 39.5 38 39.5C38.8284 39.5 39.5 40.1716 39.5 41C39.5 41.8284 38.8284 42.5 38 42.5Z"
+                fill="#C0C6CC" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M38 36C35.2386 36 33 38.2386 33 41C33 43.7614 35.2386 46 38 46C40.7614 46 43 43.7614 43 41C43 38.2386 40.7614 36 38 36ZM35 41C35 39.3431 36.3431 38 38 38C39.6569 38 41 39.3431 41 41C41 42.6569 39.6569 44 38 44C36.3431 44 35 42.6569 35 41Z"
+                fill="#C0C6CC" />
+        </g>
+        <g opacity="0.2">
+            <path
+                d="M208 21.25C207.586 21.25 207.25 21.5858 207.25 22V24C207.25 24.4142 207.586 24.75 208 24.75C208.414 24.75 208.75 24.4142 208.75 24V22.75H221.25V24C221.25 24.4142 221.586 24.75 222 24.75C222.414 24.75 222.75 24.4142 222.75 24V22C222.75 21.5858 222.414 21.25 222 21.25H208Z"
+                fill="#C0C6CC" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M203 20C203 18.8954 203.895 18 205 18H225C226.105 18 227 18.8954 227 20V26C227 27.1046 226.105 28 225 28H206.828C206.298 28 205.789 27.7893 205.414 27.4142L203.586 25.5858C203.211 25.2107 203 24.702 203 24.1716V20ZM205 19.5H225C225.276 19.5 225.5 19.7239 225.5 20V26C225.5 26.2761 225.276 26.5 225 26.5H206.828C206.696 26.5 206.569 26.4473 206.475 26.3536L204.646 24.5251C204.553 24.4314 204.5 24.3042 204.5 24.1716V20C204.5 19.7239 204.724 19.5 205 19.5Z"
+                fill="#C0C6CC" />
+        </g>
+        <g opacity="0.2">
+            <path
+                d="M208 39.25C207.586 39.25 207.25 39.5858 207.25 40C207.25 40.4142 207.586 40.75 208 40.75H222C222.414 40.75 222.75 40.4142 222.75 40C222.75 39.5858 222.414 39.25 222 39.25H208Z"
+                fill="#C0C6CC" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M203 38C203 36.8954 203.895 36 205 36H225C226.105 36 227 36.8954 227 38V42C227 42.6295 226.704 43.2223 226.2 43.6L223.533 45.6C223.187 45.8596 222.766 46 222.333 46H207.667C207.234 46 206.813 45.8596 206.467 45.6L203.8 43.6C203.296 43.2223 203 42.6295 203 42V38ZM205 37.5H225C225.276 37.5 225.5 37.7239 225.5 38V42C225.5 42.1574 225.426 42.3056 225.3 42.4L222.633 44.4C222.547 44.4649 222.442 44.5 222.333 44.5H207.667C207.558 44.5 207.453 44.4649 207.367 44.4L204.7 42.4C204.574 42.3056 204.5 42.1574 204.5 42V38C204.5 37.7239 204.724 37.5 205 37.5Z"
+                fill="#C0C6CC" />
+        </g>
+        <g opacity="0.2">
+            <path
+                d="M143.5 39C143.224 39 143 39.2239 143 39.5V41.5C143 41.7761 143.224 42 143.5 42H156.5C156.776 42 157 41.7761 157 41.5V39.5C157 39.2239 156.776 39 156.5 39H143.5Z"
+                fill="#C0C6CC" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M139 38C139 36.8954 139.895 36 141 36H159C160.105 36 161 36.8954 161 38V44C161 45.1046 160.105 46 159 46H141C139.895 46 139 45.1046 139 44V38ZM141 37.5H159C159.276 37.5 159.5 37.7239 159.5 38V44C159.5 44.2761 159.276 44.5 159 44.5H141C140.724 44.5 140.5 44.2761 140.5 44V38C140.5 37.7239 140.724 37.5 141 37.5Z"
+                fill="#C0C6CC" />
+        </g>
+        <g opacity="0.2">
+            <path
+                d="M173.5 39C173.224 39 173 39.2239 173 39.5V41.5C173 41.7761 173.224 42 173.5 42H186.5C186.776 42 187 41.7761 187 41.5V39.5C187 39.2239 186.776 39 186.5 39H173.5Z"
+                fill="#C0C6CC" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M169 38C169 36.8954 169.895 36 171 36H189C190.105 36 191 36.8954 191 38V44C191 45.1046 190.105 46 189 46H171C169.895 46 169 45.1046 169 44V38ZM171 37.5H189C189.276 37.5 189.5 37.7239 189.5 38V44C189.5 44.2761 189.276 44.5 189 44.5H171C170.724 44.5 170.5 44.2761 170.5 44V38C170.5 37.7239 170.724 37.5 171 37.5Z"
+                fill="#C0C6CC" />
+        </g>
+
+        <g fill="#C0C6CC" name="networkPort1">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M116.5 17.25C116.086 17.25 115.75 17.5858 115.75 18V19.75H113C112.586 19.75 112.25 20.0858 112.25 20.5V28C112.25 28.4142 112.586 28.75 113 28.75H127C127.414 28.75 127.75 28.4142 127.75 28V20.5C127.75 20.0858 127.414 19.75 127 19.75H124.25V18C124.25 17.5858 123.914 17.25 123.5 17.25H116.5ZM125.25 27.25V24C125.25 23.5858 124.914 23.25 124.5 23.25C124.086 23.25 123.75 23.5858 123.75 24V27.25H122.25V24C122.25 23.5858 121.914 23.25 121.5 23.25C121.086 23.25 120.75 23.5858 120.75 24V27.25H119.25V24C119.25 23.5858 118.914 23.25 118.5 23.25C118.086 23.25 117.75 23.5858 117.75 24V27.25H116.25V24C116.25 23.5858 115.914 23.25 115.5 23.25C115.086 23.25 114.75 23.5858 114.75 24V27.25H113.75V21.25H116.5C116.914 21.25 117.25 20.9142 117.25 20.5V18.75H122.75V20.5C122.75 20.9142 123.086 21.25 123.5 21.25H126.25V27.25H125.25Z" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M109 16C109 14.8954 109.895 14 111 14H129C130.105 14 131 14.8954 131 16V30C131 31.1046 130.105 32 129 32H111C109.895 32 109 31.1046 109 30V16ZM111 15.5H129C129.276 15.5 129.5 15.7239 129.5 16V30C129.5 30.2761 129.276 30.5 129 30.5H111C110.724 30.5 110.5 30.2761 110.5 30V16C110.5 15.7239 110.724 15.5 111 15.5Z" />
+        </g>
+
+        <g fill="#C0C6CC" name="networkPort2">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M146.5 17.25C146.086 17.25 145.75 17.5858 145.75 18V19.75H143C142.586 19.75 142.25 20.0858 142.25 20.5V28C142.25 28.4142 142.586 28.75 143 28.75H157C157.414 28.75 157.75 28.4142 157.75 28V20.5C157.75 20.0858 157.414 19.75 157 19.75H154.25V18C154.25 17.5858 153.914 17.25 153.5 17.25H146.5ZM155.25 27.25V24C155.25 23.5858 154.914 23.25 154.5 23.25C154.086 23.25 153.75 23.5858 153.75 24V27.25H152.25V24C152.25 23.5858 151.914 23.25 151.5 23.25C151.086 23.25 150.75 23.5858 150.75 24V27.25H149.25V24C149.25 23.5858 148.914 23.25 148.5 23.25C148.086 23.25 147.75 23.5858 147.75 24V27.25H146.25V24C146.25 23.5858 145.914 23.25 145.5 23.25C145.086 23.25 144.75 23.5858 144.75 24V27.25H143.75V21.25H146.5C146.914 21.25 147.25 20.9142 147.25 20.5V18.75H152.75V20.5C152.75 20.9142 153.086 21.25 153.5 21.25H156.25V27.25H155.25Z" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M139 16C139 14.8954 139.895 14 141 14H159C160.105 14 161 14.8954 161 16V30C161 31.1046 160.105 32 159 32H141C139.895 32 139 31.1046 139 30V16ZM141 15.5H159C159.276 15.5 159.5 15.7239 159.5 16V30C159.5 30.2761 159.276 30.5 159 30.5H141C140.724 30.5 140.5 30.2761 140.5 30V16C140.5 15.7239 140.724 15.5 141 15.5Z" />
+        </g>
+
+        <g fill="#C0C6CC" name="networkPort3">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M176.5 17.25C176.086 17.25 175.75 17.5858 175.75 18V19.75H173C172.586 19.75 172.25 20.0858 172.25 20.5V28C172.25 28.4142 172.586 28.75 173 28.75H187C187.414 28.75 187.75 28.4142 187.75 28V20.5C187.75 20.0858 187.414 19.75 187 19.75H184.25V18C184.25 17.5858 183.914 17.25 183.5 17.25H176.5ZM185.25 27.25V24C185.25 23.5858 184.914 23.25 184.5 23.25C184.086 23.25 183.75 23.5858 183.75 24V27.25H182.25V24C182.25 23.5858 181.914 23.25 181.5 23.25C181.086 23.25 180.75 23.5858 180.75 24V27.25H179.25V24C179.25 23.5858 178.914 23.25 178.5 23.25C178.086 23.25 177.75 23.5858 177.75 24V27.25H176.25V24C176.25 23.5858 175.914 23.25 175.5 23.25C175.086 23.25 174.75 23.5858 174.75 24V27.25H173.75V21.25H176.5C176.914 21.25 177.25 20.9142 177.25 20.5V18.75H182.75V20.5C182.75 20.9142 183.086 21.25 183.5 21.25H186.25V27.25H185.25Z" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M169 16C169 14.8954 169.895 14 171 14H189C190.105 14 191 14.8954 191 16V30C191 31.1046 190.105 32 189 32H171C169.895 32 169 31.1046 169 30V16ZM171 15.5H189C189.276 15.5 189.5 15.7239 189.5 16V30C189.5 30.2761 189.276 30.5 189 30.5H171C170.724 30.5 170.5 30.2761 170.5 30V16C170.5 15.7239 170.724 15.5 171 15.5Z" />
+        </g>
+
+        <defs>
+            <filter id="filter0_f_2531_15924" x="6.08496" y="45" width="247.83" height="28" filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                <feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur_2531_15924" />
+            </filter>
+            <filter id="filter1_f_2531_15924" x="12.8245" y="53" width="233.656" height="13" filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_2531_15924" />
+            </filter>
+            <filter id="filter2_iiii_2531_15924" x="16" y="-2" width="228" height="64" filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha" />
+                <feOffset dy="2" />
+                <feGaussianBlur stdDeviation="2" />
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.15 0" />
+                <feBlend mode="normal" in2="shape" result="effect1_innerShadow_2531_15924" />
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha" />
+                <feOffset dy="1" />
+                <feGaussianBlur stdDeviation="1" />
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.2 0" />
+                <feBlend mode="normal" in2="effect1_innerShadow_2531_15924" result="effect2_innerShadow_2531_15924" />
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha" />
+                <feOffset dy="-2" />
+                <feGaussianBlur stdDeviation="2" />
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0.358333 0 0 0 0 0.375694 0 0 0 0 0.4 0 0 0 0.3 0" />
+                <feBlend mode="normal" in2="effect2_innerShadow_2531_15924" result="effect3_innerShadow_2531_15924" />
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha" />
+                <feOffset dy="-1" />
+                <feGaussianBlur stdDeviation="0.5" />
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0" />
+                <feBlend mode="normal" in2="effect3_innerShadow_2531_15924" result="effect4_innerShadow_2531_15924" />
+            </filter>
+            <filter id="filter3_i_2531_15924" x="21" y="5" width="218" height="51" filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha" />
+                <feOffset dy="1" />
+                <feGaussianBlur stdDeviation="1" />
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0.537255 0 0 0 0 0.564706 0 0 0 0 0.6 0 0 0 0.3 0" />
+                <feBlend mode="normal" in2="shape" result="effect1_innerShadow_2531_15924" />
+            </filter>
+            <linearGradient id="paint0_linear_2531_15924" x1="101.362" y1="17.0496" x2="104.521" y2="62.6679"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#ACB4BF" />
+                <stop offset="1" stop-color="#949CA6" />
+            </linearGradient>
+        </defs>
+    </svg>
+</template>
