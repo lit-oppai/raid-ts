@@ -240,7 +240,7 @@ export default {
             ]
         },
         summary: {
-            class: '!hidden'
+            // class: '!hidden'
         },
         detail: {
             class: '!mt-0'
