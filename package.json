@@ -27,6 +27,7 @@
     "@types/socket.io-client": "1.4.36",
     "@vitejs/plugin-vue": "^4.6.0",
     "autoprefixer": "^10.4.16",
+    "clipboard-copy": "^4.0.1",
     "lodash": "^4.17.21",
     "lottie-web-vue": "^2.0.7",
     "naive-ui": "^2.36.0",
