@@ -7,6 +7,7 @@ import router from '@pages/router.ts'
 import PrimeVue from 'primevue/config'
 import DialogService from 'primevue/dialogservice'
 import ToastService from 'primevue/toastservice';
+import Tooltip from 'primevue/tooltip';
 
 createApp(app)
     .use(PrimeVue, {
@@ -18,4 +19,5 @@ createApp(app)
     .use(i18n)
     .use(DialogService)
     .use(ToastService)
+    .directive('tooltip', Tooltip)
     .mount('#icewhale-settings-app')

@@ -129,5 +129,19 @@
   "Used by": "被使用中：",
   "Format hard drive": "格式化磁盘",
   "Setting": "设置",
-  "Total{size}": "总计 {size}"
+  "network": "网络",
+  "Network": "网络管理",
+  "Total{size}": "总计 {size}",
+  "Remote Login": "远程访问",
+  "Copy": "复制",
+  "Install ZimaClient": "安装 ZimaClient",
+  "Install ZimaClient content": "于终端设备并通过NetworkID将当前的Zima设备绑定，以启用远程访问服务。",
+  "Privacy Service Agreement": {
+    "title": "隐私服务协议。",
+    "content": "ZimaOS目前提供限时的免费远程访问服务，启用此功能即表示您同意"
+  },
+  "Font": "正面",
+  "Back": "背面",
+  "Thunderbolt": "雷雳",
+  "Checking": "检查中"
 }
