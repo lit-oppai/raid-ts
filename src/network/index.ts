@@ -1,5 +1,6 @@
-import {api, useInstance} from '@icewhale/ui-utils';
+import { api, useInstance } from '@icewhale/ui-utils';
 import { Configuration, DiskMethodsApi, MergeMethodsApi, MountMethodsApi, StorageMethodsApi, RaidMethodsApi } from "@icewhale/zimaos-localstorage-openapi";
+import { NetworkMethodsApi, ZerotierMethodsApi } from "@icewhale/zimaos-openapi"
 
 const instance = useInstance();
 const configuration = new Configuration({
@@ -13,6 +14,9 @@ export const merge = new MergeMethodsApi(configuration, prefix, instance);
 export const mount = new MountMethodsApi(configuration, prefix, instance);
 export const raid = new RaidMethodsApi(configuration, prefix, instance);
 export const storage = new StorageMethodsApi(configuration, prefix, instance);
+
+export const network = new NetworkMethodsApi(configuration, "/v2/zimaos", instance);
+export const zerotier = new ZerotierMethodsApi(configuration, "/v2/zimaos", instance);
 
 export {
     api,

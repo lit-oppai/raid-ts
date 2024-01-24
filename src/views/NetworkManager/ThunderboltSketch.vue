@@ -1,135 +1,24 @@
 <script setup lang="ts">
-// import { ref } from "vue";
-// const BackSketchRef = ref<SVGSVGElement | null>(null);
-const activedColor = "#007AE5";
-const unactivedColor = "#C0C6CC";
+import Image from "primevue/image";
+import ThunderboltPortStatus from "./ThunderboltPortStatus.vue";
+import ThunderboltSVG from "@/assets/img/NetworkManager/Thunderbolt.svg";
 defineProps({
     actived: {
         type: Boolean,
         default: false,
     },
+    data: {
+        type: Object,
+        default: () => ({}),
+    },
 });
 </script>
 <template>
-    <svg ref="ThunderboltSketchRef" width="260" height="62" viewBox="0 0 260 62" fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <g opacity="0.8">
-            <g opacity="0.4" filter="url(#filter0_f_2531_15898)">
-                <path
-                    d="M18.811 36.2971C19.5686 35.4706 20.6384 35 21.7596 35H238.24C239.362 35 240.431 35.4706 241.189 36.2971L244.856 40.2971C247.207 42.8627 245.387 47 241.907 47H18.0929C14.6125 47 12.7925 42.8627 15.1443 40.2971L18.811 36.2971Z"
-                    fill="#6C7480" />
-            </g>
-            <g opacity="0.4" filter="url(#filter1_f_2531_15898)">
-                <path
-                    d="M17.8284 40.1716C18.5786 39.4214 19.596 39 20.6569 39H238.552C239.488 39 240.394 39.3281 241.113 39.9271L241.756 40.4636C243.193 41.6611 242.346 44 240.476 44H18.8284C17.0466 44 16.1543 41.8457 17.4142 40.5858L17.8284 40.1716Z"
-                    fill="#6C7480" />
-            </g>
-        </g>
-        <g filter="url(#filter2_iiii_2531_15898)">
-            <rect x="16" width="228" height="42" rx="8" fill="url(#paint0_linear_2531_15898)" />
-        </g>
-        <g filter="url(#filter3_i_2531_15898)">
-            <rect x="21" y="5" width="218" height="32" rx="6" fill="white" />
-        </g>
-        <rect x="21.5" y="5.5" width="217" height="31" rx="5.5" stroke="#CFD8E5" />
-
-        <g :fill="actived ? activedColor : unactivedColor">
-            <path
-                d="M138.5 19.5C137.672 19.5 137 20.1716 137 21C137 21.8284 137.672 22.5 138.5 22.5H145.5C146.328 22.5 147 21.8284 147 21C147 20.1716 146.328 19.5 145.5 19.5H138.5Z" />
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M134 21C134 18.7909 135.791 17 138 17H146C148.209 17 150 18.7909 150 21C150 23.2091 148.209 25 146 25H138C135.791 25 134 23.2091 134 21ZM138 18H146C147.657 18 149 19.3431 149 21C149 22.6569 147.657 24 146 24H138C136.343 24 135 22.6569 135 21C135 19.3431 136.343 18 138 18Z" />
-        </g>
-
-        <g opacity="0.2">
-            <path
-                d="M70.5 19C70.2239 19 70 19.2239 70 19.5V21.5C70 21.7761 70.2239 22 70.5 22H83.5C83.7761 22 84 21.7761 84 21.5V19.5C84 19.2239 83.7761 19 83.5 19H70.5Z"
-                fill="#C0C6CC" />
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M66 18C66 16.8954 66.8954 16 68 16H86C87.1046 16 88 16.8954 88 18V24C88 25.1046 87.1046 26 86 26H68C66.8954 26 66 25.1046 66 24V18ZM68 17.5H86C86.2761 17.5 86.5 17.7239 86.5 18V24C86.5 24.2761 86.2761 24.5 86 24.5H68C67.7239 24.5 67.5 24.2761 67.5 24V18C67.5 17.7239 67.7239 17.5 68 17.5Z"
-                fill="#C0C6CC" />
-        </g>
-        <g opacity="0.2">
-            <path
-                d="M104.5 19C104.224 19 104 19.2239 104 19.5V21.5C104 21.7761 104.224 22 104.5 22H117.5C117.776 22 118 21.7761 118 21.5V19.5C118 19.2239 117.776 19 117.5 19H104.5Z"
-                fill="#C0C6CC" />
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M100 18C100 16.8954 100.895 16 102 16H120C121.105 16 122 16.8954 122 18V24C122 25.1046 121.105 26 120 26H102C100.895 26 100 25.1046 100 24V18ZM102 17.5H120C120.276 17.5 120.5 17.7239 120.5 18V24C120.5 24.2761 120.276 24.5 120 24.5H102C101.724 24.5 101.5 24.2761 101.5 24V18C101.5 17.7239 101.724 17.5 102 17.5Z"
-                fill="#C0C6CC" />
-        </g>
-        <g opacity="0.2">
-            <path
-                d="M188 24.5C186.067 24.5 184.5 22.933 184.5 21C184.5 19.067 186.067 17.5 188 17.5C189.933 17.5 191.5 19.067 191.5 21C191.5 22.933 189.933 24.5 188 24.5Z"
-                fill="#C0C6CC" />
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M188 15C184.686 15 182 17.6863 182 21C182 24.3137 184.686 27 188 27C191.314 27 194 24.3137 194 21C194 17.6863 191.314 15 188 15ZM184 21C184 18.7909 185.791 17 188 17C190.209 17 192 18.7909 192 21C192 23.2091 190.209 25 188 25C185.791 25 184 23.2091 184 21Z"
-                fill="#C0C6CC" />
-        </g>
-        <path opacity="0.2" fill-rule="evenodd" clip-rule="evenodd"
-            d="M163 21C163 22.6569 164.343 24 166 24C167.657 24 169 22.6569 169 21C169 19.3431 167.657 18 166 18C164.343 18 163 19.3431 163 21ZM166 17C163.791 17 162 18.7909 162 21C162 23.2091 163.791 25 166 25C168.209 25 170 23.2091 170 21C170 18.7909 168.209 17 166 17Z"
-            fill="#C0C6CC" />
-        <defs>
-            <filter id="filter0_f_2531_15898" x="6.08496" y="27" width="247.83" height="28" filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                <feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur_2531_15898" />
-            </filter>
-            <filter id="filter1_f_2531_15898" x="12.8245" y="35" width="233.656" height="13" filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_2531_15898" />
-            </filter>
-            <filter id="filter2_iiii_2531_15898" x="16" y="-2" width="228" height="46" filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha" />
-                <feOffset dy="2" />
-                <feGaussianBlur stdDeviation="2" />
-                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.15 0" />
-                <feBlend mode="normal" in2="shape" result="effect1_innerShadow_2531_15898" />
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha" />
-                <feOffset dy="1" />
-                <feGaussianBlur stdDeviation="1" />
-                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.2 0" />
-                <feBlend mode="normal" in2="effect1_innerShadow_2531_15898" result="effect2_innerShadow_2531_15898" />
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha" />
-                <feOffset dy="-2" />
-                <feGaussianBlur stdDeviation="2" />
-                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-                <feColorMatrix type="matrix" values="0 0 0 0 0.358333 0 0 0 0 0.375694 0 0 0 0 0.4 0 0 0 0.3 0" />
-                <feBlend mode="normal" in2="effect2_innerShadow_2531_15898" result="effect3_innerShadow_2531_15898" />
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha" />
-                <feOffset dy="-1" />
-                <feGaussianBlur stdDeviation="0.5" />
-                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0" />
-                <feBlend mode="normal" in2="effect3_innerShadow_2531_15898" result="effect4_innerShadow_2531_15898" />
-            </filter>
-            <filter id="filter3_i_2531_15898" x="21" y="5" width="218" height="33" filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha" />
-                <feOffset dy="1" />
-                <feGaussianBlur stdDeviation="1" />
-                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-                <feColorMatrix type="matrix" values="0 0 0 0 0.537255 0 0 0 0 0.564706 0 0 0 0 0.6 0 0 0 0.3 0" />
-                <feBlend mode="normal" in2="shape" result="effect1_innerShadow_2531_15898" />
-            </filter>
-            <linearGradient id="paint0_linear_2531_15898" x1="101.362" y1="-0.950374" x2="104.521" y2="44.6679"
-                gradientUnits="userSpaceOnUse">
-                <stop stop-color="#ACB4BF" />
-                <stop offset="1" stop-color="#949CA6" />
-            </linearGradient>
-        </defs>
-    </svg>
+    <div class="relative">
+        <div class="absolute left-[134px] top-[17px] focus:outline-none">
+            <ThunderboltPortStatus :name="data.product" :state="data.ip !== ''" :theoretical-speed="data.theoretical_speed"
+                :negotiated-speed="data.negotiated_speed" />
+        </div>
+        <Image :src="ThunderboltSVG" />
+    </div>
 </template>
