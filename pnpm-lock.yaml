@@ -41,6 +41,9 @@ importers:
       '@icewhale/zimaos-localstorage-openapi':
         specifier: 1.0.0-alpha18
         version: 1.0.0-alpha18
+      '@icewhale/zimaos-openapi':
+        specifier: 1.1.0-alpha2
+        version: 1.1.0-alpha2
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -56,6 +59,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.16(postcss@8.4.32)
+      clipboard-copy:
+        specifier: ^4.0.1
+        version: 4.0.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -95,6 +101,8 @@ importers:
       yup:
         specifier: ^1.3.3
         version: 1.3.3
+
+  packages/styles: {}
 
   packages/utils: {}
 
@@ -373,6 +381,14 @@ packages:
 
   /@icewhale/zimaos-localstorage-openapi@1.0.0-alpha18:
     resolution: {integrity: sha512-u7LOdNJvXJ0CBnF3TV3cahggv9DhBvKTaUCUvpGHV8+qcOVfxQFG552USliLsX/8QyrIRzcs8p83SDcuHwLW+Q==}
+    dependencies:
+      axios: 1.6.3
+    transitivePeerDependencies:
+      - debug
+    dev: true
+
+  /@icewhale/zimaos-openapi@1.1.0-alpha2:
+    resolution: {integrity: sha512-+E7tgJju31HuRkx+IRXVWfs6lQoBSLmYmnJV379TlBynRttvO74o2YcUV3e4RxMHBzqDczw+RebovU9vhAdjzA==}
     dependencies:
       axios: 1.6.3
     transitivePeerDependencies:
@@ -873,6 +889,10 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.3
+    dev: true
+
+  /clipboard-copy@4.0.1:
+    resolution: {integrity: sha512-wOlqdqziE/NNTUJsfSgXmBMIrYmfd5V0HCGsR8uAKHcg+h9NENWINcfRjtWGU77wDHC8B8ijV4hMTGYbrKovng==}
     dev: true
 
   /color-convert@2.0.1:

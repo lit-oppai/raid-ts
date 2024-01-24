@@ -128,5 +128,19 @@
   "Used by": "Used by",
   "Format hard drive": "Format hard drive",
   "Setting": "Setting",
-  "Total{size}": "Total {size}"
+  "network": "Network",
+  "Network": "Network Manager",
+  "Total{size}": "Total {size}",
+  "Remote Login": "Remote Login",
+  "Copy": "Copy",
+  "Install ZimaClient": "Install ZimaClient",
+  "Install ZimaClient content": "on the end device and bind the current Zima device via NetworkID for remote access.",
+  "Privacy Service Agreement": {
+    "title": "Privacy Service Agreement.",
+    "content": "ZimaOS is currently offering free remote access for a limited time, and by enabling this feature you agree that"
+  },
+  "Font": "Font",
+  "Back": "Back",
+  "Thunderbolt": "Thunderbolt",
+  "Checking": "Checking"
 }
