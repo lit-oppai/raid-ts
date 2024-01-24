@@ -21,8 +21,8 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@icewhale/zimaos-localstorage-openapi": "1.0.0-alpha18",
-    "@icewhale/zimaos-openapi": "1.1.0-alpha2",
+    "@icewhale/zimaos-localstorage-openapi": "1.1.0-alpha3",
+    "@icewhale/zimaos-openapi": "1.1.0-alpha3",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.5",
     "@types/socket.io-client": "1.4.36",
