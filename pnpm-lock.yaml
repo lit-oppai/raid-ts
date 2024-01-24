@@ -39,11 +39,11 @@ importers:
         version: 4.2.5(vue@3.3.13)
     devDependencies:
       '@icewhale/zimaos-localstorage-openapi':
-        specifier: 1.0.0-alpha18
-        version: 1.0.0-alpha18
+        specifier: 1.1.0-alpha3
+        version: 1.1.0-alpha3
       '@icewhale/zimaos-openapi':
-        specifier: 1.1.0-alpha2
-        version: 1.1.0-alpha2
+        specifier: 1.1.0-alpha3
+        version: 1.1.0-alpha3
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -379,16 +379,16 @@ packages:
     dev: true
     optional: true
 
-  /@icewhale/zimaos-localstorage-openapi@1.0.0-alpha18:
-    resolution: {integrity: sha512-u7LOdNJvXJ0CBnF3TV3cahggv9DhBvKTaUCUvpGHV8+qcOVfxQFG552USliLsX/8QyrIRzcs8p83SDcuHwLW+Q==}
+  /@icewhale/zimaos-localstorage-openapi@1.1.0-alpha3:
+    resolution: {integrity: sha512-gOFYTW9K5o9aHvq6jWS++DyfP1TXZyZryyDKJxGO/+hQVZj19MXxudlU96G1Rsp3CQu1/XpZ1CMFEDXbagjoYQ==}
     dependencies:
       axios: 1.6.3
     transitivePeerDependencies:
       - debug
     dev: true
 
-  /@icewhale/zimaos-openapi@1.1.0-alpha2:
-    resolution: {integrity: sha512-+E7tgJju31HuRkx+IRXVWfs6lQoBSLmYmnJV379TlBynRttvO74o2YcUV3e4RxMHBzqDczw+RebovU9vhAdjzA==}
+  /@icewhale/zimaos-openapi@1.1.0-alpha3:
+    resolution: {integrity: sha512-FSNoqrxKV1mDFQlOlHdFO6LeU62Lhgt+Q4l64Y3mkIrUnZqlU0QClwCBciUtty1ILSskEavuM0xRiREgjW3OZw==}
     dependencies:
       axios: 1.6.3
     transitivePeerDependencies:
