@@ -2,6 +2,8 @@
 import Image from "primevue/image";
 import { NPopover } from "naive-ui";
 import questiongSVG from "@assets/img/ProcessStorageModals/question.svg";
+import { convertSpeedToReadable } from "@icewhale/ui-utils";
+
 const activedColor = "#007AE5";
 const unactivedColor = "#C0C6CC";
 defineProps({
@@ -39,17 +41,17 @@ function openWindow() {
         </template>
         <div class="space-y-1">
             <div class="flex items-center space-x-2">
-                <div class="w-1.5 h-1.5 rounded-full" :class="state ? `bg-green-600` : `bg-red-500`"></div>
+                <div class="w-1.5 h-1.5 rounded-full" :class="state ? `bg-green-600` : `bg-neutral-300`"></div>
                 <div class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-tight">
                     {{ name }}
                 </div>
             </div>
             <div class="flex items-center">
                 <span class="text-zinc-800 text-xs font-normal font-['Roboto'] leading-4">
-                    {{ negotiatedSpeed }}
+                    {{ convertSpeedToReadable(negotiatedSpeed) }}
                 </span>
                 <span class="text-neutral-300 text-xs font-normal font-['Roboto'] leading-4">
-                    /{{ theoreticalSpeed }}
+                    /{{ convertSpeedToReadable(theoreticalSpeed) }}
                 </span>
                 <Image :src="questiongSVG" class="h-3 w-3 ml-1 cursor-pointer" @click="openWindow" />
             </div>

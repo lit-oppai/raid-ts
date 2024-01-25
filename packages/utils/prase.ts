@@ -37,6 +37,26 @@ export const convertSizeToTargetUnit = (size: number, targetUnit: string): numbe
     return convertedSize
 }
 
+export const convertSpeedToReadable = (speed: number | string | undefined = 0) => {
+    const unit = ['bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps', 'Pbps', 'Ebps', 'Zbps', 'Ybps']
+    let index = 0
+    if (typeof speed === 'string') {
+        speed = Number(speed)
+        // 检测字符串是否溢出
+        if (speed > Number.MAX_SAFE_INTEGER) {
+            throw new Error('The number is too large to convert.')
+        }
+    }
+    while (speed >= 1000) {
+        speed = speed / 1000
+        index++
+    }
+    if (speed < 0.01) {
+        return "--"
+    }
+    return speed.toFixed(1) + unit[index]
+}
+
 export function getUserInfo() {
     const userInfo = localStorage.getItem('user')
     if (userInfo) {

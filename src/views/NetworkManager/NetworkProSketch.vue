@@ -32,9 +32,6 @@ const NicDataList = computed(() => {
                 :theoretical-speed="NicData.theoretical_speed" :negotiated-speed="NicData.negotiated_speed" />
         </div>
         <div class="absolute flex space-x-2 top-[37px] left-[51px]">
-            <ThunderboltPortStatus :actived="props.activedPort === 2" />
-            <ThunderboltPortStatus :actived="props.activedPort === 2" />
-
             <ThunderboltPortStatus v-for="data in backThunderbolt" :name="data.product" :state="data.ip !== ''"
                 :theoretical-speed="data.theoretical_speed" :negotiated-speed="data.negotiated_speed" />
         </div>
