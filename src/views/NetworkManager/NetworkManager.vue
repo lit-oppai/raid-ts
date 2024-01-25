@@ -5,10 +5,11 @@ import NetworkSketch from "./NetworkSketch.vue";
 import NetworkProSketch from "./NetworkProSketch.vue";
 import RemoteLoginCard from "./RemoteLoginCard.vue";
 import NicCard from "./NicCard.vue";
-import { network } from "@network/index.ts";
+import { network, device } from "@network/index.ts";
 import { NetWorkInterfaceStatus } from "@icewhale/zimaos-openapi";
 
 const NicDataList = ref<NetWorkInterfaceStatus[]>();
+const isNormalLevel = ref<boolean>(true);
 const fontThunderbolt = computed((): NetWorkInterfaceStatus[] => {
     return NicDataList.value?.filter((item) => item.index == 10) ?? [];
 });
@@ -18,6 +19,11 @@ onMounted(() => {
             NicDataList.value = res.data;
         }
     });
+    device.getDeviceInfo().then((res) => {
+        if (res.status === 200 && res.data.device_model !== "ZimaCube") {
+            isNormalLevel.value = false;
+        }
+    });
 });
 </script>
 
@@ -25,7 +31,7 @@ onMounted(() => {
     <!-- Sketch -->
     <div class="flex justify-center items-end space-x-3 active mt-[2.5rem]">
         <ThunderboltSketch :data=fontThunderbolt />
-        <NetworkSketch v-if="false" :NicDataList="NicDataList" />
+        <NetworkSketch v-if="isNormalLevel" :NicDataList="NicDataList" />
         <NetworkProSketch v-else :NicDataList="NicDataList" />
         <div class="flex absolute space-x-[247px] text-neutral-400 text-xs font-normal">
             <div v-t="`Font`"></div>
