@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { NPopover } from "naive-ui";
+import { convertSpeedToReadable } from "@icewhale/ui-utils";
+
 const activedColor = "#007AE5";
 const unactivedColor = "#C0C6CC";
 defineProps({
@@ -7,13 +9,9 @@ defineProps({
         type: Boolean,
         default: false,
     },
-    // negotiatedSpeed: {
-    //     type: Number,
-    //     default: 0,
-    // },
     theoreticalSpeed: {
         type: Number,
-        default: '--',
+        default: 0,
     },
 });
 </script>
@@ -32,7 +30,7 @@ defineProps({
                 <div class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-tight" v-t="`Thunderbolt`"></div>
             </div>
             <div class="text-neutral-300 text-xs font-normal font-['Roboto'] leading-4">
-                {{ theoreticalSpeed }}
+                {{ convertSpeedToReadable(theoreticalSpeed) }}
             </div>
         </div>
     </NPopover>

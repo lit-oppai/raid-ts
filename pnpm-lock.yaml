@@ -42,8 +42,8 @@ importers:
         specifier: 1.1.0-alpha3
         version: 1.1.0-alpha3
       '@icewhale/zimaos-openapi':
-        specifier: 1.1.0-alpha3
-        version: 1.1.0-alpha3
+        specifier: 1.1.0-alpha6
+        version: 1.1.0-alpha6
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -387,8 +387,8 @@ packages:
       - debug
     dev: true
 
-  /@icewhale/zimaos-openapi@1.1.0-alpha3:
-    resolution: {integrity: sha512-FSNoqrxKV1mDFQlOlHdFO6LeU62Lhgt+Q4l64Y3mkIrUnZqlU0QClwCBciUtty1ILSskEavuM0xRiREgjW3OZw==}
+  /@icewhale/zimaos-openapi@1.1.0-alpha6:
+    resolution: {integrity: sha512-cX4xlGQ/mFYpBE3o0+9mat1S8ctLKHqOXuEL9BU1fuyNZ48po3ESiYmNgrKRyesKiCbFMtkEnMhB3Il+qZM+Jw==}
     dependencies:
       axios: 1.6.3
     transitivePeerDependencies:
