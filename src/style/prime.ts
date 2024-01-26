@@ -167,7 +167,7 @@ export default {
     },
     inputswitch: {
         // 目前是 Small20px 组件规格
-        root: ({ props: e, state: r }: any) => ({
+        root: ({ props: e }: any) => ({
             class: [
                 'inline-flex relative',
                 'shrink-0',

@@ -23,7 +23,7 @@
  */
 // TODO: Replace with fetch API.
 import { ref, reactive, onBeforeMount, onUnmounted } from 'vue'
-import {disk, raid, storage} from '@network/index.ts'
+import { disk, raid, storage } from '@network/index.ts'
 import {
     DISK_API_SCHEMA,
     DISK_UI_TYPE,
@@ -102,7 +102,7 @@ class StorageNameCollection {
 export const collectionOfStorageNames = new StorageNameCollection()
 // --- DATA CLEANING ---
 // Utility Functions
-function createStorageStatus(type: string, defaultExpectType: string) {
+function createStorageStatus(defaultExpectType: string) {
     const status = reactive(new Map<string, DISK_UI_TYPE>())
     const setDefaultValues = (startIndex: number, endIndex: number) => {
         for (let i = startIndex; i <= endIndex; i++) {
@@ -117,10 +117,12 @@ function createStorageStatus(type: string, defaultExpectType: string) {
     return { status, setDefaultValues }
 }
 // Disk and Storage Info Initialization
+// 'HDD',
 const { status: HDDStatus, setDefaultValues: setDefaultHDDValues } =
-    createStorageStatus('HDD', '3.5inch HDD')
+    createStorageStatus('3.5inch HDD')
+// 'SSD',
 const { status: SSDStatus, setDefaultValues: setDefaultSSDValues } =
-    createStorageStatus('SSD', 'm.2 SSD')
+    createStorageStatus('m.2 SSD')
 
 // load disk info
 const initDiskInfo = async (): Promise<void> => {
