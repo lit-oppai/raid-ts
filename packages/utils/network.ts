@@ -126,19 +126,6 @@ export const api = {
     },
 };
 
-// TODO: instance 的配置项与 codegen 生成代码类似，可以考虑使用 codegen 生成代码。删除 instance。
-/* const disk = new DiskMethodsApi(configuration, prefix, instance);
-const merge = new MergeMethodsApi(configuration, prefix, instance);
-const mount = new MountMethodsApi(configuration, prefix, instance);
-const raid = new RaidMethodsApi(configuration, prefix, instance);
-const storage = new StorageMethodsApi(configuration, prefix, instance);
-const openAPI = {
-    disk,
-    merge,
-    mount,
-    raid,
-    storage,
-}; */
 export const useInstance = () => { 
     return instance;
 }
