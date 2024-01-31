@@ -289,7 +289,7 @@ export default {
                 },
                 'placeholder:text-surface-400 dark:placeholder:text-surface-500',
                 'w-[1%]',
-                'py-2 px-3',
+                'py-1.5 px-3',
                 { 'pr-7': e.showClear },
                 'rounded-none',
                 'transition',
@@ -354,15 +354,15 @@ export default {
                     'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80':
                         e.focused && !e.selected
                 },
-                // {
-                //     'bg-primary-500 dark:bg-primary-400 text-white dark:text-surface-700':
-                //         e.focused && e.selected
-                // },
+                {
+                    'bg-primary-500 dark:bg-primary-400 text-white dark:text-surface-700':
+                        e.focused && e.selected
+                },
                 {
                     'bg-transparent text-surface-700 dark:text-white/80':
                         !e.focused && e.selected
                 },
-                // 'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-surface-700',
+                'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-surface-700',
                 'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
                 { 'pointer-events-none cursor-default': e.disabled },
                 { 'cursor-pointer': !e.disabled },

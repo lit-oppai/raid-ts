@@ -22,7 +22,7 @@ TODO:
             @apply transition-all duration-300;
             @apply bg-white min-w-[204px];
             @screen max-md {
-                @apply min-w-0 max-w-[3rem] w-12;
+                @apply min-w-12 max-w-[3rem] w-12;
             }
         }
         /* right panel  */
@@ -81,6 +81,7 @@ TODO:
 @layer components {
     .os_menu_bar {
         @apply flex flex-col h-full;
+
         /* layout */
         .menu_bar_title {
             @apply mx-5 mt-5 px-1 max-md:hidden;
@@ -103,40 +104,76 @@ TODO:
         }
 
         .menu_bar_selector {
-            @apply flex-grow overflow-y-auto flex flex-col max-md:mt-5;
+            @apply flex-grow overflow-y-auto;
+            @apply flex flex-col;
+            @apply max-md:mt-5 space-y-1;
             a {
-                @apply mx-4 max-md:mx-0 rounded;
+                @apply mx-4 max-md:mx-1 rounded-md;
 
                 /* routers */
                 button {
-                    @apply w-full h-12 inline-flex items-center rounded;
-                    @apply text-sm font-normal font-roboto leading-6;
+                    @apply w-full h-8 inline-flex items-center rounded;
+                    @apply text-sm font-normal font-roboto leading-5;
                     @screen max-md {
                         @apply inline text-center text-2xl;
                     }
 
-                    span:first-child {
-                        @apply text-xl leading-6;
-                    }
                     span::before {
-                        @apply ml-2 my-auto;
-                        @screen max-md {
-                            @apply w-8 h-8 mx-1;
-                        }
-                    }
-                    &:hover {
-                        @apply bg-gray-100 text-zinc-800;
+                        @apply text-xl leading-6;
+                        @apply m-2 my-auto;
                     }
                     span:not(:first-child) {
                         @apply max-md:hidden;
+                    }
+                    &:hover {
+                        @apply bg-gray-100 text-zinc-800;
                     }
                 }
 
                 /* active route */
                 &.router-link-active {
                     @apply bg-sky-500 text-white;
-                    button:hover{
+                    button:hover {
                         @apply bg-sky-500 text-white;
+                    }
+                }
+            }
+        }
+
+        .menu_bar_footer {
+            @apply h-[92px] px-4 max-md:px-2 py-2 border-t-2 border-gray-100;
+            @apply flex-grow-0 flex-shrink-0;
+            @apply flex flex-col space-y-1;
+            @apply text-zinc-800 text-sm font-normal font-roboto leading-tight;
+
+            button {
+                @apply w-full h-8 inline-flex items-center rounded;
+                @apply text-sm font-normal font-roboto leading-5;
+                @screen max-md {
+                    @apply inline text-center text-2xl;
+                }
+                span::before {
+                    @apply text-xl leading-6;
+                    @apply m-2 my-auto;
+                    @screen max-md {
+                        @apply m-0;
+                    }
+                }
+                span:not(:first-child) {
+                    @apply max-md:hidden;
+                }
+
+                &:first-child {
+                    &:hover {
+                        @apply bg-gray-100;
+                    }
+                }
+
+                &:last-child {
+                    @apply text-orange-500;
+                    &:hover,
+                    &:active {
+                        @apply bg-rose-100;
                     }
                 }
             }
