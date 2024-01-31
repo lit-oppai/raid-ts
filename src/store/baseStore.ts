@@ -1,12 +1,6 @@
 import { defineStore } from "pinia";
-// import { validLangList } from "@/assets/lang";
 import langList from "@/assets/lang";
 import { switchLanguage, languageSchema } from "@/i18n";
-// import { nanoid } from "nanoid";
-
-// const accessId = nanoid();
-
-const userStr = localStorage.getItem("user");
 
 export type userSchema = {
     id: number;
@@ -35,61 +29,7 @@ const useBaseStore = defineStore("store", {
     state: () => {
         return {
             casaos_lang: "en_us",
-            version: "",
-            //   device: {
-            //     device_model: "",
-            //     device_name: "",
-            //     device_id: "",
-            //     hash: "",
-            //     initialized: true,
-            //     lan_ipv4: [],
-            //     os_version: "",
-            //     port: 80,
-            //   },
-            //   hardwareInfo: {
-            //     cpu: {
-            //       model: "intel",
-            //       num: 1,
-            //       percent: 0,
-            //       power: {
-            //         timestamp: 0,
-            //         value: 0,
-            //       },
-            //       temperature: 25,
-            //     },
-            //     mem: {
-            //       available: 0,
-            //       free: 0,
-            //       total: 0,
-            //       used: 0,
-            //       usedPercent: 0,
-            //     },
-            //     net: [
-            //       {
-            //         name: "eth",
-            //         bytesSent: 0,
-            //         bytesRecv: 0,
-            //         packetsSent: 0,
-            //         packetsRecv: 0,
-            //         errin: 0,
-            //         errout: 0,
-            //         dropin: 0,
-            //         dropout: 0,
-            //         fifoin: 0,
-            //         fifoout: 0,
-            //         state: "up",
-            //         time: 0,
-            //       }
-            //     ],
-            //     sys_disk: {
-            //       avail: 0,
-            //       health: "true",
-            //       size: 0,
-            //       used: 0,
-            //     },
-            //     sys_usb: [],
-            //   },
-            //   isMobile: false,
+            version: ""
         };
     },
     getters: {
