@@ -33,20 +33,6 @@ export type deviceSchema = {
 
 const useBaseStore = defineStore("store", {
     state: () => {
-        const user = userStr !== null
-            ? JSON.parse(userStr)
-            : {
-                id: 0,
-                username: "zimaos host",
-                nickname: "zimaos host",
-                role: "",
-                avatar: "",
-                created_at: 0,
-                updated_at: 0,
-                description: "",
-                email: "",
-            };
-
         return {
             casaos_lang: "en_us",
             version: "",
