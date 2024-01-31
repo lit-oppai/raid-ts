@@ -11,9 +11,12 @@
     "upOpenAPI": "pnpm up '@icewhale/*' --latest"
   },
   "dependencies": {
+    "@icewhale/icewhale-v1-api": "workspace:^",
+    "@icewhale/ui-styles": "workspace:^",
     "@icewhale/ui-utils": "workspace:^",
     "axios": "^1.6.3",
     "iconfonts-casaos": "^1.0.4",
+    "pinia": "^2.1.7",
     "primevue": "3.43.0",
     "socket.io-client": "^2.5.0",
     "vue": "^3.3.13",
