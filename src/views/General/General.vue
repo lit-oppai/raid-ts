@@ -3,11 +3,13 @@ import { ref, onMounted, computed, /* watch */ } from 'vue';
 import Dropdown from 'primevue/dropdown';
 import InputSwitch from 'primevue/inputswitch';
 import { useToast } from "primevue/usetoast";
+import { useI18n } from "vue-i18n";
 import api from '@icewhale/icewhale-v1-api';
 import { messageBus } from '@icewhale/ui-utils';
 import useBaseStore from '@/store/baseStore.ts';
-import { Languages, SearchEngines, /* TutorialApps */ } from "./const.ts";
+import { Languages, SearchEngines, TutorialApps } from "./const.ts";
 
+const { t } = useI18n();
 const toast = useToast();
 const store = useBaseStore();
 const language = ref<string>('');
@@ -17,7 +19,10 @@ const recommendSwitch = ref<boolean>(false);
 const tutorialSwitch = ref<Array<string>>([]);
 
 const automountUSB = ref<boolean>(true);
+const showNewsFeed = ref<boolean>(true);
 const device = ref<string>("");
+const selectedApps = ref<Array<string>>([]);
+const tutorialAppsCheckList = ref<{ [key: string]: boolean }>({});
 const isRaspberryPi = computed(() => device.value.toLowerCase().indexOf("raspberry") >= 0);
 
 
@@ -69,16 +74,18 @@ function onChangeSettings(source: string) {
                 // language.value = Languages.find(item => item.lang === oldLang);
             });
             break;
-        // case "rssSwitch":
-        //     const oldRssSwitch = rssSwitch;
-        //     rssSwitch = showNewsFeed.value;
-        //     onSaveSettings().catch(e => {
-        //         toast.add({ severity: "error", summary: "Save failed", detail: e.data?.message || e.message, life: 5000 });
-        //         // rewind to old value
-        //         rssSwitch = oldRssSwitch;
-        //         showNewsFeed.value = oldRssSwitch;
-        //     });
-        //     break;
+        case "rssSwitch":
+            // const oldRssSwitch = rssSwitch;
+            rssSwitch.value = showNewsFeed.value;
+            onSaveSettings().then(() => {
+                rssSwitch.value = showNewsFeed.value;
+            }).catch(e => {
+                toast.add({ severity: "error", summary: "Save failed", detail: e.data?.message || e.message, life: 5000 });
+                // rewind to old value
+                // rssSwitch.value = oldRssSwitch;
+                showNewsFeed.value = !showNewsFeed.value;
+            });
+            break;
         // case "recommendSwitch":
         //     const oldRecommendSwitch = recommendSwitch;
         //     recommendSwitch = showRecomand.value;
@@ -138,6 +145,13 @@ function onToggleUSBAutoMount() {
         });
     }
 }
+
+function onCheckApps(item: string, event?: MouseEvent) {
+    event?.stopPropagation();
+    tutorialAppsCheckList.value[item] = !tutorialAppsCheckList.value[item];
+    selectedApps.value = Object.keys(tutorialAppsCheckList.value).filter(key => tutorialAppsCheckList.value[key]);
+    onChangeSettings("tutorialSwitch");
+}
 </script>
 
 <template>
@@ -145,7 +159,7 @@ function onToggleUSBAutoMount() {
         Info
     </div>
 
-    <div class=" space-y-2">
+    <div class="space-y-2">
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-language-outline mr-3 text-2xl leading-6"></div>
             <div class="grow">
@@ -161,7 +175,7 @@ function onToggleUSBAutoMount() {
                 {{ $t('Search Engine') }}
             </div>
             <Dropdown v-model="searchEngine" :options="SearchEngines" optionLabel="name" checkmark
-                :highlightOnSelect="false" class="w-full md:w-14rem" @change="onChangeSettings('lang')" />
+                :highlightOnSelect="false" class="w-full md:w-14rem" @change="onChangeSettings('searchEngine')" />
         </div>
 
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
@@ -186,7 +200,28 @@ function onToggleUSBAutoMount() {
             <div class="grow">
                 {{ $t('News Feeds') }}
             </div>
-            <InputSwitch class="sm" v-model="automountUSB" @change="onToggleUSBAutoMount" />
+            <InputSwitch class="sm" v-model="showNewsFeed" @change="onChangeSettings('rssSwitch')" />
+        </div>
+
+        <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
+            <div class="casa-display-applications-outline mr-3 text-2xl leading-6"></div>
+            <div class="grow">
+                {{ $t('Tips') }}
+            </div>
+            <Dropdown class="w-40 sm" panelClass="sm p-0" v-model="selectedApps" :options="TutorialApps"
+                @change="onCheckApps($event.value, $event.originalEvent as MouseEvent)">
+                <template #value="slotProps">
+                    <div class="flex items-center">
+                        {{ slotProps.value.length }} items
+                    </div>
+                </template>
+                <template #option="slotProps">
+                    <div class="h-8 flex items-center" @click.capture="onCheckApps(slotProps.option, $event)">
+                        <Checkbox class="base ml-2" v-model="tutorialAppsCheckList[slotProps.option]" :binary="true" />
+                        <span class="text-sm grow ml-2"> {{ slotProps.option }} </span>
+                    </div>
+                </template>
+            </Dropdown>
         </div>
     </div>
 </template>
