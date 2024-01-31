@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, /* watch */ } from 'vue';
+import { ref, onMounted, computed, /* watch */ } from 'vue';
 import Dropdown from 'primevue/dropdown';
+import InputSwitch from 'primevue/inputswitch';
 import { useToast } from "primevue/usetoast";
 import api from '@icewhale/icewhale-v1-api';
+import { messageBus } from '@icewhale/ui-utils';
 import useBaseStore from '@/store/baseStore.ts';
-import { Languages, /* SearchEngines, */ /* TutorialApps */ } from "./const.ts";
+import { Languages, SearchEngines, /* TutorialApps */ } from "./const.ts";
 
 const toast = useToast();
 const store = useBaseStore();
@@ -13,6 +15,10 @@ const searchEngine = ref<string>('');
 const rssSwitch = ref<boolean>(false);
 const recommendSwitch = ref<boolean>(false);
 const tutorialSwitch = ref<Array<string>>([]);
+
+const automountUSB = ref<boolean>(true);
+const device = ref<string>("");
+const isRaspberryPi = computed(() => device.value.toLowerCase().indexOf("raspberry") >= 0);
 
 
 // watch(() => tutorialSwitch, (val) => {
@@ -113,6 +119,25 @@ function onSaveSettings(): Promise<any> {
     return api.users.setCustomStorage("system", settings)
         .then(res => res.data.data)
 }
+
+function onToggleUSBAutoMount() {
+    if (automountUSB.value) {
+        messageBus("dashboardsetting_automountusb", "true");
+        if (isRaspberryPi.value) {
+            toast.add({ severity: "warn", summary: "Notice", detail: t("Enabling this function may cause boot failures when the Raspberry Pi device is booted from USB"), life: 5000 });
+        }
+        return api.sys.toggleUsbAutoMount({ state: "on" }).catch(e => {
+            toast.add({ severity: "error", summary: "Save failed", detail: e.data?.message || e.message, life: 5000 });
+            automountUSB.value = false;
+        });
+    } else {
+        messageBus("dashboardsetting_automountusb", "false");
+        return api.sys.toggleUsbAutoMount({ state: "off" }).catch(e => {
+            toast.add({ severity: "error", summary: "Save failed", detail: e.data?.message || e.message, life: 5000 });
+            automountUSB.value = true;
+        });
+    }
+}
 </script>
 
 <template>
@@ -131,12 +156,37 @@ function onSaveSettings(): Promise<any> {
         </div>
 
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
-            <div class="casa-language-outline mr-3 text-2xl leading-6"></div>
+            <div class="casa-search-outline mr-3 text-2xl leading-6"></div>
             <div class="grow">
                 {{ $t('Search Engine') }}
             </div>
-            <Dropdown v-model="language" :options="Languages" optionLabel="name" checkmark :highlightOnSelect="false"
-                class="w-full md:w-14rem" @change="onChangeSettings('lang')" />
+            <Dropdown v-model="searchEngine" :options="SearchEngines" optionLabel="name" checkmark
+                :highlightOnSelect="false" class="w-full md:w-14rem" @change="onChangeSettings('lang')" />
+        </div>
+
+        <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
+            <div class="casa-port-outline mr-3 text-2xl leading-6"></div>
+            <div class="grow">
+                {{ $t('WebUI Port') }}
+            </div>
+            <Dropdown v-model="searchEngine" :options="SearchEngines" optionLabel="name" checkmark
+                :highlightOnSelect="false" class="w-full md:w-14rem" @change="onChangeSettings('lang')" />
+        </div>
+
+        <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
+            <div class="casa-usb-outline mr-3 text-2xl leading-6"></div>
+            <div class="grow">
+                {{ $t('USB Auto-Mount') }}
+            </div>
+            <InputSwitch class="sm" v-model="automountUSB" @change="onToggleUSBAutoMount" />
+        </div>
+
+        <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
+            <div class="casa-news-outline mr-3 text-2xl leading-6"></div>
+            <div class="grow">
+                {{ $t('News Feeds') }}
+            </div>
+            <InputSwitch class="sm" v-model="automountUSB" @change="onToggleUSBAutoMount" />
         </div>
     </div>
 </template>
