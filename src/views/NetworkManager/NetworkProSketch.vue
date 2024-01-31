@@ -20,9 +20,6 @@ const props = defineProps({
 const backThunderbolt = computed((): NetWorkInterfaceStatus[] => {
     return props.NicDataList?.filter((item) => [11, 12].includes(item.index)) ?? [];
 });
-const NicDataList = computed(() => {
-    return props.NicDataList?.filter((item) => [1, 2, 3].includes(item.index)) ?? [];
-});
 
 </script>
 <template>
