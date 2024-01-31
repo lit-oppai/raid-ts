@@ -9,9 +9,18 @@ import { network, device } from "@network/index.ts";
 import { NetWorkInterfaceStatus } from "@icewhale/zimaos-openapi";
 
 const NicDataList = ref<NetWorkInterfaceStatus[]>();
-const isNormalLevel = ref<boolean>(true);
+const isNormalLevel = ref<boolean>(false);
+// RMEAKER: font thunderbolt number is 10
 const fontThunderbolt = computed((): NetWorkInterfaceStatus[] => {
     return NicDataList.value?.filter((item) => item.index == 10) ?? [];
+});
+// REMAKER: protogenesis NIC number is 1-9
+const protogenesisNicDataList = computed(() => {
+    return NicDataList.value?.filter((item) => item.index >= 0 && item.index < 10) ?? [];
+});
+// REMAKER: extend NIC number is -1
+const ExtendNicDataList = computed(() => {
+    return NicDataList.value?.filter((item) => item.index === -1) ?? [];
 });
 onMounted(() => {
     network.getNetworkInterfaces().then((res) => {
@@ -31,8 +40,8 @@ onMounted(() => {
     <!-- Sketch -->
     <div class="flex justify-center items-end space-x-3 active mt-[2.5rem]">
         <ThunderboltSketch :data=fontThunderbolt />
-        <NetworkSketch v-if="isNormalLevel" :NicDataList="NicDataList" />
-        <NetworkProSketch v-else :NicDataList="NicDataList" />
+        <NetworkSketch v-if="isNormalLevel" :NicDataList="protogenesisNicDataList" />
+        <NetworkProSketch v-else :NicDataList="protogenesisNicDataList" />
         <div class="flex absolute space-x-[247px] text-neutral-400 text-xs font-normal">
             <div v-t="`Font`"></div>
             <div v-t="`Back`"></div>
@@ -43,7 +52,7 @@ onMounted(() => {
     <RemoteLoginCard class="mt-6"></RemoteLoginCard>
 
     <!-- NIC -->
-    <NicCard class="mt-2" v-for="item in NicDataList" :name="item.product" :state="item.ip !== ''"
+    <NicCard class="mt-2" v-for="item in ExtendNicDataList" :name="item.product" :state="item.ip !== ''"
         :theoretical-speed="item.theoretical_speed" :negotiated-speed="item.negotiated_speed"></NicCard>
 
     <div class="w-[624px] my-3">
