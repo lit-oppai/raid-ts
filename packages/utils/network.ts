@@ -98,7 +98,7 @@ instance.interceptors.response.use(
 const CancelToken = axios.CancelToken;
 // Wrapping of axios by request type
 export const api = {
-    get(url: string, data: AxiosResponse, _this: any) {
+    get(url: string, data?: { [key: string]: any }, _this?: any) {
         if (_this) {
             return instance.get(url, {
                 params: data,
@@ -112,21 +112,21 @@ export const api = {
             });
         }
     },
-    post(url: string, data: AxiosResponse, config?: { [key: string]: any }) {
+    post(url: string, data?: { [key: string]: any }, config?: { [key: string]: any }) {
         return instance.post(url, data, config);
     },
-    put(url: string, data: AxiosResponse) {
+    put(url: string, data?: { [key: string]: any }) {
         return instance.put(url, data);
     },
-    delete(url: string, data: AxiosResponse) {
+    delete(url: string, data?: { [key: string]: any }) {
         return instance.delete(url, { data: data });
     },
-    patch(url: string, data: AxiosResponse) {
+    patch(url: string, data?: { [key: string]: any }) {
         return instance.patch(url, data);
     },
 };
 
-export const useInstance = () => { 
+export const useInstance = () => {
     return instance;
 }
 
