@@ -1,4 +1,4 @@
-import { createI18n } from "vue-i18n";
+import { createI18n, useI18n } from "vue-i18n";
 import en_US from "@assets/lang/en_US.json";
 import messages from "@assets/lang";
 
@@ -19,11 +19,16 @@ const i18n = createI18n({
     messages
 });
 
+// export const switchLanguage = (lang: languageSchema) => {
+//     if (validLang(lang)) {
+//         i18n.global.locale = lang as languageSchema;
+//         localStorage.setItem("lang", lang);
+//     }
+// }
+
 export const switchLanguage = (lang: languageSchema) => {
-    if (validLang(lang)) {
-        i18n.global.locale.value = lang;
-        localStorage.setItem("lang", lang);
-    }
+    const { locale } = useI18n();
+    locale.value = lang;
 }
 
 export default i18n;

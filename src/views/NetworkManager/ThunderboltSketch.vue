@@ -2,7 +2,7 @@
 import Image from "primevue/image";
 import ThunderboltPortStatus from "./ThunderboltPortStatus.vue";
 import ThunderboltSVG from "@/assets/img/NetworkManager/Thunderbolt.svg";
-defineProps({
+const props = defineProps({
     actived: {
         type: Boolean,
         default: false,
@@ -12,6 +12,8 @@ defineProps({
         default: () => [],
     },
 });
+console.log(props.ThunderboltData, "11222");
+
 </script>
 <template>
     <div class="relative">
