@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import langList from "@/assets/lang";
-import { switchLanguage, languageSchema } from "@/i18n";
+import { switchLanguage,languageSchema } from "@/i18n";
 
 export type userSchema = {
     id: number;

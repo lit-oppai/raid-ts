@@ -8,11 +8,52 @@ import NicCard from "./NicCard.vue";
 import { network, device } from "@network/index.ts";
 import { NetWorkInterfaceStatus } from "@icewhale/zimaos-openapi";
 
-const NicDataList = ref<NetWorkInterfaceStatus[]>();
+const NicDataList = ref<NetWorkInterfaceStatus[]>([
+    {
+        "index": 0,
+        "ip": "",
+        "mac": "34:1a:4c:00:e5:0d",
+        "name": "eth0",
+        "negotiated_speed": 0,
+        "product": "Ethernet Controller I226-V",
+        "theoretical_speed": 2500000000,
+        "vendor": "Intel Corporation"
+    },
+    {
+        "index": 1,
+        "ip": "192.168.3.229",
+        "mac": "34:1a:4c:00:e5:1a",
+        "name": "eth1",
+        "negotiated_speed": 1000000000,
+        "product": "Ethernet Controller I226-V",
+        "theoretical_speed": 2500000000,
+        "vendor": "Intel Corporation"
+    },
+    {
+        "index": 10,
+        "ip": "",
+        "name": "thunderbolt10",
+        "negotiated_speed": 0,
+        "product": "Thunderbolt",
+        "theoretical_speed": 20000000000,
+        "vendor": "Inter"
+    },
+    {
+        "index": 11,
+        "ip": "",
+        "name": "thunderbolt11",
+        "negotiated_speed": 0,
+        "product": "Thunderbolt",
+        "theoretical_speed": 20000000000,
+        "vendor": "Inter"
+    }
+]);
 const isNormalLevel = ref<boolean>(false);
 // RMEAKER: font thunderbolt number is 10
 const fontThunderbolt = computed((): NetWorkInterfaceStatus[] => {
-    return NicDataList.value?.filter((item) => item.index == 10) ?? [];
+    console.log(NicDataList.value, "NicDataList.value");
+
+    return NicDataList.value?.filter((item) => item.index === 10) ?? [];
 });
 // REMAKER: protogenesis NIC number is 1-9
 const protogenesisNicDataList = computed(() => {
