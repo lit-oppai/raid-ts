@@ -63,14 +63,14 @@ export const routes: RouteMeta[] = [
             }
         ]
     },
-    // {
-    //     path: '/general',
-    //     component: () => import('./general/index.ts'),
-    //     // component: () => import('@views/General/General.vue'), // For layer thinks.
-    //     name: 'general',
-    //     icon: 'casa-settings-outline',
-    //     meta: { title: 'General' }
-    // },
+    {
+        path: '/general',
+        component: () => import('./general/index.ts'),
+        // component: () => import('@views/General/General.vue'), // For layer thinks.
+        name: 'general',
+        icon: 'casa-settings-outline',
+        meta: { title: 'General' }
+    },
 ]
 const router = createRouter({
     history: createWebHashHistory(),
