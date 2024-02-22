@@ -6,6 +6,7 @@ import InputSwitch from 'primevue/inputswitch'
 import InputNumber from 'primevue/inputnumber'
 import Checkbox from 'primevue/checkbox'
 import { useToast } from 'primevue/usetoast'
+import BaseInfoAndBackground from './BaseInfoAndBackground.vue'
 import { useI18n } from 'vue-i18n'
 import api from '@icewhale/icewhale-v1-api'
 import { messageBus } from '@icewhale/ui-utils'
@@ -215,7 +216,7 @@ function onSavePort() {
         })
         .catch(e => {
             console.log(e);
-            
+
         })
 }
 let timer: number = 0
@@ -248,7 +249,7 @@ function operatedPort() {
 </script>
 
 <template>
-    <div>Info</div>
+    <BaseInfoAndBackground></BaseInfoAndBackground>
 
     <div class="space-y-2">
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">

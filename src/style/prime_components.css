@@ -147,7 +147,7 @@ TODO:
             @apply text-zinc-800 text-sm font-normal font-roboto leading-tight;
 
             button {
-                @apply w-full h-8 inline-flex items-center rounded;
+                @apply w-full h-8 inline-flex items-center rounded-md;
                 @apply text-sm font-normal font-roboto leading-5;
                 @screen max-md {
                     @apply inline text-center text-2xl;
