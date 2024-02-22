@@ -1,6 +1,7 @@
-import { createI18n, useI18n } from "vue-i18n";
+import { createI18n } from "vue-i18n";
 import en_US from "@assets/lang/en_US.json";
 import messages from "@assets/lang";
+import { WritableComputedRef } from "vue"
 
 export type userVisibleTextCollection = typeof en_US;
 export type languageSchema = keyof typeof messages;
@@ -21,13 +22,12 @@ const i18n = createI18n({
 
 // export const switchLanguage = (lang: languageSchema) => {
 //     if (validLang(lang)) {
-//         i18n.global.locale = lang as languageSchema;
+//         i18n.global.locale = lang as unknown as WritableComputedRef<languageSchema>;
 //         localStorage.setItem("lang", lang);
 //     }
 // }
-
+const locale = i18n.global.locale as WritableComputedRef<languageSchema>;
 export const switchLanguage = (lang: languageSchema) => {
-    const { locale } = useI18n();
     locale.value = lang;
 }
 

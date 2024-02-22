@@ -1,21 +1,15 @@
 <script setup lang="ts">
 import { messageBus } from '@icewhale/ui-utils';
 import { useRoute, useRouter } from "vue-router";
-// import router from '@pages/router.ts';
-import { ref, watch } from "vue";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
+import { computed, ComputedRef } from "vue";
+
 //获取路由中的 mate 信息
 const route = useRoute();
 const router = useRouter();
 //获取路由中的 title 信息
-const title = ref<string>();
-watch(
-    () => route.meta.title,
-    () => {
-        title.value = t(`${route.meta.title}`);
-    }
-);
+const title: ComputedRef = computed(() => {
+    return route.meta.title ? route.meta.title : "";
+});
 function onClose() {
     messageBus("mircoapp_communicate", {
         action: "close",
@@ -32,7 +26,7 @@ function onClose() {
                     <i class="casa-left-outline"></i>
                 </div>
                 <div class="top_title">
-                    <span>{{ title }}</span>
+                    <span>{{ $t(title) }}</span>
                 </div>
             </div>
         </transition>

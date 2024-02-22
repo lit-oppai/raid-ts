@@ -77,6 +77,7 @@ const selectStorageList = customRef((track, trigger) => {
 // const nameStorage = ref('Main-Storage')
 
 import { useForm } from 'vee-validate'
+// Although the official recommendation is Yup, Zod has a larger community and is more popular.
 import * as yup from 'yup'
 const { defineField, handleSubmit } = useForm({
     validationSchema: yup.object({
