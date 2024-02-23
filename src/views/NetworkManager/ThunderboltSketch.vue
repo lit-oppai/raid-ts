@@ -12,7 +12,6 @@ const props = defineProps({
         default: () => [],
     },
 });
-console.log(props.ThunderboltData, "11222");
 
 </script>
 <template>

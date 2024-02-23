@@ -51,8 +51,6 @@ const NicDataList = ref<NetWorkInterfaceStatus[]>([
 const isNormalLevel = ref<boolean>(false);
 // RMEAKER: font thunderbolt number is 10
 const fontThunderbolt = computed((): NetWorkInterfaceStatus[] => {
-    console.log(NicDataList.value, "NicDataList.value");
-
     return NicDataList.value?.filter((item) => item.index === 10) ?? [];
 });
 // REMAKER: protogenesis NIC number is 1-9
