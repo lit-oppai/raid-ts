@@ -2,7 +2,7 @@
 import Image from "primevue/image";
 import ThunderboltPortStatus from "./ThunderboltPortStatus.vue";
 import ThunderboltSVG from "@/assets/img/NetworkManager/Thunderbolt.svg";
-const props = defineProps({
+defineProps({
     actived: {
         type: Boolean,
         default: false,
