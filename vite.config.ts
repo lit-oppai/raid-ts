@@ -22,8 +22,8 @@ export default ({ mode }) => {
         },
         base: "./",
         build: {
-            sourcemap: true,
-            minify: false,
+            // sourcemap: true,
+            // minify: false,
             outDir: "build/sysroot/usr/share/casaos/www/modules/icewhale_settings",
         },
         server: {

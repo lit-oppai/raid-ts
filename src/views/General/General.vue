@@ -168,7 +168,7 @@ function onChangeSettings(source: string) {
 
 function onSaveSettings(): Promise<any> {
     const settings = {
-        lang: store.casaos_lang,
+        lang: language.value?.lang || '',
         search_engine: searchEngine.value?.url || '',
         rss_switch: rssSwitch.value,
         // recommend_switch: recommendSwitch.value,
@@ -246,12 +246,14 @@ function onSavePort() {
 let timer: number = 0
 function checkPortApplied() {
     timer = setInterval(() => {
+        console.log('checkPortApplied', inputPort.value, oldPort, timer);
         const newUrl = `${location.protocol}//${location.hostname}:${inputPort.value}`;
         api.sys.checkUiPort(`${newUrl}/v1/gateway/port`).then((res) => {
             if (res.data.success === 200) {
                 clearInterval(timer);
                 const url = `${location.protocol}//${location.hostname}:${res.data.data}`;
-                window.open(url, "_self");
+                const parent =  window?.parent ?? window;
+                parent.open(url, "_self");
             }
         });
     }, 1000);
@@ -309,7 +311,7 @@ function rewindPort() {
             </div>
             <div
                 class="group bg-transparent h-8 rounded-md flex items-center border border-solid border-gray/one hover:border-sky-600 focus-within:border-sky-600 focus-within:border-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
-                <InputNumber ref="inputTextElement" :modelValue="inputPort" @input="({value})=>inputPort = Number(value)"
+                <InputNumber ref="inputTextElement" :modelValue="inputPort" @input="({ value }) => inputPort = Number(value)"
                     class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort" />
                 <i class="mr-2 group-hover:text-sky-600 group-focus-within:text-sky-600" :class="portInputIconClass"
                     @click="operatedPort" @mousedown.prevent />

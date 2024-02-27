@@ -1,0 +1,1277 @@
+Script started on 2024-02-27 07:58:02+00:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="166" LINES="43"]
+]633;Aroot@ZimaCube:~/raid-ts# ]633;Bssh-agent -s
+SSH_AUTH_SOCK=/tmp/ssh-XXXXXXBAQfJv/agent.109398; export SSH_AUTH_SOCK;
+SSH_AGENT_PID=109399; export SSH_AGENT_PID;
+echo Agent pid 109399;
+]633;Aroot@ZimaCube:~/raid-ts# ]633;Bpnpm run dev
+
+> icewhale-setting-ts@0.0.1 dev /root/raid-ts
+> vite --host --port=4000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J
+  [32m[1mVITE[22m v5.0.10[39m  [2mready in [0m[1m252[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4000[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://10.0.0.61:[1m4000[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.28.0.1:[1m4000[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+
+[1m[33mwarn[39m[22m - The `min-*` and `max-*` variants are not supported with a `screens` configuration containing objects.
+/
+/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:39 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/App/menuPart.vue, /src/style/style.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:45 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/App/menuPart.vue, /src/style/style.css[22m [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:49 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/App/menuPart.vue, /src/style/style.css[22m [33m(x3)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:11:46 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/App/menuPart.vue, /src/style/style.css[22m [33m(x4)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:12:29 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/router.ts[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:14:03 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/App/contentPart.vue, /src/style/style.css, /src/pages/App/contentPart.vue?vue&type=style&index=0&lang.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:14:03 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/App/menuPart.vue, /src/style/style.css[22m
+[2m8:14:03 AM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to load url /src/pages/App/menuPart.vue (resolved id: /root/raid-ts/src/pages/App/menuPart.vue) in /root/raid-ts/src/App.vue. Does the file exist?
+[2m8:14:03 AM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to load url /src/pages/App/contentPart.vue (resolved id: /root/raid-ts/src/pages/App/contentPart.vue) in /root/raid-ts/src/App.vue. Does the file exist?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:14:25 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/layout/contentPart.vue[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:14:25 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/layout/menuPart.vue[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:14:41 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.vue, /src/style/style.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:14:44 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/router.ts[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:15:14 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/design/menuPart.vue, /src/style/style.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:15:26 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/design/menuPart.vue, /src/style/style.css[22m [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:16:08 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/design/menuPart.vue, /src/style/style.css[22m [33m(x3)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:21:03 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:21:05 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:27:10 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m [33m(x3)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:27:13 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] /root/raid-ts/src/style/prime_components.css:107:13: The `felx` class does not exist. If `felx` is a custom class, make sure it is defined within a `@layer` directive.[39m
+  Plugin: [35mvite:css[39m
+  File: [36m/root/raid-ts/src/style/prime_components.css[39m:107:12
+[33m  105|  
+  106|          .menu_bar_update{
+  107|              @apply felx flex-grow
+     |              ^
+  108|          }
+  109|          .menu_bar_selector {[39m
+      at Input.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/input.js:106:16)
+      at AtRule.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/node.js:115:32)
+      at processApply (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:538:9
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/processTailwindFeatures.js:57:50
+      at async plugins (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/plugin.js:38:17)
+      at async LazyResult.runAsync (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/lazy-result.js:261:11)
+      at async compileCSS (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39982:25)
+      at async TransformContext.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39355:56)
+      at async Object.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:63705:30)
+[2m8:27:13 AM[22m [31m[1m[vite][22m[39m Pre-transform error: [postcss] /root/raid-ts/src/style/prime_components.css:107:13: The `felx` class does not exist. If `felx` is a custom class, make sure it is defined within a `@layer` directive.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:27:13 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] /root/raid-ts/src/style/prime_components.css:107:13: The `felx` class does not exist. If `felx` is a custom class, make sure it is defined within a `@layer` directive.[39m
+  Plugin: [35mvite:css[39m
+  File: [36m/root/raid-ts/src/style/prime_components.css[39m:107:12
+[33m  105|  
+  106|          .menu_bar_update{
+  107|              @apply felx flex-grow
+     |              ^
+  108|          }
+  109|          .menu_bar_selector {[39m
+      at Input.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/input.js:106:16)
+      at AtRule.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/node.js:115:32)
+      at processApply (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:538:9
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/processTailwindFeatures.js:57:50
+      at async plugins (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/plugin.js:38:17)
+      at async LazyResult.runAsync (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/lazy-result.js:261:11)
+      at async compileCSS (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39982:25)
+      at async TransformContext.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39355:56)
+      at async Object.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:63705:30)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:27:17 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] /root/raid-ts/src/style/prime_components.css:107:13: The `felx` class does not exist. If `felx` is a custom class, make sure it is defined within a `@layer` directive.[39m
+  Plugin: [35mvite:css[39m
+  File: [36m/root/raid-ts/src/style/prime_components.css[39m:107:12
+[33m  105|  
+  106|          .menu_bar_update{
+  107|              @apply felx flex-grow
+     |              ^
+  108|          }
+  109|          .menu_bar_selector {[39m
+      at Input.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/input.js:106:16)
+      at AtRule.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/node.js:115:32)
+      at processApply (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:538:9
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/processTailwindFeatures.js:57:50
+      at async plugins (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/plugin.js:38:17)
+      at async LazyResult.runAsync (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/lazy-result.js:261:11)
+      at async compileCSS (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39982:25)
+      at async TransformContext.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39355:56)
+      at async Object.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:63705:30) [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:27:26 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m
+
+
+
+
+
+
+[1;1H[0J[2m8:27:34 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] /root/raid-ts/src/style/prime_components.css:107:13: The `felx` class does not exist. If `felx` is a custom class, make sure it is defined within a `@layer` directive.[39m
+  Plugin: [35mvite:css[39m
+  File: [36m/root/raid-ts/src/style/prime_components.css[39m:107:12
+[33m  105|  
+  106|          .menu_bar_update{
+  107|              @apply felx flex-grow;
+     |              ^
+  108|          }
+  109|          .menu_bar_selector {[39m
+      at Input.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/input.js:106:16)
+      at AtRule.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/node.js:115:32)
+      at processApply (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:538:9
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/processTailwindFeatures.js:57:50
+      at async plugins (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/plugin.js:38:17)
+      at async LazyResult.runAsync (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/lazy-result.js:261:11)
+      at async compileCSS (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39982:25)
+      at async TransformContext.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39355:56)
+      at async Object.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:63705:30)
+[2m8:27:34 AM[22m [31m[1m[vite][22m[39m Pre-transform error: [postcss] /root/raid-ts/src/style/prime_components.css:107:13: The `felx` class does not exist. If `felx` is a custom class, make sure it is defined within a `@layer` directive.
+
+
+
+
+
+
+[1;1H[0J[2m8:28:04 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m
+
+
+
+
+
+
+[1;1H[0J[2m8:28:06 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] /root/raid-ts/src/style/prime_components.css:107:13: The `felx` class does not exist. If `felx` is a custom class, make sure it is defined within a `@layer` directive.[39m
+  Plugin: [35mvite:css[39m
+  File: [36m/root/raid-ts/src/style/prime_components.css[39m:107:12
+[33m  105|  
+  106|          .menu_bar_update{
+  107|              @apply felx flex-grow;
+     |              ^
+  108|              
+  109|          }[39m
+      at Input.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/input.js:106:16)
+      at AtRule.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/node.js:115:32)
+      at processApply (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:538:9
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/processTailwindFeatures.js:57:50
+      at async plugins (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/plugin.js:38:17)
+      at async LazyResult.runAsync (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/lazy-result.js:261:11)
+      at async compileCSS (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39982:25)
+      at async TransformContext.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39355:56)
+      at async Object.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:63705:30)
+[2m8:28:06 AM[22m [31m[1m[vite][22m[39m Pre-transform error: [postcss] /root/raid-ts/src/style/prime_components.css:107:13: The `felx` class does not exist. If `felx` is a custom class, make sure it is defined within a `@layer` directive.
+
+
+
+
+
+
+[1;1H[0J[2m8:28:10 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m
+
+
+
+
+
+
+[1;1H[0J[2m8:28:13 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] /root/raid-ts/src/style/prime_components.css:107:13: The `felx` class does not exist. If `felx` is a custom class, make sure it is defined within a `@layer` directive.[39m
+  Plugin: [35mvite:css[39m
+  File: [36m/root/raid-ts/src/style/prime_components.css[39m:107:12
+[33m  105|  
+  106|          .menu_bar_update{
+  107|              @apply felx flex-grow;
+     |              ^
+  108|          }
+  109|          .menu_bar_selector {[39m
+      at Input.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/input.js:106:16)
+      at AtRule.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/node.js:115:32)
+      at processApply (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:538:9
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/processTailwindFeatures.js:57:50
+      at async plugins (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/plugin.js:38:17)
+      at async LazyResult.runAsync (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/lazy-result.js:261:11)
+      at async compileCSS (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39982:25)
+      at async TransformContext.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39355:56)
+      at async Object.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:63705:30)
+[2m8:28:13 AM[22m [31m[1m[vite][22m[39m Pre-transform error: [postcss] /root/raid-ts/src/style/prime_components.css:107:13: The `felx` class does not exist. If `felx` is a custom class, make sure it is defined within a `@layer` directive.
+
+
+
+
+
+
+[1;1H[0J[2m8:30:18 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m
+
+
+
+
+
+
+[1;1H[0J[2m8:31:13 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m [33m(x2)[39m
+
+
+
+
+
+
+[1;1H[0J[2m8:33:17 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/design/menuPart.vue, /src/style/style.css[22m
+
+
+
+
+
+
+[1;1H[0J[2m8:36:36 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m
+
+
+
+
+
+
+[1;1H[0J[2m8:37:11 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/design/menuPart.vue, /src/style/style.css[22m
+
+
+
+
+
+
+[1;1H[0J[2m8:37:25 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/design/menuPart.vue, /src/style/style.css[22m [33m(x2)[39m
+
+
+
+
+
+
+[1;1H[0J[2m8:48:54 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/design/menuPart.vue, /src/style/style.css[22m [33m(x3)[39m
+
+
+
+
+
+
+[1;1H[0J[2m8:49:06 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m
+
+
+
+
+
+
+[1;1H[0J[2m8:49:14 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m [33m(x2)[39m
+
+
+
+
+
+
+[1;1H[0J[2m8:49:16 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m [33m(x3)[39m
+
+
+
+
+
+
+[1;1H[0J[2m8:49:34 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m [33m(x4)[39m
+
+
+
+
+
+
+[1;1H[0J[2m8:49:36 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m [33m(x5)[39m
+
+
+
+
+
+
+[1;1H[0J[2m8:49:37 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] /root/raid-ts/src/style/prime_components.css:109:13: The `max-md:` class does not exist. If `max-md:` is a custom class, make sure it is defined within a `@layer` directive.[39m
+  Plugin: [35mvite:css[39m
+  File: [36m/root/raid-ts/src/style/prime_components.css[39m:109:12
+[33m  107|              @apply flex-grow-0 overflow-y-auto;
+  108|              @apply flex flex-col;
+  109|              @apply max-md: mt-5 space-y-1;
+     |              ^
+  110|          }
+  111|          .menu_bar_selector {[39m
+      at Input.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/input.js:106:16)
+      at AtRule.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/node.js:115:32)
+      at processApply (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:538:9
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/processTailwindFeatures.js:57:50
+      at async plugins (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/plugin.js:38:17)
+      at async LazyResult.runAsync (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/lazy-result.js:261:11)
+      at async compileCSS (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39982:25)
+      at async TransformContext.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39355:56)
+      at async Object.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:63705:30)
+
+
+
+
+
+
+[1;1H[0J[2m8:49:39 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] /root/raid-ts/src/style/prime_components.css:109:13: The `max-md:` class does not exist. If `max-md:` is a custom class, make sure it is defined within a `@layer` directive.[39m
+  Plugin: [35mvite:css[39m
+  File: [36m/root/raid-ts/src/style/prime_components.css[39m:109:12
+[33m  107|              @apply flex-grow-0 overflow-y-auto;
+  108|              @apply flex flex-col;
+  109|              @apply max-md: mt-5 space-y-1;
+     |              ^
+  110|          }
+  111|          .menu_bar_selector {[39m
+      at Input.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/input.js:106:16)
+      at AtRule.error (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/node.js:115:32)
+      at processApply (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:538:9
+      at /root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/processTailwindFeatures.js:57:50
+      at async plugins (/root/raid-ts/node_modules/.pnpm/tailwindcss@3.4.0/node_modules/tailwindcss/lib/plugin.js:38:17)
+      at async LazyResult.runAsync (/root/raid-ts/node_modules/.pnpm/postcss@8.4.32/node_modules/postcss/lib/lazy-result.js:261:11)
+      at async compileCSS (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39982:25)
+      at async TransformContext.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:39355:56)
+      at async Object.transform (file:///root/raid-ts/node_modules/.pnpm/vite@5.0.10_@types+node@20.10.5/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:63705:30) [33m(x2)[39m
+
+
+
+
+
+
+[1;1H[0J[2m8:49:46 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m
+
+
+
+
+
+
+[1;1H[0J[2m8:50:04 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/style/style.css[22m [33m(x2)[39m
+
+
+
+
+
+
+[1;1H[0J[2m8:50:54 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/design/menuPart.vue, /src/style/style.css[22m
+
+
+
+
+
+
+[1
