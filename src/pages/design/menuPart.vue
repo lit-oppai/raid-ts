@@ -61,6 +61,16 @@ function onPower(type: "restart" | "shutdown") {
             </span>
         </div>
 
+        <div class="menu_bar_update">
+            <router-link to="/update" class="">
+                <Button :label="$t('update')">
+                    <div class="bg-brand-400">
+
+                    </div>
+                </Button>
+            </router-link>
+        </div>
+        
         <div class="menu_bar_selector">
             <router-link v-for="item in routes.filter(t => t?.name !== undefined)" :to="item.path" class="os_menu">
                 <Button :label="$t(item.name as string)" :icon="item.icon">
@@ -69,9 +79,11 @@ function onPower(type: "restart" | "shutdown") {
         </div>
 
         <div class="menu_bar_footer">
-            <Button :label="restartConfirm ? $t(`Are you sure?`) : $t(`Restart`)" icon="casa-restart-outline" @click="onPower('restart')">
+            <Button :label="restartConfirm ? $t(`Are you sure?`) : $t(`Restart`)" icon="casa-restart-outline"
+                @click="onPower('restart')">
             </Button>
-            <Button :label="shutdownConfirm ? $t(`Are you sure?`) : $t(`Shutdown`)" icon="casa-shutdown-outline" @click="onPower('shutdown')">
+            <Button :label="shutdownConfirm ? $t(`Are you sure?`) : $t(`Shutdown`)" icon="casa-shutdown-outline"
+                @click="onPower('shutdown')">
             </Button>
         </div>
     </div>

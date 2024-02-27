@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { reactive, ref, computed, nextTick, onMounted } from 'vue'
+import { reactive, ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
 import api from '@icewhale/icewhale-v1-api'
 import { useForm } from 'vee-validate'
 import { device } from '@network/index.ts'
 import { messageBus } from '@icewhale/ui-utils'
+import { socket } from '@network/socket'
 // import WallpapersDialog from "./WallpapersDialog.vue";
 import ProcotolDialog from "./ProtocolDialog.vue";
 import defaultWallpaper from '@assets/img/General/zimaos01.jpg'
@@ -52,6 +53,7 @@ const [nameMac, nameMacAttrs] = defineField('NameMacSchema', {
     validateOnModelUpdate: true
 })
 onMounted(async () => {
+    bindMessageBus();
     try {
         await getDeviceInfo()
     } catch (error) {
@@ -59,6 +61,15 @@ onMounted(async () => {
     }
     nameMac.value = name.value
 })
+onUnmounted(() => {
+    unbindMessageBus();
+})
+function bindMessageBus() {
+    socket.on('casaos-ui:topbar:dashboardsetting_wallpaper', getWallpaper)
+}
+function unbindMessageBus() {
+    socket.off('casaos-ui:topbar:dashboardsetting_wallpaper', getWallpaper)
+}
 // const messageNameMac = ref<string>('After refreshing, the modification will take effect and previous name will become invalid.')
 const messageNameMac = computed<string>(() => {
     return errors.value?.NameMacSchema ? errors.value.NameMacSchema : 'After refreshing, the modification will take effect and previous name will become invalid.'
@@ -130,7 +141,9 @@ function showProtocolDialog() {
                 <div class="absolute right-0 left-0 top-0 bottom-0 m-auto rounded-xl w-[12.5rem] h-[7rem] overflow-hidden bg-cover bg-no-repeat bg-center transition-background duration-500"
                     :style="{ backgroundImage: `url(${wallpaper.path})` }">
                     <div class="w-full h-full flex items-center justify-center group">
-                        <div class="bg-gray-100 h-7 px-[14px] rounded-[14px] text-sm group-hover:flex hidden items-center cursor-pointer">Change Wallpaper</div>
+                        <div
+                            class="bg-gray-100 h-7 px-[14px] rounded-[14px] text-sm group-hover:flex hidden items-center cursor-pointer">
+                            Change Wallpaper</div>
                     </div>
                 </div>
             </div>

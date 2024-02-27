@@ -55,6 +55,10 @@ export default {
                 slate: {
                     50: 'rgba(244, 248, 252, 1)'
                 },
+                brand: {
+                    50: 'rgba(229, 243, 255, 1)',
+                    400: 'rgba(15, 143, 255, 1)',
+                },
                 // yellow 
                 tertiary: {
                     100: 'rgba(255, 244, 215, 1)',

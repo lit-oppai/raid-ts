@@ -18,6 +18,16 @@ declare type RouteMeta = RouteRecordRaw & {
 // for vue-router
 export const routes: RouteMeta[] = [
     {
+        path: '/update',
+        // component: () => import('./home'),
+        redirect: 'storage',
+        // name: 'home',
+        icon: 'casa-settings-outline',
+        meta: {
+            title: 'Home'
+        }
+    },
+    {
         path: '/',
         // component: () => import('./home'),
         redirect: 'storage',
