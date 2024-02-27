@@ -20,7 +20,7 @@ if [ $? -eq 0 ]; then
 
     echo "Complete deployment."
     if [ $? -eq 0 ]; then
-        curl -X POST -H "Content-Type: application/json" -d '{"msg_type":"text","content":{"text":"IceWhale-Settings-UI updated 本地更新"}}' https://open.feishu.cn/open-apis/bot/v2/hook/$NOTICE_KEY
+        curl -X POST -H "Content-Type: application/json" -d '{"msg_type":"text","content":{"text":"IceWhale-Settings-UI 本地更新 测试中"}}' https://open.feishu.cn/open-apis/bot/v2/hook/$NOTICE_KEY
         echo "\n\t successfully sent notice message."
     fi
 
