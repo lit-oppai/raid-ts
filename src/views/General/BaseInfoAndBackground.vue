@@ -7,7 +7,7 @@ import { messageBus } from '@icewhale/ui-utils'
 import { socket } from '@network/socket'
 // import WallpapersDialog from "./WallpapersDialog.vue";
 import ProcotolDialog from "./ProtocolDialog.vue";
-import defaultWallpaper from '@assets/img/General/zimaos01.jpg'
+import defaultWallpaper from '/zimaos01.jpg'
 const wallpaperNamespace = 'wallpaper'
 interface Wallpaper {
     path: string
