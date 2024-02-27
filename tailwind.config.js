@@ -18,6 +18,9 @@ export default {
                 'max-xl': { 'max': '1280px' },
                 'max-2xl': { 'max': '1536px' },
             },
+            borderRadius: {
+                '2lg': '0.625rem',
+            },
             colors: {
                 gray: {
                     // 背景灰色 2

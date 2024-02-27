@@ -1,0 +1,20 @@
+@import 'iconfonts-casaos/casaos-iconfonts.css';
+@import './prime_components.css';
+@import './prime_utilities.css';
+
+/* MircoApp CSS: frame layout. */
+html,
+body {
+    height: 100%;
+    /* The  base application will have an impact here  */
+    padding: 0 !important;
+}
+#icewhale-settings-app {
+    height: 100%;
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
