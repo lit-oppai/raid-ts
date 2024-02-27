@@ -20,14 +20,24 @@ function onPower(type: "restart" | "shutdown") {
     } else if (type === "shutdown" && !shutdownConfirm.value) {
         shutdownConfirm.value = true;
     } else {
+        const payload = {
+            action: "",
+            peerType: "settings",
+            name: "icewhale_settings",
+            routerPath: "/general",
+        }
         switch (type) {
             case "restart":
+                payload.action = "reboot";
                 messageBus("dashboardsetting_reboot");
+                messageBus("mircoapp_communicate", payload);
                 restartConfirm.value = false;
                 // powerType.value = "restart";
                 break;
             case "shutdown":
+                payload.action = "power_off";
                 messageBus("dashboardsetting_shutdown");
+                messageBus("mircoapp_communicate", payload);
                 shutdownConfirm.value = false;
                 // powerType.value = "shutdown";
                 break;

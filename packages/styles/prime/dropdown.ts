@@ -17,51 +17,51 @@ export default {
             { 'opacity-60': e.disabled, 'pointer-events-none': e.disabled }
         ]
     }),
-    input: ({ props: e }: any) => ({
-        class: [
-            'font-sans',
-            'leading-6',
-            'sm:text-sm',
-            'block',
-            'flex-auto',
-            'bg-transparent',
-            'border-0',
-            {
-                'text-surface-800 dark:text-white/80': e.modelValue != null,
-                'text-surface-400 dark:text-surface-500':
-                    e.modelValue == null
-            },
-            'placeholder:text-surface-400 dark:placeholder:text-surface-500',
-            'w-[1%]',
-            'py-2 px-3',
-            { 'pr-7': e.showClear },
-            'rounded-none',
-            'transition',
-            'duration-200',
-            'focus:outline-none focus:shadow-none',
-            'relative',
-            'cursor-pointer',
-            'overflow-hidden overflow-ellipsis',
-            'whitespace-nowrap',
-            'appearance-none'
-        ]
-    }),
-    trigger: ({ state: r }: any) => ({
-        class: [
-            'sm:text-sm',
-            'flex items-center justify-center',
-            'shrink-0',
-            'bg-transparent',
-            'text-surface-500',
-            'w-8',
-            'rounded-tr-md',
-            'rounded-br-md',
-            {
-                'rotate-180': r.overlayVisible,
-            }
-        ]
-    }),
-    panel: {
+        input: ({ props: e }: any) => ({
+            class: [
+                'font-sans',
+                'leading-6',
+                'sm:text-sm',
+                'block',
+                'flex-auto',
+                'bg-transparent',
+                'border-0',
+                {
+                    'text-surface-800 dark:text-white/80': e.modelValue != null,
+                    'text-surface-400 dark:text-surface-500':
+                        e.modelValue == null
+                },
+                'placeholder:text-surface-400 dark:placeholder:text-surface-500',
+                'w-[1%]',
+                'py-2 px-3',
+                { 'pr-7': e.showClear },
+                'rounded-none',
+                'transition',
+                'duration-200',
+                'focus:outline-none focus:shadow-none',
+                'relative',
+                'cursor-pointer',
+                'overflow-hidden overflow-ellipsis',
+                'whitespace-nowrap',
+                'appearance-none'
+            ]
+        }),
+            trigger: ({ state: r }: any) => ({
+                class: [
+                    'sm:text-sm',
+                    'flex items-center justify-center',
+                    'shrink-0',
+                    'bg-transparent',
+                    'text-surface-500',
+                    'w-8',
+                    'rounded-tr-md',
+                    'rounded-br-md',
+                    {
+                        'rotate-180': r.overlayVisible,
+                    }
+                ]
+            }),
+                panel: {
         class: [
             'absolute top-0 left-0',
             'mt-2',
@@ -117,7 +117,7 @@ export default {
             'whitespace-nowrap'
         ]
     }),
-    itemgroup: {
+        itemgroup: {
         class: [
             'font-bold',
             'sm:text-sm',
@@ -186,9 +186,9 @@ export default {
     },
     transition: {
         enterFromClass: 'opacity-0 scale-y-[0.8]',
-        enterActiveClass:
-            'transition-[transform,opacity] duration-[120ms] ease-[cubic-bezier(0,0,0.2,1)]',
-        leaveActiveClass: 'transition-opacity duration-100 ease-linear',
-        leaveToClass: 'opacity-0'
+            enterActiveClass:
+        'transition-[transform,opacity] duration-[120ms] ease-[cubic-bezier(0,0,0.2,1)]',
+            leaveActiveClass: 'transition-opacity duration-100 ease-linear',
+                leaveToClass: 'opacity-0'
     }
 }

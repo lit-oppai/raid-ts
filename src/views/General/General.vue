@@ -17,13 +17,18 @@ const { t } = useI18n()
 const toast = useToast()
 const store = useBaseStore()
 const language = ref<{ lang: string; name: string }>()
-const searchEngine = ref<string>('')
+// const searchEngine = ref<string>('')
+const searchEngine = ref<{ url: string, name: string }>();
+let oldSearchEngineUrl: string = '';
 // const port = ref<string>("80")
 // const inputPort = ref<string>("0")
 const inputTextElement = ref()
 // const isInputPortTextActive = ref(false)
-const port = ref<number>(80)
 const inputPort = ref<number>(0)
+watch(() => inputPort.value, (val) => {
+    console.log('watch inputPort', val);
+})
+let oldPort: number = 80;
 const rssSwitch = ref<boolean>(false)
 // const recommendSwitch = ref<boolean>(false);
 const tutorialSwitch = ref<Array<string>>([])
@@ -37,7 +42,7 @@ const isRaspberryPi = computed(
     () => device.value.toLowerCase().indexOf('raspberry') >= 0
 )
 const portInputIconClass = computed(() => {
-    return inputTextElement.value?.focused ? 'casa-check-outline' : 'casa-edit-outline';
+    return (inputTextElement.value?.focused || inputPort.value !== oldPort) ? 'casa-check-outline cursor-pointer' : 'casa-edit-outline cursor-pointer';
 })
 const isInputPortTextActive = computed(() => {
     return inputTextElement.value?.focused
@@ -51,27 +56,46 @@ watch(
     }
 )
 onMounted(() => {
+    getPort()
     api.users.getCustomStorage('system').then(res => {
         const data = res.data.data
+
         language.value = Languages.find(item => item.lang === store.casaos_lang)
-        searchEngine.value = data.search_engine
+        // searchEngine.value = data.search_engine
+        searchEngine.value = SearchEngines.find(item => item.url === data.search_engine);
+        oldSearchEngineUrl = searchEngine.value?.url || '';
         rssSwitch.value = data.rss_switch
         // recommendSwitch.value = data.recommend_switch;
         tutorialSwitch.value = data.tutorial_switch
     })
 })
+
+function getPort() {
+    return api.sys.getServerPort().then(res => {
+        if (res.data.success === 200) {
+            inputPort.value = oldPort = Number(res.data.data);
+        }
+    });
+}
+
 function onChangeSettings(source: string) {
+    console.log(source, 'source', searchEngine.value);
+
     switch (source) {
-        // case "searchEngine":
-        //     const oldSearchEngine = searchEngine.value;
-        //     searchEngine.value = searchEngine.value?.url || searchEngine;
-        //     onSaveSettings().catch(e => {
-        //         toast.add({ severity: "error", summary: "Save failed", detail: e.data?.message || e.message, life: 5000 });
-        //         // rewind to old value
-        //         searchEngine = oldSearchEngine;
-        //         searchEngine.value = SearchEngines.find(item => item.url === oldSearchEngine);
-        //     });
-        //     break;
+        case "searchEngine":
+            // const oldSearchEngineUrl = searchEngine.value;
+            // searchEngine.value = searchEngine.value?.url || searchEngine;
+            onSaveSettings().then(res => {
+                if (res.success === 200) {
+                    oldSearchEngineUrl = searchEngine.value?.url || '';
+                }
+            }).catch(e => {
+                toast.add({ severity: "error", summary: "Save failed", detail: e.data?.message || e.message, life: 5000 });
+                // rewind to old value
+                // searchEngine = oldSearchEngineUrl;
+                searchEngine.value = SearchEngines.find(item => item.url === oldSearchEngineUrl);
+            });
+            break;
         // case "searchEngineSwitch":
         //     const oldSearchEngineSwitch = searchEngineSwitch;
         //     searchEngineSwitch = showSearchBar.value;
@@ -145,7 +169,7 @@ function onChangeSettings(source: string) {
 function onSaveSettings(): Promise<any> {
     const settings = {
         lang: store.casaos_lang,
-        search_engine: searchEngine.value,
+        search_engine: searchEngine.value?.url || '',
         rss_switch: rssSwitch.value,
         // recommend_switch: recommendSwitch.value,
         tutorial_switch: tutorialSwitch.value,
@@ -202,15 +226,15 @@ function onCheckApps(item: string, event?: MouseEvent) {
 }
 
 function onSavePort() {
-    if (inputPort.value === port.value) {
+    if (inputPort.value === oldPort) {
         return
     }
     messageBus('dashboardsetting_webuiport', inputPort.value.toString())
     api.sys
-        .editServerPort({ port: inputPort.value })
+        .editServerPort({ port: inputPort.value.toString() })
         .then(res => {
             if (res.data.success === 200) {
-                port.value = inputPort.value
+                oldPort = inputPort.value
                 checkPortApplied()
             }
         })
@@ -240,11 +264,19 @@ function focusInputText() {
 }
 
 function operatedPort() {
-    if (isInputPortTextActive.value) {
-        onSavePort()
-    } else {
-        focusInputText()
-    }
+    nextTick(() => {
+        if (isInputPortTextActive.value) {
+            onSavePort()
+        } else {
+            focusInputText()
+        }
+    })
+}
+
+function rewindPort() {
+    nextTick(() => {
+        inputPort.value = oldPort
+    })
 }
 </script>
 
@@ -277,10 +309,10 @@ function operatedPort() {
             </div>
             <div
                 class="group bg-transparent h-8 rounded-md flex items-center border border-solid border-gray/one hover:border-sky-600 focus-within:border-sky-600 focus-within:border-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
-                <InputNumber ref="inputTextElement" v-model="inputPort"
-                    class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" />
+                <InputNumber ref="inputTextElement" :modelValue="inputPort" @input="({value})=>inputPort = Number(value)"
+                    class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort" />
                 <i class="mr-2 group-hover:text-sky-600 group-focus-within:text-sky-600" :class="portInputIconClass"
-                    @click="operatedPort" />
+                    @click="operatedPort" @mousedown.prevent />
             </div>
         </div>
 
