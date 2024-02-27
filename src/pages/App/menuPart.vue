@@ -28,6 +28,7 @@ function onPower(type: "restart" | "shutdown") {
         }
         switch (type) {
             case "restart":
+                // Extract constants into a separate package.
                 payload.action = "reboot";
                 messageBus("dashboardsetting_reboot");
                 messageBus("mircoapp_communicate", payload);
@@ -35,11 +36,12 @@ function onPower(type: "restart" | "shutdown") {
                 // powerType.value = "restart";
                 break;
             case "shutdown":
+                // Extract constants into a separate package.
                 payload.action = "power_off";
                 messageBus("dashboardsetting_shutdown");
                 messageBus("mircoapp_communicate", payload);
                 shutdownConfirm.value = false;
-                // powerType.value = "shutdown";
+                // powerType.value = "shut1111111down";
                 break;
         }
         // emit("power", powerType.value)
