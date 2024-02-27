@@ -291,7 +291,7 @@ function rewindPort() {
             <div class="grow">
                 {{ $t('Language') }}
             </div>
-            <Dropdown v-model="language" :options="Languages" optionLabel="name" checkmark :highlightOnSelect="false"
+            <Dropdown append-to="self" panel-class="w-full" v-model="language" :options="Languages" optionLabel="name" checkmark :highlightOnSelect="false"
                 class="w-full md:w-14rem" @change="onChangeSettings('lang')" />
         </div>
 
@@ -300,7 +300,7 @@ function rewindPort() {
             <div class="grow">
                 {{ $t('Search Engine') }}
             </div>
-            <Dropdown v-model="searchEngine" :options="SearchEngines" optionLabel="name" checkmark
+            <Dropdown append-to="self" panel-class="w-full" v-model="searchEngine" :options="SearchEngines" optionLabel="name" checkmark
                 :highlightOnSelect="false" class="w-full md:w-14rem" @change="onChangeSettings('searchEngine')" />
         </div>
 
@@ -339,7 +339,7 @@ function rewindPort() {
             <div class="grow">
                 {{ $t('Tips') }}
             </div>
-            <Dropdown class="w-40 sm" panelClass="sm p-0" v-model="selectedApps" :options="TutorialApps" checkmark @change="
+            <Dropdown append-to="self" panel-class="w-full" class="w-40 sm" panelClass="sm p-0" v-model="selectedApps" :options="TutorialApps" checkmark @change="
                 onCheckApps(
                     $event.value,
                     $event.originalEvent as MouseEvent
