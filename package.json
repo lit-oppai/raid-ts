@@ -11,6 +11,7 @@
     "upOpenAPI": "pnpm up '@icewhale/*' --latest"
   },
   "dependencies": {
+    "@icewhale/icewhale-openapi": "0.0.1-alpha5",
     "@icewhale/icewhale-v1-api": "workspace:^",
     "@icewhale/ui-styles": "workspace:^",
     "@icewhale/ui-utils": "workspace:^",
@@ -18,6 +19,7 @@
     "iconfonts-casaos": "^1.0.4",
     "pinia": "^2.1.7",
     "primevue": "3.43.0",
+    "simple-uploader.js": "^0.6.0",
     "socket.io-client": "^2.5.0",
     "vue": "^3.3.13",
     "vue-i18n": "^9.8.0",
@@ -25,7 +27,7 @@
   },
   "devDependencies": {
     "@icewhale/zimaos-localstorage-openapi": "1.1.0-alpha3",
-    "@icewhale/zimaos-openapi": "1.1.0-alpha13",
+    "@icewhale/zimaos-openapi": "1.1.0-alpha20",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.5",
     "@types/socket.io-client": "1.4.36",

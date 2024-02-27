@@ -13,6 +13,9 @@ importers:
 
   .:
     dependencies:
+      '@icewhale/icewhale-openapi':
+        specifier: 0.0.1-alpha5
+        version: 0.0.1-alpha5
       '@icewhale/icewhale-v1-api':
         specifier: workspace:^
         version: link:packages/v1api
@@ -34,6 +37,9 @@ importers:
       primevue:
         specifier: 3.43.0
         version: 3.43.0(patch_hash=6xg2mlikixstnt3asa7z64fc4u)(vue@3.3.13)
+      simple-uploader.js:
+        specifier: ^0.6.0
+        version: 0.6.0
       socket.io-client:
         specifier: ^2.5.0
         version: 2.5.0
@@ -51,8 +57,8 @@ importers:
         specifier: 1.1.0-alpha3
         version: 1.1.0-alpha3
       '@icewhale/zimaos-openapi':
-        specifier: 1.1.0-alpha13
-        version: 1.1.0-alpha13
+        specifier: 1.1.0-alpha20
+        version: 1.1.0-alpha20
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -390,6 +396,14 @@ packages:
     dev: true
     optional: true
 
+  /@icewhale/icewhale-openapi@0.0.1-alpha5:
+    resolution: {integrity: sha512-Re1nb+wpkkv7Ku+6KRNKsrM8A/d2wfFQk53+bGfhAZysM/vdq2XYTLVk4VP65VoO+ZNYFQQr7k0QBSdfUy+0uQ==}
+    dependencies:
+      axios: 1.6.3
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /@icewhale/zimaos-localstorage-openapi@1.1.0-alpha3:
     resolution: {integrity: sha512-gOFYTW9K5o9aHvq6jWS++DyfP1TXZyZryyDKJxGO/+hQVZj19MXxudlU96G1Rsp3CQu1/XpZ1CMFEDXbagjoYQ==}
     dependencies:
@@ -398,8 +412,8 @@ packages:
       - debug
     dev: true
 
-  /@icewhale/zimaos-openapi@1.1.0-alpha13:
-    resolution: {integrity: sha512-jsc/pDJxA1wSAXIVt/BEjhCO7bwAWPgkRXth5zR9sV/EyewVDLzeywz14SoT5ZdmhLrOIvEY5N8aBtxVv5vqEA==}
+  /@icewhale/zimaos-openapi@1.1.0-alpha20:
+    resolution: {integrity: sha512-tru2uwuAobK6Oyvu+SUpd8mqjUee1LhY96SA3T3I4FZllmmNbLLTFAxzz9kMChY+0mEWm8e4wtzUlO0ZJEevVQ==}
     dependencies:
       axios: 1.6.3
     transitivePeerDependencies:
@@ -1714,6 +1728,10 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
     dev: true
+
+  /simple-uploader.js@0.6.0:
+    resolution: {integrity: sha512-EXN+o+LD6PVnfzTq/usP8k8yYrI6wKrAx8e+fPcPLVzzttonkyn1KT+Ycx5JnPBSnp6lpiVhNG4JhDJucdPnhA==}
+    dev: false
 
   /socket.io-client@2.5.0:
     resolution: {integrity: sha512-lOO9clmdgssDykiOmVQQitwBAF3I6mYcQAo7hQ7AM6Ny5X7fp8hIJ3HcQs3Rjz4SoggoxA1OgrQyY8EgTbcPYw==}

@@ -120,6 +120,9 @@ export const Messages = {
             { value: isTrue }
         );
     },
+    settings_openWallpaperPanel: () => { 
+        return intermediateProcessor(`${sourceID}:settings:call_setting_wallpaper`);
+    },
     dashboardsetting_reboot: () => {
         return intermediateProcessor(`${sourceID}:topbar:dashboardsetting_reboot`);
     },

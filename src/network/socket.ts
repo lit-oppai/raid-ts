@@ -5,7 +5,7 @@ const protocol = document.location.protocol;
 const wsProtocol = protocol === "https:" ? "wss:" : "ws:";
 const openApiDevIP = import.meta.env.VITE_OPEN_API_DEV_IP;
 const openApiDevPort = import.meta.env.VITE_OPEN_API_DEV_PORT;
-const baseURL = `${openApiDevIP}:${openApiDevPort}`;
+export const baseURL = `${openApiDevIP}:${openApiDevPort}`;
 const wsURL = `${wsProtocol}//${baseURL}`;
 
 export const socket = io(wsURL, {
