@@ -13,6 +13,9 @@ importers:
 
   .:
     dependencies:
+      '@icewhale/casaos-installer-openapi':
+        specifier: 1.0.0-alpha4
+        version: 1.0.0-alpha4
       '@icewhale/icewhale-openapi':
         specifier: 0.0.1-alpha5
         version: 0.0.1-alpha5
@@ -395,6 +398,14 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@icewhale/casaos-installer-openapi@1.0.0-alpha4:
+    resolution: {integrity: sha512-sSQXmChdTcrv882n9bVdTyuMnmahLRPl76f/o/7ZAxyYZpGQcf2S2384N96X5IpgScQw+grfS1PEquoDv7uOfA==}
+    dependencies:
+      axios: 1.6.3
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@icewhale/icewhale-openapi@0.0.1-alpha5:
     resolution: {integrity: sha512-Re1nb+wpkkv7Ku+6KRNKsrM8A/d2wfFQk53+bGfhAZysM/vdq2XYTLVk4VP65VoO+ZNYFQQr7k0QBSdfUy+0uQ==}

@@ -62,15 +62,16 @@ function onPower(type: "restart" | "shutdown") {
         </div>
 
         <div class="menu_bar_update">
-            <router-link to="/update" class="">
+            <router-link to="/update" class="flex items-center">
+                <div class="w-4 h-4 m-[10px] rounded-full bg-brand-400 flex-shrink-0 text-white flex items-center justify-center text-xs">
+                    1
+                </div>
                 <Button :label="$t('update')">
-                    <div class="bg-brand-400">
 
-                    </div>
                 </Button>
             </router-link>
         </div>
-        
+
         <div class="menu_bar_selector">
             <router-link v-for="item in routes.filter(t => t?.name !== undefined)" :to="item.path" class="os_menu">
                 <Button :label="$t(item.name as string)" :icon="item.icon">
