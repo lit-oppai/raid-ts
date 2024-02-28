@@ -339,7 +339,7 @@ function rewindPort() {
             <div class="grow">
                 {{ $t('Tips') }}
             </div>
-            <Dropdown append-to="self" panel-class="w-full" class="w-40 sm" panelClass="sm p-0" v-model="selectedApps" :options="TutorialApps" checkmark @change="
+            <Dropdown append-to="self" panel-class="w-full sm p-0" class="w-40 sm" v-model="selectedApps" :options="TutorialApps" checkmark @change="
                 onCheckApps(
                     $event.value,
                     $event.originalEvent as MouseEvent
