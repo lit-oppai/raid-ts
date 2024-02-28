@@ -19,12 +19,12 @@ declare type RouteMeta = RouteRecordRaw & {
 export const routes: RouteMeta[] = [
     {
         path: '/update',
-        // component: () => import('./home'),
-        redirect: 'storage',
-        // name: 'home',
-        icon: 'casa-settings-outline',
+        component: () => import('./update/index.ts'),
+        // redirect: 'storage',
+        // name: 'update',
+        icon: '',
         meta: {
-            title: 'Home'
+            title: 'Update'
         }
     },
     {

@@ -123,6 +123,9 @@ export const Messages = {
     settings_openWallpaperPanel: () => { 
         return intermediateProcessor(`${sourceID}:settings:call_setting_wallpaper`);
     },
+    setting_openUpdatePanel: () => { 
+        return intermediateProcessor(`${sourceID}:settings:show_update_panel`);
+    },
     dashboardsetting_reboot: () => {
         return intermediateProcessor(`${sourceID}:topbar:dashboardsetting_reboot`);
     },

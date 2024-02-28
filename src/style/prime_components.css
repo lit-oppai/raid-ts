@@ -105,26 +105,27 @@ TODO:
 
         .menu_bar_update {
             @apply flex-grow-0 overflow-y-auto;
-            @apply flex flex-col;
-            @apply max-md:mt-5 space-y-1;
+            @apply flex flex-col flex-shrink-0;
+            @apply max-md:mt-5;
+            @apply mb-4;
             a {
                 @apply mx-4 max-md:mx-1 rounded-md;
                 @apply bg-brand-50;
                 button {
-                    @apply w-full h-8
+                    @apply h-8
                 }
             }
         }
         .menu_bar_selector {
             @apply flex-grow overflow-y-auto;
-            @apply flex flex-col;
+            @apply flex flex-col min-h-8;
             @apply max-md:mt-5 space-y-1;
             a {
                 @apply mx-4 max-md:mx-1 rounded-md;
 
                 /* routers */
                 button {
-                    @apply w-full h-8 inline-flex items-center rounded;
+                    @apply h-8 inline-flex items-center rounded;
                     @apply text-sm font-normal font-roboto leading-5;
                     @screen max-md {
                         @apply inline text-center text-2xl;
