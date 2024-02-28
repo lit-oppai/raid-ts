@@ -77,7 +77,7 @@ onMounted(() => {
 
 <template>
     <!-- Sketch -->
-    <div class="flex justify-center items-end space-x-3 active mt-[2.5rem]">
+    <div class="relative flex justify-center items-end space-x-3 active mt-[2.5rem]">
         <ThunderboltSketch :data=fontThunderbolt />
         <NetworkSketch v-if="isNormalLevel" :NicDataList="protogenesisNicDataList" />
         <NetworkProSketch v-else :NicDataList="protogenesisNicDataList" />
