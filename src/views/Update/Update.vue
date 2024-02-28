@@ -26,8 +26,8 @@ function callUpdatePanel() {
 </script>
 
 <template>
-    <div class="w-full releative text-center text-white">
-        <img class="absolute w-full h-[11rem] object-cover rounded-3xl -z-10" :src="releaseBackgroundPath">
+    <div class="w-full h-[11rem] relative text-center text-white">
+        <img class="absolute w-full h-full object-cover rounded-xl -z-10" :src="releaseBackgroundPath">
         <div class="text-sm pt-4">
             ZimaOS
         </div>
