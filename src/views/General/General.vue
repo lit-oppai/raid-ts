@@ -17,23 +17,12 @@ const { t } = useI18n();
 const toast = useToast();
 const store = useBaseStore();
 const language = ref<{ lang: string; name: string }>();
-// const searchEngine = ref<string>('')
 const searchEngine = ref<{ url: string; name: string }>();
 let oldSearchEngineUrl: string = "";
-// const port = ref<string>("80")
-// const inputPort = ref<string>("0")
 const inputTextElement = ref();
-// const isInputPortTextActive = ref(false)
 const inputPort = ref<number>(0);
-/* watch(
-    () => inputPort.value,
-    (val) => {
-        console.log("watch inputPort", val);
-    }
-); */
 let oldPort: number = 80;
 const rssSwitch = ref<boolean>(false);
-// const recommendSwitch = ref<boolean>(false);
 const tutorialSwitch = ref<Array<string>>([]);
 
 const automountUSB = ref<boolean>(true);
@@ -110,18 +99,7 @@ function onChangeSettings(source: string) {
                     );
                 });
             break;
-        // case "searchEngineSwitch":
-        //     const oldSearchEngineSwitch = searchEngineSwitch;
-        //     searchEngineSwitch = showSearchBar.value;
-        //     onSaveSettings().catch(e => {
-        //         toast.add({ severity: "error", summary: "Save failed", detail: e.data?.message || e.message, life: 5000 });
-        //         // rewind to old value
-        //         searchEngineSwitch = oldSearchEngineSwitch;
-        //         showSearchBar.value = oldSearchEngineSwitch;
-        //     });
-        //     break;
         case "lang":
-            // const oldLang = store.casaos_lang;
             onSaveSettings()
                 .then(() => {
                     store.setLang(language.value?.lang || store.casaos_lang);
@@ -133,13 +111,9 @@ function onChangeSettings(source: string) {
                         detail: e.data?.message || e.message,
                         life: 5000,
                     });
-                    // rewind to old value
-                    // store.setLang(oldLang);
-                    // language.value = Languages.find(item => item.lang === oldLang);
                 });
             break;
         case "rssSwitch":
-            // const oldRssSwitch = rssSwitch;
             rssSwitch.value = showNewsFeed.value;
             onSaveSettings()
                 .then(() => {
@@ -152,8 +126,6 @@ function onChangeSettings(source: string) {
                         detail: e.data?.message || e.message,
                         life: 5000,
                     });
-                    // rewind to old value
-                    // rssSwitch.value = oldRssSwitch;
                     showNewsFeed.value = !showNewsFeed.value;
                 });
             break;
