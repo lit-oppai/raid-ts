@@ -6,7 +6,6 @@ import { useForm } from "vee-validate";
 import { device } from "@network/index.ts";
 import { messageBus } from "@icewhale/ui-utils";
 import { socket, baseURL } from "@network/socket";
-// import WallpapersDialog from "./WallpapersDialog.vue";
 import ProcotolDialog from "./ProtocolDialog.vue";
 import defaultWallpaper from "/zimaos01.jpg";
 
@@ -24,7 +23,6 @@ const version = ref<string>("0.0.0");
 const SN = ref<string>("ZM-2021-0001");
 const editState = ref<boolean>(false);
 const editName = ref<HTMLInputElement | null>(null);
-// const wallpapersDialogRef = ref();
 const protocolDialogRef = ref();
 const backgroundStyleObject = computed(() => {
     return {
