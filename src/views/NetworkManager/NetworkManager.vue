@@ -78,7 +78,7 @@ onMounted(() => {
 <template>
     <!-- Sketch -->
     <div class="relative flex justify-center items-end space-x-3 active mt-[2.5rem]">
-        <ThunderboltSketch :data=fontThunderbolt />
+        <ThunderboltSketch :ThunderboltData=fontThunderbolt />
         <NetworkSketch v-if="isNormalLevel" :NicDataList="protogenesisNicDataList" />
         <NetworkProSketch v-else :NicDataList="protogenesisNicDataList" />
         <div class="flex absolute space-x-[247px] text-neutral-400 text-xs font-normal">
@@ -96,7 +96,7 @@ onMounted(() => {
 
     <div class="my-3">
         <span class="text-neutral-400 text-xs font-normal font-['Roboto'] leading-none">
-            {{ $t("Privacy Service Agreement.content") }} &nbsp;
+            {{ $t("Privacy Service Agreement.content") }}&nbsp;
         </span>
         <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none">
             {{ $t("Privacy Service Agreement.title") }}
@@ -105,7 +105,7 @@ onMounted(() => {
 
     <div class="">
         <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none">
-            {{ $t("Install ZimaClient") }} &nbsp;
+            {{ $t("Install ZimaClient") }}&nbsp;
         </span>
         <span class="text-neutral-400 text-xs font-normal font-['Roboto'] leading-none">
             {{ $t("Install ZimaClient content") }}
