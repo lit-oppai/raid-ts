@@ -152,6 +152,8 @@ function showProtocolDialog() {
 }
 
 function transformServerUrl(serverUrl: string) {
+    console.log(111, serverUrl,location.protocol, baseURL);
+    
     return serverUrl.replace('SERVER_URL', `${location.protocol}//${baseURL}`);
 }
 </script>

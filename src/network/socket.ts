@@ -15,3 +15,5 @@ export const socket = io(wsURL, {
     reconnection: false,
     autoConnect: true,
 })
+
+export {}
