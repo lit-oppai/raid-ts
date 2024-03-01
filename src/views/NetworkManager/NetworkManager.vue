@@ -94,18 +94,18 @@ onMounted(() => {
     <NicCard class="mt-2" v-for="item in ExtendNicDataList" :name="item.product" :state="item.ip !== ''"
         :theoretical-speed="item.theoretical_speed" :negotiated-speed="item.negotiated_speed"></NicCard>
 
-    <div class="w-[624px] my-3">
+    <div class="my-3">
         <span class="text-neutral-400 text-xs font-normal font-['Roboto'] leading-none">
-            {{ $t("Privacy Service Agreement.content") }}
+            {{ $t("Privacy Service Agreement.content") }} &nbsp;
         </span>
         <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none">
             {{ $t("Privacy Service Agreement.title") }}
         </span>
     </div>
 
-    <div class="w-[624px]">
+    <div class="">
         <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none">
-            {{ $t("Install ZimaClient") }}
+            {{ $t("Install ZimaClient") }} &nbsp;
         </span>
         <span class="text-neutral-400 text-xs font-normal font-['Roboto'] leading-none">
             {{ $t("Install ZimaClient content") }}

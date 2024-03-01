@@ -22,7 +22,7 @@ defineExpose({
             headerTitle: { class: '!text-base !font-semibold' },
         }">
         <div class="h-full mt-6 mx-6 mb-8 px-4 bg-gray-100 rounded-md flex flex-col justify-evenly text-sm text-sky-600 font-medium">
-            <a href="//baidu.com" target="_blank">Privacy Policy</a>
+            <a href="/privacy policy.pdf" target="_blank">Privacy Policy</a>
             <a href="//baidu.com" target="_blank">EULA (End User License Agreement)</a>
             <a href="//baidu.com" target="_blank">Open Source Usage Statement</a>
         </div>

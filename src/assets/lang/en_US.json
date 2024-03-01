@@ -142,5 +142,17 @@
   "Font": "Font",
   "Back": "Back",
   "Thunderbolt": "Thunderbolt",
-  "Checking": "Checking"
+  "general": "General",
+  "update": "Update",
+  "Checking": "Checking",
+  "News feed": "News feed",
+  "Language": "Language",
+  "Search Engine": "Search Engine",
+  "WebUI Port": "WebUI Port",
+  "USB auto-mount": "USB auto-mount",
+  "Tips": "Tips",
+  "Shutdown": "Shutdown",
+  "Update": "Update",
+  "SN: {SN}": "SN: {SN}",
+  "ZiamOS {releaseVersion} is available": "ZiamOS {releaseVersion} is available"
 }
