@@ -58,7 +58,7 @@
   "storage": "存储",
   "Hard drives": "所选硬盘",
   "Done": "完成",
-  "Restart": "重新开始",
+  "Restart": "重启",
   "Hard Drive": "硬盘",
   "Healthy": "健康",
   "Unhealthy": "不健康",
@@ -143,5 +143,17 @@
   "Font": "正面",
   "Back": "背面",
   "Thunderbolt": "雷雳",
-  "Checking": "检查中"
+  "Checking": "检查中",
+  "general": "通用",
+  "update": "更新",
+  "Language": "语言",
+  "Search Engine": "搜索引擎",
+  "WebUI Port": "WebUI 端口",
+  "USB auto-mount": "USB 自动打开",
+  "News feed": "新闻流",
+  "Tips": "小贴士",
+  "Shutdown": "关机",
+  "Update": "更新",
+  "SN: {SN}": "序列号：{SN}",
+  "ZiamOS {releaseVersion} is available": "ZiamOS {releaseVersion} 更新已就绪"
 }

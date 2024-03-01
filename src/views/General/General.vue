@@ -1,77 +1,82 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch, nextTick } from 'vue'
-import Dropdown from 'primevue/dropdown'
-import InputSwitch from 'primevue/inputswitch'
+import { ref, onMounted, computed, watch, nextTick } from "vue";
+import Dropdown from "primevue/dropdown";
+import InputSwitch from "primevue/inputswitch";
 // import InputText from 'primevue/inputtext'
-import InputNumber from 'primevue/inputnumber'
-import Checkbox from 'primevue/checkbox'
-import { useToast } from 'primevue/usetoast'
-import BaseInfoAndBackground from './BaseInfoAndBackground.vue'
-import { useI18n } from 'vue-i18n'
-import api from '@icewhale/icewhale-v1-api'
-import { messageBus } from '@icewhale/ui-utils'
-import useBaseStore from '@/store/baseStore.ts'
-import { Languages, SearchEngines, TutorialApps } from './const.ts'
+import InputNumber from "primevue/inputnumber";
+import Checkbox from "primevue/checkbox";
+import { useToast } from "primevue/usetoast";
+import BaseInfoAndBackground from "./BaseInfoAndBackground.vue";
+import { useI18n } from "vue-i18n";
+import api from "@icewhale/icewhale-v1-api";
+import { messageBus } from "@icewhale/ui-utils";
+import useBaseStore from "@/store/baseStore.ts";
+import { Languages, SearchEngines, TutorialApps } from "./const.ts";
 
-const { t } = useI18n()
-const toast = useToast()
-const store = useBaseStore()
-const language = ref<{ lang: string; name: string }>()
+const { t } = useI18n();
+const toast = useToast();
+const store = useBaseStore();
+const language = ref<{ lang: string; name: string }>();
 // const searchEngine = ref<string>('')
-const searchEngine = ref<{ url: string, name: string }>();
-let oldSearchEngineUrl: string = '';
+const searchEngine = ref<{ url: string; name: string }>();
+let oldSearchEngineUrl: string = "";
 // const port = ref<string>("80")
 // const inputPort = ref<string>("0")
-const inputTextElement = ref()
+const inputTextElement = ref();
 // const isInputPortTextActive = ref(false)
-const inputPort = ref<number>(0)
-watch(() => inputPort.value, (val) => {
-    console.log('watch inputPort', val);
-})
+const inputPort = ref<number>(0);
+/* watch(
+    () => inputPort.value,
+    (val) => {
+        console.log("watch inputPort", val);
+    }
+); */
 let oldPort: number = 80;
-const rssSwitch = ref<boolean>(false)
+const rssSwitch = ref<boolean>(false);
 // const recommendSwitch = ref<boolean>(false);
-const tutorialSwitch = ref<Array<string>>([])
+const tutorialSwitch = ref<Array<string>>([]);
 
-const automountUSB = ref<boolean>(true)
-const showNewsFeed = ref<boolean>(true)
-const device = ref<string>('')
-const selectedApps = ref<Array<string>>([])
-const tutorialAppsCheckList = ref<{ [key: string]: boolean }>({})
+const automountUSB = ref<boolean>(true);
+const showNewsFeed = ref<boolean>(true);
+const device = ref<string>("");
+const selectedApps = ref<Array<string>>([]);
+const tutorialAppsCheckList = ref<{ [key: string]: boolean }>({});
 const isRaspberryPi = computed(
-    () => device.value.toLowerCase().indexOf('raspberry') >= 0
-)
+    () => device.value.toLowerCase().indexOf("raspberry") >= 0
+);
 const portInputIconClass = computed(() => {
-    return (inputTextElement.value?.focused || inputPort.value !== oldPort) ? 'casa-check-outline cursor-pointer' : 'casa-edit-outline cursor-pointer';
-})
+    return inputTextElement.value?.focused || inputPort.value !== oldPort
+        ? "casa-check-outline cursor-pointer"
+        : "casa-edit-outline cursor-pointer";
+});
 const isInputPortTextActive = computed(() => {
-    return inputTextElement.value?.focused
-})
+    return inputTextElement.value?.focused;
+});
 
 watch(
     () => tutorialSwitch.value,
-    val => {
-        selectedApps.value = val
-        val.forEach(item => (tutorialAppsCheckList.value[item] = true))
+    (val) => {
+        selectedApps.value = val;
+        val.forEach((item) => (tutorialAppsCheckList.value[item] = true));
     }
-)
+);
 onMounted(() => {
-    getPort()
-    api.users.getCustomStorage('system').then(res => {
-        const data = res.data.data
+    getPort();
+    api.users.getCustomStorage("system").then((res) => {
+        const data = res.data.data;
 
-        language.value = Languages.find(item => item.lang === store.casaos_lang)
+        language.value = Languages.find((item) => item.lang === store.casaos_lang);
         // searchEngine.value = data.search_engine
-        searchEngine.value = SearchEngines.find(item => item.url === data.search_engine);
-        oldSearchEngineUrl = searchEngine.value?.url || '';
-        rssSwitch.value = data.rss_switch
+        searchEngine.value = SearchEngines.find((item) => item.url === data.search_engine);
+        oldSearchEngineUrl = searchEngine.value?.url || "";
+        rssSwitch.value = data.rss_switch;
         // recommendSwitch.value = data.recommend_switch;
-        tutorialSwitch.value = data.tutorial_switch
-    })
-})
+        tutorialSwitch.value = data.tutorial_switch;
+    });
+});
 
 function getPort() {
-    return api.sys.getServerPort().then(res => {
+    return api.sys.getServerPort().then((res) => {
         if (res.data.success === 200) {
             inputPort.value = oldPort = Number(res.data.data);
         }
@@ -79,22 +84,31 @@ function getPort() {
 }
 
 function onChangeSettings(source: string) {
-    console.log(source, 'source', searchEngine.value);
+    console.log(source, "source", searchEngine.value);
 
     switch (source) {
         case "searchEngine":
             // const oldSearchEngineUrl = searchEngine.value;
             // searchEngine.value = searchEngine.value?.url || searchEngine;
-            onSaveSettings().then(res => {
-                if (res.success === 200) {
-                    oldSearchEngineUrl = searchEngine.value?.url || '';
-                }
-            }).catch(e => {
-                toast.add({ severity: "error", summary: "Save failed", detail: e.data?.message || e.message, life: 5000 });
-                // rewind to old value
-                // searchEngine = oldSearchEngineUrl;
-                searchEngine.value = SearchEngines.find(item => item.url === oldSearchEngineUrl);
-            });
+            onSaveSettings()
+                .then((res) => {
+                    if (res.success === 200) {
+                        oldSearchEngineUrl = searchEngine.value?.url || "";
+                    }
+                })
+                .catch((e) => {
+                    toast.add({
+                        severity: "error",
+                        summary: "Save failed",
+                        detail: e.data?.message || e.message,
+                        life: 5000,
+                    });
+                    // rewind to old value
+                    // searchEngine = oldSearchEngineUrl;
+                    searchEngine.value = SearchEngines.find(
+                        (item) => item.url === oldSearchEngineUrl
+                    );
+                });
             break;
         // case "searchEngineSwitch":
         //     const oldSearchEngineSwitch = searchEngineSwitch;
@@ -106,153 +120,150 @@ function onChangeSettings(source: string) {
         //         showSearchBar.value = oldSearchEngineSwitch;
         //     });
         //     break;
-        case 'lang':
+        case "lang":
             // const oldLang = store.casaos_lang;
             onSaveSettings()
                 .then(() => {
-                    store.setLang(language.value?.lang || store.casaos_lang)
+                    store.setLang(language.value?.lang || store.casaos_lang);
                 })
-                .catch(e => {
+                .catch((e) => {
                     toast.add({
-                        severity: 'error',
-                        summary: 'Save failed',
+                        severity: "error",
+                        summary: "Save failed",
                         detail: e.data?.message || e.message,
-                        life: 5000
-                    })
+                        life: 5000,
+                    });
                     // rewind to old value
                     // store.setLang(oldLang);
                     // language.value = Languages.find(item => item.lang === oldLang);
-                })
-            break
-        case 'rssSwitch':
+                });
+            break;
+        case "rssSwitch":
             // const oldRssSwitch = rssSwitch;
-            rssSwitch.value = showNewsFeed.value
+            rssSwitch.value = showNewsFeed.value;
             onSaveSettings()
                 .then(() => {
-                    rssSwitch.value = showNewsFeed.value
+                    rssSwitch.value = showNewsFeed.value;
                 })
-                .catch(e => {
+                .catch((e) => {
                     toast.add({
-                        severity: 'error',
-                        summary: 'Save failed',
+                        severity: "error",
+                        summary: "Save failed",
                         detail: e.data?.message || e.message,
-                        life: 5000
-                    })
+                        life: 5000,
+                    });
                     // rewind to old value
                     // rssSwitch.value = oldRssSwitch;
-                    showNewsFeed.value = !showNewsFeed.value
-                })
-            break
-        case 'tutorialSwitch':
-            const oldTutorialSwitch = tutorialSwitch.value
-            tutorialSwitch.value = selectedApps.value
-            onSaveSettings().catch(e => {
+                    showNewsFeed.value = !showNewsFeed.value;
+                });
+            break;
+        case "tutorialSwitch":
+            const oldTutorialSwitch = tutorialSwitch.value;
+            tutorialSwitch.value = selectedApps.value;
+            onSaveSettings().catch((e) => {
                 toast.add({
-                    severity: 'error',
-                    summary: 'Save failed',
+                    severity: "error",
+                    summary: "Save failed",
                     detail: e.data?.message || e.message,
-                    life: 5000
-                })
+                    life: 5000,
+                });
                 // rewind to old value
-                tutorialSwitch.value = oldTutorialSwitch
-                selectedApps.value = oldTutorialSwitch
-                oldTutorialSwitch.forEach(item => {
-                    tutorialAppsCheckList.value[item] = true
-                })
-            })
-            break
+                tutorialSwitch.value = oldTutorialSwitch;
+                selectedApps.value = oldTutorialSwitch;
+                oldTutorialSwitch.forEach((item) => {
+                    tutorialAppsCheckList.value[item] = true;
+                });
+            });
+            break;
         default:
-            break
+            break;
     }
 }
 
 function onSaveSettings(): Promise<any> {
     const settings = {
-        lang: language.value?.lang || '',
-        search_engine: searchEngine.value?.url || '',
+        lang: language.value?.lang || "",
+        search_engine: searchEngine.value?.url || "",
         rss_switch: rssSwitch.value,
         // recommend_switch: recommendSwitch.value,
         tutorial_switch: tutorialSwitch.value,
-        existing_apps_switch: true // NOTICE: show other Docker container app is disabled now
-    }
-    return api.users
-        .setCustomStorage('system', settings)
-        .then(res => res.data.data)
+        existing_apps_switch: true, // NOTICE: show other Docker container app is disabled now
+    };
+    return api.users.setCustomStorage("system", settings).then((res) => res.data.data);
 }
 
 function onToggleUSBAutoMount() {
     if (automountUSB.value) {
-        messageBus('dashboardsetting_automountusb', 'true')
+        messageBus("dashboardsetting_automountusb", "true");
         if (isRaspberryPi.value) {
             toast.add({
-                severity: 'warn',
-                summary: 'Notice',
+                severity: "warn",
+                summary: "Notice",
                 detail: t(
-                    'Enabling this function may cause boot failures when the Raspberry Pi device is booted from USB'
+                    "Enabling this function may cause boot failures when the Raspberry Pi device is booted from USB"
                 ),
-                life: 5000
-            })
+                life: 5000,
+            });
         }
-        return api.sys.toggleUsbAutoMount({ state: 'on' }).catch(e => {
+        return api.sys.toggleUsbAutoMount({ state: "on" }).catch((e) => {
             toast.add({
-                severity: 'error',
-                summary: 'Save failed',
+                severity: "error",
+                summary: "Save failed",
                 detail: e.data?.message || e.message,
-                life: 5000
-            })
-            automountUSB.value = false
-        })
+                life: 5000,
+            });
+            automountUSB.value = false;
+        });
     } else {
-        messageBus('dashboardsetting_automountusb', 'false')
-        return api.sys.toggleUsbAutoMount({ state: 'off' }).catch(e => {
+        messageBus("dashboardsetting_automountusb", "false");
+        return api.sys.toggleUsbAutoMount({ state: "off" }).catch((e) => {
             toast.add({
-                severity: 'error',
-                summary: 'Save failed',
+                severity: "error",
+                summary: "Save failed",
                 detail: e.data?.message || e.message,
-                life: 5000
-            })
-            automountUSB.value = true
-        })
+                life: 5000,
+            });
+            automountUSB.value = true;
+        });
     }
 }
 
 function onCheckApps(item: string, event?: MouseEvent) {
-    event?.stopPropagation()
-    tutorialAppsCheckList.value[item] = !tutorialAppsCheckList.value[item]
+    event?.stopPropagation();
+    tutorialAppsCheckList.value[item] = !tutorialAppsCheckList.value[item];
     selectedApps.value = Object.keys(tutorialAppsCheckList.value).filter(
-        key => tutorialAppsCheckList.value[key]
-    )
-    onChangeSettings('tutorialSwitch')
+        (key) => tutorialAppsCheckList.value[key]
+    );
+    onChangeSettings("tutorialSwitch");
 }
 
 function onSavePort() {
     if (inputPort.value === oldPort) {
-        return
+        return;
     }
-    messageBus('dashboardsetting_webuiport', inputPort.value.toString())
+    messageBus("dashboardsetting_webuiport", inputPort.value.toString());
     api.sys
         .editServerPort({ port: inputPort.value.toString() })
-        .then(res => {
+        .then((res) => {
             if (res.data.success === 200) {
-                oldPort = inputPort.value
-                checkPortApplied()
+                oldPort = inputPort.value;
+                checkPortApplied();
             }
         })
-        .catch(e => {
+        .catch((e) => {
             console.log(e);
-
-        })
+        });
 }
-let timer: number = 0
+let timer: number = 0;
 function checkPortApplied() {
     timer = setInterval(() => {
-        console.log('checkPortApplied', inputPort.value, oldPort, timer);
+        console.log("checkPortApplied", inputPort.value, oldPort, timer);
         const newUrl = `${location.protocol}//${location.hostname}:${inputPort.value}`;
         api.sys.checkUiPort(`${newUrl}/v1/gateway/port`).then((res) => {
             if (res.data.success === 200) {
                 clearInterval(timer);
                 const url = `${location.protocol}//${location.hostname}:${res.data.data}`;
-                const parent =  window?.parent ?? window;
+                const parent = window?.parent ?? window;
                 parent.open(url, "_self");
             }
         });
@@ -261,24 +272,24 @@ function checkPortApplied() {
 
 function focusInputText() {
     nextTick(() => {
-        inputTextElement.value?.$el.querySelector('input').focus()
-    })
+        inputTextElement.value?.$el.querySelector("input").focus();
+    });
 }
 
 function operatedPort() {
     nextTick(() => {
         if (isInputPortTextActive.value) {
-            onSavePort()
+            onSavePort();
         } else {
-            focusInputText()
+            focusInputText();
         }
-    })
+    });
 }
 
 function rewindPort() {
     nextTick(() => {
-        inputPort.value = oldPort
-    })
+        inputPort.value = oldPort;
+    });
 }
 </script>
 
@@ -287,31 +298,33 @@ function rewindPort() {
 
     <div class="space-y-2">
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
-            <div class="casa-language-outline mr-3 text-2xl leading-6"></div>
+            <div class="casa-language2-outline mr-3 text-2xl leading-6"></div>
             <div class="grow">
-                {{ $t('Language') }}
+                {{ $t("Language") }}
             </div>
-            <Dropdown append-to="self" panel-class="w-full" v-model="language" :options="Languages" optionLabel="name" checkmark :highlightOnSelect="false"
-                class="w-full md:w-14rem" @change="onChangeSettings('lang')" />
+            <Dropdown append-to="self" panel-class="w-full" v-model="language" :options="Languages" optionLabel="name"
+                checkmark :highlightOnSelect="false" class="w-full w-14rem" @change="onChangeSettings('lang')" />
         </div>
 
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-search-outline mr-3 text-2xl leading-6"></div>
             <div class="grow">
-                {{ $t('Search Engine') }}
+                {{ $t("Search Engine") }}
             </div>
-            <Dropdown append-to="self" panel-class="w-full" v-model="searchEngine" :options="SearchEngines" optionLabel="name" checkmark
-                :highlightOnSelect="false" class="w-full md:w-14rem" @change="onChangeSettings('searchEngine')" />
+            <Dropdown append-to="self" panel-class="w-full" v-model="searchEngine" :options="SearchEngines"
+                optionLabel="name" checkmark :highlightOnSelect="false" class="w-full w-14rem"
+                @change="onChangeSettings('searchEngine')" />
         </div>
 
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-port-outline mr-3 text-2xl leading-6"></div>
             <div class="grow">
-                {{ $t('WebUI Port') }}
+                {{ $t("WebUI Port") }}
             </div>
             <div
-                class="group bg-transparent h-8 rounded-md flex items-center border border-solid border-gray/one hover:border-sky-600 focus-within:border-sky-600 focus-within:border-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
-                <InputNumber ref="inputTextElement" :modelValue="inputPort" @input="({ value }) => inputPort = Number(value)"
+                class="group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
+                <InputNumber ref="inputTextElement" :modelValue="inputPort"
+                    @input="({ value }) => (inputPort = Number(value))"
                     class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort" />
                 <i class="mr-2 group-hover:text-sky-600 group-focus-within:text-sky-600" :class="portInputIconClass"
                     @click="operatedPort" @mousedown.prevent />
@@ -321,7 +334,7 @@ function rewindPort() {
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-usb-outline mr-3 text-2xl leading-6"></div>
             <div class="grow">
-                {{ $t('USB Auto-Mount') }}
+                {{ $t("USB auto-mount") }}
             </div>
             <InputSwitch class="sm" v-model="automountUSB" @change="onToggleUSBAutoMount" />
         </div>
@@ -329,7 +342,7 @@ function rewindPort() {
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-news-outline mr-3 text-2xl leading-6"></div>
             <div class="grow">
-                {{ $t('News Feeds') }}
+                {{ $t("News feed") }}
             </div>
             <InputSwitch class="sm" v-model="showNewsFeed" @change="onChangeSettings('rssSwitch')" />
         </div>
@@ -337,18 +350,17 @@ function rewindPort() {
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-display-applications-outline mr-3 text-2xl leading-6"></div>
             <div class="grow">
-                {{ $t('Tips') }}
+                {{ $t("Tips") }}
             </div>
-            <Dropdown append-to="self" panel-class="w-full sm p-0" class="w-40 sm" v-model="selectedApps" :options="TutorialApps" checkmark @change="
-                onCheckApps(
-                    $event.value,
-                    $event.originalEvent as MouseEvent
-                )
-                ">
+            <Dropdown append-to="self" panel-class="w-full sm p-0" v-model="selectedApps" :options="TutorialApps" checkmark
+                @change="
+                    onCheckApps(
+                        $event.value,
+                        $event.originalEvent as MouseEvent
+                    )
+                    ">
                 <template #value="slotProps">
-                    <div class="flex items-center">
-                        {{ slotProps.value.length }} items
-                    </div>
+                    <div class="flex items-center">{{ slotProps.value.length }} items</div>
                 </template>
                 <template #option="slotProps">
                     <div class="h-8 flex items-center" @click.capture="onCheckApps(slotProps.option, $event)">
