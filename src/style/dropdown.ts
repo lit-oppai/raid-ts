@@ -3,16 +3,16 @@ export default {
         class: [
             'inline-flex',
             'relative',
-            'w-full md:w-56',
+            'h-8 w-full max-w-56',
             'rounded-md',
             'shadow-sm',
             'bg-surface-0 dark:bg-surface-900',
-            "border",
+            "outline outline-1 outline-gray-200",
             {
-                'border-sky-600 dark:ring-primary-400':
+                'outline-sky-600 dark:ring-primary-400':
                     r.focused
             },
-            'cursor-default',
+            'cursor-pointer',
             'select-none',
             { 'opacity-60': e.disabled, 'pointer-events-none': e.disabled }
         ]
@@ -33,7 +33,7 @@ export default {
             },
             'placeholder:text-surface-400 dark:placeholder:text-surface-500',
             'w-[1%]',
-            'py-2 px-3',
+            'py-1.5 px-3',
             { 'pr-7': e.showClear },
             'rounded-none',
             'transition',

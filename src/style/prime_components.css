@@ -92,14 +92,21 @@ TODO:
             @apply flex space-x-2.5 items-center;
             @apply flex-grow-0 flex-shrink-0 m-5 px-1 pt-4;
             @apply text-zinc-800 text-sm font-normal font-roboto leading-tight;
+            .author_name {
+                @apply truncate;
+            }
             @screen max-md {
                 @apply mx-0;
                 .author_name {
                     @apply hidden;
                 }
             }
-            img {
-                @apply w-10 h-10 rounded-md;
+            .author_image {
+                @apply flex-shrink-0 ;
+                @apply w-10 h-10;
+                img {
+                    @apply rounded-md;
+                }
             }
         }
 
@@ -112,7 +119,8 @@ TODO:
                 @apply mx-4 max-md:mx-1 rounded-md;
                 @apply bg-brand-50;
                 button {
-                    @apply h-8
+                    @apply h-8;
+                    @apply max-md:hidden;
                 }
             }
         }
