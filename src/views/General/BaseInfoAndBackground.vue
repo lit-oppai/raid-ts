@@ -36,7 +36,6 @@ function getWallpaper() {
     api.users
         .getCustomStorage(wallpaperNamespace)
         .then((res) => {
-            debugger
             if (res.data.success === 200 && res.data.data !== "") {
                 wallpaper.path = transformServerUrl(res.data.data.path);
                 wallpaper.from = res.data.data.from;
