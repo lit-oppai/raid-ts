@@ -69,9 +69,9 @@ function getRealeaseStatus() {
         </span>
         <div class="menu_bar_author">
             <Image class="author_image" :src="avatar || authorImage"></Image>
-            <span class="author_name">
+            <div class="author_name" :title="userName">
                 {{ userName }}
-            </span>
+            </div>
         </div>
 
         <div class="menu_bar_update" v-show="isUpdate">
