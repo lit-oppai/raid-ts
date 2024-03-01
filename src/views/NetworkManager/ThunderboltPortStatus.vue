@@ -4,7 +4,7 @@ import { convertSpeedToReadable } from "@icewhale/ui-utils";
 
 const activedColor = "#007AE5";
 const unactivedColor = "#C0C6CC";
-const props = defineProps({
+defineProps({
     state: {
         type: Boolean,
         default: false,
@@ -14,8 +14,6 @@ const props = defineProps({
         default: 0,
     },
 });
-
-console.log("ThunderboltPortStatus.vue", props.state, props.theoreticalSpeed);
 </script>
 <template>
     <NPopover trigger="hover">
@@ -28,7 +26,7 @@ console.log("ThunderboltPortStatus.vue", props.state, props.theoreticalSpeed);
         </template>
         <div class="space-y-1">
             <div class="flex items-center space-x-2">
-                <div class="w-1.5 h-1.5 rounded-full" :class="state ? 'bg-green-600' : 'bg-gray-200'"></div>
+                <div class="w-1.5 h-1.5 bg-green-600 rounded-full"></div>
                 <div class="text-zinc-800 text-sm font-medium font-['Roboto'] leading-tight" v-t="`Thunderbolt`"></div>
             </div>
             <div class="text-neutral-300 text-xs font-normal font-['Roboto'] leading-4">
