@@ -155,5 +155,8 @@
   "Shutdown": "关机",
   "Update": "更新",
   "SN: {SN}": "序列号：{SN}",
-  "ZiamOS {releaseVersion} is available": "ZiamOS {releaseVersion} 更新已就绪"
+  "ZiamOS {releaseVersion} is available": "ZiamOS {releaseVersion} 更新已就绪",
+  "Privacy Policy": "隐私协议",
+  "EULA (End User License Agreement)": "软件最终使用协议",
+  "Open Source Usage Statement": "开源使用声明"
 }
