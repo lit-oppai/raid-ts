@@ -7,7 +7,7 @@ import { device } from "@network/index.ts";
 import { messageBus } from "@icewhale/ui-utils";
 import { socket, baseURL } from "@network/socket";
 import ProcotolDialog from "./ProtocolDialog.vue";
-import defaultWallpaper from "/zimaos01.jpg";
+import defaultWallpaper from "/wallpaper/zimaos01.jpg";
 
 const wallpaperNamespace = "wallpaper";
 interface Wallpaper {
@@ -36,8 +36,11 @@ function getWallpaper() {
         .then((res) => {
             if (res.data.success === 200 && res.data.data !== "") {
                 wallpaper.path = transformServerUrl(res.data.data.path);
+                console.log(res.data.data.path, "res.data.data.path");
+                
+                console.log(wallpaper.path, "wallpaper.path");
+                
                 wallpaper.from = res.data.data.from;
-                console.log(wallpaper, "res.data.data");
                 return;
             }
         })
@@ -152,8 +155,6 @@ function showProtocolDialog() {
 }
 
 function transformServerUrl(serverUrl: string) {
-    console.log(111, serverUrl,location.protocol, baseURL);
-    
     return serverUrl.replace('SERVER_URL', `${location.protocol}//${baseURL}`);
 }
 </script>
