@@ -229,7 +229,6 @@ function onSavePort() {
 let timer: number = 0;
 function checkPortApplied() {
     timer = setInterval(() => {
-        console.log("checkPortApplied", inputPort.value, oldPort, timer);
         const newUrl = `${location.protocol}//${location.hostname}:${inputPort.value}`;
         api.sys.checkUiPort(`${newUrl}/v1/gateway/port`).then((res) => {
             if (res.data.success === 200) {
