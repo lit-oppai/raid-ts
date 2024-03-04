@@ -37,9 +37,9 @@ function getWallpaper() {
             if (res.data.success === 200 && res.data.data !== "") {
                 wallpaper.path = transformServerUrl(res.data.data.path);
                 console.log(res.data.data.path, "res.data.data.path");
-                
+
                 console.log(wallpaper.path, "wallpaper.path");
-                
+
                 wallpaper.from = res.data.data.from;
                 return;
             }
@@ -155,7 +155,7 @@ function showProtocolDialog() {
 }
 
 function transformServerUrl(serverUrl: string) {
-    return serverUrl.replace('SERVER_URL', `${location.protocol}//${baseURL}`);
+    return serverUrl.replace("SERVER_URL", `${location.protocol}//${baseURL}`);
 }
 </script>
 
@@ -170,7 +170,7 @@ function transformServerUrl(serverUrl: string) {
                     <div class="w-full h-full flex items-center justify-center group">
                         <div
                             class="bg-gray-100 h-7 px-[14px] rounded-[14px] text-sm group-hover:flex hidden items-center cursor-pointer">
-                            Change Wallpaper
+                            {{ $t("Change Wallpaper") }}
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,8 @@ function transformServerUrl(serverUrl: string) {
         <div class="basis-1/2 flex flex-col justify-center ml-2">
             <div class="relative group flex items-center justify-between w-[15rem] h-[2.25rem] group-focus-within:outline outline-gray-200 rounded"
                 :class="{ outline: editState }" v-on-click-outside="deselectMacName">
-                <div v-if="!editState" class="ml-2 w-full font-medium text-base truncate" @click="activeMacName">
+                <div v-if="!editState" class="ml-2 w-full font-medium text-base truncate" @click="activeMacName"
+                    :title="name">
                     {{ name }}
                 </div>
                 <input v-else="editState" class="ml-2 h-full w-full outline-none bg-transparent" type="text" ref="editName"
@@ -194,8 +195,8 @@ function transformServerUrl(serverUrl: string) {
                 </div>
             </div>
 
-            <div class="ml-2 font-normal text-xs mb-4 mt-1.5 cursor-pointer" @click="showProtocolDialog">
-                ZimaOS {{ version }}
+            <div class="ml-2 font-normal text-xs mb-4 mt-1.5">
+                <span class="h-full cursor-pointer" @click="showProtocolDialog">ZimaOS {{ version }}</span>
             </div>
             <div class="ml-2 text-neutral-500 font-normal text-xs">
                 {{ $t("SN: {SN}", { SN }) }}
