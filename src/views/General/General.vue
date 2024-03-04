@@ -296,7 +296,8 @@ function rewindPort() {
                 class="group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
                 <InputNumber ref="inputTextElement" :modelValue="inputPort"
                     @input="({ value }) => (inputPort = Number(value))"
-                    class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort" />
+                    class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort"
+                    @keyup.enter="operatedPort" />
                 <i class="mr-2 group-hover:text-sky-600" :class="portInputIconClass" @click="operatedPort"
                     @mousedown.prevent />
             </div>
@@ -323,8 +324,8 @@ function rewindPort() {
             <div class="grow font-medium">
                 {{ $t("Tips") }}
             </div>
-            <Dropdown append-to="self" panel-class="w-full sm p-0" v-model="selectedApps" :options="TutorialApps" checkmark
-                @change="
+            <Dropdown append-to="self" panel-class="w-full sm p-0" v-model="selectedApps" :options="TutorialApps"
+                checkmark @change="
                     onCheckApps(
                         $event.value,
                         $event.originalEvent as MouseEvent
@@ -333,6 +334,7 @@ function rewindPort() {
                 <template #value="slotProps">
                     <div class="flex items-center">{{ slotProps.value.length }} items</div>
                 </template>
+
                 <template #option="slotProps">
                     <div class="h-8 flex items-center" @click.capture="onCheckApps(slotProps.option, $event)">
                         <Checkbox class="ml-2" v-model="tutorialAppsCheckList[slotProps.option]" :binary="true" />
