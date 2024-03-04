@@ -54,7 +54,7 @@ export const convertSpeedToReadable = (speed: number | string | undefined = 0) =
     if (speed < 0.01) {
         return "--"
     }
-    return speed.toFixed(1) + unit[index]
+    return Number(speed.toFixed(1)) + unit[index]
 }
 
 export function getUserInfo() {
