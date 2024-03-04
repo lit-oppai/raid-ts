@@ -159,5 +159,6 @@
   "EULA (End User License Agreement)": "EULA (End User License Agreement)",
   "Open Source Usage Statement": "Open Source Usage Statement",
   "About ZimaOS": "About ZimaOS",
-  "Change Wallpaper": "Change Wallpaper"
+  "Change Wallpaper": "Change Wallpaper",
+  "Enabling this function may cause boot failures when the Raspberry Pi device is booted from USB": "Enabling this function may cause boot failures when the Raspberry Pi device is booted from USB"
 }
