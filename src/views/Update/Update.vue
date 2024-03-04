@@ -36,8 +36,8 @@ function onImageLoad() {
 </script>
 
 <template>
-    <Skeleton v-if="!imageLoaded" width="100%" height="11rem" class="mt-6"/>
-    <div v-if="imageLoaded" class="mt-6 w-full h-[11rem] relative text-center text-white">
+    <Skeleton v-if="!imageLoaded" width="100%" height="11rem" />
+    <div v-if="imageLoaded" class="w-full h-[11rem] relative text-center text-white">
         
         <img class="absolute w-full h-full object-cover rounded-xl -z-10" :src="releaseBackgroundPath" />
         <div class="text-sm pt-4">ZimaOS</div>
