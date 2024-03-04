@@ -22,6 +22,8 @@ export default {
                 '2lg': '0.625rem',
             },
             colors: {
+                // follow figma
+                "gary/300": "rgba(228, 232, 236, 1)",
                 gray: {
                     // 背景灰色 2
                     50: 'rgba(247, 249, 250, 1)',
