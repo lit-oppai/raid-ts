@@ -95,8 +95,8 @@ onMounted(() => {
         :theoretical-speed="item.theoretical_speed" :negotiated-speed="item.negotiated_speed"></NicCard>
 
     <div class="my-3">
-        <span class="text-neutral-400 text-xs font-normal font-['Roboto'] leading-none">
-            {{ $t("Privacy Service Agreement.content") }}&nbsp;
+        <span class="text-neutral-400 text-xs font-normal font-['Roboto'] leading-none pr-1">
+            {{ $t("Privacy Service Agreement.content") }}
         </span>
         <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none">
             {{ $t("Privacy Service Agreement.title") }}
@@ -104,8 +104,8 @@ onMounted(() => {
     </div>
 
     <div class="">
-        <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none">
-            {{ $t("Install ZimaClient") }}&nbsp;
+        <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none pr-1">
+            {{ $t("Install ZimaClient") }} 
         </span>
         <span class="text-neutral-400 text-xs font-normal font-['Roboto'] leading-none">
             {{ $t("Install ZimaClient content") }}
