@@ -270,7 +270,7 @@ function rewindPort() {
     <div class="space-y-2">
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-language2-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow">
+            <div class="grow font-medium">
                 {{ $t("Language") }}
             </div>
             <Dropdown append-to="self" panel-class="w-full" v-model="language" :options="Languages" optionLabel="name"
@@ -279,7 +279,7 @@ function rewindPort() {
 
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-search-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow">
+            <div class="grow font-medium">
                 {{ $t("Search Engine") }}
             </div>
             <Dropdown append-to="self" panel-class="w-full" v-model="searchEngine" :options="SearchEngines"
@@ -289,7 +289,7 @@ function rewindPort() {
 
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-port-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow">
+            <div class="grow font-medium">
                 {{ $t("WebUI Port") }}
             </div>
             <div
@@ -304,7 +304,7 @@ function rewindPort() {
 
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-usb-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow">
+            <div class="grow font-medium">
                 {{ $t("USB auto-mount") }}
             </div>
             <InputSwitch class="sm" v-model="automountUSB" @change="onToggleUSBAutoMount" />
@@ -312,7 +312,7 @@ function rewindPort() {
 
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-news-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow">
+            <div class="grow font-medium">
                 {{ $t("News feed") }}
             </div>
             <InputSwitch class="sm" v-model="showNewsFeed" @change="onChangeSettings('rssSwitch')" />
@@ -320,7 +320,7 @@ function rewindPort() {
 
         <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
             <div class="casa-display-applications-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow">
+            <div class="grow font-medium">
                 {{ $t("Tips") }}
             </div>
             <Dropdown append-to="self" panel-class="w-full sm p-0" v-model="selectedApps" :options="TutorialApps" checkmark
