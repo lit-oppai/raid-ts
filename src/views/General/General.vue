@@ -297,8 +297,8 @@ function rewindPort() {
                 <InputNumber ref="inputTextElement" :modelValue="inputPort"
                     @input="({ value }) => (inputPort = Number(value))"
                     class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort" />
-                <i class="mr-2 group-hover:text-sky-600 group-focus-within:text-sky-600" :class="portInputIconClass"
-                    @click="operatedPort" @mousedown.prevent />
+                <i class="mr-2 group-hover:text-sky-600" :class="portInputIconClass" @click="operatedPort"
+                    @mousedown.prevent />
             </div>
         </div>
 
