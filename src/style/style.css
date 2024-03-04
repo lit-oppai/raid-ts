@@ -8,6 +8,7 @@ body {
     height: 100%;
     /* The  base application will have an impact here  */
     padding: 0 !important;
+    font-family: Robot;
 }
 #icewhale-settings-app {
     height: 100%;
