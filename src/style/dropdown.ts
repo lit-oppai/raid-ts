@@ -77,7 +77,7 @@ export default {
         class: ['max-h-[15rem]', 'overflow-auto']
     },
     list: {
-        class: 'bg-white py-1 list-none m-0'
+        class: 'bg-white py-1 border rounded border-gary/300 list-none m-0'
     },
     item: ({ context: e }: any) => ({
         class: [
