@@ -178,7 +178,7 @@ function transformServerUrl(serverUrl: string) {
         </div>
         <!-- inof list -->
         <div class="basis-1/2 flex flex-col justify-center ml-2">
-            <div class="relative group flex items-center justify-between w-[15rem] h-[2.25rem] group-focus-within:outline outline-gray-200 rounded"
+            <div class="relative group flex items-center justify-between w-[15rem] h-[2.25rem] group-focus-within:outline outline-1 outline-sky-600 rounded"
                 :class="{ outline: editState }" v-on-click-outside="deselectMacName">
                 <div v-if="!editState" class="ml-2 w-full font-medium text-base truncate" @click="activeMacName"
                     :title="name">
@@ -186,7 +186,7 @@ function transformServerUrl(serverUrl: string) {
                 </div>
                 <input v-else="editState" class="ml-2 h-full w-full outline-none bg-transparent" type="text" ref="editName"
                     name="editName" id="editName" v-model="nameMac" v-bind="nameMacAttrs" />
-                <div class="mr-2 hidden group-hover:block group-focus-within:block" :class="iconNameMac"
+                <div class="mr-2 hidden group-hover:block group-focus-within:block group-focus-within:text-sky-600" :class="iconNameMac"
                     @click="operateMacName"></div>
 
                 <div v-show="editState" class="absolute top-10 w-full rounded px-2 py-1 font-medium text-xs"
