@@ -65,7 +65,7 @@ function getRealeaseStatus() {
 <template>
     <div class="os_menu_bar">
         <span class="menu_bar_title">
-            {{ $t("Setting") }}
+            {{ $t("Settings") }}
         </span>
         <div class="menu_bar_author">
             <Image class="author_image" :src="avatar || authorImage"></Image>
