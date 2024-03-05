@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { reactive, ref, computed, nextTick, onMounted, onUnmounted } from "vue";
 import { vOnClickOutside } from "@vueuse/components";
-import api from "@icewhale/icewhale-v1-api";
+import api from "@icewhale/ui-v1-api";
 import { useForm } from "vee-validate";
 import { device } from "@network/index.ts";
 import { messageBus } from "@icewhale/ui-utils";
 import { socket, baseURL } from "@network/socket";
 import ProcotolDialog from "./ProtocolDialog.vue";
-import defaultWallpaper from "/wallpaper/zimaos01.jpg";
 
 const wallpaperNamespace = "wallpaper";
 interface Wallpaper {
@@ -15,7 +14,7 @@ interface Wallpaper {
     from: string;
 }
 const wallpaper: Wallpaper = reactive({
-    path: defaultWallpaper,
+    path: "",
     from: "Built-in",
 });
 const name = ref<string>("");
