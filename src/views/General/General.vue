@@ -8,7 +8,7 @@ import Checkbox from "primevue/checkbox";
 import { useToast } from "primevue/usetoast";
 import BaseInfoAndBackground from "./BaseInfoAndBackground.vue";
 import { useI18n } from "vue-i18n";
-import api from "@icewhale/icewhale-v1-api";
+import api from "@icewhale/ui-v1-api";
 import { messageBus } from "@icewhale/ui-utils";
 import useBaseStore from "@/store/baseStore.ts";
 import { Languages, SearchEngines, TutorialApps } from "./const.ts";
