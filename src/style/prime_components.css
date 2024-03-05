@@ -93,6 +93,7 @@ TODO:
             @apply flex-grow-0 flex-shrink-0 m-5 px-1 pt-4;
             @apply text-zinc-800 text-sm font-normal font-roboto leading-tight;
             .author_name {
+                @apply font-medium;
                 @apply truncate;
             }
             @screen max-md {
@@ -103,7 +104,7 @@ TODO:
             }
             .author_image {
                 @apply flex-shrink-0 ;
-                @apply w-10 h-10;
+                @apply w-10 h-10 rounded-full overflow-hidden;
                 img {
                     @apply rounded-md;
                 }
