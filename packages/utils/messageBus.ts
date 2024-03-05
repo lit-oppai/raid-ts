@@ -1,5 +1,4 @@
-// import WUJIE_PROPS from "@utils/primaryProps.ts";
-import { WUJIE_PROPS } from './primaryProps';
+import { WUJIE_PROPS } from './framePropsInfo.ts';
 import { api } from "./network.ts";
 
 // Function:

@@ -1,5 +1,5 @@
 {
-  "name": "icewhale-setting-ts",
+  "name": "@icewhale/setting-ui",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -13,9 +13,10 @@
   "dependencies": {
     "@icewhale/casaos-installer-openapi": "1.0.0-alpha4",
     "@icewhale/icewhale-openapi": "0.0.1-alpha5",
-    "@icewhale/icewhale-v1-api": "workspace:^",
+    "@icewhale/ui-pic": "workspace:^",
     "@icewhale/ui-styles": "workspace:^",
     "@icewhale/ui-utils": "workspace:^",
+    "@icewhale/ui-v1-api": "workspace:^",
     "@vueuse/components": "^10.9.0",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.6.3",
@@ -30,6 +31,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.1",
     "@icewhale/zimaos-localstorage-openapi": "1.1.0-alpha3",
     "@icewhale/zimaos-openapi": "1.1.0-alpha20",
     "@types/lodash": "^4.14.202",
