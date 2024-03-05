@@ -13,10 +13,9 @@
   "dependencies": {
     "@icewhale/casaos-installer-openapi": "1.0.0-alpha4",
     "@icewhale/icewhale-openapi": "0.0.1-alpha5",
-    "@icewhale/ui-pic": "workspace:^",
-    "@icewhale/ui-styles": "workspace:^",
-    "@icewhale/ui-utils": "workspace:^",
-    "@icewhale/ui-v1-api": "workspace:^",
+    "@icewhale/ui-styles": "latest",
+    "@icewhale/ui-utils": "latest",
+    "@icewhale/ui-v1-api": "latest",
     "@vueuse/components": "^10.9.0",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.6.3",

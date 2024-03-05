@@ -19,18 +19,15 @@ importers:
       '@icewhale/icewhale-openapi':
         specifier: 0.0.1-alpha5
         version: 0.0.1-alpha5
-      '@icewhale/ui-pic':
-        specifier: workspace:^
-        version: link:packages/pic
       '@icewhale/ui-styles':
-        specifier: workspace:^
-        version: link:packages/styles
+        specifier: latest
+        version: 0.0.1
       '@icewhale/ui-utils':
-        specifier: workspace:^
-        version: link:packages/utils
+        specifier: latest
+        version: 0.0.1
       '@icewhale/ui-v1-api':
-        specifier: workspace:^
-        version: link:packages/v1api
+        specifier: latest
+        version: 0.0.1
       '@vueuse/components':
         specifier: ^10.9.0
         version: 10.9.0(vue@3.4.21)
@@ -630,6 +627,18 @@ packages:
       axios: 1.6.7
     transitivePeerDependencies:
       - debug
+    dev: false
+
+  /@icewhale/ui-styles@0.0.1:
+    resolution: {integrity: sha512-Vs8P4jkBuO+OWcjLMtzVgEzzkZ05P+4VINYSUWCRUSa5W3kjNG7cszmQXiDc5CzDJcUjnxjyzoXJmt54AGS1NQ==}
+    dev: false
+
+  /@icewhale/ui-utils@0.0.1:
+    resolution: {integrity: sha512-bnpt19ygQ9HJRS111mUCIP1Cu83HO99TCwsoiUHL/rK29BKmfSyEskxBVEEPaHhBuKXgx6aL27AXE1NYX0J3mg==}
+    dev: false
+
+  /@icewhale/ui-v1-api@0.0.1:
+    resolution: {integrity: sha512-/uNEnShREFTfHXoBm7gE4JMl/oLXqT/s/i1n+ZQ16GeZ3fnxZVcd+55DM1x8BMFOkSmNKmoQn9fwgZMeX9AvxQ==}
     dev: false
 
   /@icewhale/zimaos-localstorage-openapi@1.1.0-alpha3:
