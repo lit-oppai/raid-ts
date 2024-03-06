@@ -39,7 +39,7 @@ TODO:
             }
 
             .top_title {
-                @apply text-zinc-800 text-base font-semibold font-roboto leading-normal;
+                @apply text-gary/primary text-base font-medium font-roboto leading-normal;
             }
 
             /* actions */
