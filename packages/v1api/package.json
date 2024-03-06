@@ -1,5 +1,5 @@
 {
-  "name": "@icewhale/icewhale-v1-api",
+  "name": "@icewhale/ui-v1-api",
   "version": "0.0.0",
   "description": "",
   "main": "index.ts",

@@ -13,7 +13,7 @@
   "dependencies": {
     "@icewhale/casaos-installer-openapi": "1.0.0-alpha4",
     "@icewhale/icewhale-openapi": "0.0.1-alpha5",
-    "@icewhale/icewhale-v1-api": "workspace:^",
+    "@icewhale/ui-v1-api": "workspace:^",
     "@icewhale/ui-styles": "workspace:^",
     "@icewhale/ui-utils": "workspace:^",
     "@vueuse/components": "^10.9.0",
