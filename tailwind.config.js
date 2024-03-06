@@ -23,7 +23,9 @@ export default {
             },
             colors: {
                 // follow figma
+                "gary/primary": "rgba(48, 50, 51, 1)",
                 "gary/300": "rgba(228, 232, 236, 1)",
+                "gary/500": "rgba(172, 184, 195, 1)",
                 gray: {
                     // 背景灰色 2
                     50: 'rgba(247, 249, 250, 1)',
