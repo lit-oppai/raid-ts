@@ -317,7 +317,7 @@ function rewindPort() {
             </div>
         </div>
 
-        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
+        <div class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary">
             <div class="casa-usb-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm">
                 {{ $t("USB auto-mount") }}
@@ -325,7 +325,7 @@ function rewindPort() {
             <InputSwitch class="sm" v-model="automountUSB" @change="onToggleUSBAutoMount" />
         </div>
 
-        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
+        <div class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary">
             <div class="casa-news-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm">
                 {{ $t("News feed") }}
