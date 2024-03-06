@@ -307,9 +307,9 @@ function rewindPort() {
                 {{ $t("WebUI Port") }}
             </div>
             <div
-                class="group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
+                class="w-[12.125rem] group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
                 <InputNumber ref="inputTextElement" :modelValue="inputPort"
-                    @input="({ value }) => (inputPort = Number(value))"
+                    @input="({ value }) => (inputPort = Number(value))" input-class="w-full"
                     class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort"
                     @keyup.enter="operatedPort" />
                 <i class="mr-2 group-hover:text-sky-600" :class="portInputIconClass" @click="operatedPort"
