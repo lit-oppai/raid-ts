@@ -78,7 +78,7 @@ function getRealeaseStatus() {
             <router-link to="/update" class="flex items-center">
                 <div
                     class="w-4 h-4 m-[10px] rounded-full bg-brand-400 flex-shrink-0 text-white flex items-center justify-center text-xs">
-                    ★
+                    1
                 </div>
                 <Button :label="$t('update')"> </Button>
             </router-link>

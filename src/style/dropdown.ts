@@ -1,15 +1,16 @@
 export default {
     root: ({ props: e, state: r }: any) => ({
         class: [
+            'group',
             'inline-flex',
             'relative',
-            'h-8 w-full max-w-56',
+            'h-8',
             'rounded-md',
             'shadow-sm',
-            'bg-surface-0 dark:bg-surface-900',
-            "outline outline-1 outline-gray-200",
+            'bg-surface-0',
+            "outline outline-1 outline-gary/500 hover:outline-sky-600",
             {
-                'outline-sky-600 dark:ring-primary-400':
+                'outline-sky-600':
                     r.focused
             },
             'cursor-pointer',
@@ -27,11 +28,11 @@ export default {
             'bg-transparent',
             'border-0',
             {
-                'text-surface-800 dark:text-white/80': e.modelValue != null,
-                'text-surface-400 dark:text-surface-500':
+                'text-surface-800': e.modelValue != null,
+                'text-surface-400':
                     e.modelValue == null
             },
-            'placeholder:text-surface-400 dark:placeholder:text-surface-500',
+            'placeholder:text-surface-400',
             'w-[1%]',
             'py-1.5 px-3',
             { 'pr-7': e.showClear },
@@ -52,12 +53,12 @@ export default {
             'flex items-center justify-center',
             'shrink-0',
             'bg-transparent',
-            'text-surface-500',
+            'text-gary/500 group-hover:text-black',
             'w-8',
             'rounded-tr-md',
             'rounded-br-md',
             {
-                'rotate-180': r.overlayVisible,
+                'rotate-180 text-black': r.overlayVisible,
             }
         ]
     }),
@@ -65,22 +66,24 @@ export default {
         class: [
             'absolute top-0 left-0',
             'mt-2',
-            'border-0',
+            'border-0 outline outline-1 outline-gary/300',
             'rounded-md',
             'shadow-md',
-            'bg-surface-0 dark:bg-surface-800',
-            'text-surface-800 dark:text-white/80',
-            'ring-1 ring-inset ring-surface-300 dark:ring-surface-700'
+            'bg-surface-0',
+            'text-surface-800',
+            'ring-1 ring-inset ring-surface-300'
         ]
     },
     wrapper: {
         class: ['max-h-[15rem]', 'overflow-auto']
     },
     list: {
-        class: 'bg-white py-1 border rounded border-gary/300 list-none m-0'
+        class: 'bg-white p-1 space-y-0.5 border rounded border-gary/300 list-none m-0'
     },
     item: ({ context: e }: any) => ({
         class: [
+            'h-8',
+            'flex items-center space-x-2',
             'sm:text-sm',
             'leading-none',
             { 'font-normal': !e.selected, 'font-bold': e.selected },
@@ -88,17 +91,17 @@ export default {
             'border-0',
             'rounded-none',
             'm-0',
-            'py-2 px-4',
+            'px-3',
             {
-                'text-surface-700 dark:text-white/80':
+                'text-surface-700':
                     !e.focused && !e.selected && !e.disabled
             },
             {
-                'text-surface-600 dark:text-white/70':
+                'text-surface-600':
                     !e.focused && !e.selected && e.disabled
             },
             {
-                'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80':
+                'bg-surface-200 text-surface-700':
                     e.focused && !e.selected
             },
             // {
@@ -123,8 +126,8 @@ export default {
             'sm:text-sm',
             'm-0',
             'py-2 px-4',
-            'text-surface-800 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-600/80',
+            'text-surface-800',
+            'bg-surface-0',
             'cursor-auto'
         ]
     },
@@ -133,7 +136,7 @@ export default {
             'leading-none',
             'sm:text-sm',
             'py-2 px-4',
-            'text-surface-800 dark:text-white/80',
+            'text-surface-800',
             'bg-transparent'
         ]
     },
@@ -143,8 +146,8 @@ export default {
             'm-0',
             'rounded-tl-md',
             'rounded-tr-md',
-            'text-surface-700 dark:text-white/80',
-            'bg-surface-100 dark:bg-surface-800'
+            'text-surface-700 ',
+            'bg-surface-100 '
         ]
     },
     filtercontainer: {
@@ -159,16 +162,16 @@ export default {
             'pr-7',
             '-mr-7',
             'w-full',
-            'text-surface-700 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-900',
+            'text-surface-700 ',
+            'bg-surface-0 ',
             'placeholder:text-surface-400',
-            'ring-1 ring-inset ring-surface-300 dark:ring-surface-700',
+            'ring-1 ring-inset ring-surface-300 ',
             'border-0',
             'rounded-tl-md',
             'rounded-tr-md',
             'appearance-none',
             'focus:ring-2 focus:ring-inset focus:outline-none focus:outline-offset-0',
-            'focus:ring-primary-600 dark:focus:ring-primary-500',
+            'focus:ring-primary-600',
             'appearance-none'
         ]
     },

@@ -168,7 +168,7 @@ function transformServerUrl(serverUrl: string) {
                     :style="[backgroundStyleObject]">
                     <div class="w-full h-full flex items-center justify-center group">
                         <div
-                            class="bg-gray-100 h-7 px-[14px] rounded-[14px] text-sm group-hover:flex hidden items-center cursor-pointer">
+                            class="bg-gray-100 h-7 px-[14px] rounded-[14px] text-sm group-hover:flex hidden items-center cursor-pointer select-none">
                             {{ $t("Change Wallpaper") }}
                         </div>
                     </div>
@@ -176,17 +176,18 @@ function transformServerUrl(serverUrl: string) {
             </div>
         </div>
         <!-- inof list -->
-        <div class="basis-1/2 flex flex-col justify-center ml-2">
-            <div class="relative group flex items-center justify-between w-[15rem] h-[2.25rem] group-focus-within:outline outline-1 outline-sky-600 rounded"
+        <div class="basis-1/2 flex flex-col justify-center ml-2 pb-[3px]">
+            <div class="relative group flex items-center justify-between w-[15rem] h-[2.25rem] group-focus-within:outline outline-1 outline-sky-600 rounded text-gary/primary"
                 :class="{ outline: editState }" v-on-click-outside="deselectMacName">
                 <div v-if="!editState" class="ml-2 w-full font-medium text-base truncate" @click="activeMacName"
                     :title="name">
                     {{ name }}
                 </div>
-                <input v-else="editState" class="ml-2 h-full w-full outline-none bg-transparent" type="text" ref="editName"
-                    name="editName" id="editName" v-model="nameMac" v-bind="nameMacAttrs" @keyup.enter="operateMacName" />
-                <div class="mr-2 hidden group-hover:block group-focus-within:block"
-                    :class="iconNameMac" @click="operateMacName"></div>
+                <input v-else="editState" class="ml-2 h-full w-full outline-none bg-transparent" type="text"
+                    ref="editName" name="editName" id="editName" v-model="nameMac" v-bind="nameMacAttrs"
+                    @keyup.enter="operateMacName" />
+                <div class="mr-2 hidden group-hover:block group-focus-within:block" :class="iconNameMac"
+                    @click="operateMacName"></div>
 
                 <div v-show="editState" class="absolute top-10 w-full rounded px-2 py-1 font-medium text-xs"
                     :class="messageClassNameMac">

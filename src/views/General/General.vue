@@ -4,7 +4,6 @@ import Dropdown from "primevue/dropdown";
 import InputSwitch from "primevue/inputswitch";
 // import InputText from 'primevue/inputtext'
 import InputNumber from "primevue/inputnumber";
-import Checkbox from "primevue/checkbox";
 import { useToast } from "primevue/usetoast";
 import BaseInfoAndBackground from "./BaseInfoAndBackground.vue";
 import { useI18n } from "vue-i18n";
@@ -268,28 +267,43 @@ function rewindPort() {
     <BaseInfoAndBackground></BaseInfoAndBackground>
 
     <div class="space-y-2">
-        <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
+        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
             <div class="casa-language2-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium">
+            <div class="grow font-medium text-sm">
                 {{ $t("Language") }}
             </div>
             <Dropdown append-to="self" panel-class="w-full" v-model="language" :options="Languages" optionLabel="name"
-                checkmark :highlightOnSelect="false" class="w-full w-14rem" @change="onChangeSettings('lang')" />
+                checkmark :highlightOnSelect="false" class="w-[12.125rem]" @change="onChangeSettings('lang')">
+                <template #option="slotProps">
+                    <div
+                        :class="slotProps.option.name === language?.name ? `casa-check-outline text-sky-600` : `h-4 w-4`">
+                    </div>
+                    <div>{{ $t(slotProps.option.name) }}</div>
+                </template>
+            </Dropdown>
         </div>
 
-        <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
+        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
             <div class="casa-search-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium">
+            <div class="grow font-medium text-sm">
                 {{ $t("Search Engine") }}
             </div>
             <Dropdown append-to="self" panel-class="w-full" v-model="searchEngine" :options="SearchEngines"
-                optionLabel="name" checkmark :highlightOnSelect="false" class="w-full w-14rem"
-                @change="onChangeSettings('searchEngine')" />
+                optionLabel="name" checkmark :highlightOnSelect="false" class="w-[12.125rem]"
+                @change="onChangeSettings('searchEngine')">
+
+                <template #option="slotProps">
+                    <div
+                        :class="slotProps.option.name === searchEngine?.name ? `casa-check-outline text-sky-600` : `h-4 w-4`">
+                    </div>
+                    <div>{{ $t(slotProps.option.name) }}</div>
+                </template>
+            </Dropdown>
         </div>
 
-        <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
+        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
             <div class="casa-port-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium">
+            <div class="grow font-medium text-sm">
                 {{ $t("WebUI Port") }}
             </div>
             <div
@@ -303,41 +317,44 @@ function rewindPort() {
             </div>
         </div>
 
-        <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
+        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
             <div class="casa-usb-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium">
+            <div class="grow font-medium text-sm">
                 {{ $t("USB auto-mount") }}
             </div>
             <InputSwitch class="sm" v-model="automountUSB" @change="onToggleUSBAutoMount" />
         </div>
 
-        <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
+        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
             <div class="casa-news-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium">
+            <div class="grow font-medium text-sm">
                 {{ $t("News feed") }}
             </div>
             <InputSwitch class="sm" v-model="showNewsFeed" @change="onChangeSettings('rssSwitch')" />
         </div>
 
-        <div class="flex items-center px-4 py-2.5 bg-white rounded-lg">
+        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
             <div class="casa-display-applications-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium">
+            <div class="grow font-medium text-sm">
                 {{ $t("Tips") }}
             </div>
-            <Dropdown append-to="self" panel-class="w-full sm p-0" v-model="selectedApps" :options="TutorialApps"
-                checkmark @change="
+            <Dropdown append-to="self" panel-class="w-full sm p-0" class="w-[12.125rem]" v-model="selectedApps"
+                :options="TutorialApps" checkmark @change="
                     onCheckApps(
                         $event.value,
                         $event.originalEvent as MouseEvent
                     )
                     ">
+
                 <template #value="slotProps">
                     <div class="flex items-center">{{ slotProps.value.length }} items</div>
                 </template>
 
                 <template #option="slotProps">
                     <div class="h-8 flex items-center" @click.capture="onCheckApps(slotProps.option, $event)">
-                        <Checkbox class="ml-2" v-model="tutorialAppsCheckList[slotProps.option]" :binary="true" />
+                        <div
+                            :class="tutorialAppsCheckList[slotProps.option] ? `casa-check-outline text-sky-600 text-base` : `h-4 w-4`">
+                        </div>
                         <span class="text-sm grow ml-2">
                             {{ slotProps.option }}
                         </span>
