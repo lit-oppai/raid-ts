@@ -19,15 +19,15 @@ importers:
       '@icewhale/icewhale-openapi':
         specifier: 0.0.1-alpha5
         version: 0.0.1-alpha5
-      '@icewhale/icewhale-v1-api':
-        specifier: workspace:^
-        version: link:packages/v1api
       '@icewhale/ui-styles':
         specifier: workspace:^
         version: link:packages/styles
       '@icewhale/ui-utils':
         specifier: workspace:^
         version: link:packages/utils
+      '@icewhale/ui-v1-api':
+        specifier: workspace:^
+        version: link:packages/v1api
       '@vueuse/components':
         specifier: ^10.9.0
         version: 10.9.0(vue@3.4.21)
