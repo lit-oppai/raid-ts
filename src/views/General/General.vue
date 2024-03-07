@@ -50,9 +50,10 @@ watch(
 );
 onMounted(() => {
     getPort();
+    getUsbAutoMount();
     api.users.getCustomStorage("system").then((res) => {
         const data = res.data.data;
-
+        
         language.value = Languages.find((item) => item.lang === store.casaos_lang);
         // searchEngine.value = data.search_engine
         searchEngine.value = SearchEngines.find((item) => item.url === data.search_engine);
@@ -199,6 +200,12 @@ function onToggleUSBAutoMount() {
     }
 }
 
+function getUsbAutoMount() {
+    return api.sys.getUsbStatus().then((res) => {
+        automountUSB.value = res.data.data === "on";
+    });
+}
+
 function onCheckApps(item: string, event?: MouseEvent) {
     event?.stopPropagation();
     tutorialAppsCheckList.value[item] = !tutorialAppsCheckList.value[item];
@@ -330,7 +337,7 @@ function rewindPort() {
             <div class="grow font-medium text-sm">
                 {{ $t("News feed") }}
             </div>
-            <InputSwitch class="sm" v-model="showNewsFeed" @change="onChangeSettings('rssSwitch')" />
+            <InputSwitch class="sm" v-model="rssSwitch" @change="onChangeSettings('rssSwitch')" />
         </div>
 
         <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
