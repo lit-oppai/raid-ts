@@ -57,7 +57,7 @@ function onPower(type: "restart" | "shutdown") {
 
 function getRealeaseStatus() {
     install.getStatus().then(({ data }) => {
-        isUpdate.value = data.data?.status === "idle";
+        isUpdate.value = data.data?.status === "idle" && data.message === "ready-to-update";
     });
 }
 </script>
