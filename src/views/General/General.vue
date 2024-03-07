@@ -276,9 +276,9 @@ function rewindPort() {
                 checkmark :highlightOnSelect="false" class="w-[12.125rem]" @change="onChangeSettings('lang')">
                 <template #option="slotProps">
                     <div
-                        :class="slotProps.option.name === language?.name ? `casa-check-outline text-sky-600` : `h-4 w-4`">
+                        :class="slotProps.option.name === language?.name ? `casa-check-outline text-sky-600 text-base` : `h-4 w-4`">
                     </div>
-                    <div>{{ $t(slotProps.option.name) }}</div>
+                    <div class="font-normal">{{ $t(slotProps.option.name) }}</div>
                 </template>
             </Dropdown>
         </div>
@@ -294,7 +294,7 @@ function rewindPort() {
 
                 <template #option="slotProps">
                     <div
-                        :class="slotProps.option.name === searchEngine?.name ? `casa-check-outline text-sky-600` : `h-4 w-4`">
+                        :class="slotProps.option.name === searchEngine?.name ? `casa-check-outline text-sky-600 text-base` : `h-4 w-4`">
                     </div>
                     <div>{{ $t(slotProps.option.name) }}</div>
                 </template>
