@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Dialog from "primevue/dialog";
-import Toast from "primevue/toast";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -33,5 +32,4 @@ defineExpose({
             <a href="//baidu.com" target="_blank">{{ $t("Open Source Usage Statement") }}</a> -->
         </div>
     </Dialog>
-    <Toast></Toast>
 </template>
