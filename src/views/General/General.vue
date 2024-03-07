@@ -10,6 +10,8 @@ import { useI18n } from "vue-i18n";
 import api from "@icewhale/ui-v1-api";
 import { messageBus } from "@icewhale/ui-utils";
 import useBaseStore from "@/store/baseStore.ts";
+import { useForm } from "vee-validate";
+import { object, number } from "yup";
 import { Languages, SearchEngines, TutorialApps } from "./const.ts";
 
 const { t } = useI18n();
@@ -19,7 +21,7 @@ const language = ref<{ lang: string; name: string }>();
 const searchEngine = ref<{ url: string; name: string }>();
 let oldSearchEngineUrl: string = "";
 const inputTextElement = ref();
-const inputPort = ref<number>(0);
+// const inputPort = ref<number>(0);
 let oldPort: number = 80;
 const rssSwitch = ref<boolean>(false);
 const tutorialSwitch = ref<Array<string>>([]);
@@ -32,7 +34,21 @@ const tutorialAppsCheckList = ref<{ [key: string]: boolean }>({});
 const isRaspberryPi = computed(
     () => device.value.toLowerCase().indexOf("raspberry") >= 0
 );
+const { errors, defineField } = useForm({
+    validationSchema: object({
+        MacPortSchema: number()
+            .required()
+            .min(80, "The port number must be greater than 80")
+            .max(65535, "The port number must be less than 65535")
+    }),
+});
+const [inputPort, inputPortAttrs] = defineField("MacPortSchema", {
+    validateOnModelUpdate: true,
+});
 const portInputIconClass = computed(() => {
+    if(errors.value?.MacPortSchema) {
+        return "casa-warning-solid !text-red-500 cursor-none";
+    }
     return inputTextElement.value?.focused || inputPort.value !== oldPort
         ? "casa-check-outline cursor-pointer"
         : "casa-edit-outline cursor-pointer";
@@ -46,6 +62,19 @@ watch(
     (val) => {
         selectedApps.value = val;
         val.forEach((item) => (tutorialAppsCheckList.value[item] = true));
+    }
+);
+watch(
+    () => errors.value,
+    (val) => {
+        if (val?.MacPortSchema) {
+            toast.add({
+                severity: "error",
+                summary: val.MacPortSchema,
+                // detail: val.MacPortSchema?.[0] || "",
+                life: 5000,
+            });
+        }
     }
 );
 onMounted(() => {
@@ -73,12 +102,8 @@ function getPort() {
 }
 
 function onChangeSettings(source: string) {
-    console.log(source, "source", searchEngine.value);
-
     switch (source) {
         case "searchEngine":
-            // const oldSearchEngineUrl = searchEngine.value;
-            // searchEngine.value = searchEngine.value?.url || searchEngine;
             onSaveSettings()
                 .then((res) => {
                     if (res.success === 200) {
@@ -92,8 +117,6 @@ function onChangeSettings(source: string) {
                         detail: e.data?.message || e.message,
                         life: 5000,
                     });
-                    // rewind to old value
-                    // searchEngine = oldSearchEngineUrl;
                     searchEngine.value = SearchEngines.find(
                         (item) => item.url === oldSearchEngineUrl
                     );
@@ -315,7 +338,7 @@ function rewindPort() {
             </div>
             <div
                 class="w-[12.125rem] group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
-                <InputNumber ref="inputTextElement" :modelValue="inputPort"
+                <InputNumber ref="inputTextElement" :modelValue="inputPort" v-bind="inputPortAttrs"
                     @input="({ value }) => (inputPort = Number(value))" input-class="w-full"
                     class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort"
                     @keyup.enter="operatedPort" />
