@@ -14,15 +14,16 @@ defineExpose({
     open,
 });
 </script>
+
 <template>
-    <Dialog v-model:visible="visible" :header="t('About ZimaOS')" modal :draggable="false" closeIcon="casa-close-outline"
-        :pt="{
-            root: {
-                class:
-                    'w-[26.5rem] h-[236px] rounded-2lg overflow-hidden header-split-line footer-split-line',
-            },
-            headerTitle: { class: '!text-base !font-semibold' },
-        }">
+    <Dialog v-model:visible="visible" :header="t('About ZimaOS')" modal :draggable="false" unstyled
+        closeIcon="casa-close-outline text-2xl" :pt="{
+        root: {
+            class:
+                'w-[26.5rem] h-[236px] rounded-2lg overflow-hidden header-split-line footer-split-line',
+        },
+        headerTitle: { class: '!text-base !font-medium' },
+    }">
         <div
             class="h-full mt-6 mx-6 mb-8 px-4 bg-gray-100 rounded-md flex flex-col justify-evenly text-sm text-sky-600 font-medium">
             <a href="/privacy policy.pdf" target="_blank">{{ $t("Privacy Policy") }}</a>
