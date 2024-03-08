@@ -17,10 +17,9 @@ export default {
             'h-[58px]',
             'flex items-center justify-between shrink-0',
             'bg-white text-gray-800 border-b  rounded-t-xl px-6 pt-5 pb-3',
-            'dark:bg-gray-900  dark:text-white/80'
         ]
     },
-    headerTitle: 'text-zinc-800 text-base font-medium font-["Roboto"]',
+    title: 'text-zinc-800 text-base font-medium font-["Roboto"]',
     headerIcons: 'flex items-center',
     closeButton: {
         class: [
@@ -32,7 +31,7 @@ export default {
             'dark:hover:bg-gray-800/80'
         ]
     },
-    closeButtonIcon: 'w-4 h-4 inline-block',
+    closeButtonIcon: 'text-2xl inline-block',
     content: ({ state }: any) => ({
         class: [
             'flex flex-col',
