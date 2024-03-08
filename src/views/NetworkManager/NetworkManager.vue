@@ -73,6 +73,12 @@ onMounted(() => {
         }
     });
 });
+function openPrivatePDF() {
+    window.open("/privacy policy.pdf", "_blank");
+}
+function openLinkInstalledZimaOS() {
+    window.open("https://findzima.com", "_blank");
+}
 </script>
 
 <template>
@@ -98,13 +104,13 @@ onMounted(() => {
         <span class="text-neutral-400 text-xs font-normal font-['Roboto'] leading-none pr-1">
             {{ $t("Privacy Service Agreement.content") }}
         </span>
-        <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none">
+        <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none cursor-pointer" @click="openPrivatePDF">
             {{ $t("Privacy Service Agreement.title") }}
         </span>
     </div>
 
     <div class="">
-        <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none pr-1">
+        <span class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none pr-1 cursor-pointer" @click="openLinkInstalledZimaOS">
             {{ $t("Install ZimaClient") }} 
         </span>
         <span class="text-neutral-400 text-xs font-normal font-['Roboto'] leading-none">
