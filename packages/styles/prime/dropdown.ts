@@ -6,10 +6,10 @@ export default {
             'w-full md:w-56',
             'rounded-md',
             'shadow-sm',
-            'bg-surface-0 dark:bg-surface-900',
+            'bg-surface-0 ',
             "border",
             {
-                'border-sky-600 dark:ring-primary-400':
+                'border-sky-600  ':
                     r.focused
             },
             'cursor-default',
@@ -27,11 +27,11 @@ export default {
                 'bg-transparent',
                 'border-0',
                 {
-                    'text-surface-800 dark:text-white/80': e.modelValue != null,
-                    'text-surface-400 dark:text-surface-500':
+                    'text-surface-800 ': e.modelValue != null,
+                    'text-surface-400 ':
                         e.modelValue == null
                 },
-                'placeholder:text-surface-400 dark:placeholder:text-surface-500',
+                'placeholder:text-surface-400  ',
                 'w-[1%]',
                 'py-2 px-3',
                 { 'pr-7': e.showClear },
@@ -68,9 +68,9 @@ export default {
             'border-0',
             'rounded-md',
             'shadow-md',
-            'bg-surface-0 dark:bg-surface-800',
-            'text-surface-800 dark:text-white/80',
-            'ring-1 ring-inset ring-surface-300 dark:ring-surface-700'
+            'bg-surface-0  ',
+            'text-surface-800  ',
+            'ring-1 ring-inset ring-surface-300  '
         ]
     },
     wrapper: {
@@ -90,27 +90,22 @@ export default {
             'm-0',
             'py-2 px-4',
             {
-                'text-surface-700 dark:text-white/80':
+                'text-surface-700 ':
                     !e.focused && !e.selected && !e.disabled
             },
             {
-                'text-surface-600 dark:text-white/70':
+                'text-surface-600  ':
                     !e.focused && !e.selected && e.disabled
             },
             {
-                'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80':
+                'bg-surface-200   text-surface-700 ':
                     e.focused && !e.selected
             },
-            // {
-            //     'bg-primary-500 dark:bg-primary-400 text-white dark:text-surface-700':
-            //         e.focused && e.selected
-            // },
             {
-                'bg-transparent text-surface-700 dark:text-white/80':
+                'bg-transparent text-surface-700  ':
                     !e.focused && e.selected
             },
-            // 'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-surface-700',
-            'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+            'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500',
             { 'pointer-events-none cursor-default': e.disabled },
             { 'cursor-pointer': !e.disabled },
             'overflow-hidden',
@@ -123,8 +118,8 @@ export default {
             'sm:text-sm',
             'm-0',
             'py-2 px-4',
-            'text-surface-800 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-600/80',
+            'text-surface-800 ',
+            'bg-surface-0  ',
             'cursor-auto'
         ]
     },
@@ -133,7 +128,7 @@ export default {
             'leading-none',
             'sm:text-sm',
             'py-2 px-4',
-            'text-surface-800 dark:text-white/80',
+            'text-surface-800 ',
             'bg-transparent'
         ]
     },
@@ -143,8 +138,8 @@ export default {
             'm-0',
             'rounded-tl-md',
             'rounded-tr-md',
-            'text-surface-700 dark:text-white/80',
-            'bg-surface-100 dark:bg-surface-800'
+            'text-surface-700  ',
+            'bg-surface-100  '
         ]
     },
     filtercontainer: {
@@ -159,16 +154,16 @@ export default {
             'pr-7',
             '-mr-7',
             'w-full',
-            'text-surface-700 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-900',
+            'text-surface-700  ',
+            'bg-surface-0 ',
             'placeholder:text-surface-400',
-            'ring-1 ring-inset ring-surface-300 dark:ring-surface-700',
+            'ring-1 ring-inset ring-surface-300  ',
             'border-0',
             'rounded-tl-md',
             'rounded-tr-md',
             'appearance-none',
             'focus:ring-2 focus:ring-inset focus:outline-none focus:outline-offset-0',
-            'focus:ring-primary-600 dark:focus:ring-primary-500',
+            'focus:ring-primary-600  ',
             'appearance-none'
         ]
     },

@@ -21,18 +21,18 @@ export default {
             'border',
             'text-surface-600',
             {
-                'border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-900':
+                'border-surface-300 bg-surface-0 ':
                     !r.checked,
-                'border-primary-500 bg-primary-500 dark:border-primary-400 dark:bg-primary-400':
+                'border-primary-500 bg-primary-500  ':
                     r.checked
             },
             {
-                'ring-2 ring-primary-500 dark:ring-primary-400':
+                'ring-2 ring-primary-500  ':
                     !e.disabled && r.focused,
                 'cursor-default opacity-60': e.disabled
             },
             {
-                'peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500 dark:peer-focus-visible:ring-primary-400':
+                'peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500  ':
                     !e.disabled,
                 'cursor-default opacity-60': e.disabled
             },
@@ -55,7 +55,7 @@ export default {
             // 'opacity-0',
             'rounded-md',
             'outline-none',
-            // 'border-2 border-surface-300 dark:border-surface-700',
+            // 'border-2 border-surface-300 ',
             'appareance-none'
         ]
     },
@@ -65,7 +65,7 @@ export default {
             'text-normal',
             // 'w-3',
             // 'h-3',
-            // 'text-white dark:text-surface-900',
+            // 'text-white  ',
             'transition-all',
             'duration-200'
         ]
