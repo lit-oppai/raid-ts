@@ -5,7 +5,6 @@ export default {
             'h-[calc(100%_-_4rem)]',
             'max-h-90 transform scale-100',
             'm-0 w-[40.25rem]',
-            'dark:border dark:border-blue-900/40',
             {
                 'transition-none transform-none !w-screen !h-screen !max-h-full !top-0 !left-0':
                     state.maximized
@@ -17,7 +16,6 @@ export default {
             'h-[58px]',
             'flex items-center justify-between shrink-0',
             'bg-white text-gray-800 border-b-2  rounded-t-xl px-6 pt-5 pb-3',
-            'dark:bg-gray-900  dark:text-white/80'
         ]
     },
     headerTitle: 'text-zinc-800 text-base font-medium font-["Roboto"]',
@@ -29,7 +27,6 @@ export default {
             'text-slate-800',
             'hover:border-transparent hover:bg-gray-100',
             // 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]', // focus
-            'dark:hover:bg-gray-800/80'
         ]
     },
     closeButtonIcon: 'w-4 h-4 inline-block',
@@ -50,7 +47,6 @@ export default {
             'shrink-0 ',
             'h-16',
             'border-t-2 bg-white text-gray-700 px-6 pb-6 pt-3 text-right rounded-b-xl',
-            'dark:bg-gray-900  dark:text-white/80'
         ]
     },
     mask: ({ }: any) => ({

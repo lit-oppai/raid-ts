@@ -10,7 +10,7 @@ export default {
                     r.instance.$name == 'InputGroup' && !e.showButtons
             },
             {
-                'border-0 border-y border-l last:border-r border-surface-300 dark:border-surface-600':
+                'border-0 border-y border-l last:border-r border-surface-300  ':
                     r.instance.$name == 'InputGroup' && !e.showButtons
             },
             'shadow-sm',
@@ -43,20 +43,20 @@ export default {
                         e.props.showButtons &&
                         e.props.buttonLayout == 'vertical'
                 },
-                'text-surface-900 dark:text-surface-0',
-                'placeholder:text-surface-400 dark:placeholder:text-surface-500',
-                'bg-surface-0 dark:bg-surface-900',
+                'text-surface-900  ',
+                'placeholder:text-surface-400  ',
+                'bg-white  ',
                 {
-                    'border-r border-surface-300 dark:border-surface-700':
+                    'border-r border-surface-300 ':
                         e.props.showButtons && e.props.buttonLayout == 'stacked'
                 },
                 {
-                    'border-x border-surface-300 dark:border-surface-700':
+                    'border-x border-surface-300  ':
                         e.props.showButtons &&
                         e.props.buttonLayout == 'horizontal'
                 },
                 {
-                    'border-y border-surface-300 dark:border-surface-700':
+                    'border-y border-surface-300  ':
                         e.props.showButtons &&
                         e.props.buttonLayout == 'vertical'
                 },
