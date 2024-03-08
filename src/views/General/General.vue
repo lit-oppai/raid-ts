@@ -1,3 +1,107 @@
+<template>
+    <BaseInfoAndBackground></BaseInfoAndBackground>
+
+    <div class="space-y-2">
+        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
+            <div class="casa-language2-outline mr-3 text-2xl leading-6"></div>
+            <div class="grow font-medium text-sm">
+                {{ $t("Language") }}
+            </div>
+            <Dropdown append-to="self" panel-class="w-full" v-model="language" :options="Languages" optionLabel="name"
+                checkmark :highlightOnSelect="false" class="w-[12.125rem]" @change="onChangeSettings('lang')">
+                <template #option="slotProps">
+                    <div :class="slotProps.option.name === language?.name
+                        ? `casa-check-outline text-sky-600 text-base`
+                        : `h-4 w-4`
+                    "></div>
+                    <div class="font-normal">
+                        {{ $t(slotProps.option.name) }}
+                    </div>
+                </template>
+            </Dropdown>
+        </div>
+
+        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
+            <div class="casa-search-outline mr-3 text-2xl leading-6"></div>
+            <div class="grow font-medium text-sm">
+                {{ $t("Search Engine") }}
+            </div>
+            <Dropdown append-to="self" panel-class="w-full" v-model="searchEngine" :options="SearchEngines"
+                optionLabel="name" checkmark :highlightOnSelect="false" class="w-[12.125rem]"
+                @change="onChangeSettings('searchEngine')">
+                <template #option="slotProps">
+                    <div :class="slotProps.option.name === searchEngine?.name
+                        ? `casa-check-outline text-sky-600 text-base`
+                        : `h-4 w-4`
+                    "></div>
+                    <div>{{ $t(slotProps.option.name) }}</div>
+                </template>
+            </Dropdown>
+        </div>
+
+        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
+            <div class="casa-port-outline mr-3 text-2xl leading-6"></div>
+            <div class="grow font-medium text-sm">
+                {{ $t("WebUI Port") }}
+            </div>
+            <div
+                class="w-[12.125rem] group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
+                <InputNumber ref="inputTextElement" :modelValue="inputPort" v-bind="inputPortAttrs"
+                    @input="({ value }) => (inputPort = Number(value))" input-class="w-full" :useGrouping="false"
+                    class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort"
+                    @keyup.enter="operatedPort" />
+                <i class="mr-2 group-hover:text-sky-600" :class="portInputIconClass" @click="operatedPort"
+                    @mousedown.prevent />
+            </div>
+        </div>
+
+        <div class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary">
+            <div class="casa-usb-outline mr-3 text-2xl leading-6"></div>
+            <div class="grow font-medium text-sm">
+                {{ $t("USB auto-mount") }}
+            </div>
+            <InputSwitch class="sm" v-model="automountUSB" @change="onToggleUSBAutoMount" />
+        </div>
+
+        <div class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary">
+            <div class="casa-news-outline mr-3 text-2xl leading-6"></div>
+            <div class="grow font-medium text-sm">
+                {{ $t("News feed") }}
+            </div>
+            <InputSwitch class="sm" v-model="rssSwitch" @change="onChangeSettings('rssSwitch')" />
+        </div>
+
+        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
+            <div class="casa-display-applications-outline mr-3 text-2xl leading-6"></div>
+            <div class="grow font-medium text-sm">
+                {{ $t("Tips") }}
+            </div>
+            <Dropdown append-to="self" panel-class="w-full sm p-0" class="w-[12.125rem]" v-model="selectedApps"
+                :options="TutorialApps" checkmark @change="
+                    onCheckApps(
+                        $event.value,
+                        $event.originalEvent as MouseEvent
+                    )
+                    ">
+                <template #value="slotProps">
+                    <div class="flex items-center">{{ slotProps.value.length }} items</div>
+                </template>
+
+                <template #option="slotProps">
+                    <div class="h-8 flex items-center" @click.capture="onCheckApps(slotProps.option, $event)">
+                        <div :class="tutorialAppsCheckList[slotProps.option]
+                        ? `casa-check-outline text-sky-600 text-base`
+                        : `h-4 w-4`
+                    "></div>
+                        <span class="text-sm grow ml-2">
+                            {{ slotProps.option }}
+                        </span>
+                    </div>
+                </template>
+            </Dropdown>
+        </div>
+    </div>
+</template>
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, nextTick } from "vue";
 import Dropdown from "primevue/dropdown";
@@ -24,10 +128,10 @@ const inputTextElement = ref();
 // const inputPort = ref<number>(0);
 let oldPort: number = 80;
 const rssSwitch = ref<boolean>(false);
+let oldRssSwitch: boolean = false;
 const tutorialSwitch = ref<Array<string>>([]);
 
 const automountUSB = ref<boolean>(true);
-const showNewsFeed = ref<boolean>(true);
 const device = ref<string>("");
 const selectedApps = ref<Array<string>>([]);
 const tutorialAppsCheckList = ref<{ [key: string]: boolean }>({});
@@ -39,14 +143,14 @@ const { errors, defineField } = useForm({
         MacPortSchema: number()
             .required()
             .min(80, "The port number must be greater than 80")
-            .max(65535, "The port number must be less than 65535")
+            .max(65535, "The port number must be less than 65535"),
     }),
 });
 const [inputPort, inputPortAttrs] = defineField("MacPortSchema", {
     validateOnModelUpdate: true,
 });
 const portInputIconClass = computed(() => {
-    if(errors.value?.MacPortSchema) {
+    if (errors.value?.MacPortSchema) {
         return "casa-warning-solid !text-red-500 cursor-pointer";
     }
     return inputTextElement.value?.focused || inputPort.value !== oldPort
@@ -64,25 +168,12 @@ watch(
         val.forEach((item) => (tutorialAppsCheckList.value[item] = true));
     }
 );
-// watch(
-//     () => errors.value,
-//     (val) => {
-//         if (val?.MacPortSchema) {
-//             toast.add({
-//                 severity: "error",
-//                 summary: val.MacPortSchema,
-//                 // detail: val.MacPortSchema?.[0] || "",
-//                 life: 5000,
-//             });
-//         }
-//     }
-// );
 onMounted(() => {
     getPort();
     getUsbAutoMount();
     api.users.getCustomStorage("system").then((res) => {
         const data = res.data.data;
-        
+
         language.value = Languages.find((item) => item.lang === store.casaos_lang);
         // searchEngine.value = data.search_engine
         searchEngine.value = SearchEngines.find((item) => item.url === data.search_engine);
@@ -137,20 +228,16 @@ function onChangeSettings(source: string) {
                 });
             break;
         case "rssSwitch":
-            rssSwitch.value = showNewsFeed.value;
-            onSaveSettings()
-                .then(() => {
-                    rssSwitch.value = showNewsFeed.value;
-                })
-                .catch((e) => {
-                    toast.add({
-                        severity: "error",
-                        summary: "Save failed",
-                        detail: e.data?.message || e.message,
-                        life: 5000,
-                    });
-                    showNewsFeed.value = !showNewsFeed.value;
+            oldRssSwitch = rssSwitch.value;
+            onSaveSettings().catch((e) => {
+                toast.add({
+                    severity: "error",
+                    summary: "Save failed",
+                    detail: e.data?.message || e.message,
+                    life: 5000,
                 });
+                rssSwitch.value = oldRssSwitch;
+            });
             break;
         case "tutorialSwitch":
             const oldTutorialSwitch = tutorialSwitch.value;
@@ -224,8 +311,9 @@ function onToggleUSBAutoMount() {
 }
 
 function getUsbAutoMount() {
-    return api.sys.getUsbStatus().then((res) => {
-        automountUSB.value = res.data.data === "on";
+    return api.sys.getUsbStatus().then((res) => {  
+        // remake: The data definition is very arbitrary
+        automountUSB.value = res.data.data === "True";
     });
 }
 
@@ -289,8 +377,8 @@ function operatedPort() {
                 summary: errors.value.MacPortSchema,
                 life: 5000,
             });
-            return
-        }else if (isInputPortTextActive.value) {
+            return;
+        } else if (isInputPortTextActive.value) {
             onSavePort();
         } else {
             focusInputText();
@@ -304,105 +392,3 @@ function rewindPort() {
     });
 }
 </script>
-
-<template>
-    <BaseInfoAndBackground></BaseInfoAndBackground>
-
-    <div class="space-y-2">
-        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
-            <div class="casa-language2-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
-                {{ $t("Language") }}
-            </div>
-            <Dropdown append-to="self" panel-class="w-full" v-model="language" :options="Languages" optionLabel="name"
-                checkmark :highlightOnSelect="false" class="w-[12.125rem]" @change="onChangeSettings('lang')">
-                <template #option="slotProps">
-                    <div
-                        :class="slotProps.option.name === language?.name ? `casa-check-outline text-sky-600 text-base` : `h-4 w-4`">
-                    </div>
-                    <div class="font-normal">{{ $t(slotProps.option.name) }}</div>
-                </template>
-            </Dropdown>
-        </div>
-
-        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
-            <div class="casa-search-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
-                {{ $t("Search Engine") }}
-            </div>
-            <Dropdown append-to="self" panel-class="w-full" v-model="searchEngine" :options="SearchEngines"
-                optionLabel="name" checkmark :highlightOnSelect="false" class="w-[12.125rem]"
-                @change="onChangeSettings('searchEngine')">
-
-                <template #option="slotProps">
-                    <div
-                        :class="slotProps.option.name === searchEngine?.name ? `casa-check-outline text-sky-600 text-base` : `h-4 w-4`">
-                    </div>
-                    <div>{{ $t(slotProps.option.name) }}</div>
-                </template>
-            </Dropdown>
-        </div>
-
-        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
-            <div class="casa-port-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
-                {{ $t("WebUI Port") }}
-            </div>
-            <div
-                class="w-[12.125rem] group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
-                <InputNumber ref="inputTextElement" :modelValue="inputPort" v-bind="inputPortAttrs"
-                    @input="({ value }) => (inputPort = Number(value))" input-class="w-full" :useGrouping="false"
-                    class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort"
-                    @keyup.enter="operatedPort" />
-                <i class="mr-2 group-hover:text-sky-600" :class="portInputIconClass" @click="operatedPort"
-                    @mousedown.prevent />
-            </div>
-        </div>
-
-        <div class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary">
-            <div class="casa-usb-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
-                {{ $t("USB auto-mount") }}
-            </div>
-            <InputSwitch class="sm" v-model="automountUSB" @change="onToggleUSBAutoMount" />
-        </div>
-
-        <div class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary">
-            <div class="casa-news-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
-                {{ $t("News feed") }}
-            </div>
-            <InputSwitch class="sm" v-model="rssSwitch" @change="onChangeSettings('rssSwitch')" />
-        </div>
-
-        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
-            <div class="casa-display-applications-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
-                {{ $t("Tips") }}
-            </div>
-            <Dropdown append-to="self" panel-class="w-full sm p-0" class="w-[12.125rem]" v-model="selectedApps"
-                :options="TutorialApps" checkmark @change="
-                    onCheckApps(
-                        $event.value,
-                        $event.originalEvent as MouseEvent
-                    )
-                    ">
-
-                <template #value="slotProps">
-                    <div class="flex items-center">{{ slotProps.value.length }} items</div>
-                </template>
-
-                <template #option="slotProps">
-                    <div class="h-8 flex items-center" @click.capture="onCheckApps(slotProps.option, $event)">
-                        <div
-                            :class="tutorialAppsCheckList[slotProps.option] ? `casa-check-outline text-sky-600 text-base` : `h-4 w-4`">
-                        </div>
-                        <span class="text-sm grow ml-2">
-                            {{ slotProps.option }}
-                        </span>
-                    </div>
-                </template>
-            </Dropdown>
-        </div>
-    </div>
-</template>
