@@ -15,7 +15,8 @@ export default {
             },
             'cursor-pointer',
             'select-none',
-            { 'opacity-60': e.disabled, 'pointer-events-none': e.disabled }
+            { 'opacity-60': e.disabled, 'pointer-events-none': e.disabled },
+            'text-gray-800'
         ]
     }),
     input: ({ props: e }: any) => ({
