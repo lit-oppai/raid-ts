@@ -253,6 +253,11 @@ function onSavePort() {
         })
         .catch((e) => {
             console.log(e);
+            toast.add({
+                severity: "error",
+                detail: e.response.data.message,
+                life: 5000,
+            });
         });
 }
 let timer: number = 0;
