@@ -47,7 +47,7 @@ const [inputPort, inputPortAttrs] = defineField("MacPortSchema", {
 });
 const portInputIconClass = computed(() => {
     if(errors.value?.MacPortSchema) {
-        return "casa-warning-solid !text-red-500 cursor-none";
+        return "casa-warning-solid !text-red-500 cursor-pointer";
     }
     return inputTextElement.value?.focused || inputPort.value !== oldPort
         ? "casa-check-outline cursor-pointer"
@@ -64,19 +64,19 @@ watch(
         val.forEach((item) => (tutorialAppsCheckList.value[item] = true));
     }
 );
-watch(
-    () => errors.value,
-    (val) => {
-        if (val?.MacPortSchema) {
-            toast.add({
-                severity: "error",
-                summary: val.MacPortSchema,
-                // detail: val.MacPortSchema?.[0] || "",
-                life: 5000,
-            });
-        }
-    }
-);
+// watch(
+//     () => errors.value,
+//     (val) => {
+//         if (val?.MacPortSchema) {
+//             toast.add({
+//                 severity: "error",
+//                 summary: val.MacPortSchema,
+//                 // detail: val.MacPortSchema?.[0] || "",
+//                 life: 5000,
+//             });
+//         }
+//     }
+// );
 onMounted(() => {
     getPort();
     getUsbAutoMount();
@@ -278,7 +278,14 @@ function focusInputText() {
 
 function operatedPort() {
     nextTick(() => {
-        if (isInputPortTextActive.value) {
+        if (errors.value?.MacPortSchema) {
+            toast.add({
+                severity: "error",
+                summary: errors.value.MacPortSchema,
+                life: 5000,
+            });
+            return
+        }else if (isInputPortTextActive.value) {
             onSavePort();
         } else {
             focusInputText();
@@ -339,7 +346,7 @@ function rewindPort() {
             <div
                 class="w-[12.125rem] group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
                 <InputNumber ref="inputTextElement" :modelValue="inputPort" v-bind="inputPortAttrs"
-                    @input="({ value }) => (inputPort = Number(value))" input-class="w-full"
+                    @input="({ value }) => (inputPort = Number(value))" input-class="w-full" :useGrouping="false"
                     class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort"
                     @keyup.enter="operatedPort" />
                 <i class="mr-2 group-hover:text-sky-600" :class="portInputIconClass" @click="operatedPort"
