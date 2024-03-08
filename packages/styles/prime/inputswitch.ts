@@ -23,16 +23,16 @@ export default {
             'before:h-4 before:w-4',
             'before:rounded-full',
             'before:duration-200 before:transition before:ease-in-out',
-            'before:bg-surface-0 before:dark:bg-surface-900',
+            'before:bg-surface-0 ',
             'before:shadow',
             { 'before:transform before:translate-x-3': e.modelValue },
             'border-2 border-transparent',
             {
-                'bg-surface-200 dark:bg-surface-700': !e.modelValue,
-                'bg-primary-500 dark:bg-primary-400': e.modelValue
+                'bg-surface-200 ': !e.modelValue,
+                'bg-primary-500 ': e.modelValue
             },
             {
-                'hover:bg-surface-300 hover:dark:bg-surface-600 ':
+                'hover:bg-surface-300  ':
                     !e.modelValue
             },
             'transition-colors duration-200',

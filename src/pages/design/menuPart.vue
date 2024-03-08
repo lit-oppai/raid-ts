@@ -6,6 +6,7 @@ import authorImage from "@assets/img/author.svg";
 import { routes } from "@pages/router.ts";
 import { getUserInfo } from "@icewhale/ui-utils";
 import { install } from "@network/index.ts";
+import { vOnClickOutside } from "@vueuse/components";
 
 const userName: string = getUserInfo()?.username ?? "";
 // TODO ： 1、 local storage 相关没有 ts 提示 -- 提出常量部分作为映射。 2、本地存储的更新问题 -- 同步的门槛需要确定。
@@ -24,8 +25,10 @@ onMounted(() => {
 function onPower(type: "restart" | "shutdown") {
     if (type === "restart" && !restartConfirm.value) {
         restartConfirm.value = true;
+        shutdownConfirm.value = false;
     } else if (type === "shutdown" && !shutdownConfirm.value) {
         shutdownConfirm.value = true;
+        restartConfirm.value = false;
     } else {
         const payload = {
             action: "",
@@ -60,6 +63,11 @@ function getRealeaseStatus() {
         isUpdate.value = data.data?.status === "idle" && data.message === "ready-to-update";
     });
 }
+
+function resetStatus() {
+    restartConfirm.value = false;
+    shutdownConfirm.value = false;
+}
 </script>
 <!-- css components: os_panel menu_bar -->
 <template>
@@ -90,7 +98,7 @@ function getRealeaseStatus() {
             </router-link>
         </div>
 
-        <div class="menu_bar_footer">
+        <div class="menu_bar_footer" v-on-click-outside="resetStatus">
             <Button :label="restartConfirm ? $t(`Are you sure?`) : $t(`Restart`)" icon="casa-restart-outline"
                 @click="onPower('restart')">
             </Button>

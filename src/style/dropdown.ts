@@ -7,7 +7,7 @@ export default {
             'h-8',
             'rounded-md',
             'shadow-sm',
-            'bg-surface-0',
+            'bg-surface-0 overflow-hidden',
             "outline outline-1 outline-gary/500 hover:outline-sky-600",
             {
                 'outline-sky-600':
@@ -26,7 +26,7 @@ export default {
             'sm:text-sm',
             'block',
             'flex-auto',
-            'bg-transparent',
+            'bg-white',
             'border-0',
             {
                 'text-surface-800': e.modelValue != null,

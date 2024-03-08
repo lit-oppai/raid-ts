@@ -195,7 +195,7 @@ function transformServerUrl(serverUrl: string) {
                 </div>
             </div>
 
-            <div class="ml-2 font-normal text-xs mb-4 mt-1.5">
+            <div class="ml-2 font-normal text-xs text-gary/primary mb-4 mt-1.5">
                 <span class="h-full cursor-pointer" @click="showProtocolDialog">ZimaOS {{ version }}</span>
             </div>
             <div class="ml-2 text-neutral-500 font-normal text-xs">
