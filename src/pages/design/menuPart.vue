@@ -51,7 +51,6 @@ function onPower(type: "restart" | "shutdown") {
                 messageBus("dashboardsetting_shutdown");
                 messageBus("mircoapp_communicate", payload);
                 shutdownConfirm.value = false;
-                // powerType.value = "shut1111111down";
                 break;
         }
         // emit("power", powerType.value)
