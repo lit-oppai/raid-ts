@@ -11,8 +11,8 @@
                 checkmark :highlightOnSelect="false" class="w-[12.125rem]" @change="onChangeSettings('lang')">
                 <template #option="slotProps">
                     <div :class="slotProps.option.name === language?.name
-                        ? `casa-check-outline text-sky-600 text-base`
-                        : `h-4 w-4`
+                    ? `casa-check-outline text-sky-600 text-base`
+                    : `h-4 w-4`
                     "></div>
                     <div class="font-normal">
                         {{ $t(slotProps.option.name) }}
@@ -31,8 +31,8 @@
                 @change="onChangeSettings('searchEngine')">
                 <template #option="slotProps">
                     <div :class="slotProps.option.name === searchEngine?.name
-                        ? `casa-check-outline text-sky-600 text-base`
-                        : `h-4 w-4`
+                    ? `casa-check-outline text-sky-600 text-base`
+                    : `h-4 w-4`
                     "></div>
                     <div class="font-normal">
                         {{ $t(slotProps.option.name) }}
@@ -49,7 +49,7 @@
             <div
                 class="w-[12.125rem] group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
                 <InputNumber ref="inputTextElement" :modelValue="inputPort" v-bind="inputPortAttrs"
-                    @input="({ value }) => (inputPort = Number(value))" input-class="w-full" :useGrouping="false"
+                    @input="({ value }) => (inputPort = (value))" input-class="w-full" :useGrouping="false"
                     class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort"
                     @keyup.enter="operatedPort" />
                 <i class="mr-2 group-hover:text-sky-600" :class="portInputIconClass" @click="operatedPort"
@@ -94,8 +94,8 @@
                 <template #option="slotProps">
                     <div class="h-8 flex items-center" @click.capture="onCheckApps(slotProps.option, $event)">
                         <div :class="tutorialAppsCheckList[slotProps.option]
-                        ? `casa-check-outline text-sky-600 text-base`
-                        : `h-4 w-4`
+                    ? `casa-check-outline text-sky-600 text-base`
+                    : `h-4 w-4`
                     "></div>
                         <span class="text-sm grow ml-2">
                             {{ slotProps.option }}
