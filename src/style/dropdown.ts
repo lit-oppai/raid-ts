@@ -7,7 +7,7 @@ export default {
             'h-8',
             'rounded-md',
             'shadow-sm',
-            'bg-surface-0 overflow-hidden',
+            'bg-surface-0',
             "outline outline-1 outline-gary/500 hover:outline-sky-600",
             {
                 'outline-sky-600':
@@ -37,7 +37,7 @@ export default {
             'w-[1%]',
             'py-1.5 px-3',
             { 'pr-7': e.showClear },
-            'rounded-none',
+            'rounded-md',
             'transition',
             'duration-200',
             'focus:outline-none focus:shadow-none',
