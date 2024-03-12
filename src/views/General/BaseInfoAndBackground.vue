@@ -177,7 +177,7 @@ function transformServerUrl(serverUrl: string) {
         </div>
         <!-- inof list -->
         <div class="basis-1/2 flex flex-col justify-center ml-2 pb-[3px]">
-            <div class="relative group flex items-center justify-between w-[15rem] h-[2.25rem] group-focus-within:outline outline-1 outline-sky-600 rounded text-gary/primary"
+            <div class="relative group flex items-center justify-between w-[15rem] h-[2.25rem] group-focus-within:outline outline-1 outline-sky-600 rounded text-gary/primary cursor-pointer"
                 :class="{ outline: editState }" v-on-click-outside="deselectMacName">
                 <div v-if="!editState" class="ml-2 w-full font-medium text-base truncate" @click="activeMacName"
                     :title="name">
