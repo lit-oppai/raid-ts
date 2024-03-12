@@ -17,10 +17,10 @@ export const Languages = [
     { lang: "zh_cn", name: "简体中文" },
 ];
 export const SearchEngines = [
+    { url: "off", name: "Off" },
     { url: "https://duckduckgo.com/?q=", name: "DuckDuckGo" },
     { url: "https://www.google.com/search?q=", name: "Google" },
     { url: "https://www.bing.com/search?q=", name: "Bing" },
     { url: "https://www.startpage.com/do/search?cat=web&pl=chrome&query=", name: "StartPage" },
-    { url: "off", name: "Off" },
 ];
 export const TutorialApps = ["Data station", "Remote Access", "File Manage", "Stable Diffusion"];
