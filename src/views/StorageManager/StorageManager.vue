@@ -13,10 +13,6 @@ import supermanRaidSVG from '@/assets/img/StorageManager/supermanRaid.svg'
 import useEstablishRAID from "@views/ProcessStorageModals/controlView.ts";
 import ZimaCubeCard from "@views/StorageManager/ZimaCubeCard.vue";
 import {
-    // storageInfoMap,
-    // totalStorageUsageStatus,
-    // RAIDCandidateDiskCount,
-    // isStoragePageDataLoading,
     useStoragePageDataBindingLifecycle,
 } from "./controlData.ts";
 const {
@@ -82,18 +78,8 @@ const filesFreeRate = computed(() => {
         : 100;
 });
 onBeforeMount(() => {
-    // console.log("onBeforeMount");
     initEstablishRAID();
 });
-// onMounted(() => {
-//     console.log("onMounted");
-// });
-// onActivated(() => {
-//     console.log("onActivated");
-// });
-// onUnmounted(() => {
-//     console.log("onUnmounted");
-// });
 const goToStorageDetailPage = (isRaid: boolean, label: string) => {
     const path: string = storageInfoMap.get(label)?.path ?? "";
     if (isRaid) {
