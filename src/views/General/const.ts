@@ -23,4 +23,4 @@ export const SearchEngines = [
     { url: "https://www.startpage.com/do/search?cat=web&pl=chrome&query=", name: "StartPage" },
     { url: "off", name: "Off" },
 ];
-export const TutorialApps = ["Data station", "Remote Access", "File Manage"];
+export const TutorialApps = ["Data station", "Remote Access", "File Manage", "Stable Diffusion"];
