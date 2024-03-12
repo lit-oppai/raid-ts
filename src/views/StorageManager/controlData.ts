@@ -157,9 +157,9 @@ function processDiskInfo(disk: DISK_API_SCHEMA): void {
     }
 
     disk.free && RAIDCandidateDiskCount.value++
-    if (disk.type === 'HDD' && disk.index > 0 && disk.index < 7) {
+    if (disk.index > 0 && disk.index < 7) {
         HDDStatus.set(indexStr, baseInfo)
-    } else if (['SSD', 'NVME'].includes(disk.type) && disk.index) {
+    } else if (['SSD', 'NVME'].includes(disk.type) && disk.index <= 90 && disk.index >= 95) {
         const key = INDEX_TO_DISK_HUB_MAP.get(disk.index)
         if (key) {
             SSDStatus.set(key, baseInfo)
