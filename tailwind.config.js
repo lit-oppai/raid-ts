@@ -22,7 +22,7 @@ export default {
                 '2lg': '0.625rem',
             },
             colors: {
-                // follow figma
+                // follow figma OLD
                 "gary/primary": "rgba(48, 50, 51, 1)",
                 "gary/300": "rgba(228, 232, 236, 1)",
                 "gary/500": "rgba(172, 184, 195, 1)",
@@ -96,6 +96,48 @@ export default {
                     500: 'rgba(40, 195, 34, 1)',
                     default: "rgba(40, 195, 34, 1)",
                 },
+                // NEW
+                // Semantic transformation.
+                "Blue/Default": "rgba(0, 122, 229, 1)",
+                "Blue/Hover": "rgba(0, 103, 194, 1)",
+                "Blue/Active": "rgba(0, 87, 163, 1)",
+                "Blue/Secondary": "rgba(128, 195, 255, 1)",
+                "Blue/Tertiary": "rgba(229, 243, 255, 1)",
+
+                "Yellow/Default": "rgba(232, 171, 2, 1)",
+                "Yellow/Hover": "rgba(212, 156, 2, 1)",
+                "Yellow/Active": "rgba(192, 141, 2, 1)",
+                "Yellow/Secondary": "rgba(253, 222, 135, 1)",
+                "Yellow/Tertiary": "rgba(255, 244, 215, 1)",
+
+                "Green/Default": "rgba(40, 195, 34, 1)",
+                "Green/Hover": "rgba(35, 169, 30, 1)",
+                "Green/Active": "rgba(31, 152, 27, 1)",
+                "Green/Secondary": "rgba(164, 236, 147, 1)",
+                "Green/Tertiary": "rgba(213, 247, 212, 1)",
+
+                "Red/Default": "rgba(242, 98, 36, 1)",
+                "Red/Hover": "rgba(217, 80, 22, 1)",
+                "Red/Active": "rgba(204, 75, 20, 1)",
+                "Red/Secondary": "rgba(255, 184, 153, 1)",
+                "Red/Tertiary": "rgba(255, 234, 225, 1)",
+
+                // PENDING
+                "Gary/Primary": "rgba(48, 50, 51, 1)",
+                "Gary/Normal": "rgba(96, 99, 102, 1)",
+                "Gary/Secondary": "rgba(144, 149, 153, 1)",
+                "Gary/Placeholder": "rgba(192, 198, 204, 1)",
+
+                "Gary/500": "rgba(223, 227, 230, 1)",
+                "Gary/400": "rgba(230, 234, 237, 1)",
+                "Gary/300": "rgba(238, 242, 245, 1)",
+                "Gary/200": "rgba(244, 248, 252, 1)",
+                "Gary/100": "rgba(242, 244, 245, 1)",
+                "Gary/50": "rgba(247, 249, 250, 1)",
+                "Brand/900": "rgba(0, 49, 92, 1)",
+                "Brand/800": "rgba(0, 68, 128, 1)",
+                "Brand/700": "rgba(0, 87, 163, 1)",
+                "Brand/600": "rgba(0, 103, 194, 1)",
             },
         },
     },
