@@ -47,13 +47,17 @@
                 {{ $t('WebUI Port') }}
             </div>
             <div
-                class="w-[12.125rem] group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
+                class="w-[12.125rem] relative group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
                 <InputNumber ref="inputTextElement" :modelValue="inputPort" v-bind="inputPortAttrs"
                     @input="({ value }) => (inputPort = (value))" input-class="w-full" :useGrouping="false"
                     class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort"
                     @keyup.enter="operatedPort" />
-                <i class="mr-2 group-hover:text-sky-600" :class="portInputIconClass" @click="operatedPort"
-                    @mousedown.prevent />
+                <div class="mr-2 group-focus-within:text-green-default group-focus-within:hover:text-Brand/500 rounded-md h-6 w-6 text-base"
+                    :class="portInputIconClass" @click="operatedPort" @mousedown.prevent>
+                </div>
+                <div class="absolute w-full rounded bg-Yellow/Tertiary text-Yellow/Hover z-20 top-9 px-2 py-1 text-xs" v-show="oldPort !== inputPort">
+                    {{ errors.MacPortSchema ? errors.MacPortSchema : 'After refreshing, the modification will take effect.' }}
+                </div>
             </div>
         </div>
 
@@ -155,11 +159,11 @@ const [inputPort, inputPortAttrs] = defineField('MacPortSchema', {
 })
 const portInputIconClass = computed(() => {
     if (errors.value?.MacPortSchema) {
-        return 'casa-warning-solid !text-red-500 cursor-pointer'
+        return 'casa-alert-circle-outline !text-red-500 cursor-pointer hover:bg-gray-200 text-center'
     }
     return inputTextElement.value?.focused || inputPort.value !== oldPort
-        ? 'casa-check-outline cursor-pointer'
-        : 'casa-edit-outline cursor-pointer'
+        ? 'casa-check-outline cursor-pointer hover:bg-gray-200 text-center'
+        : ''
 })
 const isInputPortTextActive = computed(() => {
     return inputTextElement.value?.focused
