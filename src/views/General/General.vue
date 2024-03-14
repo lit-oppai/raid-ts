@@ -138,7 +138,7 @@ let oldPort: number = 80
 const rssSwitch = ref<boolean>(false)
 let oldRssSwitch: boolean = false
 const tutorialSwitch = ref<Array<string>>([])
-let tutorialApps = ref<Array<string>>(TutorialApps)
+const tutorialApps = ref<Array<string>>(TutorialApps)
 
 const automountUSB = ref<boolean>(true)
 const device = ref<string>('')
@@ -160,10 +160,10 @@ const [inputPort, inputPortAttrs] = defineField('MacPortSchema', {
 })
 const portInputIconClass = computed(() => {
     if (errors.value?.MacPortSchema) {
-        return 'casa-alert-circle-outline !text-red-500 cursor-pointer hover:bg-gray-200 text-center'
+        return 'casa-alert-circle-outline !text-red-500 cursor-pointer hover:bg-gray-100 active:bg-gray-200 text-center'
     }
     return inputTextElement.value?.focused || inputPort.value !== oldPort
-        ? 'casa-check-outline cursor-pointer hover:bg-gray-200 text-center'
+        ? 'casa-check-outline cursor-pointer hover:bg-gray-100 active:bg-gray-200 text-center'
         : ''
 })
 const isInputPortTextActive = computed(() => {
@@ -177,10 +177,25 @@ watch(
         val.forEach(item => (tutorialAppsCheckList.value[item] = true))
     }
 )
+
+initTutorialOptions();
+
 onMounted(() => {
     getPort()
     getUsbAutoMount()
-    api.users.getCustomStorage('system').then(res => {
+    getCustomOptions();
+})
+
+function getPort() {
+    return api.sys.getServerPort().then(res => {
+        if (res.data.success === 200) {
+            inputPort.value = oldPort = Number(res.data.data)
+        }
+    })
+}
+
+function getCustomOptions() {
+    return api.users.getCustomStorage('system').then(res => {
         const data = res.data.data
 
         language.value = Languages.find(item => item.lang === store.casaos_lang)
@@ -193,17 +208,13 @@ onMounted(() => {
         // recommendSwitch.value = data.recommend_switch;
         tutorialSwitch.value = data.tutorial_switch
     })
-    api.sys.getUtilization().then(res => {
-        if (res.status === 200 && res.data.data.gpu.length === 0 ) {
-            tutorialApps.value.splice(tutorialApps.value.indexOf('Stable Diffusion'), 1);
-        }
-    })
-})
+}
 
-function getPort() {
-    return api.sys.getServerPort().then(res => {
-        if (res.data.success === 200) {
-            inputPort.value = oldPort = Number(res.data.data)
+function initTutorialOptions() {    
+    tutorialApps.value = TutorialApps
+    return api.sys.getUtilization().then(res => {
+        if (res.status === 200 && res.data.data.gpu.length === 0 ) {
+            tutorialApps.value.filter(item => item !== 'Stable Diffusion');
         }
     })
 }
