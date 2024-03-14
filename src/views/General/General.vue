@@ -83,7 +83,7 @@
                 {{ $t('Tips') }}
             </div>
             <Dropdown append-to="self" panel-class="w-full sm p-0" class="w-[12.125rem]" v-model="selectedApps"
-                :options="TutorialApps" checkmark @change="
+                :options="tutorialApps" checkmark @change="
                     onCheckApps(
                         $event.value,
                         $event.originalEvent as MouseEvent
@@ -138,6 +138,7 @@ let oldPort: number = 80
 const rssSwitch = ref<boolean>(false)
 let oldRssSwitch: boolean = false
 const tutorialSwitch = ref<Array<string>>([])
+let tutorialApps = ref<Array<string>>(TutorialApps)
 
 const automountUSB = ref<boolean>(true)
 const device = ref<string>('')
@@ -191,6 +192,11 @@ onMounted(() => {
         rssSwitch.value = data.rss_switch
         // recommendSwitch.value = data.recommend_switch;
         tutorialSwitch.value = data.tutorial_switch
+    })
+    api.sys.getUtilization().then(res => {
+        if (res.status === 200 && res.data.data.gpu.length === 0 ) {
+            tutorialApps.value.splice(tutorialApps.value.indexOf('Stable Diffusion'), 1);
+        }
     })
 })
 
