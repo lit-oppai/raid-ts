@@ -2,18 +2,32 @@
     <BaseInfoAndBackground></BaseInfoAndBackground>
 
     <div class="space-y-2">
-        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
+        <div
+            class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
+        >
             <div class="casa-language2-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm">
                 {{ $t('Language') }}
             </div>
-            <Dropdown append-to="self" panel-class="w-full" v-model="language" :options="Languages" optionLabel="name"
-                checkmark :highlightOnSelect="false" class="w-[12.125rem]" @change="onChangeSettings('lang')">
+            <Dropdown
+                append-to="self"
+                panel-class="w-full"
+                v-model="language"
+                :options="Languages"
+                optionLabel="name"
+                checkmark
+                :highlightOnSelect="false"
+                class="w-[12.125rem]"
+                @change="onChangeSettings('lang')"
+            >
                 <template #option="slotProps">
-                    <div :class="slotProps.option.name === language?.name
-                    ? `casa-check-outline text-sky-600 text-base`
-                    : `h-4 w-4`
-                    "></div>
+                    <div
+                        :class="
+                            slotProps.option.name === language?.name
+                                ? `casa-check-outline text-sky-600 text-base`
+                                : `h-4 w-4`
+                        "
+                    ></div>
                     <div class="font-normal">
                         {{ $t(slotProps.option.name) }}
                     </div>
@@ -21,19 +35,32 @@
             </Dropdown>
         </div>
 
-        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
+        <div
+            class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
+        >
             <div class="casa-search-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm">
                 {{ $t('Search Engine') }}
             </div>
-            <Dropdown append-to="self" panel-class="w-full" v-model="searchEngine" :options="SearchEngines"
-                optionLabel="name" checkmark :highlightOnSelect="false" class="w-[12.125rem]"
-                @change="onChangeSettings('searchEngine')">
+            <Dropdown
+                append-to="self"
+                panel-class="w-full"
+                v-model="searchEngine"
+                :options="SearchEngines"
+                optionLabel="name"
+                checkmark
+                :highlightOnSelect="false"
+                class="w-[12.125rem]"
+                @change="onChangeSettings('searchEngine')"
+            >
                 <template #option="slotProps">
-                    <div :class="slotProps.option.name === searchEngine?.name
-                    ? `casa-check-outline text-sky-600 text-base`
-                    : `h-4 w-4`
-                    "></div>
+                    <div
+                        :class="
+                            slotProps.option.name === searchEngine?.name
+                                ? `casa-check-outline text-sky-600 text-base`
+                                : `h-4 w-4`
+                        "
+                    ></div>
                     <div class="font-normal">
                         {{ $t(slotProps.option.name) }}
                     </div>
@@ -41,54 +68,97 @@
             </Dropdown>
         </div>
 
-        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
+        <div
+            class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
+        >
             <div class="casa-port-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm">
                 {{ $t('WebUI Port') }}
             </div>
             <div
-                class="w-[12.125rem] relative group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200">
-                <InputNumber ref="inputTextElement" :modelValue="inputPort" v-bind="inputPortAttrs"
-                    @input="({ value }) => (inputPort = (value))" input-class="w-full" :useGrouping="false"
-                    class="py-0 grow caret-custom-blue-1 bg-transparent outline-none" @blur="rewindPort"
-                    @keyup.enter="operatedPort" />
-                <div class="mr-2 group-focus-within:text-green-default group-focus-within:hover:text-Brand/500 rounded-md h-6 w-6 text-base"
-                    :class="portInputIconClass" @click="operatedPort" @mousedown.prevent>
-                </div>
-                <div class="absolute w-full rounded bg-Yellow/Tertiary text-Yellow/Hover z-20 top-9 px-2 py-1 text-xs" v-show="oldPort !== inputPort">
-                    {{ errors.MacPortSchema ? errors.MacPortSchema : 'After refreshing, the modification will take effect.' }}
+                class="w-[12.125rem] relative group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200"
+            >
+                <InputNumber
+                    ref="inputTextElement"
+                    :modelValue="inputPort"
+                    v-bind="inputPortAttrs"
+                    @input="({ value }) => (inputPort = value)"
+                    input-class="w-full"
+                    :useGrouping="false"
+                    class="py-0 grow caret-custom-blue-1 bg-transparent outline-none"
+                    @blur="rewindPort"
+                    @keyup.enter="operatedPort"
+                />
+                <div
+                    class="mr-2 group-focus-within:text-green-default group-focus-within:hover:text-Brand/500 rounded-md h-6 w-6 text-base"
+                    :class="portInputIconClass"
+                    @click="operatedPort"
+                    @mousedown.prevent
+                ></div>
+                <div
+                    class="absolute w-full rounded bg-Yellow/Tertiary text-Yellow/Hover z-20 top-9 px-2 py-1 text-xs"
+                    v-show="oldPort !== inputPort"
+                >
+                    {{
+                        errors.MacPortSchema
+                            ? errors.MacPortSchema
+                            : 'After refreshing, the modification will take effect.'
+                    }}
                 </div>
             </div>
         </div>
 
-        <div class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary">
+        <div
+            class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary"
+        >
             <div class="casa-usb-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm">
                 {{ $t('USB auto-mount') }}
             </div>
-            <InputSwitch class="sm" v-model="automountUSB" @change="onToggleUSBAutoMount" />
+            <InputSwitch
+                class="sm"
+                v-model="automountUSB"
+                @change="onToggleUSBAutoMount"
+            />
         </div>
 
-        <div class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary">
+        <div
+            class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary"
+        >
             <div class="casa-news-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm">
                 {{ $t('News feed') }}
             </div>
-            <InputSwitch class="sm" v-model="rssSwitch" @change="onChangeSettings('rssSwitch')" />
+            <InputSwitch
+                class="sm"
+                v-model="rssSwitch"
+                @change="onChangeSettings('rssSwitch')"
+            />
         </div>
 
-        <div class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary">
-            <div class="casa-display-applications-outline mr-3 text-2xl leading-6"></div>
+        <div
+            class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
+        >
+            <div
+                class="casa-display-applications-outline mr-3 text-2xl leading-6"
+            ></div>
             <div class="grow font-medium text-sm">
                 {{ $t('Tips') }}
             </div>
-            <Dropdown append-to="self" panel-class="w-full sm p-0" class="w-[12.125rem]" v-model="selectedApps"
-                :options="tutorialApps" checkmark @change="
+            <Dropdown
+                append-to="self"
+                panel-class="w-full sm p-0"
+                class="w-[12.125rem]"
+                v-model="selectedApps"
+                :options="tutorialApps"
+                checkmark
+                @change="
                     onCheckApps(
                         $event.value,
                         $event.originalEvent as MouseEvent
                     )
-                    ">
+                "
+            >
                 <template #value="slotProps">
                     <div class="flex items-center">
                         {{ slotProps.value.length }} items
@@ -96,11 +166,17 @@
                 </template>
 
                 <template #option="slotProps">
-                    <div class="h-8 flex items-center" @click.capture="onCheckApps(slotProps.option, $event)">
-                        <div :class="tutorialAppsCheckList[slotProps.option]
-                    ? `casa-check-outline text-sky-600 text-base`
-                    : `h-4 w-4`
-                    "></div>
+                    <div
+                        class="h-8 flex items-center"
+                        @click.capture="onCheckApps(slotProps.option, $event)"
+                    >
+                        <div
+                            :class="
+                                tutorialAppsCheckList[slotProps.option]
+                                    ? `casa-check-outline text-sky-600 text-base`
+                                    : `h-4 w-4`
+                            "
+                        ></div>
                         <span class="text-sm grow ml-2">
                             {{ slotProps.option }}
                         </span>
@@ -178,12 +254,12 @@ watch(
     }
 )
 
-initTutorialOptions();
+initTutorialOptions()
 
 onMounted(() => {
     getPort()
     getUsbAutoMount()
-    getCustomOptions();
+    getCustomOptions()
 })
 
 function getPort() {
@@ -210,10 +286,12 @@ function getCustomOptions() {
     })
 }
 
-function initTutorialOptions() {    
+function initTutorialOptions() {
     return api.sys.getUtilization().then(res => {
-        if (res.status === 200 && res.data.data.gpu.length === 0 ) {
-            tutorialApps.value = TutorialApps.filter(item => item !== 'Stable Diffusion');
+        if (res.status === 200 && res.data.data.gpu.length === 0) {
+            tutorialApps.value = TutorialApps.filter(
+                item => item !== 'Stable Diffusion'
+            )
         }
     })
 }
