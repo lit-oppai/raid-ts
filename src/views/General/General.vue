@@ -211,10 +211,9 @@ function getCustomOptions() {
 }
 
 function initTutorialOptions() {    
-    tutorialApps.value = TutorialApps
     return api.sys.getUtilization().then(res => {
         if (res.status === 200 && res.data.data.gpu.length === 0 ) {
-            tutorialApps.value.filter(item => item !== 'Stable Diffusion');
+            tutorialApps.value = TutorialApps.filter(item => item !== 'Stable Diffusion');
         }
     })
 }
