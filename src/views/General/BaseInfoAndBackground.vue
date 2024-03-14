@@ -183,7 +183,7 @@ function transformServerUrl(serverUrl: string) {
                     :title="name">
                     {{ name }}
                 </div>
-                <input v-else="editState" class="ml-2 h-full w-full outline-none bg-transparent" type="text"
+                <input v-else="editState" class="ml-2 h-full w-full outline-none bg-transparent text-base" type="text"
                     ref="editName" name="editName" id="editName" v-model="nameMac" v-bind="nameMacAttrs"
                     @keyup.enter="operateMacName" />
                 <div class="mr-2 hidden group-hover:block group-focus-within:block" :class="iconNameMac"
