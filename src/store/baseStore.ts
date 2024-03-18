@@ -49,8 +49,8 @@ const useBaseStore = defineStore("store", {
                 localStorage.setItem("lang", validLang);
                 switchLanguage(validLang);
                 // send to all possible valid micro-apps
-                const { messageBus } = (await (() => import("@icewhale/ui-utils"))());
-                messageBus("dashboardsetting_language", validLang);
+                // const { messageBus } = (await (() => import("@icewhale/ui-utils"))());
+                // messageBus("dashboardsetting_language", validLang);
             }
         },
     },
