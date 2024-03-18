@@ -6,8 +6,10 @@ import { useForm } from "vee-validate";
 import { device } from "@network/index.ts";
 import { messageBus } from "@icewhale/ui-utils";
 import { socket, baseURL } from "@network/socket";
+import { useI18n } from "vue-i18n";
 import ProcotolDialog from "./ProtocolDialog.vue";
 
+const { t } = useI18n();
 const wallpaperNamespace = "wallpaper";
 interface Wallpaper {
     path: string;
@@ -53,7 +55,7 @@ const { errors, defineField, handleSubmit } = useForm({
             .required()
             .min(3, "Too short")
             .max(20)
-            .matches(/^[a-zA-Z0-9\x20\-\u4e00-\u9fa5]+$/, "Do not allow special characters"),
+            .matches(/^[a-zA-Z0-9\x20\-\u4e00-\u9fa5]+$/, t("Special chars are not allowed")),
     }),
 });
 const [nameMac, nameMacAttrs] = defineField("NameMacSchema", {

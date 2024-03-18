@@ -161,5 +161,6 @@
   "Open Source Usage Statement": "开源使用声明",
   "About ZimaOS": "关于 ZimaOS",
   "Change Wallpaper": "更改壁纸",
-  "Enabling this function may cause boot failures when the Raspberry Pi device is booted from USB": "Raspberry Pi 不支持。"
+  "Enabling this function may cause boot failures when the Raspberry Pi device is booted from USB": "Raspberry Pi 不支持。",
+  "Special chars are not allowed": "不允许使用特殊字符。"
 }
