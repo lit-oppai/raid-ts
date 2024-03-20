@@ -55,7 +55,8 @@ const fontThunderbolt = computed((): NetWorkInterfaceStatus[] => {
 });
 // REMAKER: protogenesis NIC number is 1-9
 const protogenesisNicDataList = computed(() => {
-    return NicDataList.value?.filter((item) => item.index >= 0 && item.index < 10) ?? [];
+    // REMAKER: sort by index and filter index is 0-9 following left to right.
+    return NicDataList.value?.sort((a,b)=> a.index - b.index).filter((item) => item.index >= 0 && item.index < 10) ?? [];
 });
 // REMAKER: extend NIC number is -1
 const ExtendNicDataList = computed(() => {
