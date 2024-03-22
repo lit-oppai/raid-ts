@@ -30,7 +30,8 @@ const { showEstablishRAID, initEstablishRAID } = useEstablishRAID();
 const route = useRoute();
 const router = useRouter();
 const isFirstRoutePath = computed(() => route.matched.length === 1);
-const sysRate = computed(() => {
+const sysRate: number = 10;
+/* const sysRate = computed(() => {
     return totalStorageUsageStatus.value
         ? (
             (totalStorageUsageStatus.value?.SystemUsage /
@@ -40,23 +41,23 @@ const sysRate = computed(() => {
             100
         ).toFixed(0)
         : 0;
-});
+}); */
 const dataRate = computed(() => {
     return (
         (totalStorageUsageStatus.value?.DataUsage /
-            (totalStorageUsageStatus.value?.SystemUsage +
+            (
                 totalStorageUsageStatus.value?.DataFree +
                 totalStorageUsageStatus.value?.DataUsage)) *
-        100
+        90
     ).toFixed(0);
 });
 const freeRate = computed(() => {
     return (
         (totalStorageUsageStatus.value?.DataFree /
-            (totalStorageUsageStatus.value?.SystemUsage +
+            (
                 totalStorageUsageStatus.value?.DataFree +
                 totalStorageUsageStatus.value?.DataUsage)) *
-        100
+        90
     ).toFixed(0);
 });
 const filesUsageRate = computed(() => {
