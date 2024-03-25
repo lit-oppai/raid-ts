@@ -15,7 +15,7 @@ import {
     expansionMinDiskSize,
 } from "@views/ProcessStorageModals/controlData.ts";
 import { RAIDStrategy } from "@views/ProcessStorageModals/controlData.d";
-import { reloadServiceData } from "@views/StorageManager/controlData.ts";
+import { reloadServiceData, RAIDCandidateDiskCount } from "@views/StorageManager/controlData.ts";
 
 import { convertSizeToReadable } from "@icewhale/ui-utils";
 import { useRoute } from "vue-router";
@@ -245,7 +245,8 @@ const extenedCapacity = (): void => {
                 <Button :label="$t('Power off')" severity="primary" size="medium" @click="targetPawerOff()" v-else></Button>
             </div>
 
-            <div class="pt-2 px-1">
+            <!-- Not has the new disk & Raid is helthy. -->
+            <div class="pt-2 px-1" v-if="RAIDCandidateDiskCount > 0 && !needNewDisk">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                     {{
                         $t(
