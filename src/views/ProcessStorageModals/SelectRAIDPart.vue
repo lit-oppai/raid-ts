@@ -59,7 +59,15 @@ for (let [key, item] of allDiskStatus) {
         storageDisabled.push(key)
     }
 }
-
+// prepare select disk list. 
+if (selectRAIDStrategy.value === 'RAID5') {
+    for (let i = 1; i < 4; i++) {
+        const diskInfo = HDDStatus.get(String(i))
+        if (diskInfo?.unused && diskInfo?.health) {
+            selectStorageList.value.push(String(i))
+        }
+    }
+}
 
 const calculateRAIDCapacity = (strategy: RAIDStrategy, diskList: number[]) => {
     let totalSize = 0,
