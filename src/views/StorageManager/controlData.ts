@@ -156,7 +156,7 @@ function processDiskInfo(disk: DISK_API_SCHEMA): void {
         support: disk.support
     }
 
-    disk.free && RAIDCandidateDiskCount.value++
+    disk.index !== -1 && disk.free && RAIDCandidateDiskCount.value++
     if (disk.index > 0 && disk.index < 7) {
         HDDStatus.set(indexStr, baseInfo)
     } else if (['SSD', 'NVME'].includes(disk.type) && disk.index <= 90 && disk.index >= 95) {
