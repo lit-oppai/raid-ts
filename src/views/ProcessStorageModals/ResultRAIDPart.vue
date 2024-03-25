@@ -4,6 +4,7 @@ import Button from "primevue/button";
 import errorSVG from "@assets/img/ProcessStorageModals/error.svg";
 import successSVG from "@assets/img/ProcessStorageModals/success.svg";
 import {
+    nameStorage,
     resultRAIDInfo,
     selectRAIDStrategy,
     selectStorageList,
@@ -26,7 +27,7 @@ if (resultRAIDInfo.success) {
     <div class="flex flex-col items-center space-y-7 mt-20 px-6">
         <Image :src="svg"></Image>
         <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-            {{ $t(statusMessage) }}
+            {{ nameStorage + $t(statusMessage) }}
         </span>
     </div>
     <div class="mt-3 flex justify-center px-6" v-if="context !== 'EnableStorage'">
