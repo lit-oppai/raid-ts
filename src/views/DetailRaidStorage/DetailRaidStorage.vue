@@ -79,11 +79,11 @@ const router = useRouter();
 const isLoadingDisabledButton = ref<boolean>(false);
 async function disabledRaid (): Promise<void> {
     if (!confirm_disassembly_raids.value) {
-        confirm_disassembly_raids.value = false;
+        confirm_disassembly_raids.value = true;
         disassembly_text.value =  "Confirm";
         return;
     }
-    confirm_disassembly_raids.value = true;
+    confirm_disassembly_raids.value = false;
     isLoadingDisabledButton.value = true;
     await raid
         .deleteRaid(storagePath ?? "")
