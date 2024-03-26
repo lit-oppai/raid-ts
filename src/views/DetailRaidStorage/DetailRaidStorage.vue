@@ -15,7 +15,7 @@ import {
     expansionMinDiskSize,
 } from "@views/ProcessStorageModals/controlData.ts";
 import { RAIDStrategy } from "@views/ProcessStorageModals/controlData.d";
-import { reloadServiceData } from "@views/StorageManager/controlData.ts";
+import { reloadServiceData, RAIDCandidateDiskCount } from "@views/StorageManager/controlData.ts";
 
 import { convertSizeToReadable } from "@icewhale/ui-utils";
 import { useRoute } from "vue-router";
@@ -34,6 +34,9 @@ const needFirstAid = ref(false);
 const needNewDisk = ref(false);
 const isReady = ref(false);
 const showAddingDiskButton = ref(true);
+
+const confirm_disassembly_raids = ref(false);
+const disassembly_text = ref("Disable");
 
 // const expansionMinDiskSize = ref(0);
 const isLoadingDiskInfoByStorageSpace = ref<boolean>(false);
@@ -74,7 +77,13 @@ initEstablishRAID();
 import { useRouter } from "vue-router";
 const router = useRouter();
 const isLoadingDisabledButton = ref<boolean>(false);
-const disabledRaid = async (): Promise<void> => {
+async function disabledRaid (): Promise<void> {
+    if (!confirm_disassembly_raids.value) {
+        confirm_disassembly_raids.value = true;
+        disassembly_text.value =  "Confirm";
+        return;
+    }
+    confirm_disassembly_raids.value = false;
     isLoadingDisabledButton.value = true;
     await raid
         .deleteRaid(storagePath ?? "")
@@ -92,6 +101,10 @@ const disabledRaid = async (): Promise<void> => {
         .finally(() => {
             isLoadingDisabledButton.value = false;
         });
+};
+function deselectDisassemblyRaid(): void {
+    confirm_disassembly_raids.value = false;
+    disassembly_text.value = "Disable";
 };
 
 // ejct disk
@@ -245,7 +258,8 @@ const extenedCapacity = (): void => {
                 <Button :label="$t('Power off')" severity="primary" size="medium" @click="targetPawerOff()" v-else></Button>
             </div>
 
-            <div class="pt-2 px-1">
+            <!-- Not has the new disk & Raid is helthy. -->
+            <div class="pt-2 px-1" v-if="RAIDCandidateDiskCount > 0 && !needNewDisk">
                 <span class="text-neutral-400 text-sm font-normal font-['Roboto']">
                     {{
                         $t(
@@ -317,7 +331,7 @@ const extenedCapacity = (): void => {
                     {{ $t("Format and Disable") }}
                 </span>
 
-                <Button :label="$t('Disable')" severity="accent" size="medium" @click="disabledRaid"
+                <Button :label="$t(disassembly_text)" severity="accent" size="medium" @click="disabledRaid" @focusout="deselectDisassemblyRaid"
                     :loading="isLoadingDisabledButton"></Button>
             </div>
         </div>
