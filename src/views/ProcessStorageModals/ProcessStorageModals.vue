@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount } from "vue";
+import { onBeforeUnmount }                from "vue";
 import { currentStep, stepschain, clear } from "./controlData.ts";
 onBeforeUnmount(() => {
     clear();

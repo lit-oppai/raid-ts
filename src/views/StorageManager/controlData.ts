@@ -23,7 +23,7 @@
  */
 // TODO: Replace with fetch API.
 import { ref, reactive, onBeforeMount, onUnmounted } from 'vue'
-import { disk, raid, storage } from '@network/index.ts'
+import { disk, raid, storage }                       from '@network/index.ts'
 import {
     DISK_API_SCHEMA,
     DISK_UI_TYPE,
@@ -69,7 +69,7 @@ export const totalStorageUsageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     FilesUsage: 0,
     FilesFree: 0
 })
-import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP } from './const.ts'
+import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP }  from './const.ts'
 // process storage name
 class StorageNameCollection {
     private storageNames = new Set<string>()
@@ -263,7 +263,7 @@ const destroyStoragePageData = (): void => {
     resetStoragePageData()
 }
 // socket
-import { socket } from '@network/socket.ts'
+import { socket }                                    from '@network/socket.ts'
 // Socket Event Handlers
 function handleDiskAdded (): void {
     initDiskInfo()

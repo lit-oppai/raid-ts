@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import Button from "primevue/button";
-import Skeleton from "primevue/skeleton";
-import { install } from "@network/index.ts";
-import { messageBus } from "@icewhale/ui-utils";
+import Button             from "primevue/button";
+import Skeleton           from "primevue/skeleton";
+import { install }        from "@network/index.ts";
+import { messageBus }     from "@icewhale/ui-utils";
 
 const releaseBackgroundPath = ref<string>("");
 const imageLoaded = ref<boolean>(false);
@@ -36,16 +36,32 @@ function onImageLoad() {
 </script>
 
 <template>
-    <Skeleton v-if="!imageLoaded" width="100%" height="11rem" class="mt-6"/>
-    <div v-if="imageLoaded" class="mt-6 w-full h-[11rem] relative text-center text-white">
-        <img class="absolute w-full h-full object-cover rounded-xl -z-10" :src="releaseBackgroundPath" />
+    <Skeleton v-if="!imageLoaded" width="100%" height="11rem" class="mt-6" />
+    <div
+        v-if="imageLoaded"
+        class="mt-6 w-full h-[11rem] relative text-center text-white"
+    >
+        <img
+            class="absolute w-full h-full object-cover rounded-xl -z-10"
+            :src="releaseBackgroundPath"
+        />
         <div class="text-sm pt-4">ZimaOS</div>
         <div class="text-3xl font-semibold pt-1">
             {{ releaseCode }}
         </div>
-        <Button class="mt-8" :label="$t(`Update`)" severity="primary" size="medium" @click="callUpdatePanel"></Button>
+        <Button
+            class="mt-8"
+            :label="$t(`Update`)"
+            severity="primary"
+            size="medium"
+            @click="callUpdatePanel"
+        ></Button>
         <div class="text-xs pt-2">
-            {{ $t("ZiamOS {releaseVersion} is available", { releaseVersion: releaseVersion }) }}
+            {{
+                $t("ZiamOS {releaseVersion} is available", {
+                    releaseVersion: releaseVersion,
+                })
+            }}
         </div>
     </div>
 </template>

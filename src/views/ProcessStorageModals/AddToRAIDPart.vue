@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import Image from "primevue/image";
-import Button from "primevue/button";
-import { stepByStep } from "./controlData.ts";
-import useEstablishRAID from "./controlView";
+import { ref, onMounted }        from "vue";
+import Image                     from "primevue/image";
+import Button                    from "primevue/button";
+import { stepByStep }            from "./controlData.ts";
+import useEstablishRAID          from "./controlView";
 // import diskSVG from '@assets/img/StorageManager/disk.svg';
-import HDDSVG from "@assets/img/StorageManager/HDD.svg";
-import SSDSVG from "@assets/img/StorageManager/SSD.svg";
-import cryingFaceSVG from "@assets/img/ProcessStorageModals/cryingFace.svg";
-import { disk } from "@network/index.ts";
-import { Disk } from "@icewhale/zimaos-localstorage-openapi";
+import HDDSVG                    from "@assets/img/StorageManager/HDD.svg";
+import SSDSVG                    from "@assets/img/StorageManager/SSD.svg";
+import cryingFaceSVG             from "@assets/img/ProcessStorageModals/cryingFace.svg";
+import { disk }                  from "@network/index.ts";
+import { Disk }                  from "@icewhale/zimaos-localstorage-openapi";
 
 import { convertSizeToReadable } from "@icewhale/ui-utils";
 
@@ -18,7 +18,7 @@ const newDiskStatus = ref<Disk[]>();
 const loadNewDiskStatus = async () => {
     await disk.getDisks("show").then((res) => {
         newDiskStatus.value = res.data.data?.filter(
-            (item) => item?.free && item?.health === "true"
+            (item) => item?.free && item?.health === "true",
         );
     });
 };
@@ -33,11 +33,11 @@ onMounted(async () => {
     await loadNewDiskStatus();
     selectedFidDisk.value =
         newDiskStatus.value?.find(
-            (item) => item.size && item.size >= expansionMinDiskSize.value
+            (item) => item.size && item.size >= expansionMinDiskSize.value,
         )?.path ?? "";
 });
-import { isExitNewDisk } from "@views/ProcessStorageModals/controlData.ts";
-import { watch } from "vue";
+import { isExitNewDisk }         from "@views/ProcessStorageModals/controlData.ts";
+import { watch }                 from "vue";
 watch(newDiskStatus, (val) => {
     if (val?.length) {
         isExitNewDisk.value = true;
@@ -60,32 +60,65 @@ watch(newDiskStatus, (val) => {
         </div>
         <div class="flex flex-col gap-2 px-6">
             <!-- Traversing Part -->
-            <label class="flex items-center h-10 bg-white rounded-md border border-neutral-300 gap-2 px-3 cursor-pointer"
-                v-for="(item, index) in newDiskStatus" :key="index" :for="`select${index}`" :class="{
-                    'opacity-50': item && item.size && expansionMinDiskSize > item.size,
-                }">
-                <Image :src="item.type === 'HDD' ? HDDSVG : SSDSVG" class="h-6 w-6"></Image>
-                <span class="align-baseline text-zinc-800 text-sm font-medium font-['Roboto']">
+            <label
+                class="flex items-center h-10 bg-white rounded-md border border-neutral-300 gap-2 px-3 cursor-pointer"
+                v-for="(item, index) in newDiskStatus"
+                :key="index"
+                :for="`select${index}`"
+                :class="{
+                    'opacity-50':
+                        item && item.size && expansionMinDiskSize > item.size,
+                }"
+            >
+                <Image
+                    :src="item.type === 'HDD' ? HDDSVG : SSDSVG"
+                    class="h-6 w-6"
+                ></Image>
+                <span
+                    class="align-baseline text-zinc-800 text-sm font-medium font-['Roboto']"
+                >
                     {{ item.model }} -
                     {{ convertSizeToReadable(item.size as number) }}
                 </span>
                 <div class="flex-grow"></div>
-                <input type="radio" :id="`select${index}`" :value="item.path" v-model="selectedFidDisk"
-                    v-if="item && item.size && expansionMinDiskSize <= item.size" />
+                <input
+                    type="radio"
+                    :id="`select${index}`"
+                    :value="item.path"
+                    v-model="selectedFidDisk"
+                    v-if="
+                        item && item.size && expansionMinDiskSize <= item.size
+                    "
+                />
             </label>
         </div>
     </template>
     <template v-else>
-        <div class="flex h-full flex-col items-center justify-center bg-white rounded-xl">
+        <div
+            class="flex h-full flex-col items-center justify-center bg-white rounded-xl"
+        >
             <Image :src="cryingFaceSVG"> </Image>
             {{ $t("No available hard drives") }}
         </div>
     </template>
     <div class="flex-grow"></div>
-    <div class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2">
-        <Button :label="$t('Add')" severity="primary" size="medium" @click="stepByStep('next')"
-            v-show="isExitNewDisk" :disabled="!selectedFidDisk"></Button>
-        <Button :label="$t('Close')" severity="primary" size="medium" @click="closeEstablishRAID" v-show="!isExitNewDisk
-            "></Button>
+    <div
+        class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2"
+    >
+        <Button
+            :label="$t('Add')"
+            severity="primary"
+            size="medium"
+            @click="stepByStep('next')"
+            v-show="isExitNewDisk"
+            :disabled="!selectedFidDisk"
+        ></Button>
+        <Button
+            :label="$t('Close')"
+            severity="primary"
+            size="medium"
+            @click="closeEstablishRAID"
+            v-show="!isExitNewDisk"
+        ></Button>
     </div>
 </template>

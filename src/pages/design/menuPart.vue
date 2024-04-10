@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import Image from "primevue/image";
-import Button from "primevue/button";
-import authorImage from "@assets/img/author.svg";
-import { routes } from "@pages/router.ts";
-import { getUserInfo } from "@icewhale/ui-utils";
-import { install } from "@network/index.ts";
+import { ref, onMounted }  from "vue";
+import Image               from "primevue/image";
+import Button              from "primevue/button";
+import authorImage         from "@assets/img/author.svg";
+import { routes }          from "@pages/router.ts";
+import { getUserInfo }     from "@icewhale/ui-utils";
+import { install }         from "@network/index.ts";
 import { vOnClickOutside } from "@vueuse/components";
 
 const userName: string = getUserInfo()?.username ?? "";
 // TODO ： 1、 local storage 相关没有 ts 提示 -- 提出常量部分作为映射。 2、本地存储的更新问题 -- 同步的门槛需要确定。
-const avatar: string = `/v1/users/avatar?token=${localStorage.getItem("access_token")}`;
+const avatar: string = `/v1/users/avatar?token=${localStorage.getItem(
+    "access_token",
+)}`;
 const isUpdate = ref<boolean>(false);
 
 // shutdown or restart
@@ -59,7 +61,8 @@ function onPower(type: "restart" | "shutdown") {
 
 function getRealeaseStatus() {
     install.getStatus().then(({ data }) => {
-        isUpdate.value = data.data?.status === "idle" && data.message === "ready-to-update";
+        isUpdate.value =
+            data.data?.status === "idle" && data.message === "ready-to-update";
     });
 }
 
@@ -84,7 +87,8 @@ function resetStatus() {
         <div class="menu_bar_update" v-show="isUpdate">
             <router-link to="/update" class="flex items-center">
                 <div
-                    class="w-4 h-4 m-[10px] rounded-full bg-brand-400 flex-shrink-0 text-white flex items-center justify-center text-xs">
+                    class="w-4 h-4 m-[10px] rounded-full bg-brand-400 flex-shrink-0 text-white flex items-center justify-center text-xs"
+                >
                     1
                 </div>
                 <Button :label="$t('update')"> </Button>
@@ -92,17 +96,28 @@ function resetStatus() {
         </div>
 
         <div class="menu_bar_selector">
-            <router-link v-for="item in routes.filter((t) => t?.name !== undefined)" :to="item.path" class="os_menu">
-                <Button :label="$t(item.name as string)" :icon="item.icon"> </Button>
+            <router-link
+                v-for="item in routes.filter((t) => t?.name !== undefined)"
+                :to="item.path"
+                class="os_menu"
+            >
+                <Button :label="$t(item.name as string)" :icon="item.icon">
+                </Button>
             </router-link>
         </div>
 
         <div class="menu_bar_footer" v-on-click-outside="resetStatus">
-            <Button :label="restartConfirm ? $t(`Are you sure?`) : $t(`Restart`)" icon="casa-restart-outline"
-                @click="onPower('restart')">
+            <Button
+                :label="restartConfirm ? $t(`Are you sure?`) : $t(`Restart`)"
+                icon="casa-restart-outline"
+                @click="onPower('restart')"
+            >
             </Button>
-            <Button :label="shutdownConfirm ? $t(`Are you sure?`) : $t(`Shutdown`)" icon="casa-shutdown-outline"
-                @click="onPower('shutdown')">
+            <Button
+                :label="shutdownConfirm ? $t(`Are you sure?`) : $t(`Shutdown`)"
+                icon="casa-shutdown-outline"
+                @click="onPower('shutdown')"
+            >
             </Button>
         </div>
     </div>

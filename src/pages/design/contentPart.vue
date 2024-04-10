@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { messageBus } from '@icewhale/ui-utils';
-import { useRoute, useRouter } from "vue-router";
+import { messageBus }            from "@icewhale/ui-utils";
+import { useRoute, useRouter }   from "vue-router";
 import { computed, ComputedRef } from "vue";
 
 //获取路由中的 mate 信息
@@ -19,10 +19,17 @@ function onClose() {
 </script>
 <template>
     <div class="panel_top">
-        <transition mode="out-in" class="animate-fade animate-once animate-duration-200 animate-ease-in">
+        <transition
+            mode="out-in"
+            class="animate-fade animate-once animate-duration-200 animate-ease-in"
+        >
             <!-- <transition mode="out-in" name="slide-fade"> -->
             <div :key="title" class="flex items-center">
-                <div class="top_left" @click="router.go(-1)" v-if="route.matched.length > 1">
+                <div
+                    class="top_left"
+                    @click="router.go(-1)"
+                    v-if="route.matched.length > 1"
+                >
                     <i class="casa-left-outline"></i>
                 </div>
                 <div class="top_title">
@@ -42,7 +49,10 @@ function onClose() {
     <!-- 路由匹配到的组件将渲染在这里 -->
     <div class="panel_content">
         <router-view v-slot="{ Component }">
-            <transition mode="out-in" class="animate-fade animate-once animate-duration-200 animate-ease-in">
+            <transition
+                mode="out-in"
+                class="animate-fade animate-once animate-duration-200 animate-ease-in"
+            >
                 <div :key="route.hash">
                     <component :is="Component" />
                 </div>
@@ -68,7 +78,9 @@ function onClose() {
 
 .slide-fade-enter-active,
 .slide-fade-leave-active {
-    transition: opacity 0.2s, transform 0.2s;
+    transition:
+        opacity 0.2s,
+        transform 0.2s;
 }
 
 .slide-fade-enter-from {

@@ -1,11 +1,11 @@
 import { computed, ComputedRef, ref, Ref, customRef, reactive } from 'vue'
-import OverviewPart from './OverviewPart.vue'
-import SelectRAIDPart from './SelectRAIDPart.vue'
-import ConfirmRAIDPart from './ConfirmRAIDPart.vue'
-import CreatingRAIDPart from './CreatingRAIDPart.vue'
-import ResultRAIDPart from './ResultRAIDPart.vue'
-import AddToRAIDPart from './AddToRAIDPart.vue'
-import { EntranceContextType, RAIDStrategy } from './controlData.d'
+import OverviewPart                                             from './OverviewPart.vue'
+import SelectRAIDPart                                           from './SelectRAIDPart.vue'
+import ConfirmRAIDPart                                          from './ConfirmRAIDPart.vue'
+import CreatingRAIDPart                                         from './CreatingRAIDPart.vue'
+import ResultRAIDPart                                           from './ResultRAIDPart.vue'
+import AddToRAIDPart                                            from './AddToRAIDPart.vue'
+import { EntranceContextType, RAIDStrategy }                    from './controlData.d'
 // ----------------------------------------
 // TODO: 只被外部传参使用
 const formatePath = ref<string>('')
@@ -76,9 +76,9 @@ const selectStorageList = customRef((track, trigger) => {
 // 当前操作的存储池名称
 // const nameStorage = ref('Main-Storage')
 
-import { useForm } from 'vee-validate'
+import { useForm }                                              from 'vee-validate'
 // Although the official recommendation is Yup, Zod has a larger community and is more popular.
-import * as yup from 'yup'
+import * as yup                                                 from 'yup'
 const { defineField, handleSubmit } = useForm({
     validationSchema: yup.object({
         NameStorageSchema: yup

@@ -1,10 +1,10 @@
 // ref https://codesandbox.io/s/plfs2x?file=/src/App.vue:1006-1069
 import { defineAsyncComponent, onMounted, ref, watch, effectScope } from 'vue'
-import { useDialog } from 'primevue/usedialog'
-import { currentStepName, changeContext } from './controlData.ts'
-import { EntranceContextType } from './controlData.d'
-import { reloadServiceData } from '@views/StorageManager/controlData.ts'
-import { useI18n } from 'vue-i18n'
+import { useDialog }                                                from 'primevue/usedialog'
+import { currentStepName, changeContext }                           from './controlData.ts'
+import { EntranceContextType }                                      from './controlData.d'
+import { reloadServiceData }                                        from '@views/StorageManager/controlData.ts'
+import { useI18n }                                                  from 'vue-i18n'
 
 let dialog: any = null
 let dialogInstance: any = null
