@@ -20,8 +20,6 @@ export const routes: RouteMeta[] = [
     {
         path: '/update',
         component: () => import('./update/index.ts'),
-        // redirect: 'storage',
-        // name: 'update',
         icon: '',
         meta: {
             title: 'Update'
