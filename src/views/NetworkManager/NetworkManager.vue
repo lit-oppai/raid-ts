@@ -48,11 +48,11 @@ const NicDataList = ref<NetWorkInterfaceStatus[]>([
         vendor: "Inter",
     },
 ]);
-const isNormalLevel = ref<boolean>(false);
+const isNormalLevel = ref<boolean>(true);
 // RMEAKER: font thunderbolt number is 10
-const fontThunderbolt = computed((): NetWorkInterfaceStatus[] => {
-    return NicDataList.value?.filter((item) => item.index === 10) ?? [];
-});
+// const fontThunderbolt = computed((): NetWorkInterfaceStatus[] => {
+//     return NicDataList.value?.filter((item) => item.index === 10) ?? [];
+// });
 // REMAKER: protogenesis NIC number is 1-9
 const protogenesisNicDataList = computed(() => {
     // REMAKER: sort by index and filter index is 0-9 following left to right.
@@ -91,7 +91,7 @@ function openLinkInstalledZimaOS() {
     <div
         class="relative flex justify-center items-end space-x-3 active mt-[2.5rem]"
     >
-        <ThunderboltSketch :ThunderboltData="fontThunderbolt" />
+        <!-- <ThunderboltSketch :ThunderboltData="fontThunderbolt" /> -->
         <NetworkSketch
             v-if="isNormalLevel"
             :NicDataList="protogenesisNicDataList"
@@ -100,7 +100,7 @@ function openLinkInstalledZimaOS() {
         <div
             class="flex absolute space-x-[247px] text-neutral-400 text-xs font-normal"
         >
-            <div v-t="`Font`"></div>
+            <!-- <div v-t="`Font`"></div> -->
             <div v-t="`Back`"></div>
         </div>
     </div>
