@@ -92,7 +92,7 @@ const disabledStorage = async (): Promise<void> => {
                     <span
                         class="text-zinc-800 text-base font-medium font-['Roboto'] leading-6"
                     >
-                        {{ storageInfo?.driveName }}
+                        {{ storageInfo?.driveName || $t('Missing hard drive') }}
                     </span>
                 </div>
                 <div class="flex">
