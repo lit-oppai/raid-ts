@@ -8,7 +8,7 @@ import useEstablishRAID          from "./controlView";
 import HDDSVG                    from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG                    from "@assets/img/StorageManager/SSD.svg";
 import cryingFaceSVG             from "@assets/img/ProcessStorageModals/cryingFace.svg";
-import { disk }                  from "@network/index.ts";
+import { diskAPI }                  from "@network/index.ts";
 import { Disk }                  from "@icewhale/zimaos-localstorage-openapi";
 
 import { convertSizeToReadable } from "@icewhale/ui-utils";
@@ -16,7 +16,7 @@ import { convertSizeToReadable } from "@icewhale/ui-utils";
 const { closeEstablishRAID } = useEstablishRAID();
 const newDiskStatus = ref<Disk[]>();
 const loadNewDiskStatus = async () => {
-    await disk.getDisks("show").then((res) => {
+    await diskAPI.getDisks("show").then((res) => {
         newDiskStatus.value = res.data.data?.filter(
             (item) => item?.free && item?.health === "true",
         );

@@ -22,7 +22,7 @@ import {
 
 import { convertSizeToReadable } from "@icewhale/ui-utils";
 import { useRoute }              from "vue-router";
-import { /*disk,*/ raid }        from "@network/index.ts";
+import { /*diskAPI,*/ raidAPI }        from "@network/index.ts";
 import { Device }                from "@icewhale/zimaos-localstorage-openapi";
 import minBy                     from "lodash/minBy";
 
@@ -45,7 +45,7 @@ const disassembly_text = ref("Disable");
 const isLoadingDiskInfoByStorageSpace = ref<boolean>(false);
 const loadRaid = async () => {
     isLoadingDiskInfoByStorageSpace.value = true;
-    await raid
+    await raidAPI
         .getRaids(storagePath)
         .then((res) => {
             selectRAIDStrategy.value = ("RAID" +
@@ -78,7 +78,7 @@ const loadRaid = async () => {
 await loadRaid(); // TODO
 initEstablishRAID();
 
-// disable raid
+// disable raidAPI
 import { useRouter }             from "vue-router";
 const router = useRouter();
 const isLoadingDisabledButton = ref<boolean>(false);
@@ -90,7 +90,7 @@ async function disabledRaid(): Promise<void> {
     }
     confirm_disassembly_raids.value = false;
     isLoadingDisabledButton.value = true;
-    await raid
+    await raidAPI
         .deleteRaid(storagePath ?? "")
         .then((res) => {
             if (res.status === 200) {
@@ -118,7 +118,7 @@ const pathOperationEject = ref<string>("");
 const ejectDiskFromRaid = async (path: string): Promise<void> => {
     // operationEjectLoading.value = true;
     pathOperationEject.value = path;
-    await raid
+    await raidAPI
         .updateRaid({
             path: storagePath ?? "",
             action: "remove",

@@ -6,7 +6,7 @@ import InputSwitch        from "primevue/inputswitch";
 import { NPopover }       from "naive-ui";
 import remoteSVG          from "@/assets/img/NetworkManager/remote.svg";
 import { useToast }       from "primevue/usetoast";
-import { zerotier }       from "@network/index.ts";
+import { zerotierAPI }       from "@network/index.ts";
 import { ZTInfo }         from "@icewhale/zimaos-openapi";
 
 const toast = useToast();
@@ -17,7 +17,7 @@ let clickedCount = 0;
 let lastClickTime = 0;
 
 onMounted(() => {
-    zerotier.getZerotierInfo().then((res:any) => {
+    zerotierAPI.getZerotierInfo().then((res:any) => {
         if (res.status === 200) {
             const data: ZTInfo = res.data;
             // id must be exist.
@@ -71,7 +71,7 @@ function switchAccess() {
     isChecking.value = true;
     const status = isAccessed.value ? "online" : "offline";
 
-    zerotier
+    zerotierAPI
         .setZerotierNetworkStatus({ status: status })
         .then((res:any) => {
             if (res.status === 200) {

@@ -3,7 +3,7 @@ import { reactive, ref, computed, nextTick, onMounted, onUnmounted } from "vue";
 import { vOnClickOutside }                                           from "@vueuse/components";
 import api                                                           from "@icewhale/ui-v1-api";
 import { useForm }                                                   from "vee-validate";
-import { device }                                                    from "@network/index.ts";
+import { deviceAPI }                                                    from "@network/index.ts";
 import { messageBus }                                                from "@icewhale/ui-utils";
 import { socket, baseURL }                                           from "@network/socket";
 import { useI18n }                                                   from "vue-i18n";
@@ -122,7 +122,7 @@ function submitMacName() {
     handleSubmit(
         (values) => {
             // 成功 并保存
-            device
+            deviceAPI
                 .putDeviceInfo({ device_name: values.NameMacSchema })
                 .then((res) => {
                     if (res.status === 200) {
@@ -141,7 +141,7 @@ function submitMacName() {
     )();
 }
 async function getDeviceInfo() {
-    await device.getDeviceInfo().then((res) => {
+    await deviceAPI.getDeviceInfo().then((res) => {
         if (res.status === 200) {
             name.value = res.data.device_name;
             version.value = res.data?.os_version ?? "1.0.0";

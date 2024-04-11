@@ -21,7 +21,7 @@ import {
     nameStorage,
     formatePath,
 } from "@views/ProcessStorageModals/controlData.ts";
-import { storage }                  from "@network/index.ts";
+import { storageAPI }                  from "@network/index.ts";
 import { collectionOfStorageNames } from "@views/StorageManager/controlData.ts";
 import router                       from "@/pages/router";
 
@@ -33,7 +33,7 @@ const showCheckFormat = (type: "HDD" | "SSD", path: string = ""): void => {
 };
 const showEnableStorage = (name: string, path: string): void => {
     showEstablishRAID("EnableStorage");
-    storage
+    storageAPI
         .createStorage({ path, name, format: false })
         .then((res) => {
             if (res.status === 200) {

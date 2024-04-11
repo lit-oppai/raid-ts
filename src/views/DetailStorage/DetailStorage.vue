@@ -19,7 +19,7 @@ import {
     onlyFormatSingleStorageSpace,
     formatePath,
 } from "@views/ProcessStorageModals/controlData.ts";
-import { storage /* disk */ }    from "@network/index.ts";
+import { storageAPI /* diskAPI */ }    from "@network/index.ts";
 /* import { DiskInfo } from "@icewhale/zimaos-localstorage-openapi"; */
 
 const { showEstablishRAID } = useEstablishRAID();
@@ -52,7 +52,7 @@ const showCheckFormat = (): void => {
 const isLoadingDisabledButton = ref<boolean>(false);
 const disabledStorage = async (): Promise<void> => {
     isLoadingDisabledButton.value = true;
-    await storage
+    await storageAPI
         .deleteStorage(storageInfo.value?.path ?? "")
         .then((res) => {
             if (res.status === 200) {

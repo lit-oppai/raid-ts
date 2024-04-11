@@ -5,7 +5,7 @@ import NetworkSketch                from "./NetworkSketch.vue";
 import NetworkProSketch             from "./NetworkProSketch.vue";
 import RemoteLoginCard              from "./RemoteLoginCard.vue";
 import NicCard                      from "./NicCard.vue";
-import { network, device }          from "@network/index.ts";
+import { networkAPI, deviceAPI }          from "@network/index.ts";
 import { NetWorkInterfaceStatus }   from "@icewhale/zimaos-openapi";
 
 const NicDataList = ref<NetWorkInterfaceStatus[]>([
@@ -67,12 +67,12 @@ const ExtendNicDataList = computed(() => {
     return NicDataList.value?.filter((item) => item.index === -1) ?? [];
 });
 onMounted(() => {
-    network.getNetworkInterfaces().then((res) => {
+    networkAPI.getNetworkInterfaces().then((res) => {
         if (res.status === 200) {
             NicDataList.value = res.data;
         }
     });
-    device.getDeviceInfo().then((res) => {
+    deviceAPI.getDeviceInfo().then((res) => {
         if (res.status === 200 && res.data.device_model !== "ZimaCube") {
             isNormalLevel.value = false;
         }
