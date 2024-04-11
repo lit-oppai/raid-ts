@@ -23,7 +23,7 @@
  */
 // TODO: Replace with fetch API.
 import { ref, reactive, onBeforeMount, onUnmounted } from 'vue'
-import { diskAPI, raidAPI, storage }                       from '@network/index.ts'
+import { diskAPI, raidAPI, storageAPI }                       from '@network/index.ts'
 import {
     DISK_API_SCHEMA,
     DISK_UI_TYPE,
@@ -35,7 +35,7 @@ import {
 
 // Data Acquisition.
 async function getDiskInfo (): Promise<DISK_API_SCHEMA[] | any> {
-    return disk
+    return diskAPI
         .getDisks()
         .then((res: any) => res.data.data)
         .catch(() => [])
@@ -45,7 +45,7 @@ async function getStorageInfo (): Promise<STORAGE_API_SCHEMA[]> {
         .getRaids()
         .then((res: any) => res.data.data)
         .catch(() => [])
-    const b = await storage
+    const b = await storageAPI
         .getStorage('show')
         .then((res: any) => res.data.data)
         .catch(() => [])

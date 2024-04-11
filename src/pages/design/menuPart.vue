@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted }  from "vue";
-import Image               from "primevue/image";
-import Button              from "primevue/button";
-import authorImage         from "@assets/img/author.svg";
-import { routes }          from "@pages/router.ts";
-import { getUserInfo }     from "@icewhale/ui-utils";
-import { install }         from "@network/index.ts";
+import { ref, onMounted } from "vue";
+import Image from "primevue/image";
+import Button from "primevue/button";
+import authorImage from "@assets/img/author.svg";
+import { routes } from "@pages/router.ts";
+import { getUserInfo } from "@icewhale/ui-utils";
+import { install, appStoreAPI } from "@network/index.ts";
 import { vOnClickOutside } from "@vueuse/components";
 
 const userName: string = getUserInfo()?.username ?? "";
 // TODO ： 1、 local storage 相关没有 ts 提示 -- 提出常量部分作为映射。 2、本地存储的更新问题 -- 同步的门槛需要确定。
 const avatar: string = `/v1/users/avatar?token=${localStorage.getItem(
-    "access_token",
+    "access_token"
 )}`;
 const isUpdate = ref<boolean>(false);
 
@@ -19,9 +19,11 @@ const isUpdate = ref<boolean>(false);
 import { messageBus } from "@icewhale/ui-utils";
 const restartConfirm = ref<boolean>(false);
 const shutdownConfirm = ref<boolean>(false);
+const upgradableAppList = ref<any[]>([]);
 
 onMounted(() => {
     getRealeaseStatus();
+    getUpgradableAppList();
 });
 
 function onPower(type: "restart" | "shutdown") {
@@ -70,6 +72,15 @@ function resetStatus() {
     restartConfirm.value = false;
     shutdownConfirm.value = false;
 }
+
+function getUpgradableAppList() {
+    appStoreAPI.upgradableAppList().then((res) => {
+        upgradableAppList.value = res.data.data || [];
+        if (upgradableAppList.value.length > 0) {
+            isUpdate.value = true;
+        }
+    })
+}
 </script>
 <!-- css components: os_panel menu_bar -->
 <template>
@@ -89,7 +100,7 @@ function resetStatus() {
                 <div
                     class="w-4 h-4 m-[10px] rounded-full bg-brand-400 flex-shrink-0 text-white flex items-center justify-center text-xs"
                 >
-                    1
+                    {{ upgradableAppList.length || 1 }}
                 </div>
                 <Button :label="$t('update')"> </Button>
             </router-link>
