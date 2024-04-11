@@ -22,8 +22,8 @@ export const networkAPI = new NetworkMethodsApi(configuration, "/v2/zimaos", ins
 export const zerotierAPI = new ZeroTierMethodsApi(configuration, "/v2/zimaos", instance);
 export const deviceAPI = new DeviceMethodsApi(configuration, "/v2/zimaos", instance);
 export const driveAPI = new DriveMethodsApi(configuration, "/v2/icewhale", instance);
-export const appStoreAPI = new AppStoreMethodsApi(configuration, "/v2/appmanagement", instance);
-export const composeApi = new ComposeMethodsApi(configuration, "/v2/appmanagement", instance);
+export const appStoreAPI = new AppStoreMethodsApi(configuration, "/v2/app_management", instance);
+export const composeApi = new ComposeMethodsApi(configuration, "/v2/app_management", instance);
 
 export const install = new InstallApi(configuration, "/v2/installer", instance);
 

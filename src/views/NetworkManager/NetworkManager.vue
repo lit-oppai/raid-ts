@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import ThunderboltSketch            from "./ThunderboltSketch.vue";
+// import ThunderboltSketch            from "./ThunderboltSketch.vue";
 import NetworkSketch                from "./NetworkSketch.vue";
 import NetworkProSketch             from "./NetworkProSketch.vue";
 import RemoteLoginCard              from "./RemoteLoginCard.vue";
