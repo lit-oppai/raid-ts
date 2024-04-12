@@ -22,7 +22,7 @@
         9. collectionOfStorageNames: storage name collection.
  */
 // TODO: Replace with fetch API.
-import { ref, reactive, onBeforeMount, onUnmounted } from 'vue'
+import { ref, reactive, onBeforeMount, onUnmounted }          from 'vue'
 import { diskAPI, raidAPI, storageAPI }                       from '@network/index.ts'
 import {
     DISK_API_SCHEMA,
@@ -69,7 +69,7 @@ export const totalStorageUsageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     FilesUsage: 0,
     FilesFree: 0
 })
-import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP }  from './const.ts'
+import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP }           from './const.ts'
 // process storage name
 class StorageNameCollection {
     private storageNames = new Set<string>()
@@ -106,7 +106,9 @@ function createStorageStatus (defaultExpectType: string) {
     const status = reactive(new Map<string, DISK_UI_TYPE>())
     const setDefaultValues = (startIndex: number, endIndex: number) => {
         for (let i = startIndex; i <= endIndex; i++) {
-            status.set(i.toString(), {
+            const key = INDEX_TO_DISK_HUB_MAP.get(i)
+            key &&
+            status.set(key, {
                 exit: false,
                 health: false,
                 temperature: 0,
@@ -161,8 +163,8 @@ function processDiskInfo (disk: DISK_API_SCHEMA): void {
         HDDStatus.set(indexStr, baseInfo)
     } else if (
         ['SSD', 'NVME'].includes(disk.type) &&
-        disk.index <= 90 &&
-        disk.index >= 95
+        disk.index >= 90 &&
+        disk.index <= 95
     ) {
         const key = INDEX_TO_DISK_HUB_MAP.get(disk.index)
         if (key) {
@@ -263,7 +265,7 @@ const destroyStoragePageData = (): void => {
     resetStoragePageData()
 }
 // socket
-import { socket }                                    from '@network/socket.ts'
+import { socket }                                             from '@network/socket.ts'
 // Socket Event Handlers
 function handleDiskAdded (): void {
     initDiskInfo()
