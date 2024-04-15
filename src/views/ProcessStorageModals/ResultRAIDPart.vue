@@ -61,13 +61,15 @@ if (resultRAIDInfo.success) {
             <div class="w-full h-px bg-gray-200"></div>
             <div class="flex justify-between">
                 <span
-                    class="text-neutral-400 text-sm font-normal font-['Roboto']"
+                    class="text-neutral-400 text-sm font-normal font-['Roboto'] flex-1"
                 >
                     {{ $t("Hard drives") }} :
                 </span>
-                <span class="text-zinc-800 text-sm font-medium font-['Roboto']">
-                    {{ selectStorageList }}
-                </span>
+                <div class="flex shrink-0 grow-0 space-x-1">
+                    <div v-for="key in selectStorageList" class="w-4 h-6 py-1 bg-zinc-100 rounded text-center text-zinc-800 text-xs font-medium font-['Roboto']">
+                        {{ key }}
+                    </div>
+                </div>
             </div>
         </div>
         <span
