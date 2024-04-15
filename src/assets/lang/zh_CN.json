@@ -164,5 +164,6 @@
   "Enabling this function may cause boot failures when the Raspberry Pi device is booted from USB": "Raspberry Pi 不支持。",
   "Special chars are not allowed": "不允许使用特殊字符。",
   "Updating": "更新中",
-  "Missing hard drive": "丢失的硬盘"
+  "Missing hard drive": "丢失的硬盘",
+  "Are you sure?": "确认？"
 }
