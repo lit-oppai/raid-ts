@@ -36,6 +36,7 @@ const storageSelectable: (number | string)[] = [];
 // 无硬盘
 const storageNone: (number | string)[] = [];
 
+let countSelectDisk = 1;
 for (let [key, item] of allDiskStatus) {
     // 不可选
     if (!item.exit) {
@@ -58,14 +59,11 @@ for (let [key, item] of allDiskStatus) {
         // 不可选
         storageDisabled.push(key);
     }
-}
-// prepare select disk list.
-if (selectRAIDStrategy.value === "RAID5") {
-    for (let i = 1; i < 4; i++) {
-        const diskInfo = HDDStatus.get(String(i));
-        if (diskInfo?.unused && diskInfo?.health) {
-            selectStorageList.value.push(String(i));
-        }
+
+    // prepare select disk list.
+    if (((selectRAIDStrategy.value === "RAID5" && countSelectDisk <= 3) || (selectRAIDStrategy.value !== "RAID5" && countSelectDisk <= 2)) && item?.unused && item.health) {
+        countSelectDisk++;
+        selectStorageList.value.push(key);
     }
 }
 

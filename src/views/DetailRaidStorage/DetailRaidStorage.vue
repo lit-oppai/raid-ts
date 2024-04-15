@@ -85,7 +85,7 @@ const isLoadingDisabledButton = ref<boolean>(false);
 async function disabledRaid(): Promise<void> {
     if (!confirm_disassembly_raids.value) {
         confirm_disassembly_raids.value = true;
-        disassembly_text.value = "Confirm";
+        disassembly_text.value = "Are you sure?";
         return;
     }
     confirm_disassembly_raids.value = false;
