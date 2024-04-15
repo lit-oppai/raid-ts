@@ -8,7 +8,7 @@ import diskSVG                   from "@assets/img/StorageManager/disk.svg";
 import warningSVG                from "@assets/img/StorageManager/warning.svg";
 import warningRedSVG             from "@assets/img/StorageManager/warningRed.svg";
 import warningIntense            from "@assets/img/StorageManager/warningIntense.svg";
-// import Warning from '@assets/img/StorageManager/warning.vue';
+
 import useEstablishRAID          from "@views/ProcessStorageModals/controlView.ts";
 import {
     selectRAIDStrategy,
@@ -22,7 +22,7 @@ import {
 
 import { convertSizeToReadable } from "@icewhale/ui-utils";
 import { useRoute }              from "vue-router";
-import { /*diskAPI,*/ raidAPI }        from "@network/index.ts";
+import { raidAPI }               from "@network/index.ts";
 import { Device }                from "@icewhale/zimaos-localstorage-openapi";
 import minBy                     from "lodash/minBy";
 
@@ -147,7 +147,7 @@ watch(
         diskInfoByStorageSpace.value = v
             ? diskInfoByStorageSpace.value.filter((i) => i.health)
             : diskInfoByStorageSpace.value;
-    },
+    }
 );
 
 // power off
@@ -210,10 +210,10 @@ const extenedCapacity = (): void => {
                 {{
                     needNewDisk
                         ? $t(
-                              "The data has been locked for read-only access. Please add new hard drive(s).",
+                              "The data has been locked for read-only access. Please add new hard drive(s)."
                           )
                         : $t(
-                              `The data has been locked for read-only access. Please replace it for recovery operations.`,
+                              `The data has been locked for read-only access. Please replace it for recovery operations.`
                           )
                 }}
             </span>
@@ -293,7 +293,7 @@ const extenedCapacity = (): void => {
                 >
                     {{
                         $t(
-                            "The hard drive has been ejected. Please power off, replace and restart.",
+                            "The hard drive has been ejected. Please power off, replace and restart."
                         )
                     }}
                 </span>
@@ -318,14 +318,14 @@ const extenedCapacity = (): void => {
             <!-- Not has the new disk & Raid is helthy. -->
             <div
                 class="pt-2 px-1"
-                v-if="RAIDCandidateDiskCount > 0 && !needNewDisk"
+                v-if="RAIDCandidateDiskCount == 0 && !needNewDisk"
             >
                 <span
                     class="text-neutral-400 text-sm font-normal font-['Roboto']"
                 >
                     {{
                         $t(
-                            "After inserting a new hard drive, you can expand the current RAID capacity.",
+                            "After inserting a new hard drive, you can expand the current RAID capacity."
                         )
                     }}
                 </span>
@@ -377,9 +377,9 @@ const extenedCapacity = (): void => {
                                     `Replace a hard drive of at least {size} to restore functionality.`,
                                     {
                                         size: convertSizeToReadable(
-                                            expansionMinDiskSize,
+                                            expansionMinDiskSize
                                         ),
-                                    },
+                                    }
                                 )
                             }}
                         </span>
@@ -400,7 +400,7 @@ const extenedCapacity = (): void => {
             <!-- TODO0 无损坏 && raid5 && 存在空槽位 -->
             <div
                 class="bg-white rounded-lg h-11 flex items-center px-4"
-                v-if="storageLevel === 5 && !needFirstAid && isReady"
+                v-if="storageLevel === 5 && !needFirstAid && RAIDCandidateDiskCount"
             >
                 <Image :src="diskSVG" class="h-6 w-6"></Image>
                 <span
