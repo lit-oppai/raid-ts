@@ -130,8 +130,9 @@ const { status: SSDStatus, setDefaultValues: setDefaultSSDValues } =
 const initDiskInfo = async (): Promise<void> => {
     const disksInfo = await getDiskInfo()
     // rinseDiskInfo(disksInfo)
+    // init disk data construct.
     setDefaultHDDValues(1, 6)
-    setDefaultSSDValues(91, 94)
+    setDefaultSSDValues(90, 93)
     RAIDCandidateDiskCount.value = 0
     disksInfo.forEach(processDiskInfo)
 }
