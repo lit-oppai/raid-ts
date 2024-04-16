@@ -8,7 +8,10 @@ import { install, appStoreAPI, composeApi } from "@network/index.ts";
 import { UpgradableAppInfoStatusEnum }      from "@icewhale/casaos-appmanagement-openapi";
 import supermanRaidSVG                      from "@/assets/img/StorageManager/supermanRaid.svg";
 import { showTitle }                        from "@/i18n.ts";
+import { useRoute }                         from "vue-router";
 
+const route = useRoute();
+const isUpdateSys = ref<boolean>(Boolean(route.query.isUpdateSys));
 const releaseBackgroundPath = ref<string>("");
 const imageLoaded = ref<boolean>(false);
 const releaseCode = ref<string>("");
@@ -68,9 +71,9 @@ function upgradeApp(store_app_id: string) {
 </script>
 
 <template>
-    <Skeleton v-if="!imageLoaded" width="100%" height="11rem" class="mt-6" />
+    <Skeleton v-if="!imageLoaded && isUpdateSys" width="100%" height="11rem" class="mt-6" />
     <div
-        v-else
+        v-else-if="isUpdateSys"
         class="mt-6 w-full h-[11rem] relative overflow-hidden text-center text-white"
     >
         <img
