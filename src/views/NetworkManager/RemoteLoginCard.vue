@@ -28,9 +28,8 @@ onMounted(() => {
     })
 });
 
-watch([isAccessed.value], () => {
+watch(isAccessed, () => {
     emit("update:remoteAccessStatus", isAccessed.value);
-    console.log("isAccessed.value", isAccessed.value);
 });
 
 function handleClick() {
