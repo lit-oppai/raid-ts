@@ -26,7 +26,7 @@ if (resultRAIDInfo.success) {
     <div class="flex flex-col items-center space-y-7 mt-20 px-6">
         <Image :src="svg"></Image>
         <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-            {{ nameStorage + $t(statusMessage) }}
+            {{ nameStorage + ' ' + $t(statusMessage) }}
         </span>
     </div>
     <div
