@@ -11,7 +11,7 @@ import { showTitle }                        from "@/i18n.ts";
 import { useRoute }                         from "vue-router";
 
 const route = useRoute();
-const isUpdateSys = ref<boolean>(Boolean(route.query.isUpdateSys));
+const isUpdateSys = ref<boolean>(Boolean(route.params.isUpdateSys));
 const releaseBackgroundPath = ref<string>("");
 const imageLoaded = ref<boolean>(false);
 const releaseCode = ref<string>("");
