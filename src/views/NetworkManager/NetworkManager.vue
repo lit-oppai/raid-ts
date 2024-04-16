@@ -49,6 +49,7 @@ const NicDataList = ref<NetWorkInterfaceStatus[]>([
     }, */
 ]);
 const isNormalLevel = ref<boolean>(true);
+const isAccess = ref<boolean>(false);
 
 // REMAKER: protogenesis NIC number is 1-9
 const protogenesisNicDataList = computed(() => {
@@ -100,7 +101,7 @@ function openLinkInstalledZimaOS() {
     </div>
 
     <!-- Remote Login -->
-    <RemoteLoginCard class="mt-6"></RemoteLoginCard>
+    <RemoteLoginCard class="mt-6" @update:remoteAccessStatus="val => isAccess = val"></RemoteLoginCard>
 
     <!-- NIC -->
     <NicCard
@@ -112,7 +113,7 @@ function openLinkInstalledZimaOS() {
         :negotiated-speed="item.negotiated_speed"
     ></NicCard>
 
-    <div class="my-3">
+    <div class="my-3" v-show="!isAccess">
         <span
             class="text-neutral-400 text-xs font-normal font-['Roboto'] leading-none pr-1"
         >
@@ -126,7 +127,7 @@ function openLinkInstalledZimaOS() {
         </span>
     </div>
 
-    <div class="">
+    <div class="" v-show="isAccess">
         <span
             class="text-sky-600 text-xs font-normal font-['Roboto'] leading-none pr-1 cursor-pointer"
             @click="openLinkInstalledZimaOS"

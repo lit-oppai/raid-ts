@@ -1,30 +1,36 @@
 <script setup lang="ts">
-import copy               from "clipboard-copy";
-import { ref, onMounted } from "vue";
-import Image              from "primevue/image";
-import InputSwitch        from "primevue/inputswitch";
-import { NPopover }       from "naive-ui";
-import remoteSVG          from "@/assets/img/NetworkManager/remote.svg";
-import { useToast }       from "primevue/usetoast";
-import { zerotierAPI }       from "@network/index.ts";
-import { ZTInfo }         from "@icewhale/zimaos-openapi";
+import copy                                      from "clipboard-copy";
+import { ref, onMounted, defineEmits, watch }    from "vue";
+import Image                                     from "primevue/image";
+import InputSwitch                               from "primevue/inputswitch";
+import { NPopover }                              from "naive-ui";
+import remoteSVG                                 from "@/assets/img/NetworkManager/remote.svg";
+import { useToast }                              from "primevue/usetoast";
+import { zerotierAPI }                           from "@network/index.ts";
+import { ZTInfo }                                from "@icewhale/zimaos-openapi";
 
 const toast = useToast();
 const accessID = ref<string>("");
 const isAccessed = ref<boolean>(false);
 const isChecking = ref<boolean>(false);
+const emit = defineEmits(["update:remoteAccessStatus"]);
 let clickedCount = 0;
 let lastClickTime = 0;
 
 onMounted(() => {
-    zerotierAPI.getZerotierInfo().then((res:any) => {
+    zerotierAPI.getZerotierInfo().then((res: any) => {
         if (res.status === 200) {
             const data: ZTInfo = res.data;
             // id must be exist.
             accessID.value = data?.id || "";
             isAccessed.value = data?.status === "online";
         }
-    });
+    })
+});
+
+watch([isAccessed.value], () => {
+    emit("update:remoteAccessStatus", isAccessed.value);
+    console.log("isAccessed.value", isAccessed.value);
 });
 
 function handleClick() {
@@ -72,12 +78,20 @@ function switchAccess() {
     const status = isAccessed.value ? "online" : "offline";
 
     zerotierAPI
-        .setZerotierNetworkStatus({ status: status })
-        .then((res:any) => {
+        .setZerotierNetworkStatus({ status })
+        .then((res: any) => {
             if (res.status === 200) {
                 isAccessed.value = res.data.status === "online";
                 accessID.value = res.data?.id || "";
             }
+        })
+        .catch((err: any) => {
+            isAccessed.value = !isAccessed.value;
+            toast?.add({
+                severity: "error",
+                summary: err.response.data.message,
+                life: 3000,
+            });
         })
         .finally(() => {
             isChecking.value = false;
