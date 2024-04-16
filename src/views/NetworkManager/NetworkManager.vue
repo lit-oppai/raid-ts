@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-// import ThunderboltSketch            from "./ThunderboltSketch.vue";
-import NetworkSketch                from "./NetworkSketch.vue";
-import NetworkProSketch             from "./NetworkProSketch.vue";
-import RemoteLoginCard              from "./RemoteLoginCard.vue";
-import NicCard                      from "./NicCard.vue";
+import { ref, computed, onMounted }       from "vue";
+import NetworkSketch                      from "./NetworkSketch.vue";
+import NetworkProSketch                   from "./NetworkProSketch.vue";
+import RemoteLoginCard                    from "./RemoteLoginCard.vue";
+import NicCard                            from "./NicCard.vue";
 import { networkAPI, deviceAPI }          from "@network/index.ts";
-import { NetWorkInterfaceStatus }   from "@icewhale/zimaos-openapi";
+import { NetWorkInterfaceStatus }         from "@icewhale/zimaos-openapi";
 
 const NicDataList = ref<NetWorkInterfaceStatus[]>([
-    {
+    // mock data
+/*     {
         index: 0,
         ip: "",
         mac: "34:1a:4c:00:e5:0d",
@@ -46,19 +46,15 @@ const NicDataList = ref<NetWorkInterfaceStatus[]>([
         product: "Thunderbolt",
         theoretical_speed: 20000000000,
         vendor: "Inter",
-    },
+    }, */
 ]);
 const isNormalLevel = ref<boolean>(true);
-// RMEAKER: font thunderbolt number is 10
-// const fontThunderbolt = computed((): NetWorkInterfaceStatus[] => {
-//     return NicDataList.value?.filter((item) => item.index === 10) ?? [];
-// });
+
 // REMAKER: protogenesis NIC number is 1-9
 const protogenesisNicDataList = computed(() => {
     // REMAKER: sort by index and filter index is 0-9 following left to right.
     return (
         NicDataList.value
-            ?.sort((a, b) => a.index - b.index)
             .filter((item) => item.index >= 0 && item.index < 10) ?? []
     );
 });
@@ -69,7 +65,7 @@ const ExtendNicDataList = computed(() => {
 onMounted(() => {
     networkAPI.getNetworkInterfaces().then((res) => {
         if (res.status === 200) {
-            NicDataList.value = res.data;
+            NicDataList.value = res.data?.sort((a, b) => a.index - b.index);
         }
     });
     deviceAPI.getDeviceInfo().then((res) => {
@@ -91,7 +87,6 @@ function openLinkInstalledZimaOS() {
     <div
         class="relative flex justify-center items-end space-x-3 active mt-[2.5rem]"
     >
-        <!-- <ThunderboltSketch :ThunderboltData="fontThunderbolt" /> -->
         <NetworkSketch
             v-if="isNormalLevel"
             :NicDataList="protogenesisNicDataList"
@@ -100,7 +95,6 @@ function openLinkInstalledZimaOS() {
         <div
             class="flex absolute space-x-[247px] text-neutral-400 text-xs font-normal"
         >
-            <!-- <div v-t="`Font`"></div> -->
             <div v-t="`Back`"></div>
         </div>
     </div>
