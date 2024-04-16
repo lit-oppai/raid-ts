@@ -71,7 +71,12 @@ function upgradeApp(store_app_id: string) {
 </script>
 
 <template>
-    <Skeleton v-if="!imageLoaded && isUpdateSys" width="100%" height="11rem" class="mt-6" />
+    <Skeleton
+        v-if="!imageLoaded && isUpdateSys"
+        width="100%"
+        height="11rem"
+        class="mt-6"
+    />
     <div
         v-else-if="isUpdateSys"
         class="mt-6 w-full h-[11rem] relative overflow-hidden text-center text-white"
@@ -103,7 +108,7 @@ function upgradeApp(store_app_id: string) {
         <div
             class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5 ml-0.5"
         >
-            {{$t("Apps update")}}
+            {{ $t("Apps update") }}
         </div>
         <div
             v-for="item in upgradableAppList"
