@@ -45,7 +45,7 @@ function handleClick() {
         toast?.add({
             severity: "success",
             summary: "Copied to clipboard",
-            life: 3000,
+            life: 5000,
         });
     } else if (clickInterval <= 300 && clickedCount === 5) {
         clickedCount = 0;
@@ -53,7 +53,7 @@ function handleClick() {
         toast?.add({
             severity: "success",
             summary: "Successed to change",
-            life: 3000,
+            life: 5000,
         });
     }
 }
@@ -89,7 +89,7 @@ function switchAccess() {
             toast?.add({
                 severity: "error",
                 summary: err.response.data.message,
-                life: 3000,
+                life: 5000,
             });
         })
         .finally(() => {
