@@ -98,7 +98,13 @@ function getUpgradableAppList() {
 
         <div class="menu_bar_update" v-show="isUpdateSys || isUpdateApps">
             <router-link
-                :to="{ path: 'update', params: { isUpdateSys, isUpdateApps } }"
+                :to="{
+                    path: 'update',
+                    query: {
+                        'isUpdateSys': isUpdateSys.toString(),
+                        'isUpdateApps': isUpdateApps.toString(),
+                    },
+                }"
                 class="flex items-center"
             >
                 <div
