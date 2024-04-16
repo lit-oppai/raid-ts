@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import Button from "primevue/button";
-import Skeleton from "primevue/skeleton";
-import PImage from "primevue/image";
-import { messageBus } from "@icewhale/ui-utils";
+import { ref, onMounted }                   from "vue";
+import Button                               from "primevue/button";
+import Skeleton                             from "primevue/skeleton";
+import PImage                               from "primevue/image";
+import { messageBus }                       from "@icewhale/ui-utils";
 import { install, appStoreAPI, composeApi } from "@network/index.ts";
-import { UpgradableAppInfoStatusEnum } from "@icewhale/casaos-appmanagement-openapi";
-import supermanRaidSVG from "@/assets/img/StorageManager/supermanRaid.svg";
-import { showTitle } from "@/i18n.ts";
+import { UpgradableAppInfoStatusEnum }      from "@icewhale/casaos-appmanagement-openapi";
+import supermanRaidSVG                      from "@/assets/img/StorageManager/supermanRaid.svg";
+import { showTitle }                        from "@/i18n.ts";
 
 const releaseBackgroundPath = ref<string>("");
 const imageLoaded = ref<boolean>(false);
@@ -100,7 +100,7 @@ function upgradeApp(store_app_id: string) {
         <div
             class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-5 ml-0.5"
         >
-            Apps update
+            {{$t("Apps update")}}
         </div>
         <div
             v-for="item in upgradableAppList"
