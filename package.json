@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host --port=4000",
     "build": "vue-tsc && vite build",
-    "build:raw": "vue-cli-service build --dest ./raw/usr/share/casaos/www/modules/icewhale_settings --mode production",
+    "build:raw": "vue-tsc && OUTPUT_DIR='raw/usr/share/casaos/www/modules/icewhale_settings' vite build",
     "deploy:local": "bash ./script/build_deploy.sh",
     "preview": "vite preview",
     "upOpenAPI": "pnpm up '@icewhale/*' --latest"
