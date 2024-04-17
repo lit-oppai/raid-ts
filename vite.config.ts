@@ -6,6 +6,8 @@ import vue from '@vitejs/plugin-vue'
 export default ({ mode }) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
+    const outputDir =  process.env.OUTPUT_DIR || 'build/sysroot/usr/share/casaos/www/modules/icewhale_settings';
+
     return defineConfig({
         plugins: [vue()],
         resolve: {
@@ -24,7 +26,7 @@ export default ({ mode }) => {
         build: {
             // sourcemap: true,
             // minify: false,
-            outDir: "build/sysroot/usr/share/casaos/www/modules/icewhale_settings",
+            outDir: outputDir,
         },
         server: {
             open: true,

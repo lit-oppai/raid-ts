@@ -1,0 +1,24 @@
+{
+    "name": "icewhale-settings",
+    "ui": {
+        "name": "icewhale_settings",
+        "title": {
+            "en_us": "settings"
+        },
+        "prefetch": true,
+        "show": false,
+        "entry": "/modules/icewhale_settings/index.html",
+        "icon": "/modules/icewhale_settings/raid.svg",
+        "description": "Icewhale Settings",
+        "formality": {
+            "type": "modal",
+            "props": {
+            "width": "864px",
+            "height": "90vh",
+            "maxHeight": "768px",
+            "hasModalCard": true,
+            "animation": "zoom-in"
+            }
+        }
+    }
+}
