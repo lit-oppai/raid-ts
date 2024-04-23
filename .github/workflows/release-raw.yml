@@ -57,7 +57,7 @@ jobs:
             -   run: pnpm install
             -   run: pnpm build:raw
             -   run: |
-                    mksquashfs raw/ icewhale-settings.raw
+                    mksquashfs raw/ icewhale_settings.raw
             -   name: '更新 Update release'
                 uses: zhanghengxin/git-release-private@ice
                 with:
@@ -66,7 +66,7 @@ jobs:
                     gzip: false
                     prerelease: true
                     tag: ${{ steps.get_version.outputs.VERSION }}
-                    files: ./icewhale-settings.raw
+                    files: ./icewhale_settings.raw
 
             -   name: Upload to oss
                 id: upload_to_oss
@@ -77,4 +77,4 @@ jobs:
                     region: oss-cn-shanghai
                     bucket: casaos
                     assets: |
-                        ./icewhale-settings.raw:/IceWhaleTech/IceWhale-Settings-UI/releases/download/${{ steps.get_version.outputs.VERSION }}/icewhale-settings.raw
+                        ./icewhale_settings.raw:/IceWhaleTech/IceWhale-Settings-UI/releases/download/${{ steps.get_version.outputs.VERSION }}/icewhale_settings.raw
