@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { reactive, ref, computed, nextTick, onMounted, onUnmounted } from "vue";
-import { vOnClickOutside } from "@vueuse/components";
-import api from "@icewhale/ui-v1-api";
-import { useForm } from "vee-validate";
-import { device } from "@network/index.ts";
-import { messageBus } from "@icewhale/ui-utils";
-import { socket, baseURL } from "@network/socket";
-import { useI18n } from "vue-i18n";
-import ProcotolDialog from "./ProtocolDialog.vue";
+import { vOnClickOutside }                                           from "@vueuse/components";
+import api                                                           from "@icewhale/ui-v1-api";
+import { useForm }                                                   from "vee-validate";
+import { deviceAPI }                                                    from "@network/index.ts";
+import { messageBus }                                                from "@icewhale/ui-utils";
+import { socket, baseURL }                                           from "@network/socket";
+import { useI18n }                                                   from "vue-i18n";
+import ProcotolDialog                                                from "./ProtocolDialog.vue";
 
 const { t } = useI18n();
 const wallpaperNamespace = "wallpaper";
@@ -45,9 +45,9 @@ function getWallpaper() {
                 return;
             }
         })
-        .catch(() => { });
+        .catch(() => {});
 }
-import { object, string } from "yup";
+import { object, string }                                            from "yup";
 
 const { errors, defineField, handleSubmit } = useForm({
     validationSchema: object({
@@ -55,7 +55,10 @@ const { errors, defineField, handleSubmit } = useForm({
             .required()
             .min(3, "Too short")
             .max(20)
-            .matches(/^[a-zA-Z0-9\x20\-\u4e00-\u9fa5]+$/, t("Special chars are not allowed")),
+            .matches(
+                /^[a-zA-Z0-9\x20\-\u4e00-\u9fa5]+$/,
+                t("Special chars are not allowed"),
+            ),
     }),
 });
 const [nameMac, nameMacAttrs] = defineField("NameMacSchema", {
@@ -119,7 +122,7 @@ function submitMacName() {
     handleSubmit(
         (values) => {
             // 成功 并保存
-            device
+            deviceAPI
                 .putDeviceInfo({ device_name: values.NameMacSchema })
                 .then((res) => {
                     if (res.status === 200) {
@@ -134,11 +137,11 @@ function submitMacName() {
         (v) => {
             // 失败，不允许保存
             console.log(v, "v");
-        }
+        },
     )();
 }
 async function getDeviceInfo() {
-    await device.getDeviceInfo().then((res) => {
+    await deviceAPI.getDeviceInfo().then((res) => {
         if (res.status === 200) {
             name.value = res.data.device_name;
             version.value = res.data?.os_version ?? "1.0.0";
@@ -164,13 +167,21 @@ function transformServerUrl(serverUrl: string) {
     <div class="flex justify-center my-8">
         <!-- background -->
         <div class="basis-1/2 flex flex-row-reverse mr-2">
-            <div @click="showChangeWallpaperDialog" title="Change wallpaper"
-                class="relative w-[13rem] h-[7.5rem] bg-gradient-to-br from-zinc-800 from-1.44% via-zinc-600 via-50% to-black to-99% shadow-wallpaper rounded-2xl">
-                <div class="absolute right-0 left-0 top-0 bottom-0 m-auto rounded-xl w-[12.5rem] h-[7rem] overflow-hidden bg-cover bg-no-repeat bg-center transition-background duration-500"
-                    :style="[backgroundStyleObject]">
-                    <div class="w-full h-full flex items-center justify-center group">
+            <div
+                @click="showChangeWallpaperDialog"
+                title="Change wallpaper"
+                class="relative w-[13rem] h-[7.5rem] bg-gradient-to-br from-zinc-800 from-1.44% via-zinc-600 via-50% to-black to-99% shadow-wallpaper rounded-2xl"
+            >
+                <div
+                    class="absolute right-0 left-0 top-0 bottom-0 m-auto rounded-xl w-[12.5rem] h-[7rem] overflow-hidden bg-cover bg-no-repeat bg-center transition-background duration-500"
+                    :style="[backgroundStyleObject]"
+                >
+                    <div
+                        class="w-full h-full flex items-center justify-center group"
+                    >
                         <div
-                            class="bg-gray-100 h-7 px-[14px] rounded-[14px] text-sm group-hover:flex hidden items-center cursor-pointer select-none">
+                            class="bg-gray-100 h-7 px-[14px] rounded-[14px] text-sm group-hover:flex hidden items-center cursor-pointer select-none"
+                        >
                             {{ $t("Change Wallpaper") }}
                         </div>
                     </div>
@@ -179,26 +190,49 @@ function transformServerUrl(serverUrl: string) {
         </div>
         <!-- inof list -->
         <div class="basis-1/2 flex flex-col justify-center ml-2 pb-[3px]">
-            <div class="relative group flex items-center justify-between w-[15rem] h-[2.25rem] group-focus-within:outline outline-1 outline-sky-600 rounded text-gary/primary cursor-pointer"
-                :class="{ outline: editState }" v-on-click-outside="deselectMacName">
-                <div v-if="!editState" class="ml-2 w-full font-medium text-base truncate" @click="activeMacName"
-                    :title="name">
+            <div
+                class="relative group flex items-center justify-between w-[15rem] h-[2.25rem] group-focus-within:outline outline-1 outline-sky-600 rounded text-gary/primary cursor-pointer"
+                :class="{ outline: editState }"
+                v-on-click-outside="deselectMacName"
+            >
+                <div
+                    v-if="!editState"
+                    class="ml-2 w-full font-medium text-base truncate"
+                    @click="activeMacName"
+                    :title="name"
+                >
                     {{ name }}
                 </div>
-                <input v-else="editState" class="ml-2 h-full w-full outline-none bg-transparent text-base" type="text"
-                    ref="editName" name="editName" id="editName" v-model="nameMac" v-bind="nameMacAttrs"
-                    @keyup.enter="operateMacName" />
-                <div class="mr-2 hidden group-hover:block group-focus-within:block" :class="iconNameMac"
-                    @click="operateMacName"></div>
+                <input
+                    v-else="editState"
+                    class="ml-2 h-full w-full outline-none bg-transparent text-base"
+                    type="text"
+                    ref="editName"
+                    name="editName"
+                    id="editName"
+                    v-model="nameMac"
+                    v-bind="nameMacAttrs"
+                    @keyup.enter="operateMacName"
+                />
+                <div
+                    class="mr-2 hidden group-hover:block group-focus-within:block"
+                    :class="iconNameMac"
+                    @click="operateMacName"
+                ></div>
 
-                <div v-show="editState" class="absolute top-10 w-full rounded px-2 py-1 font-medium text-xs"
-                    :class="messageClassNameMac">
+                <div
+                    v-show="editState"
+                    class="absolute top-10 w-full rounded px-2 py-1 font-medium text-xs"
+                    :class="messageClassNameMac"
+                >
                     {{ messageNameMac }}
                 </div>
             </div>
 
             <div class="ml-2 font-normal text-xs text-gary/primary mb-4 mt-1.5">
-                <span class="h-full cursor-pointer" @click="showProtocolDialog">ZimaOS {{ version }}</span>
+                <span class="h-full cursor-pointer" @click="showProtocolDialog"
+                    >ZimaOS {{ version }}</span
+                >
             </div>
             <div class="ml-2 text-neutral-500 font-normal text-xs">
                 {{ $t("SN: {SN}", { SN }) }}

@@ -34,11 +34,26 @@ const filter = computed(() => {
         </g>
     </g>
     <defs>
-        <filter :id="filter" :x="x + 2" y="14" width="12" height="12" filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB">
+        <filter
+            :id="filter"
+            :x="x + 2"
+            y="14"
+            width="12"
+            height="12"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+        >
             <feFlood flood-opacity="0" result="BackgroundImageFix" />
-            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-            <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_988_10640" />
+            <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="BackgroundImageFix"
+                result="shape"
+            />
+            <feGaussianBlur
+                stdDeviation="2"
+                result="effect1_foregroundBlur_988_10640"
+            />
         </filter>
     </defs>
 </template>

@@ -21,8 +21,8 @@ export const INDEX_TO_DISK_HUB_MAP = new Map<number, string>([
     [5, '5'],
     [6, '6'],
 
-    [91, 'A'],
-    [92, 'B'],
-    [93, 'C'],
-    [94, 'D']
+    [90, 'A'],
+    [91, 'B'],
+    [92, 'C'],
+    [93, 'D']
 ])

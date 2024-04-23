@@ -16,8 +16,11 @@ const pinia = createPinia()
 createApp(app)
     .use(PrimeVue, {
         unstyled: true,
-        pt: primeStyle // theme
-        // pt: {}
+        pt: primeStyle, // theme
+        components: {
+            prefix: "P",
+            include: ['Image']
+        }
     })
     .use(router)
     .use(i18n)

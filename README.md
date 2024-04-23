@@ -16,3 +16,10 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
    1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
    2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+
+## CONTRACT
+
+Variable :snake_case. 蛇形命名法
+Constant :SCREAMING_SNAKE_CASE. 大写单词命名法
+Function, Attribute :camelCase. 驼峰式命名法
+Class :PascalCase. 帕斯卡命名法

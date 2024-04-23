@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, Ref, onMounted, computed } from "vue";
-import Button from "primevue/button";
+import Button                            from "primevue/button";
 import {
     nameStorage,
     nameStorageAttrs,
@@ -20,15 +20,17 @@ import {
     collectionOfStorageNames,
     reloadServiceData,
 } from "@views/StorageManager/controlData.ts";
-import useEstablishRAID from "./controlView";
-import { loadAllNewDiskStatus } from "@views/DiscoverNewHardDrive/controlData.ts";
-import { useRouter } from "vue-router";
+import useEstablishRAID                  from "./controlView";
+import { loadAllNewDiskStatus }          from "@views/DiscoverNewHardDrive/controlData.ts";
+import { useRouter }                     from "vue-router";
 
 const { closeEstablishRAID } = useEstablishRAID();
 const router = useRouter();
 
 if (context.value === "Create" && selectRAIDStrategy.value !== "") {
-    nameStorage.value = collectionOfStorageNames.beNamed(selectRAIDStrategy.value);
+    nameStorage.value = collectionOfStorageNames.beNamed(
+        selectRAIDStrategy.value,
+    );
 }
 const nameRef: Ref<HTMLInputElement | null> = ref(null);
 // 在组件挂载时调用selectText()方法选中文本
@@ -39,7 +41,11 @@ onMounted(() => {
 const pathList = computed(() => {
     return (
         selectStorageList.value.map((item) => {
-            return HDDStatus.get(item + "")?.path ?? SSDStatus.get(item + "")?.path ?? "";
+            return (
+                HDDStatus.get(item + "")?.path ??
+                SSDStatus.get(item + "")?.path ??
+                ""
+            );
         }) ?? []
     );
 });
@@ -49,10 +55,10 @@ function selectText(): void {
     inputElement?.select();
 }
 
-import {storage, raid} from "@network/index.ts";
-import { RaidBodyRaidLevelEnum } from "@icewhale/zimaos-localstorage-openapi";
+import { storageAPI, raidAPI }                 from "@network/index.ts";
+import { RaidBodyRaidLevelEnum }         from "@icewhale/zimaos-localstorage-openapi";
 // nameStorage validate.
-import { nameStorageHandleSubmit } from "@views/ProcessStorageModals/controlData.ts";
+import { nameStorageHandleSubmit }       from "@views/ProcessStorageModals/controlData.ts";
 const createStorage = nameStorageHandleSubmit(
     () => {
         // onSuccess.
@@ -68,14 +74,14 @@ const createStorage = nameStorageHandleSubmit(
     },
     ({ errors }) => {
         alert(errors.NameStorageSchema);
-    }
+    },
 );
 const createSingleStorage = () => {
-    // storage.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
-    storage
+    // storageAPI.createStorage({ name: nameStorage.value, path: formatePath.value, format: true }).then((res) => {
+    storageAPI
         .createStorage(
             { name: nameStorage.value, path: formatePath.value, format: true },
-            { timeout: 600000 }
+            { timeout: 600000 },
         )
         .then((res) => {
             if (res.status === 200) {
@@ -105,15 +111,14 @@ const createSingleStorage = () => {
 const createRAID = () => {
     const raidLevel = Number(selectRAIDStrategy.value?.split("RAID")[1]);
 
-    raid
-        .createRaid(
-            {
-                devices: pathList.value,
-                name: nameStorage.value,
-                raid_level: (raidLevel as unknown) as RaidBodyRaidLevelEnum,
-            },
-            { timeout: 600000 }
-        )
+    raidAPI.createRaid(
+        {
+            devices: pathList.value,
+            name: nameStorage.value,
+            raid_level: raidLevel as unknown as RaidBodyRaidLevelEnum,
+        },
+        { timeout: 600000 },
+    )
         .then((res) => {
             resultRAIDInfo.capacity = (res.data.size ?? 0 - 0) * 1024;
             resultRAIDInfo.btnText = "Done";
@@ -144,15 +149,17 @@ const createRAID = () => {
 
 // First Aid
 // import { isExitNewDisk } from "@views/ProcessStorageModals/controlData.ts";
-import { selectedFidDisk, needFirstAidRaid } from "@views/ProcessStorageModals/controlData.ts";
+import {
+    selectedFidDisk,
+    needFirstAidRaid,
+} from "@views/ProcessStorageModals/controlData.ts";
 const confirmFirstAid = () => {
     stepByStep("next");
-    raid
-        .updateRaid({
-            devices: [selectedFidDisk.value as string],
-            path: needFirstAidRaid.value,
-            action: "add",
-        })
+    raidAPI.updateRaid({
+        devices: [selectedFidDisk.value as string],
+        path: needFirstAidRaid.value,
+        action: "add",
+    })
         .then((res) => {
             resultRAIDInfo.capacity = (res.data.size ?? 0 - 0) * 1024;
             resultRAIDInfo.btnText = "Done";
@@ -185,12 +192,11 @@ const confirmFirstAid = () => {
 import { extendRaidPath } from "@views/ProcessStorageModals/controlData.ts";
 const extendCapacity = () => {
     stepByStep("next");
-    raid
-        .updateRaid({
-            devices: pathList.value,
-            path: extendRaidPath.value ?? "",
-            action: "add",
-        })
+    raidAPI.updateRaid({
+        devices: pathList.value,
+        path: extendRaidPath.value ?? "",
+        action: "add",
+    })
         .then((res) => {
             resultRAIDInfo.capacity = (res.data.size ?? 0 - 0) * 1024;
             resultRAIDInfo.btnText = "Done";
@@ -244,37 +250,61 @@ switch (context.value) {
 <template>
     <div class="flex-grow flex flex-col justify-start mt-6 space-y-4 px-6">
         <!-- AddToRAIDPart not show. -->
-        <div class="bg-gray-50 rounded-lg border border-gray-200 px-6 pt-[2px] grid grid-cols-2"
-            v-show="context !== 'FirstAid' && context !== 'Modify' && !onlyFormatSingleStorageSpace">
+        <div
+            class="bg-gray-50 rounded-lg border border-gray-200 px-6 pt-[2px] grid grid-cols-2"
+            v-show="
+                context !== 'FirstAid' &&
+                context !== 'Modify' &&
+                !onlyFormatSingleStorageSpace
+            "
+        >
             <div class="mt-4 mb-10">
-                <span v-t="`ConfirmRAIDPART.labelNameInput.${context}`"
-                    class="text-zinc-800 text-base font-semibold font-['Roboto']">
+                <span
+                    v-t="`ConfirmRAIDPART.labelNameInput.${context}`"
+                    class="text-zinc-800 text-base font-semibold font-['Roboto']"
+                >
                     <!-- {{ $t(labelNameInput) }} -->
                 </span>
             </div>
             <div class="mr-2 mt-3 flex flex-col space-y-[6px]">
-                <input ref="nameRef" id="name" v-model="nameStorage" v-bind="nameStorageAttrs" autocomplete="Main-Storage"
-                    type="text" force
-                    class="selection:bg-sky-100 bg-white h-[20px] px-3 py-1.5 rounded box-content border border-zinc-200 hover:border-sky-600 active:border-sky-600 focus-visible:border-sky-600 outline-none text-sky-600 text-sm font-normal font-['Roboto']" />
+                <input
+                    ref="nameRef"
+                    id="name"
+                    v-model="nameStorage"
+                    v-bind="nameStorageAttrs"
+                    autocomplete="Main-Storage"
+                    type="text"
+                    force
+                    class="selection:bg-sky-100 bg-white h-[20px] px-3 py-1.5 rounded box-content border border-zinc-200 hover:border-sky-600 active:border-sky-600 focus-visible:border-sky-600 outline-none text-sky-600 text-sm font-normal font-['Roboto']"
+                />
 
-                <span v-t="`ConfirmRAIDPART.noteNameInput`" class="text-neutral-400 text-xs font-normal font-['Roboto']">
+                <span
+                    v-t="`ConfirmRAIDPART.noteNameInput`"
+                    class="text-neutral-400 text-xs font-normal font-['Roboto']"
+                >
                     <!-- {{ $t("The name can not be changed after this step.") }} -->
                 </span>
             </div>
         </div>
         <div class="bg-gray-50 rounded-lg border border-gray-200 px-6 py-8">
             <div>
-                <span v-t="`ConfirmRAIDPART.titleUserAgreement.${context}`"
-                    class="text-zinc-800 text-base font-semibold font-['Roboto']">
+                <span
+                    v-t="`ConfirmRAIDPART.titleUserAgreement.${context}`"
+                    class="text-zinc-800 text-base font-semibold font-['Roboto']"
+                >
                     <!-- Starting RAID creation -->
                 </span>
             </div>
-            <div class="text-neutral-400 text-sm font-normal font-['Roboto'] mt-3">
+            <div
+                class="text-neutral-400 text-sm font-normal font-['Roboto'] mt-3"
+            >
                 <span v-t="`ConfirmRAIDPART.contentUserAgreement1.${context}`">
                     <!-- Creating a RAID array will initialize the selected hard drive, -->
                 </span>
-                <span v-t="`ConfirmRAIDPART.contentUserAgreement2.${context}`"
-                    class="text-zinc-800 text-sm font-medium font-['Roboto']">
+                <span
+                    v-t="`ConfirmRAIDPART.contentUserAgreement2.${context}`"
+                    class="text-zinc-800 text-sm font-medium font-['Roboto']"
+                >
                     <!-- and all files on the hard drive will be deleted and cannot be recovered. -->
                 </span>
                 <span v-t="`ConfirmRAIDPART.contentUserAgreement3`">
@@ -284,19 +314,39 @@ switch (context.value) {
                 </span>
             </div>
             <div class="flex justify-end items-center mt-16">
-                <input name="confirm" type="checkbox" v-model="checkedCreateRAID" style="color-scheme: none"
-                    class="mr-2 w-5 h-5 bg-white cursor-pointer" />
-                <span v-t="`ConfirmRAIDPART.signUserAgreement`" class="text-zinc-800 text-sm font-normal font-['Roboto']">
+                <input
+                    name="confirm"
+                    type="checkbox"
+                    v-model="checkedCreateRAID"
+                    style="color-scheme: none"
+                    class="mr-2 w-5 h-5 bg-white cursor-pointer"
+                />
+                <span
+                    v-t="`ConfirmRAIDPART.signUserAgreement`"
+                    class="text-zinc-800 text-sm font-normal font-['Roboto']"
+                >
                     <!-- {{ $t("I am aware of this and confirm the operation.") }} -->
                 </span>
             </div>
         </div>
     </div>
-    <div class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2">
-        <Button :label="$t('Previous')" severity="neutral" size="medium" @click="stepByStep('prev')"
-            v-show="currentStep > 0"></Button>
-        <Button :label="$t(nextStepLabelButton)" severity="primary" size="medium" @click="nextStepLabelButtonHandle"
-            :disabled="!checkedCreateRAID"></Button>
+    <div
+        class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2"
+    >
+        <Button
+            :label="$t('Previous')"
+            severity="neutral"
+            size="medium"
+            @click="stepByStep('prev')"
+            v-show="currentStep > 0"
+        ></Button>
+        <Button
+            :label="$t(nextStepLabelButton)"
+            severity="primary"
+            size="medium"
+            @click="nextStepLabelButtonHandle"
+            :disabled="!checkedCreateRAID"
+        ></Button>
     </div>
 </template>
 <style></style>

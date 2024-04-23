@@ -1,7 +1,7 @@
-import { Raid as RAID_API_SCHEMA, Storage as STORAGE_API_SCHEMA } from "@icewhale/zimaos-localstorage-openapi"
-export type DiskDriveType = 'SSD' | 'HDD'
+import { Raid as RAID_API_SCHEMA, Storage as STORAGE_API_SCHEMA, Disk as DISK_API_SCHEMA } from "@icewhale/zimaos-localstorage-openapi"
+export type DiskDriveType = 'SSD' | 'HDD' | 'USB'
 export type RaidStrategy = 'RAID0' | 'RAID1' | 'RAID5'
-export interface DISK_API_SCHEMA {
+export interface DISK_API_SCHEMA extends DISK_API_SCHEMA {
     index: number
     avail: boolean
     name: string
@@ -9,12 +9,9 @@ export interface DISK_API_SCHEMA {
     health: string
     free: boolean
     temperature: number
-    type: DiskDriveType
+    type: string
     path: string
     model: string
-    // "need_format": boolean,
-    // "serial": "NF6243T000696",
-    // "supported": boolean,
     storage_name: string
     children: Array<
         | {
