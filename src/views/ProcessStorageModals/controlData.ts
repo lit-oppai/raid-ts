@@ -67,6 +67,7 @@ const selectStorageList = customRef((track, trigger) => {
             return value
         },
         set(newValue) {
+            newValue = Array.from(new Set(newValue)) // Remove duplicates
             newValue.sort((a: string, b: string) => (a > b ? 1 : -1))
             value = newValue
             trigger()
