@@ -22,8 +22,8 @@
         9. collectionOfStorageNames: storage name collection.
  */
 // TODO: Replace with fetch API.
-import { ref, reactive, onBeforeMount, onUnmounted }          from 'vue'
-import { diskAPI, raidAPI, storageAPI }                       from '@network/index.ts'
+import { ref, reactive, onBeforeMount, onUnmounted } from 'vue'
+import { diskAPI, raidAPI, storageAPI }              from '@network/index.ts'
 import {
     DISK_API_SCHEMA,
     DISK_UI_TYPE,
@@ -34,13 +34,13 @@ import {
 } from './controlData.d'
 
 // Data Acquisition.
-async function getDiskInfo (): Promise<DISK_API_SCHEMA[] | any> {
+async function getDiskInfo(): Promise<DISK_API_SCHEMA[] | any> {
     return diskAPI
         .getDisks()
         .then((res: any) => res.data.data)
         .catch(() => [])
 }
-async function getStorageInfo (): Promise<STORAGE_API_SCHEMA[]> {
+async function getStorageInfo(): Promise<STORAGE_API_SCHEMA[]> {
     const a = await raidAPI
         .getRaids()
         .then((res: any) => res.data.data)
@@ -69,17 +69,17 @@ export const totalStorageUsageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     FilesUsage: 0,
     FilesFree: 0
 })
-import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP }           from './const.ts'
+import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP }  from './const.ts'
 // process storage name
 class StorageNameCollection {
     private storageNames = new Set<string>()
-    addName (name: string): void {
+    addName(name: string): void {
         this.storageNames.add(name)
     }
-    hasName (name: string): boolean {
+    hasName(name: string): boolean {
         return this.storageNames.has(name)
     }
-    beNamed (storageType: keyof typeof STORAGE_NAME_ENUM): string {
+    beNamed(storageType: keyof typeof STORAGE_NAME_ENUM): string {
         const prefixName = STORAGE_NAME_ENUM[storageType]
         if (!this.hasName(prefixName)) {
             return prefixName
@@ -92,28 +92,28 @@ class StorageNameCollection {
 
         return prefixName + index
     }
-    clear (): void {
+    clear(): void {
         this.storageNames.clear()
     }
-    log (label: string = 'storageNames'): void {
+    log(label: string = 'storageNames'): void {
         console.log(label, this.storageNames)
     }
 }
 export const collectionOfStorageNames = new StorageNameCollection()
 // --- DATA CLEANING ---
 // Utility Functions
-function createStorageStatus (defaultExpectType: string) {
+function createStorageStatus(defaultExpectType: string) {
     const status = reactive(new Map<string, DISK_UI_TYPE>())
     const setDefaultValues = (startIndex: number, endIndex: number) => {
         for (let i = startIndex; i <= endIndex; i++) {
             const key = INDEX_TO_DISK_HUB_MAP.get(i)
             key &&
-            status.set(key, {
-                exit: false,
-                health: false,
-                temperature: 0,
-                expectType: defaultExpectType
-            })
+                status.set(key, {
+                    exit: false,
+                    health: false,
+                    temperature: 0,
+                    expectType: defaultExpectType
+                })
         }
     }
     return { status, setDefaultValues }
@@ -137,7 +137,7 @@ const initDiskInfo = async (): Promise<void> => {
     disksInfo.forEach(processDiskInfo)
 }
 // Disk Info Processing
-function processDiskInfo (disk: DISK_API_SCHEMA): void {
+function processDiskInfo(disk: DISK_API_SCHEMA): void {
     const indexStr = disk.index.toString()
     const baseInfo: DISK_UI_TYPE = {
         exit: true,
@@ -145,7 +145,7 @@ function processDiskInfo (disk: DISK_API_SCHEMA): void {
         temperature: disk.temperature,
         name: disk.name,
         size: disk.size,
-        type: disk.rota ? 'HDD' : 'SSD',
+        type: disk.rota ? 'HDD' : disk.type === 'USB' ? 'USB' : 'SSD',
         path: disk.path,
         model: disk.model,
         allocatedStorageSpace:
@@ -189,7 +189,7 @@ const initStorageInfo = async (): Promise<void> => {
     storageInfo.forEach(processStorageInfo)
 }
 // Storage Info Processing
-function processStorageInfo (storage: STORAGE_API_SCHEMA): void {
+function processStorageInfo(storage: STORAGE_API_SCHEMA): void {
     const name =
         storage.name === 'System' ? STORAGE_NAME_ENUM.System : storage.name
     const isRaid = storage.raid_level !== undefined
@@ -200,7 +200,7 @@ function processStorageInfo (storage: STORAGE_API_SCHEMA): void {
 
     const storageHealth = isRaid
         ? storage.shortage !== true &&
-          storage.devices?.every((device: { health: any }) => device.health)
+        storage.devices?.every((device: { health: any }) => device.health)
         : storage.health
 
     const storageData: STORAGE_UI_TYPE = {
@@ -212,8 +212,10 @@ function processStorageInfo (storage: STORAGE_API_SCHEMA): void {
         type: (isRaid
             ? 'RAID' + storage.raid_level
             : storage?.disk_type?.toUpperCase() === 'SATA'
-            ? 'HDD'
-            : 'SSD') as StorageType,
+                ? 'HDD'
+                : storage?.disk_type?.toUpperCase() === 'USB'
+                    ? 'USB'
+                    : 'SSD') as StorageType,
         path: storage.path,
         raid: isRaid,
         raid_level: storage.raid_level,
@@ -266,13 +268,13 @@ const destroyStoragePageData = (): void => {
     resetStoragePageData()
 }
 // socket
-import { socket }                                             from '@network/socket.ts'
+import { socket }                                    from '@network/socket.ts'
 // Socket Event Handlers
-function handleDiskAdded (): void {
+function handleDiskAdded(): void {
     initDiskInfo()
 }
 
-function handleDiskRemoved (): void {
+function handleDiskRemoved(): void {
     initStoragePageData()
 }
 export const useStoragePageDataBindingLifecycle = () => {
