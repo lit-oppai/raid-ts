@@ -23,7 +23,7 @@
  */
 // TODO: Replace with fetch API.
 import { ref, reactive, onBeforeMount, onUnmounted } from 'vue'
-import { disk, raid, storage } from '@network/index.ts'
+import { diskAPI, raidAPI, storageAPI }              from '@network/index.ts'
 import {
     DISK_API_SCHEMA,
     DISK_UI_TYPE,
@@ -35,17 +35,17 @@ import {
 
 // Data Acquisition.
 async function getDiskInfo(): Promise<DISK_API_SCHEMA[] | any> {
-    return disk
+    return diskAPI
         .getDisks()
         .then((res: any) => res.data.data)
         .catch(() => [])
 }
 async function getStorageInfo(): Promise<STORAGE_API_SCHEMA[]> {
-    const a = await raid
+    const a = await raidAPI
         .getRaids()
         .then((res: any) => res.data.data)
         .catch(() => [])
-    const b = await storage
+    const b = await storageAPI
         .getStorage('show')
         .then((res: any) => res.data.data)
         .catch(() => [])
@@ -69,7 +69,7 @@ export const totalStorageUsageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     FilesUsage: 0,
     FilesFree: 0
 })
-import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP } from './const.ts'
+import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP }  from './const.ts'
 // process storage name
 class StorageNameCollection {
     private storageNames = new Set<string>()
@@ -106,12 +106,14 @@ function createStorageStatus(defaultExpectType: string) {
     const status = reactive(new Map<string, DISK_UI_TYPE>())
     const setDefaultValues = (startIndex: number, endIndex: number) => {
         for (let i = startIndex; i <= endIndex; i++) {
-            status.set(i.toString(), {
-                exit: false,
-                health: false,
-                temperature: 0,
-                expectType: defaultExpectType
-            })
+            const key = INDEX_TO_DISK_HUB_MAP.get(i)
+            key &&
+                status.set(key, {
+                    exit: false,
+                    health: false,
+                    temperature: 0,
+                    expectType: defaultExpectType
+                })
         }
     }
     return { status, setDefaultValues }
@@ -128,8 +130,9 @@ const { status: SSDStatus, setDefaultValues: setDefaultSSDValues } =
 const initDiskInfo = async (): Promise<void> => {
     const disksInfo = await getDiskInfo()
     // rinseDiskInfo(disksInfo)
+    // init disk data construct.
     setDefaultHDDValues(1, 6)
-    setDefaultSSDValues(91, 94)
+    setDefaultSSDValues(90, 93)
     RAIDCandidateDiskCount.value = 0
     disksInfo.forEach(processDiskInfo)
 }
@@ -142,7 +145,7 @@ function processDiskInfo(disk: DISK_API_SCHEMA): void {
         temperature: disk.temperature,
         name: disk.name,
         size: disk.size,
-        type: disk.rota ? 'HDD' : 'SSD',
+        type: disk.rota ? 'HDD' : disk.type === 'USB' ? 'USB' : 'SSD',
         path: disk.path,
         model: disk.model,
         allocatedStorageSpace:
@@ -156,10 +159,14 @@ function processDiskInfo(disk: DISK_API_SCHEMA): void {
         support: disk.support
     }
 
-    disk.free && RAIDCandidateDiskCount.value++
+    disk.index !== -1 && disk.free && RAIDCandidateDiskCount.value++
     if (disk.index > 0 && disk.index < 7) {
         HDDStatus.set(indexStr, baseInfo)
-    } else if (['SSD', 'NVME'].includes(disk.type) && disk.index <= 90 && disk.index >= 95) {
+    } else if (
+        ['SSD', 'NVME'].includes(disk.type) &&
+        disk.index >= 90 &&
+        disk.index <= 95
+    ) {
         const key = INDEX_TO_DISK_HUB_MAP.get(disk.index)
         if (key) {
             SSDStatus.set(key, baseInfo)
@@ -167,7 +174,7 @@ function processDiskInfo(disk: DISK_API_SCHEMA): void {
     }
 }
 
-// load storage info 
+// load storage info
 const initStorageInfo = async (): Promise<void> => {
     const storageInfo = await getStorageInfo()
     // clear
@@ -206,14 +213,16 @@ function processStorageInfo(storage: STORAGE_API_SCHEMA): void {
             ? 'RAID' + storage.raid_level
             : storage?.disk_type?.toUpperCase() === 'SATA'
                 ? 'HDD'
-                : 'SSD') as StorageType,
+                : storage?.disk_type?.toUpperCase() === 'USB'
+                    ? 'USB'
+                    : 'SSD') as StorageType,
         path: storage.path,
         raid: isRaid,
         raid_level: storage.raid_level,
         label: name,
         health: storageHealth,
         shortage: storage.shortage,
-        driveName: storage?.drive_name,
+        driveName: storage?.drive_name
     }
 
     collectionOfStorageNames.addName(storage.name)
@@ -259,7 +268,7 @@ const destroyStoragePageData = (): void => {
     resetStoragePageData()
 }
 // socket
-import { socket } from "@network/socket.ts";
+import { socket }                                    from '@network/socket.ts'
 // Socket Event Handlers
 function handleDiskAdded(): void {
     initDiskInfo()
@@ -297,12 +306,8 @@ export const useStoragePageDataBindingLifecycle = () => {
 // 调用方法返回：可以添加逻辑、符合统一调用方式。
 export const useStorageInfo = () => {
     return {
-        reloadServiceData: initStoragePageData,
+        reloadServiceData: initStoragePageData
     }
 }
 
-export {
-    HDDStatus,
-    SSDStatus,
-    initStoragePageData as reloadServiceData,
-}
+export { HDDStatus, SSDStatus, initStoragePageData as reloadServiceData }

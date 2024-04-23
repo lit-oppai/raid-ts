@@ -1,6 +1,6 @@
-import { createI18n } from "vue-i18n";
-import en_US from "@assets/lang/en_US.json";
-import messages from "@assets/lang";
+import { createI18n }          from "vue-i18n";
+import en_US                   from "@assets/lang/en_US.json";
+import messages                from "@assets/lang";
 import { WritableComputedRef } from "vue"
 
 export type userVisibleTextCollection = typeof en_US;
@@ -19,6 +19,11 @@ const i18n = createI18n({
     fallbackLocale: "en_us",
     messages
 });
+
+export const showTitle = (title: any, fallback = 'en_us') => { 
+    let lang = localStorage.getItem('lang') || navigator.language.replace("-", "_");
+    return title?.['custom'] || title?.[lang] || title?.[fallback] || title?.['en_US'];
+}
 
 // export const switchLanguage = (lang: languageSchema) => {
 //     if (validLang(lang)) {

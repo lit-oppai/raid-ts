@@ -20,8 +20,6 @@ export const routes: RouteMeta[] = [
     {
         path: '/update',
         component: () => import('./update/index.ts'),
-        // redirect: 'storage',
-        // name: 'update',
         icon: '',
         meta: {
             title: 'Update'
@@ -29,9 +27,7 @@ export const routes: RouteMeta[] = [
     },
     {
         path: '/',
-        // component: () => import('./home'),
-        redirect: 'storage',
-        // name: 'home',
+        redirect: 'general',
         icon: 'casa-settings-outline',
         meta: {
             title: 'Home'

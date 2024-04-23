@@ -1,9 +1,9 @@
 import { ref } from "vue";
-import { disk } from "@network/index.ts";
+import { diskAPI } from "@network/index.ts";
 import { INDEX_TO_DISK_HUB_MAP } from "@views/StorageManager/const.ts";
 const allNewDiskStatus = ref(new Map());
 const loadAllNewDiskStatus = async (): Promise<void> => {
-    return disk.getDisks("show").then((res) => {
+    return diskAPI.getDisks("show").then((res) => {
         if (res.status === 200 && res.data.data) {
             allNewDiskStatus.value = new Map(
                 res.data.data
