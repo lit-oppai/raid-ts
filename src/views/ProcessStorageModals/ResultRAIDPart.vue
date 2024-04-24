@@ -12,21 +12,20 @@ import {
 } from "./controlData.ts";
 
 import { convertSizeToReadable } from "@icewhale/ui-utils";
-
-let svg: string, statusMessage: string;
-if (resultRAIDInfo.success) {
-    svg = successSVG;
-    statusMessage = "Success";
-} else {
-    svg = errorSVG;
-    statusMessage = "Fail";
-}
 </script>
 <template name="ResultRAIDPart">
     <div class="flex flex-col items-center space-y-7 mt-20 px-6">
-        <Image :src="svg"></Image>
+        <Image :src="resultRAIDInfo.success ? successSVG : errorSVG"></Image>
         <span class="text-zinc-800 text-base font-semibold font-['Roboto']">
-            {{ nameStorage + ' ' + $t(statusMessage) }}
+            {{
+                context !== "EnableStorage"
+                    ? nameStorage + " " + resultRAIDInfo.success
+                        ? $t("Success")
+                        : $t("Fail")
+                    : resultRAIDInfo.success
+                    ? $t("Enable Success")
+                    : $t("Enable Fail")
+            }}
         </span>
     </div>
     <div
@@ -66,7 +65,10 @@ if (resultRAIDInfo.success) {
                     {{ $t("Hard drives") }} :
                 </span>
                 <div class="flex shrink-0 grow-0 space-x-1">
-                    <div v-for="key in selectStorageList" class="w-4 h-6 py-1 bg-zinc-100 rounded text-center text-zinc-800 text-xs font-medium font-['Roboto']">
+                    <div
+                        v-for="key in selectStorageList"
+                        class="w-4 h-6 py-1 bg-zinc-100 rounded text-center text-zinc-800 text-xs font-medium font-['Roboto']"
+                    >
                         {{ key }}
                     </div>
                 </div>

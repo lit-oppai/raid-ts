@@ -165,5 +165,7 @@
   "Updating": "Updating",
   "Missing hard drive": "Missing hard drive",
   "Are you sure?": "Are you sure?",
-  "Apps update": "Apps update"
+  "Apps update": "Apps update",
+  "Enable Success": "Enable Success.",
+  "Enable Fail": "Enable Fail."
 }

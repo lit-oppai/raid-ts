@@ -5,7 +5,6 @@ import Button                    from "primevue/button";
 import HDDSVG                    from "@assets/img/StorageManager/HDD.svg";
 import SSDSVG                    from "@assets/img/StorageManager/SSD.svg";
 import warningSVG                from "@assets/img/StorageManager/warning.svg";
-//
 import {
     storageInfoMap,
     reloadServiceData,
@@ -19,8 +18,7 @@ import {
     onlyFormatSingleStorageSpace,
     formatePath,
 } from "@views/ProcessStorageModals/controlData.ts";
-import { storageAPI /* diskAPI */ }    from "@network/index.ts";
-/* import { DiskInfo } from "@icewhale/zimaos-localstorage-openapi"; */
+import { storageAPI }            from "@network/index.ts";
 
 const { showEstablishRAID } = useEstablishRAID();
 const route = useRoute();

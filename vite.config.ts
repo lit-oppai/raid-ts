@@ -1,6 +1,6 @@
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath }         from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import vue                       from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -22,7 +22,7 @@ export default ({ mode }) => {
                 '@': fileURLToPath(new URL('src', import.meta.url)),
             },
         },
-        base: "./",
+        base: "/modules/icewhale_settings/",
         build: {
             // sourcemap: true,
             // minify: false,
@@ -49,10 +49,7 @@ export default ({ mode }) => {
                     target: `http://${process.env.VITE_OPEN_API_DEV_IP}:${process.env.VITE_OPEN_API_DEV_PORT}`,
                     changeOrigin: true,
                 },
-                "^/login": {
-                    rewrite: (path) => {
-                        return path.replace(/^\/login/, '/')
-                    },
+                "^(?!/modules/icewhale_settings)/.*": {
                     target: `http://${process.env.VITE_OPEN_API_DEV_IP}:${process.env.VITE_OPEN_API_DEV_PORT}`,
                     changeOrigin: true,
                 },

@@ -91,8 +91,8 @@ const useEstablishRAID = () => {
                 draggable: false,
                 header: showType[type].title,
                 style: {
-                    width: '50vw',
-                    overflow: 'auto'
+                    "overflow": 'auto',
+                    "width": "548px",
                 },
                 breakpoints: {
                     '960px': '75vw',
