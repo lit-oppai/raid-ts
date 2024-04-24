@@ -14,8 +14,8 @@ importers:
   .:
     dependencies:
       '@icewhale/casaos-appmanagement-openapi':
-        specifier: 0.4.8-alpha2
-        version: 0.4.8-alpha2
+        specifier: 0.4.8-alpha4
+        version: 0.4.8-alpha4
       '@icewhale/casaos-installer-openapi':
         specifier: 1.1.0-alpha3
         version: 1.1.0-alpha3
@@ -72,8 +72,8 @@ importers:
         specifier: 1.2.0-alpha4
         version: 1.2.0-alpha4
       '@icewhale/zimaos-openapi':
-        specifier: 1.2.0-alpha2
-        version: 1.2.0-alpha2
+        specifier: 1.2.0-alpha5
+        version: 1.2.0-alpha5
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.17.0
@@ -420,8 +420,8 @@ packages:
     dev: true
     optional: true
 
-  /@icewhale/casaos-appmanagement-openapi@0.4.8-alpha2:
-    resolution: {integrity: sha512-mWxGbn+wAI4E5klGv3WjlbOHgSpgGIV3Lttn0f0/4s3zpURDYOOFk+utClI8idko0V/l5vnl8GI8d8ssQl7sdw==}
+  /@icewhale/casaos-appmanagement-openapi@0.4.8-alpha4:
+    resolution: {integrity: sha512-MoA/znXD1VuTbwvJmzizi3A5RxLwidzNKD+bdtbDkLsIeosJOEWHy4CJ0t+3qbN+Ex8iKT2yhJVWPj6riZwxog==}
     dependencies:
       axios: 1.6.8
     transitivePeerDependencies:
@@ -452,8 +452,8 @@ packages:
       - debug
     dev: true
 
-  /@icewhale/zimaos-openapi@1.2.0-alpha2:
-    resolution: {integrity: sha512-ovGgrXhNwJKrHNz6d0W6tawhOCDw64GHzZeYUeNtp0BZNEds0rMWI51gVoE40Jqt3a8SObXiacKTRjKIEVmwHg==}
+  /@icewhale/zimaos-openapi@1.2.0-alpha5:
+    resolution: {integrity: sha512-oABJELV77HYVja4300J71KGh9l1xddJvhsYsGMf2Ij/mRgu/MFBb9wsF1mUBDVJqgDjywGi8KQh3a1X3negsIg==}
     dependencies:
       axios: 1.6.8
     transitivePeerDependencies:
