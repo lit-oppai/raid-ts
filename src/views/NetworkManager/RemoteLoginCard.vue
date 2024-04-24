@@ -61,17 +61,17 @@ function handleClick() {
 }
 
 function changeAccessId() {
-    // zerotier
-    //     .setZerotierNetworkStatus({ status: "offline" })
-    //     .then((res) => {
-    //         if (res.status === 200) {
-    //             isAccessed.value = false;
-    //             accessID.value = "";
-    //         }
-    //     })
-    //     .finally(() => {
-    //         isChecking.value = false;
-    //     });
+    zerotierAPI
+        .setZerotierNetworkStatus({ status: "reset" })
+        .then((res:any) => {
+            if (res.status === 200) {
+                isAccessed.value = false;
+                accessID.value = "";
+            }
+        })
+        .finally(() => {
+            isChecking.value = false;
+        });
 }
 
 function switchAccess() {
@@ -148,7 +148,7 @@ function handleMenuClick(e: Event) {
                 </NPopover>
                 <i class="casa-dots-vertical-outline hover:bg-Gary/300 active:bg-Gary/500 cursor-pointer w-[18px] h-[18px] rounded flex items-center justify-center" @click="handleMenuClick"></i>
                 <OverlayPanel ref="op" id="overlay_tmenu" class="mt-1">
-                    <div class="bg-Gary/Primary flex items-center p-1 rounded-md outline outline-Gary/500 cursor-pointer shadow-2xl select-none">
+                    <div class="bg-Gary/Primary flex items-center p-1 rounded-md outline outline-Gary/500 cursor-pointer shadow-2xl select-none" @click="changeAccessId">
                         <span class="text-white text-center text-xs font-normal leading-4 px-1 py-0.5 hover:bg-Gary/Normal rounded">Reset ID</span>
                     </div>
                 </OverlayPanel>
