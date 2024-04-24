@@ -14,7 +14,7 @@
             "type": "modal",
             "props": {
             "width": "864px",
-            "height": "90vh",
+            "height": "80vh",
             "maxHeight": "768px",
             "hasModalCard": true,
             "animation": "zoom-in"
