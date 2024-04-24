@@ -71,6 +71,7 @@ function changeAccessId() {
         })
         .finally(() => {
             isChecking.value = false;
+            op.value.toggle();
         });
 }
 
