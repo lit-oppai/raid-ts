@@ -22,8 +22,9 @@
         9. collectionOfStorageNames: storage name collection.
  */
 // TODO: Replace with fetch API.
-import { ref, reactive, onBeforeMount, onUnmounted } from 'vue'
-import { diskAPI, raidAPI, storageAPI }              from '@network/index.ts'
+import { ref, reactive, onBeforeMount, onUnmounted, Ref }                    from 'vue'
+import { diskAPI, raidAPI, storageAPI }                                      from '@network/index.ts'
+import { useStorage }                                                        from '@vueuse/core'
 import {
     DISK_API_SCHEMA,
     DISK_UI_TYPE,
@@ -69,7 +70,7 @@ export const totalStorageUsageStatus = ref<STORAGE_USAGE_INFO_TYPE>({
     FilesUsage: 0,
     FilesFree: 0
 })
-import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP }  from './const.ts'
+import { STORAGE_NAME_ENUM, INDEX_TO_DISK_HUB_MAP }                          from './const.ts'
 // process storage name
 class StorageNameCollection {
     private storageNames = new Set<string>()
@@ -127,14 +128,25 @@ const { status: SSDStatus, setDefaultValues: setDefaultSSDValues } =
     createStorageStatus('m.2 SSD')
 
 // load disk info
-const initDiskInfo = async (): Promise<void> => {
-    const disksInfo = await getDiskInfo()
+const disk_infos = useStorage('disk_infos_api', [], sessionStorage)
+const initDiskInfo =  () => {
+    // const disksInfo = await getDiskInfo()
     // rinseDiskInfo(disksInfo)
     // init disk data construct.
     setDefaultHDDValues(1, 6)
     setDefaultSSDValues(90, 93)
     RAIDCandidateDiskCount.value = 0
-    disksInfo.forEach(processDiskInfo)
+    // disksInfo.forEach(processDiskInfo)
+    refeshDiskInfo();
+}
+// refesh disk_infos
+const refeshDiskInfo = async (): Promise<void> => { 
+    try {
+        disk_infos.value = await getDiskInfo()
+        disk_infos.value.forEach(processDiskInfo)
+    } catch (error) { 
+        console.log('error', error);
+    }
 }
 // Disk Info Processing
 function processDiskInfo(disk: DISK_API_SCHEMA): void {
@@ -175,8 +187,8 @@ function processDiskInfo(disk: DISK_API_SCHEMA): void {
 }
 
 // load storage info
-const initStorageInfo = async (): Promise<void> => {
-    const storageInfo = await getStorageInfo()
+const storage_infos:Ref<STORAGE_API_SCHEMA[]> = useStorage('storage_infos_api', [])
+const initStorageInfo = () => {
     // clear
     storageInfoMap.clear()
     collectionOfStorageNames.clear()
@@ -186,7 +198,18 @@ const initStorageInfo = async (): Promise<void> => {
     totalStorageUsageStatus.value.FilesUsage = 0
     totalStorageUsageStatus.value.FilesFree = 0
 
-    storageInfo.forEach(processStorageInfo)
+    // const storageInfo = await getStorageInfo()
+    // storageInfo.forEach(processStorageInfo)
+    refeshStorageInfo();
+}
+const refeshStorageInfo = async (): Promise<void> => { 
+    try {
+        storage_infos.value = await getStorageInfo()
+        storage_infos.value.forEach(processStorageInfo)
+    } catch (error) { 
+        console.log('error', error);
+    }
+
 }
 // Storage Info Processing
 function processStorageInfo(storage: STORAGE_API_SCHEMA): void {
@@ -245,10 +268,10 @@ function processStorageInfo(storage: STORAGE_API_SCHEMA): void {
 // Data Lifecycle Management -- init.
 export const isStoragePageDataLoading = ref<boolean>(false)
 const initStoragePageData = (): void => {
-    isStoragePageDataLoading.value = true
-    Promise.all([initDiskInfo(), initStorageInfo()]).then(() => {
-        isStoragePageDataLoading.value = false
-    })
+    isStoragePageDataLoading.value = true;
+    initDiskInfo();
+    initStorageInfo();
+    isStoragePageDataLoading.value = false;
 }
 
 const resetStoragePageData = (): void => {
@@ -268,10 +291,11 @@ const destroyStoragePageData = (): void => {
     resetStoragePageData()
 }
 // socket
-import { socket }                                    from '@network/socket.ts'
+import { socket }                                                            from '@network/socket.ts'
 // Socket Event Handlers
 function handleDiskAdded(): void {
-    initDiskInfo()
+    // initDiskInfo()
+    refeshDiskInfo();
 }
 
 function handleDiskRemoved(): void {
