@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { ref, computed, onMounted }       from "vue";
-import NetworkSketch                      from "./NetworkSketch.vue";
-import NetworkProSketch                   from "./NetworkProSketch.vue";
-import RemoteLoginCard                    from "./RemoteLoginCard.vue";
-import NicCard                            from "./NicCard.vue";
-import { networkAPI, deviceAPI }          from "@network/index.ts";
-import { NetWorkInterfaceStatus }         from "@icewhale/zimaos-openapi";
+import { ref, Ref, computed, onMounted }            from "vue";
+import NetworkSketch                                from "./NetworkSketch.vue";
+import NetworkProSketch                             from "./NetworkProSketch.vue";
+import RemoteLoginCard                              from "./RemoteLoginCard.vue";
+import NicCard                                      from "./NicCard.vue";
+import { networkAPI, deviceAPI }                    from "@network/index.ts";
+import { NetWorkInterfaceStatus }                   from "@icewhale/zimaos-openapi";
+import { useStorage }                               from "@vueuse/core";
 
-const NicDataList = ref<NetWorkInterfaceStatus[]>([
+const network_interfaces_cache:Ref<NetWorkInterfaceStatus[]> = useStorage("network_interfaces_api", [], sessionStorage);
+/* const NicDataList = ref<NetWorkInterfaceStatus[]>([
     // mock data
-/*     {
+    {
         index: 0,
         ip: "",
         mac: "34:1a:4c:00:e5:0d",
@@ -46,27 +48,28 @@ const NicDataList = ref<NetWorkInterfaceStatus[]>([
         product: "Thunderbolt",
         theoretical_speed: 20000000000,
         vendor: "Inter",
-    }, */
-]);
+    },
+]); */
 const isNormalLevel = ref<boolean>(true);
 const isAccess = ref<boolean>(false);
 
 // REMAKER: protogenesis NIC number is 1-9
-const protogenesisNicDataList = computed(() => {
+const protogenesis_network_interfaces = computed(() => {
     // REMAKER: sort by index and filter index is 0-9 following left to right.
     return (
-        NicDataList.value
+        network_interfaces_cache.value
             .filter((item) => item.index >= 0 && item.index < 10) ?? []
     );
 });
 // REMAKER: extend NIC number is -1
-const ExtendNicDataList = computed(() => {
-    return NicDataList.value?.filter((item) => item.index === -1) ?? [];
+const extend_network_interfaces = computed(() => {
+    return network_interfaces_cache.value?.filter((item) => item.index === -1) ?? [];
 });
 onMounted(() => {
     networkAPI.getNetworkInterfaces().then((res) => {
         if (res.status === 200) {
-            NicDataList.value = res.data?.sort((a, b) => a.index - b.index);
+            // NicDataList.value = res.data?.sort((a, b) => a.index - b.index);
+            network_interfaces_cache.value = res.data?.sort((a, b) => a.index - b.index);
         }
     });
     deviceAPI.getDeviceInfo().then((res) => {
@@ -90,9 +93,9 @@ function openLinkInstalledZimaOS() {
     >
         <NetworkSketch
             v-if="isNormalLevel"
-            :NicDataList="protogenesisNicDataList"
+            :NicDataList="protogenesis_network_interfaces"
         />
-        <NetworkProSketch v-else :NicDataList="protogenesisNicDataList" />
+        <NetworkProSketch v-else :NicDataList="protogenesis_network_interfaces" />
         <div
             class="flex absolute space-x-[247px] text-neutral-400 text-xs font-normal"
         >
@@ -106,7 +109,7 @@ function openLinkInstalledZimaOS() {
     <!-- NIC -->
     <NicCard
         class="mt-2"
-        v-for="item in ExtendNicDataList"
+        v-for="item in extend_network_interfaces"
         :name="item.product"
         :state="item.ip !== ''"
         :theoretical-speed="item.theoretical_speed"
