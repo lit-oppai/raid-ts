@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { reactive, ref, computed, nextTick, onMounted, onUnmounted } from "vue";
-import { vOnClickOutside }                                           from "@vueuse/components";
-import api                                                           from "@icewhale/ui-v1-api";
-import { useForm }                                                   from "vee-validate";
+import { reactive, ref, computed, nextTick, onMounted, onUnmounted }    from "vue";
+import { vOnClickOutside }                                              from "@vueuse/components";
+import api                                                              from "@icewhale/ui-v1-api";
+import { useForm }                                                      from "vee-validate";
 import { deviceAPI }                                                    from "@network/index.ts";
-import { messageBus }                                                from "@icewhale/ui-utils";
-import { socket, baseURL }                                           from "@network/socket";
-import { useI18n }                                                   from "vue-i18n";
-import ProcotolDialog                                                from "./ProtocolDialog.vue";
+import { messageBus }                                                   from "@icewhale/ui-utils";
+import { socket, baseURL }                                              from "@network/socket";
+import { useI18n }                                                      from "vue-i18n";
+import ProcotolDialog                                                   from "./ProtocolDialog.vue";
 
 const { t } = useI18n();
 const wallpaperNamespace = "wallpaper";
@@ -37,17 +37,13 @@ function getWallpaper() {
         .then((res) => {
             if (res.data.success === 200 && res.data.data !== "") {
                 wallpaper.path = transformServerUrl(res.data.data.path);
-                console.log(res.data.data.path, "res.data.data.path");
-
-                console.log(wallpaper.path, "wallpaper.path");
-
                 wallpaper.from = res.data.data.from;
                 return;
             }
         })
         .catch(() => {});
 }
-import { object, string }                                            from "yup";
+import { object, string }                                               from "yup";
 
 const { errors, defineField, handleSubmit } = useForm({
     validationSchema: object({
