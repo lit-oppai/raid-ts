@@ -146,7 +146,7 @@ const clear = (): void => {
     resultRAIDInfo.success = true
     resultRAIDInfo.capacity = 0
     selectedFidDisk.value = ''
-    expansionMinDiskSize.value = 0
+    // expansionMinDiskSize.value = 0 这个数据不应该属于当前组件，应该属于 raid 详情页。
     needFirstAidRaid.value = ''
     diskListByStorageSpace.value = []
     extendRaidPath.value = ''
