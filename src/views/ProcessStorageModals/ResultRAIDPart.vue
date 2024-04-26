@@ -83,7 +83,7 @@ import { convertSizeToReadable } from "@icewhale/ui-utils";
     </div>
     <div class="flex-grow"></div>
     <div
-        class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2"
+        class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t"
     >
         <Button
             :label="$t(resultRAIDInfo.btnText)"

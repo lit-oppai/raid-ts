@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted }        from "vue";
-import Image                     from "primevue/image";
-import Button                    from "primevue/button";
-import { stepByStep }            from "./controlData.ts";
-import useEstablishRAID          from "./controlView";
-// import diskSVG from '@assets/img/StorageManager/disk.svg';
-import HDDSVG                    from "@assets/img/StorageManager/HDD.svg";
-import SSDSVG                    from "@assets/img/StorageManager/SSD.svg";
-import cryingFaceSVG             from "@assets/img/ProcessStorageModals/cryingFace.svg";
+import { ref, onMounted }           from "vue";
+import Image                        from "primevue/image";
+import Button                       from "primevue/button";
+import { stepByStep }               from "./controlData.ts";
+import useEstablishRAID             from "./controlView";
+import HDDSVG                       from "@assets/img/StorageManager/HDD.svg";
+import SSDSVG                       from "@assets/img/StorageManager/SSD.svg";
+import cryingFaceSVG                from "@assets/img/ProcessStorageModals/cryingFace.svg";
 import { diskAPI }                  from "@network/index.ts";
-import { Disk }                  from "@icewhale/zimaos-localstorage-openapi";
+import { Disk }                     from "@icewhale/zimaos-localstorage-openapi";
 
-import { convertSizeToReadable } from "@icewhale/ui-utils";
+import { convertSizeToReadable }    from "@icewhale/ui-utils";
 
 const { closeEstablishRAID } = useEstablishRAID();
 const newDiskStatus = ref<Disk[]>();
@@ -36,8 +35,8 @@ onMounted(async () => {
             (item) => item.size && item.size >= expansionMinDiskSize.value,
         )?.path ?? "";
 });
-import { isExitNewDisk }         from "@views/ProcessStorageModals/controlData.ts";
-import { watch }                 from "vue";
+import { isExitNewDisk }            from "@views/ProcessStorageModals/controlData.ts";
+import { watch }                    from "vue";
 watch(newDiskStatus, (val) => {
     if (val?.length) {
         isExitNewDisk.value = true;
@@ -103,7 +102,7 @@ watch(newDiskStatus, (val) => {
     </template>
     <div class="flex-grow"></div>
     <div
-        class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2"
+        class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t"
     >
         <Button
             :label="$t('Add')"

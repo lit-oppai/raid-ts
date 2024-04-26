@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, Ref, onMounted, computed } from "vue";
-import Button                            from "primevue/button";
+import { ref, Ref, onMounted, computed }       from "vue";
+import Button                                  from "primevue/button";
 import {
     nameStorage,
     nameStorageAttrs,
@@ -20,9 +20,9 @@ import {
     collectionOfStorageNames,
     reloadServiceData,
 } from "@views/StorageManager/controlData.ts";
-import useEstablishRAID                  from "./controlView";
-import { loadAllNewDiskStatus }          from "@views/DiscoverNewHardDrive/controlData.ts";
-import { useRouter }                     from "vue-router";
+import useEstablishRAID                        from "./controlView";
+import { loadAllNewDiskStatus }                from "@views/DiscoverNewHardDrive/controlData.ts";
+import { useRouter }                           from "vue-router";
 
 const { closeEstablishRAID } = useEstablishRAID();
 const router = useRouter();
@@ -56,9 +56,9 @@ function selectText(): void {
 }
 
 import { storageAPI, raidAPI }                 from "@network/index.ts";
-import { RaidBodyRaidLevelEnum }         from "@icewhale/zimaos-localstorage-openapi";
+import { RaidBodyRaidLevelEnum }               from "@icewhale/zimaos-localstorage-openapi";
 // nameStorage validate.
-import { nameStorageHandleSubmit }       from "@views/ProcessStorageModals/controlData.ts";
+import { nameStorageHandleSubmit }             from "@views/ProcessStorageModals/controlData.ts";
 const createStorage = nameStorageHandleSubmit(
     () => {
         // onSuccess.
@@ -331,7 +331,7 @@ switch (context.value) {
         </div>
     </div>
     <div
-        class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2"
+        class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t"
     >
         <Button
             :label="$t('Previous')"

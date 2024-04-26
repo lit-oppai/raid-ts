@@ -300,9 +300,6 @@ const clearSelectStorageList = (strategy: RAIDStrategy) => {
                         <div v-if="item?.unused && !item.health">
                             {{ $t("unhealthy") }}
                         </div>
-                        <div v-else-if="item?.unused">
-                            {{ $t("Available") }}
-                        </div>
                         <div
                             v-else-if="
                                 context === 'Modify' &&
@@ -317,6 +314,9 @@ const clearSelectStorageList = (strategy: RAIDStrategy) => {
                                     ),
                                 })
                             }}
+                        </div>
+                        <div v-else-if="item?.unused">
+                            {{ $t("Available") }}
                         </div>
                         <div v-else>
                             {{
@@ -446,7 +446,7 @@ const clearSelectStorageList = (strategy: RAIDStrategy) => {
         </div>
     </div>
     <div
-        class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t-2"
+        class="space-x-4 flex justify-end h-16 px-6 pb-6 pt-3 shrink-0 border-t"
     >
         <Button
             :label="$t('Previous')"
