@@ -99,7 +99,7 @@ function getUpgradableAppList() {
         <div class="menu_bar_update" v-show="isUpdateSys || isUpdateApps">
             <router-link
                 :to="{
-                    path: 'update',
+                    path: '/update',
                     query: {
                         'isUpdateSys': isUpdateSys.toString(),
                         'isUpdateApps': isUpdateApps.toString(),
