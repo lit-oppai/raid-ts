@@ -115,7 +115,7 @@ function deselectDisassemblyRaid(): void {
 // ejct disk
 // const operationEjectLoading = ref<boolean>(false);
 const pathOperationEject = ref<string>("");
-const ejectDiskFromRaid = async (path: string): Promise<void> => {
+async function ejectDiskFromRaid(path: string): Promise<void> {
     // operationEjectLoading.value = true;
     pathOperationEject.value = path;
     await raidAPI
@@ -139,7 +139,7 @@ const ejectDiskFromRaid = async (path: string): Promise<void> => {
         .finally(() => {
             pathOperationEject.value = "";
         });
-};
+}
 
 watch(
     () => showAddingDiskButton.value === false && needNewDisk.value === true,
@@ -400,7 +400,11 @@ const extenedCapacity = (): void => {
             <!-- TODO0 无损坏 && raid5 && 存在空槽位 -->
             <div
                 class="bg-white rounded-lg h-11 flex items-center px-4"
-                v-if="storageLevel === 5 && !needFirstAid && RAIDCandidateDiskCount"
+                v-if="
+                    storageLevel === 5 &&
+                    !needFirstAid &&
+                    RAIDCandidateDiskCount
+                "
             >
                 <Image :src="diskSVG" class="h-6 w-6"></Image>
                 <span
