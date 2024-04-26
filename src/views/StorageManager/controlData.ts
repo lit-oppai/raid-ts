@@ -198,7 +198,7 @@ const initStorageInfo = () => {
     totalStorageUsageStatus.value.DataFree = 0
     totalStorageUsageStatus.value.FilesUsage = 0
     totalStorageUsageStatus.value.FilesFree = 0
-    
+
     refeshStorageInfo();
 }
 const refeshStorageInfo = async (): Promise<void> => { 
@@ -272,6 +272,14 @@ const initStoragePageData = (): void => {
     initStorageInfo();
     isStoragePageDataLoading.value = false;
 }
+const reloadServiceData = (): void => {
+    isStoragePageDataLoading.value = true;
+    refeshDiskInfo();
+    // initDiskInfo();
+    refeshStorageInfo();
+    // initStorageInfo();
+    isStoragePageDataLoading.value = false;
+}
 
 const resetStoragePageData = (): void => {
     HDDStatus.clear()
@@ -329,8 +337,8 @@ export const useStoragePageDataBindingLifecycle = () => {
 // 调用方法返回：可以添加逻辑、符合统一调用方式。
 export const useStorageInfo = () => {
     return {
-        reloadServiceData: initStoragePageData
+        reloadServiceData
     }
 }
 
-export { HDDStatus, SSDStatus, initStoragePageData as reloadServiceData }
+export { HDDStatus, SSDStatus, reloadServiceData }
