@@ -171,7 +171,8 @@ function processDiskInfo(disk: DISK_API_SCHEMA): void {
         support: disk.support
     }
 
-    disk.index !== -1 && disk.free && RAIDCandidateDiskCount.value++
+    // disk.index !== -1 && disk.free && RAIDCandidateDiskCount.value++
+    disk.free && RAIDCandidateDiskCount.value++
     if (disk.index > 0 && disk.index < 7) {
         HDDStatus.set(indexStr, baseInfo)
     } else if (
