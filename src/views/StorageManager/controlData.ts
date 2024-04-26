@@ -198,9 +198,7 @@ const initStorageInfo = () => {
     totalStorageUsageStatus.value.DataFree = 0
     totalStorageUsageStatus.value.FilesUsage = 0
     totalStorageUsageStatus.value.FilesFree = 0
-
-    // const storageInfo = await getStorageInfo()
-    // storageInfo.forEach(processStorageInfo)
+    
     refeshStorageInfo();
 }
 const refeshStorageInfo = async (): Promise<void> => { 
