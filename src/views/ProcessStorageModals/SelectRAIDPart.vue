@@ -61,7 +61,7 @@ for (let [key, item] of allDiskStatus) {
     }
 
     // prepare select disk list.
-    if (((selectRAIDStrategy.value === "RAID5" && countSelectDisk <= 3) || (selectRAIDStrategy.value !== "RAID5" && countSelectDisk <= 2)) && item?.unused && item.health) {
+    if (selectStorageList.value.length && ((selectRAIDStrategy.value === "RAID5" && countSelectDisk <= 3) || (selectRAIDStrategy.value !== "RAID5" && countSelectDisk <= 2)) && item?.unused && item.health) {
         countSelectDisk++;
         selectStorageList.value = [...selectStorageList.value, key];
     }
