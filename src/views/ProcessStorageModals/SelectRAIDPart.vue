@@ -19,18 +19,13 @@ import SelectStrategy             from "./SelectStrategy.vue";
 import Button                     from "primevue/button";
 import { NPopover }               from "naive-ui";
 
-// const list = typeof RAIDStrategy
 const strategies: RAIDStrategy[] = ["RAID0", "RAID1", "RAID5"];
-// const allDiskTemp = new Map([...SSDStatus, ...HDDStatus]);
 const sortedArray = Array.from(new Map([...SSDStatus, ...HDDStatus])).sort(
     (a, b) => (a[0] > b[0] ? 1 : -1),
 );
 const allDiskStatus = new Map(sortedArray);
 // 不可选
 const storageDisabled: (number | string)[] = [];
-// const storageDisabledMap = new Map();
-// 选中
-// const selectStorageList = ref<(number | string)[]>([]);
 // 可选
 const storageSelectable: (number | string)[] = [];
 // 无硬盘
