@@ -135,7 +135,6 @@ const initDiskInfo =  () => {
     // init disk data construct.
     setDefaultHDDValues(1, 6)
     setDefaultSSDValues(90, 93)
-    RAIDCandidateDiskCount.value = 0
     // disksInfo.forEach(processDiskInfo)
     refeshDiskInfo();
 }
@@ -143,6 +142,7 @@ const initDiskInfo =  () => {
 const refeshDiskInfo = async (): Promise<void> => { 
     try {
         disk_infos.value = await getDiskInfo()
+        RAIDCandidateDiskCount.value = 0
         disk_infos.value.forEach(processDiskInfo)
     } catch (error) { 
         console.log('error', error);
@@ -193,17 +193,17 @@ const initStorageInfo = () => {
     // clear
     storageInfoMap.clear()
     collectionOfStorageNames.clear()
-    unhealthyLabel.value = undefined
-    totalStorageUsageStatus.value.DataUsage = 0
-    totalStorageUsageStatus.value.DataFree = 0
-    totalStorageUsageStatus.value.FilesUsage = 0
-    totalStorageUsageStatus.value.FilesFree = 0
 
     refeshStorageInfo();
 }
 const refeshStorageInfo = async (): Promise<void> => { 
     try {
         storage_infos.value = await getStorageInfo()
+        unhealthyLabel.value = undefined
+        totalStorageUsageStatus.value.DataUsage = 0
+        totalStorageUsageStatus.value.DataFree = 0
+        totalStorageUsageStatus.value.FilesUsage = 0
+        totalStorageUsageStatus.value.FilesFree = 0
         storage_infos.value.forEach(processStorageInfo)
     } catch (error) { 
         console.log('error', error);
