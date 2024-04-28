@@ -56,7 +56,7 @@ for (let [key, item] of allDiskStatus) {
     }
 
     // prepare select disk list.
-    if (selectStorageList.value.length && ((selectRAIDStrategy.value === "RAID5" && countSelectDisk <= 3) || (selectRAIDStrategy.value !== "RAID5" && countSelectDisk <= 2)) && item?.unused && item.health) {
+    if (selectStorageList.value.length < 3 && ((selectRAIDStrategy.value === "RAID5" && countSelectDisk <= 3) || (selectRAIDStrategy.value !== "RAID5" && countSelectDisk <= 2)) && item?.unused && item.health) {
         countSelectDisk++;
         selectStorageList.value = [...selectStorageList.value, key];
     }
@@ -80,7 +80,9 @@ const calculateRAIDCapacity = (strategy: RAIDStrategy, diskList: number[]) => {
                 return minSize * (diskList.length - 1);
             } else {
                 return 0;
-            }
+            };
+        default:
+            return 0;
     }
 };
 let availableSpacePercentage = ref(0),
