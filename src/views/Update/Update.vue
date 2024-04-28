@@ -98,7 +98,7 @@ function upgradeApp(store_app_id: string) {
         ></Button>
         <div class="text-xs pt-2">
             {{
-                $t("ZiamOS {releaseVersion} is available", {
+                $t("ZimaOS {releaseVersion} is available", {
                     releaseVersion: releaseVersion,
                 })
             }}
