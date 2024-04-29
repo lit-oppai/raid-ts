@@ -3,6 +3,9 @@
 // Used to distinguish and manage sub-applications in the primary application.
 export let WUJIE_PROPS: any = {}
 
+/**
+ * Extends the global Window interface to include additional properties related to the Wujie library.
+ */
 declare global {
     interface Window {
         icewhale: string

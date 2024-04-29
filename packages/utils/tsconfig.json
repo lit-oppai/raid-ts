@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "ES2015",
+        "lib": ["ESNext", "DOM"],
+        "module": "esnext",
+        "moduleResolution": "Bundler",
+        "emitDeclarationOnly": true,
+        "allowImportingTsExtensions": true,
+        "declaration": true,
+        "declarationDir": "./types",
+        "types": ["vite/client"]
+    }
+}
