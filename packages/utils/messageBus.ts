@@ -1,6 +1,6 @@
 // import WUJIE_PROPS from "@utils/primaryProps.ts";
 import { WUJIE_PROPS } from './primaryProps';
-import { api } from "./network.ts";
+import { api }         from ".";
 
 // Function:
 // Send message to message bus.

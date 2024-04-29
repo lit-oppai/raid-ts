@@ -1,11 +1,11 @@
-import { api, useInstance }                                                                                                                         from '@icewhale/ui-utils';
-import { Configuration, DiskMethodsApi, MergeMethodsApi, MountMethodsApi, StorageMethodsApi, RaidMethodsApi }                                       from "@icewhale/zimaos-localstorage-openapi";
-import { NetworkMethodsApi, ZeroTierMethodsApi, DeviceMethodsApi }                                                                                  from "@icewhale/zimaos-openapi"
-import { DriveMethodsApi }                                                                                                                          from "@icewhale/icewhale-openapi/generate/icewhale-drive";
-import { DefaultApi as InstallApi }                                                                                                                 from "@icewhale/casaos-installer-openapi";
-import { AppStoreMethodsApi, ComposeMethodsApi }                                                                                                    from "@icewhale/casaos-appmanagement-openapi";
+import { useZimaAuth }                                                                                                     from '@icewhale/ui-utils';
+import { Configuration, DiskMethodsApi, MergeMethodsApi, MountMethodsApi, StorageMethodsApi, RaidMethodsApi }              from "@icewhale/zimaos-localstorage-openapi";
+import { NetworkMethodsApi, ZeroTierMethodsApi, DeviceMethodsApi }                                                         from "@icewhale/zimaos-openapi"
+import { DriveMethodsApi }                                                                                                 from "@icewhale/icewhale-openapi/generate/icewhale-drive";
+import { DefaultApi as InstallApi }                                                                                        from "@icewhale/casaos-installer-openapi";
+import { AppStoreMethodsApi, ComposeMethodsApi }                                                                           from "@icewhale/casaos-appmanagement-openapi";
 
-const instance = useInstance();
+const { instance } = useZimaAuth();
 const configuration = new Configuration({
     accessToken: localStorage.getItem("access_token") ?? "",
 });
@@ -26,7 +26,3 @@ export const appStoreAPI = new AppStoreMethodsApi(configuration, "/v2/app_manage
 export const composeApi = new ComposeMethodsApi(configuration, "/v2/app_management", instance);
 
 export const install = new InstallApi(configuration, "/v2/installer", instance);
-
-export {
-    api,
-};

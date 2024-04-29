@@ -48,9 +48,8 @@ onMounted(() => {
                 zerotier_info.value = data;
             }
         })
-        .catch((err: any) => {
+        .catch(() => {
             zerotier_info.value = { id: "", status: "offline" };
-            console.log(err, "color:#0f0");
         });
 });
 
