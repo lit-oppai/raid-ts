@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "path": ".",
+    },
+  ],
+  "settings": {
+    "files.associations": {
+      "*.css": "tailwindcss",
+    },
+    "editor.quickSuggestions": {
+      "strings": "on",
+    },
+    "tailwindCSS.classAttributes": ["class", "className", "ngClass", ".*Styles*"],
+    "tailwindCSS.experimental.classRegex": [
+      // class: "" / class: ''
+      "\\bclass:\\s*[\"']([^\"']*)[\"']",
+      // class: []
+      "\\bclass:\\s*\\[[^\\]]*\\]",
+      // class: {}
+      "\\bclass:\\s*\\{[^}]*\\}",
+    ],
+    "scss.validate": false,
+    "css.validate": false,
+    "i18n-ally.localesPaths": [
+      "src/assets/lang"
+    ],
+    "i18n-ally.keystyle": "nested",
+    "DockerRun.DisableDockerrc": true,
+    "vue-i18n.i18nPaths": "src/assets/lang",
+  },
+  "extensions": {
+    "recommendations": [
+      "Vue.volar",
+      // "bradlc.vscode-tailwindcss",
+      // "stylelint.vscode-stylelint",
+      "antfu.iconify",
+      "idered.npm",
+      "wix.vscode-import-cost",
+    ],
+  },
+}
