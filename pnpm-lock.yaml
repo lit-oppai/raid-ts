@@ -134,7 +134,11 @@ importers:
 
   packages/styles: {}
 
-  packages/utils: {}
+  packages/utils:
+    devDependencies:
+      typescript:
+        specifier: ^5.4.2
+        version: 5.4.5
 
   packages/v1api: {}
 
