@@ -3,7 +3,7 @@
 
     <div class="space-y-2">
         <div
-            class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
+            class="flex items-center px-4 max-sm:pr-1.5 py-1.5 bg-white rounded-lg text-gary/primary"
         >
             <div class="casa-language2-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm text-nowrap mr-[18px]">
@@ -36,7 +36,7 @@
         </div>
 
         <div
-            class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
+            class="flex items-center px-4 max-sm:pr-1.5 py-1.5 bg-white rounded-lg text-gary/primary"
         >
             <div class="casa-search-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm text-nowrap mr-[18px]">
@@ -69,7 +69,7 @@
         </div>
 
         <div
-            class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
+            class="flex items-center px-4 max-sm:pr-1.5 py-1.5 bg-white rounded-lg text-gary/primary"
         >
             <div class="casa-port-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm text-nowrap mr-[18px]">
@@ -109,7 +109,7 @@
         </div>
 
         <div
-            class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary"
+            class="flex items-center px-4 max-sm:pr-1.5 py-1.5 h-11 bg-white rounded-lg text-gary/primary"
         >
             <div class="casa-usb-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm text-nowrap mr-[18px]">
@@ -123,7 +123,7 @@
         </div>
 
         <div
-            class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary"
+            class="flex items-center px-4 max-sm:pr-1.5 py-1.5 h-11 bg-white rounded-lg text-gary/primary"
         >
             <div class="casa-news-outline mr-3 text-2xl leading-6"></div>
             <div class="grow font-medium text-sm text-nowrap mr-[18px]">
@@ -137,7 +137,7 @@
         </div>
 
         <div
-            class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
+            class="flex items-center px-4 max-sm:pr-1.5 py-1.5 bg-white rounded-lg text-gary/primary"
         >
             <div
                 class="casa-display-applications-outline mr-3 text-2xl leading-6"
@@ -155,7 +155,7 @@
                 @change="
                     onCheckApps(
                         $event.value,
-                        $event.originalEvent as MouseEvent,
+                        $event.originalEvent as MouseEvent
                     )
                 "
             >
@@ -220,7 +220,7 @@ const device = ref<string>("");
 const selectedApps = ref<Array<string>>([]);
 const tutorialAppsCheckList = ref<{ [key: string]: boolean }>({});
 const isRaspberryPi = computed(
-    () => device.value.toLowerCase().indexOf("raspberry") >= 0,
+    () => device.value.toLowerCase().indexOf("raspberry") >= 0
 );
 const { errors, defineField } = useForm({
     validationSchema: object({
@@ -250,7 +250,7 @@ watch(
     (val) => {
         selectedApps.value = val;
         val.forEach((item) => (tutorialAppsCheckList.value[item] = true));
-    },
+    }
 );
 
 initTutorialOptions();
@@ -274,11 +274,11 @@ function getCustomOptions() {
         const data = res.data.data;
 
         language.value = Languages.find(
-            (item) => item.lang === store.casaos_lang,
+            (item) => item.lang === store.casaos_lang
         );
         // searchEngine.value = data.search_engine
         searchEngine.value = SearchEngines.find(
-            (item) => item.url === data.search_engine,
+            (item) => item.url === data.search_engine
         );
         oldSearchEngineUrl = searchEngine.value?.url || "";
         rssSwitch.value = data.rss_switch;
@@ -291,7 +291,7 @@ function initTutorialOptions() {
     return api.sys.getUtilization().then((res) => {
         if (res.status === 200 && res.data.data.gpu.length === 0) {
             tutorialApps.value = TutorialApps.filter(
-                (item) => item !== "Stable Diffusion",
+                (item) => item !== "Stable Diffusion"
             );
         }
     });
@@ -314,7 +314,7 @@ function onChangeSettings(source: string) {
                         life: 5000,
                     });
                     searchEngine.value = SearchEngines.find(
-                        (item) => item.url === oldSearchEngineUrl,
+                        (item) => item.url === oldSearchEngineUrl
                     );
                 });
             break;
@@ -389,7 +389,7 @@ function onToggleUSBAutoMount() {
                 severity: "warn",
                 summary: "Notice",
                 detail: t(
-                    "Enabling this function may cause boot failures when the Raspberry Pi device is booted from USB",
+                    "Enabling this function may cause boot failures when the Raspberry Pi device is booted from USB"
                 ),
                 life: 5000,
             });
@@ -428,7 +428,7 @@ function onCheckApps(item: string, event?: MouseEvent) {
     event?.stopPropagation();
     tutorialAppsCheckList.value[item] = !tutorialAppsCheckList.value[item];
     selectedApps.value = Object.keys(tutorialAppsCheckList.value).filter(
-        (key) => tutorialAppsCheckList.value[key],
+        (key) => tutorialAppsCheckList.value[key]
     );
     onChangeSettings("tutorialSwitch");
 }
