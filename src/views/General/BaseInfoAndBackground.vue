@@ -160,9 +160,9 @@ function transformServerUrl(serverUrl: string) {
 </script>
 
 <template>
-    <div class="flex justify-center my-8">
+    <div class="flex justify-center max-sm:flex-col items-center my-8 max-sm:my-[10px]">
         <!-- background -->
-        <div class="basis-1/2 flex flex-row-reverse mr-2">
+        <div class="basis-1/2 flex flex-row-reverse min-sm:mr-2">
             <div
                 @click="showChangeWallpaperDialog"
                 title="Change wallpaper"
@@ -185,7 +185,7 @@ function transformServerUrl(serverUrl: string) {
             </div>
         </div>
         <!-- inof list -->
-        <div class="basis-1/2 flex flex-col justify-center ml-2 pb-[3px]">
+        <div class="basis-1/2 flex flex-col justify-center max-sm:items-center ml-2 max-sm:ml-0 pb-[3px] max-sm:pb-[22px]">
             <div
                 class="relative group flex items-center justify-between w-[15rem] h-[2.25rem] group-focus-within:outline outline-1 outline-sky-600 rounded text-gary/primary cursor-pointer"
                 :class="{ outline: editState }"
@@ -193,7 +193,7 @@ function transformServerUrl(serverUrl: string) {
             >
                 <div
                     v-if="!editState"
-                    class="ml-2 w-full font-medium text-base truncate"
+                    class="ml-2 max-sm:ml-0 w-full font-medium text-base truncate max-sm:text-center"
                     @click="activeMacName"
                     :title="name"
                 >
@@ -201,7 +201,7 @@ function transformServerUrl(serverUrl: string) {
                 </div>
                 <input
                     v-else="editState"
-                    class="ml-2 h-full w-full outline-none bg-transparent text-base"
+                    class="ml-2 max-sm:ml-0 h-full w-full outline-none bg-transparent text-base max-sm:text-center"
                     type="text"
                     ref="editName"
                     name="editName"
@@ -225,12 +225,12 @@ function transformServerUrl(serverUrl: string) {
                 </div>
             </div>
 
-            <div class="ml-2 font-normal text-xs text-gary/primary mb-4 mt-1.5">
+            <div class="ml-2 max-sm:ml-0 font-normal text-xs text-gary/primary mb-4 mt-1.5 max-sm:mb-1 max-sm:mt-0.5">
                 <span class="h-full cursor-pointer" @click="showProtocolDialog"
                     >ZimaOS {{ version }}</span
                 >
             </div>
-            <div class="ml-2 text-neutral-500 font-normal text-xs">
+            <div class="ml-2 max-sm:ml-0 text-neutral-500 font-normal text-xs">
                 {{ $t("SN: {SN}", { SN }) }}
             </div>
         </div>
