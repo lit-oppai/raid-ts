@@ -6,7 +6,7 @@
             class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
         >
             <div class="casa-language2-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
+            <div class="grow font-medium text-sm text-nowrap mr-[18px]">
                 {{ $t("Language") }}
             </div>
             <Dropdown
@@ -17,7 +17,7 @@
                 optionLabel="name"
                 checkmark
                 :highlightOnSelect="false"
-                class="w-[12.125rem]"
+                class="max-sm:w-[10rem] w-[12.125rem]"
                 @change="onChangeSettings('lang')"
             >
                 <template #option="slotProps">
@@ -39,7 +39,7 @@
             class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
         >
             <div class="casa-search-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
+            <div class="grow font-medium text-sm text-nowrap mr-[18px]">
                 {{ $t("Search Engine") }}
             </div>
             <Dropdown
@@ -50,7 +50,7 @@
                 optionLabel="name"
                 checkmark
                 :highlightOnSelect="false"
-                class="w-[12.125rem]"
+                class="max-sm:w-[10rem] w-[12.125rem]"
                 @change="onChangeSettings('searchEngine')"
             >
                 <template #option="slotProps">
@@ -72,11 +72,11 @@
             class="flex items-center px-4 py-1.5 bg-white rounded-lg text-gary/primary"
         >
             <div class="casa-port-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
+            <div class="grow font-medium text-sm text-nowrap mr-[18px]">
                 {{ $t("WebUI Port") }}
             </div>
             <div
-                class="w-[12.125rem] relative group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200"
+                class="max-sm:w-[10rem] w-[12.125rem] relative group bg-transparent h-8 rounded-md flex items-center outline outline-1 outline-gray-200 hover:outline-sky-600 focus-within:outline-sky-600 focus-within:outline-custom-blue-1 focus-within:shadow-input-glory transition-input duration-200"
             >
                 <InputNumber
                     ref="inputTextElement"
@@ -112,7 +112,7 @@
             class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary"
         >
             <div class="casa-usb-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
+            <div class="grow font-medium text-sm text-nowrap mr-[18px]">
                 {{ $t("USB auto-mount") }}
             </div>
             <InputSwitch
@@ -126,7 +126,7 @@
             class="flex items-center px-4 py-1.5 h-11 bg-white rounded-lg text-gary/primary"
         >
             <div class="casa-news-outline mr-3 text-2xl leading-6"></div>
-            <div class="grow font-medium text-sm">
+            <div class="grow font-medium text-sm text-nowrap mr-[18px]">
                 {{ $t("News feed") }}
             </div>
             <InputSwitch
@@ -142,13 +142,13 @@
             <div
                 class="casa-display-applications-outline mr-3 text-2xl leading-6"
             ></div>
-            <div class="grow font-medium text-sm">
+            <div class="grow font-medium text-sm text-nowrap mr-[18px]">
                 {{ $t("Tips") }}
             </div>
             <Dropdown
                 append-to="self"
                 panel-class="w-full sm p-0"
-                class="w-[12.125rem]"
+                class="max-sm:w-[10rem] w-[12.125rem]"
                 v-model="selectedApps"
                 :options="tutorialApps"
                 checkmark
