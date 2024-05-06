@@ -13,10 +13,15 @@ export default {
             },
             screens: {
                 'max-sm': { 'max': '640px' },
+                'min-sm': { 'min': '640px' },
                 'max-md': { 'max': '768px' },
+                'min-md': { 'min': '768px' },
                 'max-lg': { 'max': '1024px' },
+                'min-lg': { 'min': '1024px' },
                 'max-xl': { 'max': '1280px' },
+                'min-xl': { 'min': '1280px' },
                 'max-2xl': { 'max': '1536px' },
+                'min-2xl': { 'min': '1536px' },
             },
             borderRadius: {
                 '2lg': '0.625rem',
