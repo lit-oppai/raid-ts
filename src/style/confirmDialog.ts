@@ -60,21 +60,21 @@ export default {
     rejectButton: {
         root: {
             class: [
-                'w-14 h-8 p-2 bg-gray-800/opacity-5 rounded-lg border border-gray-800/opacity-5 justify-start items-center gap-1.5 inline-flex',
+                'w-14 h-8 p-2 bg-Secondary/Default rounded-lg border border-Border/Regular justify-start items-center gap-1.5 inline-flex',
             ]
         },
         label: {
-            class: ["text-zinc-900 text-xs font-normal font-['Britti Sans'] leading-none"]
+            class: ["text-zinc-900 text-xs text-center font-normal font-['Britti Sans'] leading-none"]
         }
     },
     acceptButton: {
         root: {
             class: [
-                'ml- w-16 h-8 p-2 bg-blue-600 rounded-lg border border-gray-800/opacity-10 justify-start items-center gap-1.5 inline-flex',
+                'w-16 h-8 p-2 bg-Primary/Default rounded-lg border border-Border/Emphasized justify-start items-center gap-1.5 inline-flex',
             ]
         },
         label: {
-            class: ["text-white text-xs font-semibold font-['Britti Sans'] leading-none"]
+            class: ["text-white text-xs text-center font-semibold font-['Britti Sans'] leading-none"]
         }
     }
 }

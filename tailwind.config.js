@@ -150,8 +150,10 @@ export default {
 
                 // new design scheme
                 "Border/Regular": "rgba(46, 48, 56, 0.05)",
+                "Border/Emphasized":"rgba(46, 48, 56, 0.13)",
                 "Shade/Secondary": "rgba(255, 255, 255, 0.9)",
                 "Background/Primary": "rgba(255, 255, 255, 1)",
+                "Primary/Default": "rgba(0, 87, 255, 1)",
                 "Secondary/Default": "rgba(46, 48, 56, 0.05)",
             },
         },
