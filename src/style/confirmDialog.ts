@@ -3,7 +3,7 @@ export default {
         return ({
             class: [
                 "bg-white",
-                'rounded-Radius2XL shadow-lg border-0',
+                'rounded-Radius2XL shadow-lg border border-Border/Regular',
                 'h-[12.625rem]',
                 'transform scale-100',
                 'w-[18.75rem] mx-[1.5rem]',
@@ -19,7 +19,7 @@ export default {
         class: [
             'h-[58px]',
             'flex items-center justify-between shrink-0',
-            'text-gray-800 border-b  rounded-t-xl px-6 pt-4 pb-3 border-Border/Regular',
+            'text-gray-800 border-b  rounded-t-xl pl-5 pr-4 pt-4 pb-3 border-Border/Regular',
             "bg-Shade/Secondary",
         ]
     },
