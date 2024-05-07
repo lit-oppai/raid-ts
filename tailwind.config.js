@@ -25,6 +25,9 @@ export default {
             },
             borderRadius: {
                 '2lg': '0.625rem',
+
+                // NEW DESIGN SCHEME
+                "Radius2XL": "0.75rem"
             },
             colors: {
                 // follow figma OLD
@@ -144,6 +147,12 @@ export default {
                 "Brand/700": "rgba(0, 87, 163, 1)",
                 "Brand/600": "rgba(0, 103, 194, 1)",
                 "Brand/500": "rgba(0, 122, 229, 1)",
+
+                // new design scheme
+                "Border/Regular": "rgba(46, 48, 56, 0.05)",
+                "Shade/Secondary": "rgba(255, 255, 255, 0.9)",
+                "Background/Primary": "rgba(255, 255, 255, 1)",
+                "Secondary/Default": "rgba(46, 48, 56, 0.05)",
             },
         },
     },

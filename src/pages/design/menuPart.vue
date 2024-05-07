@@ -7,6 +7,8 @@ import { routes }               from "@pages/router.ts";
 import { getUserInfo }          from "@icewhale/ui-utils";
 import { install, appStoreAPI } from "@network/index.ts";
 import { vOnClickOutside }      from "@vueuse/components";
+import { useI18n }              from "vue-i18n";
+import { useConfirm }           from "primevue/useconfirm";
 
 const userName: string = getUserInfo()?.username ?? "";
 // TODO ： 1、 local storage 相关没有 ts 提示 -- 提出常量部分作为映射。 2、本地存储的更新问题 -- 同步的门槛需要确定。
@@ -35,30 +37,33 @@ function onPower(type: "restart" | "shutdown") {
         shutdownConfirm.value = true;
         restartConfirm.value = false;
     } else {
-        const payload = {
-            action: "",
-            peerType: "settings",
-            name: "icewhale_settings",
-            routerPath: "/general",
-        };
-        switch (type) {
-            case "restart":
-                // Extract constants into a separate package.
-                payload.action = "reboot";
-                messageBus("dashboardsetting_reboot");
-                messageBus("mircoapp_communicate", payload);
-                restartConfirm.value = false;
-                // powerType.value = "restart";
-                break;
-            case "shutdown":
-                // Extract constants into a separate package.
-                payload.action = "power_off";
-                messageBus("dashboardsetting_shutdown");
-                messageBus("mircoapp_communicate", payload);
-                shutdownConfirm.value = false;
-                break;
-        }
-        // emit("power", powerType.value)
+        confirmPower(type);
+    }
+}
+
+function confirmPower(type: "restart" | "shutdown") {
+    const payload = {
+        action: "",
+        peerType: "settings",
+        name: "icewhale_settings",
+        routerPath: "/general",
+    };
+    switch (type) {
+        case "restart":
+            // Extract constants into a separate package.
+            payload.action = "reboot";
+            messageBus("dashboardsetting_reboot");
+            messageBus("mircoapp_communicate", payload);
+            restartConfirm.value = false;
+            // powerType.value = "restart";
+            break;
+        case "shutdown":
+            // Extract constants into a separate package.
+            payload.action = "power_off";
+            messageBus("dashboardsetting_shutdown");
+            messageBus("mircoapp_communicate", payload);
+            shutdownConfirm.value = false;
+            break;
     }
 }
 
@@ -82,6 +87,31 @@ function getUpgradableAppList() {
         }
     });
 }
+
+const { t } = useI18n();
+const confirm = useConfirm();
+function handleButtonClick(type: "restart" | "shutdown") {
+    if (window.innerWidth <= 640) {
+        callConfirmView(type);
+    } else {
+        onPower(type);
+    }
+}
+function callConfirmView(type: "restart" | "shutdown") {
+    confirm.require({
+        group: "secondary_confirmation_dialog",
+        message: t(`Are you sure?`),
+        header: `${type}`,
+        rejectLabel: 'Cancel',
+        acceptLabel: 'confirm',
+        accept: () => {
+            confirmPower(type);
+        },
+        reject: () => {
+            resetStatus();
+        },
+    });
+}
 </script>
 <!-- css components: os_panel menu_bar -->
 <template>
@@ -101,8 +131,8 @@ function getUpgradableAppList() {
                 :to="{
                     path: '/update',
                     query: {
-                        'isUpdateSys': isUpdateSys.toString(),
-                        'isUpdateApps': isUpdateApps.toString(),
+                        isUpdateSys: isUpdateSys.toString(),
+                        isUpdateApps: isUpdateApps.toString(),
                     },
                 }"
                 class="flex items-center"
@@ -131,13 +161,13 @@ function getUpgradableAppList() {
             <Button
                 :label="restartConfirm ? $t(`Are you sure?`) : $t(`Restart`)"
                 icon="casa-restart-outline"
-                @click="onPower('restart')"
+                @click="handleButtonClick('restart')"
             >
             </Button>
             <Button
                 :label="shutdownConfirm ? $t(`Are you sure?`) : $t(`Shutdown`)"
                 icon="casa-shutdown-outline"
-                @click="onPower('shutdown')"
+                @click="handleButtonClick('shutdown')"
             >
             </Button>
         </div>
