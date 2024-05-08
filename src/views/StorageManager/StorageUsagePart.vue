@@ -230,14 +230,11 @@
 import { computed, defineProps }                                                  from "vue";
 import { NPopover }                                                               from "naive-ui";
 import { convertSizeToReadable }                                                  from "@icewhale/ui-utils";
-import { useStoragePageDataBindingLifecycle }                                     from "./controlData.ts";
+import { useStoragePageData }                                                         from "./controlData.ts";
 
 const {
-    // storageInfoMap,
     totalStorageUsageStatus,
-    // RAIDCandidateDiskCount,
-    // isStoragePageDataLoading,
-} = useStoragePageDataBindingLifecycle();
+} = useStoragePageData();
 const sysRate: number = 10;
 /* const sysRate = computed(() => {
     return totalStorageUsageStatus.value

@@ -8,7 +8,7 @@
         5. reloadDiskInfo: reload disk info.
     public method:
         1. useStoragePageDataBindingLifecycle: use storage page data binding lifecycle.
-        2. useStorageInfo: use storage info.
+        2. useStoragePageData: use storage info.
         3. useReloadStoragePageData: use reload storage info.
     public property:
         1. HDDStatus: HDD status.
@@ -136,10 +136,10 @@ const initDiskInfo =  () => {
     setDefaultHDDValues(1, 6)
     setDefaultSSDValues(90, 93)
     // disksInfo.forEach(processDiskInfo)
-    refeshDiskInfo();
+    refreshDiskInfo();
 }
 // refesh disk_infos
-const refeshDiskInfo = async (): Promise<void> => { 
+const refreshDiskInfo = async (): Promise<void> => { 
     try {
         disk_infos.value = await getDiskInfo()
         RAIDCandidateDiskCount.value = 0
@@ -194,9 +194,9 @@ const initStorageInfo = () => {
     storageInfoMap.clear()
     collectionOfStorageNames.clear()
 
-    refeshStorageInfo();
+    refreshStorageInfo();
 }
-const refeshStorageInfo = async (): Promise<void> => { 
+const refreshStorageInfo = async (): Promise<void> => { 
     try {
         storage_infos.value = await getStorageInfo()
         unhealthyLabel.value = undefined
@@ -266,18 +266,10 @@ function processStorageInfo(storage: STORAGE_API_SCHEMA): void {
 
 // Data Lifecycle Management -- init.
 export const isStoragePageDataLoading = ref<boolean>(false)
-const initStoragePageData = (): void => {
-    isStoragePageDataLoading.value = true;
-    initDiskInfo();
-    initStorageInfo();
-    isStoragePageDataLoading.value = false;
-}
 const reloadServiceData = (): void => {
     isStoragePageDataLoading.value = true;
-    refeshDiskInfo();
-    // initDiskInfo();
-    refeshStorageInfo();
-    // initStorageInfo();
+    refreshDiskInfo();
+    refreshStorageInfo();
     isStoragePageDataLoading.value = false;
 }
 
@@ -292,23 +284,34 @@ const resetStoragePageData = (): void => {
     totalStorageUsageStatus.value.FilesUsage = 0
     totalStorageUsageStatus.value.FilesFree = 0
 }
-// TODO: clear data when unmount.
-// Vue has complete management of it.
-const destroyStoragePageData = (): void => {
-    resetStoragePageData()
-}
+
 // socket
 import { socket }                                                            from '@network/socket.ts'
-// Socket Event Handlers
-function handleDiskAdded(): void {
-    // initDiskInfo()
-    refeshDiskInfo();
-}
 
-function handleDiskRemoved(): void {
-    initStoragePageData()
-}
 export const useStoragePageDataBindingLifecycle = () => {
+
+    const initStoragePageData = (): void => {
+        isStoragePageDataLoading.value = true;
+        initDiskInfo();
+        initStorageInfo();
+        isStoragePageDataLoading.value = false;
+    }
+
+    // Vue has complete management of it.
+    const destroyStoragePageData = (): void => {
+        resetStoragePageData()
+    }
+    
+    // Socket Event Handlers
+    function handleDiskAdded(): void {
+        // initDiskInfo()
+        refreshDiskInfo();
+    }
+    
+    function handleDiskRemoved(): void {
+        initStoragePageData()
+    }
+    
     // First time init.
     onBeforeMount(() => {
         initStoragePageData()
@@ -327,7 +330,12 @@ export const useStoragePageDataBindingLifecycle = () => {
         unhealthyLabel,
         sysStorageInfo,
         RAIDCandidateDiskCount,
-        totalStorageUsageStatus,
+        // TODO: Q1、useStoragePageDataBindingLifecycle 与 useStoragePageData 返回数据不统一，Q2、totalStorageUsageStatus 不需要绑定在页面的生命周期上 Q3、但是，数据还需要更新。
+        // TODO_LIST:
+        // - [ ] Q1、生命周期绑定事件，事件与页面为强关联。
+        // - [ ] Q2、数据更新不需要绑定在生命周期上。
+        // - [ ] Q3、数据更新，需要在页面上进行展示。
+        // totalStorageUsageStatus,
         isStoragePageDataLoading,
         collectionOfStorageNames
     }
@@ -335,8 +343,9 @@ export const useStoragePageDataBindingLifecycle = () => {
 // THINK: 直接返回数据与调用方法返回数据无差别。
 // 直接返回：调用简单，只读数据，无需考虑数据的生命周期。
 // 调用方法返回：可以添加逻辑、符合统一调用方式。
-export const useStorageInfo = () => {
+export const useStoragePageData = () => {
     return {
+        totalStorageUsageStatus,
         reloadServiceData
     }
 }

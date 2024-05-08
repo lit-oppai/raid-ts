@@ -62,7 +62,7 @@ import { unhealthyLabel }                                            from "@view
         <div class="storage_usage os_bg_white_card flex flex-col px-4 py-3">
             <StorageUsagePart :goToStorageDetailPage="goToStorageDetailPage"></StorageUsagePart>
         </div>
-        <!-- Data Space Part -->
+        <!-- Storage Space Part -->
         <div class="flex mt-6 mb-2">
             <span
                 class="text-neutral-400 text-sm font-normal font-['Roboto'] leading-tight"
