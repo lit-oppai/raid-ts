@@ -323,6 +323,12 @@ export const useStoragePageDataBindingLifecycle = () => {
         socket.off('local-storage:disk:added', handleDiskAdded)
         socket.off('local-storage:disk:removed', handleDiskRemoved)
     })
+    return useStoragePageData();
+}
+// THINK: 直接返回数据与调用方法返回数据无差别。
+// 直接返回：调用简单，只读数据，无需考虑数据的生命周期。
+// 调用方法返回：可以添加逻辑、符合统一调用方式。
+export const useStoragePageData = () => {
     return {
         HDDStatus,
         SSDStatus,
@@ -330,21 +336,9 @@ export const useStoragePageDataBindingLifecycle = () => {
         unhealthyLabel,
         sysStorageInfo,
         RAIDCandidateDiskCount,
-        // TODO: Q1、useStoragePageDataBindingLifecycle 与 useStoragePageData 返回数据不统一，Q2、totalStorageUsageStatus 不需要绑定在页面的生命周期上 Q3、但是，数据还需要更新。
-        // TODO_LIST:
-        // - [ ] Q1、生命周期绑定事件，事件与页面为强关联。
-        // - [ ] Q2、数据更新不需要绑定在生命周期上。
-        // - [ ] Q3、数据更新，需要在页面上进行展示。
-        // totalStorageUsageStatus,
         isStoragePageDataLoading,
-        collectionOfStorageNames
-    }
-}
-// THINK: 直接返回数据与调用方法返回数据无差别。
-// 直接返回：调用简单，只读数据，无需考虑数据的生命周期。
-// 调用方法返回：可以添加逻辑、符合统一调用方式。
-export const useStoragePageData = () => {
-    return {
+        collectionOfStorageNames,
+        
         totalStorageUsageStatus,
         reloadServiceData
     }
