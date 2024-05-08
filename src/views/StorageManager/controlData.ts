@@ -200,6 +200,7 @@ const refreshStorageInfo = async (): Promise<void> => {
     try {
         storage_infos.value = await getStorageInfo()
         unhealthyLabel.value = undefined
+        storageInfoMap.clear();
         totalStorageUsageStatus.value.DataUsage = 0
         totalStorageUsageStatus.value.DataFree = 0
         totalStorageUsageStatus.value.FilesUsage = 0
